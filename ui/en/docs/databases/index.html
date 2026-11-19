@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Databases, caches, queues and search engines · HYPHA</title>
+<meta name="description" content="PostgreSQL and its most expensive queries (DBM), MySQL and MariaDB, Redis and Valkey, Memcached, MongoDB, RabbitMQ, OpenSearch and Elasticsearch, SQL Server: settings, permissions and metrics.">
+<link rel="canonical" href="https://hypha.s33d.fr/en/docs/databases/">
+<link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/bases-de-donnees/">
+<link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/databases/">
+<link rel="alternate" hreflang="x-default" href="https://hypha.s33d.fr/docs/bases-de-donnees/">
+<meta name="color-scheme" content="dark light">
+<meta property="og:title" content="Databases, caches, queues and search engines">
+<meta property="og:description" content="PostgreSQL and its most expensive queries (DBM), MySQL and MariaDB, Redis and Valkey, Memcached, MongoDB, RabbitMQ, OpenSearch and Elasticsearch, SQL Server: settings, permissions and metrics.">
+<meta property="og:url" content="https://hypha.s33d.fr/en/docs/databases/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="HYPHA">
+<link rel="icon" type="image/svg+xml" href="/assets/img/hypha.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('hypha.theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Documentation", "item": "https://hypha.s33d.fr/en/docs/"}, {"@type": "ListItem", "position": 2, "name": "Databases, caches, queues and search engines", "item": "https://hypha.s33d.fr/en/docs/databases/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#contenu">Skip to content</a><header class="top"><div class="top-in"><a class="brand" href="/" aria-label="HYPHA"><img src="/assets/img/hypha.svg" alt="" width="28" height="28"><span>HYPHA<small>by S33D</small></span></a><nav aria-label="HYPHA"><a href="/en/docs/" aria-current="page">Documentation</a><a href="/en/pricing/">Pricing</a><a href="/en/faq/" class="hide-sm">FAQ</a><a class="lang" href="/docs/bases-de-donnees/" hreflang="fr" data-lang="fr" title="Français">FR</a><a class="btn" href="/">Sign in</a></nav></div></header>
+<div class="wrap"><aside class="side"><details class="nav" open><summary>Documentation contents</summary><h2>Get started</h2><ul><li><a href="/en/docs/">Overview</a></li><li><a href="/en/docs/getting-started/">Get started</a></li><li><a href="/en/docs/videos/">Videos</a></li></ul><h2>Install the agent</h2><ul><li><a href="/en/docs/agent-linux/">Linux</a></li><li><a href="/en/docs/agent-windows/">Windows</a></li><li><a href="/en/docs/agent-docker/">Docker</a></li><li><a href="/en/docs/kubernetes/">Kubernetes</a></li><li><a href="/en/docs/configuration/">Agent configuration</a></li><li><a href="/en/docs/fleet/">Fleet and updates</a></li></ul><h2>Integrations</h2><ul><li><a href="/en/docs/integrations/">System, web and mail</a></li><li><a href="/en/docs/databases/" aria-current="page">Databases</a></li><li><a href="/en/docs/snmp/">SNMP</a></li><li><a href="/en/docs/cloud/">Clouds</a></li><li><a href="/en/docs/virtualization/">Virtualization</a></li></ul><h2>Observe</h2><ul><li><a href="/en/docs/metrics/">Metrics and dashboards</a></li><li><a href="/en/docs/logs/">Logs</a></li><li><a href="/en/docs/traces/">Traces and OpenTelemetry</a></li><li><a href="/en/docs/synthetics/">Synthetic tests</a></li></ul><h2>Alert and act</h2><ul><li><a href="/en/docs/monitors/">Monitors</a></li><li><a href="/en/docs/alerts-and-channels/">Alerts and channels</a></li><li><a href="/en/docs/downtimes/">Downtimes</a></li><li><a href="/en/docs/incidents/">Incidents</a></li><li><a href="/en/docs/slos/">SLOs</a></li><li><a href="/en/docs/status-pages/">Status pages</a></li><li><a href="/en/docs/explain-and-repair/">Explain and repair</a></li></ul><h2>Administer</h2><ul><li><a href="/en/docs/accounts-and-roles/">Accounts and roles</a></li><li><a href="/en/docs/plans-and-billing/">Plans and billing</a></li><li><a href="/en/docs/api/">API</a></li><li><a href="/en/docs/self-hosting/">Self-hosting</a></li><li><a href="/en/docs/security/">Security</a></li></ul></details></aside><main class="doc" id="contenu"><div class="crumbs"><a href="/en/docs/">Documentation</a> › Integrations</div><h1>Databases, caches, queues and search engines</h1><p class="lead">Each integration reads the software with a read-only monitoring account, or through the local socket when possible.</p><h2 id="postgresql">PostgreSQL<a class="anchor" href="#postgresql" aria-hidden="true">#</a></h2>
+<p>On by default if the socket <code>/var/run/postgresql/.s.PGSQL.5432</code> exists. The agent connects through that socket as the system user <code>postgres</code> (<code>peer</code> authentication, no password), in a read-only session.</p>
+<pre><code class="language-yaml">integrations:
+  postgres:
+    enabled: auto
+    # or a monitoring account holding the pg_monitor role:
+    # dsn: postgres://hypha:password@127.0.0.1:5432/postgres?sslmode=disable
+    dbm: auto</code></pre>
+<p>Metrics: connections and their share of the maximum, committed and rolled-back transactions, rows read and written, database sizes, cache hit ratio, locks, waiting queries, longest query, idle-in-transaction sessions, background writer, primary or replica role, replication lag (<code>postgresql.replication_delay</code>, <code>postgresql.replication.wal_lag_bytes</code>).</p>
+<h3 id="most-expensive-queries-dbm">Most expensive queries (DBM)<a class="anchor" href="#most-expensive-queries-dbm" aria-hidden="true">#</a></h3>
+<p>If the <code>pg_stat_statements</code> extension exists in the <code>postgres</code> database, the agent sends the 50 most expensive queries (total time) every 5 minutes, with the normalised text PostgreSQL returns. The <strong>Databases</strong> page ranks them by total time, calls or mean time, with the cache hit ratio and each query's trend.</p>
+<pre><code class="language-sql">-- postgresql.conf: shared_preload_libraries = &#x27;pg_stat_statements&#x27; (restart needed if missing)
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements;</code></pre>
+<p>The agent checks for the extension again once an hour: after creating it, restart <code>hypha-agent</code> to see it at once.</p>
+<h2 id="mysql-and-mariadb">MySQL and MariaDB<a class="anchor" href="#mysql-and-mariadb" aria-hidden="true">#</a></h2>
+<p>Without settings, the agent connects as <code>root</code> through the local socket <code>/run/mysqld/mysqld.sock</code> (socket authentication of Debian and Ubuntu packages). Otherwise, a monitoring account:</p>
+<pre><code class="language-sql">CREATE USER &#x27;hypha&#x27;@&#x27;127.0.0.1&#x27; IDENTIFIED BY &#x27;…&#x27;;
+GRANT PROCESS, REPLICATION CLIENT ON *.* TO &#x27;hypha&#x27;@&#x27;127.0.0.1&#x27;;</code></pre>
+<pre><code class="language-yaml">integrations:
+  mysql:
+    dsn: &quot;hypha:password@tcp(127.0.0.1:3306)/&quot;</code></pre>
+<p>Metrics: connections (current, maximum, share used, refused, aborted), queries and slow queries, commands by type, running threads, on-disk temporary tables, InnoDB buffer pool, row lock waits, database sizes, replication lag and state (<code>mysql.replication</code>).</p>
+<h2 id="redis-and-valkey">Redis and Valkey<a class="anchor" href="#redis-and-valkey" aria-hidden="true">#</a></h2>
+<p>The <code>INFO</code> command, on <code>127.0.0.1:6379</code> by default, or a Unix socket.</p>
+<pre><code class="language-yaml">integrations:
+  redis:
+    address: 127.0.0.1:6379
+    # username: hypha   # Redis 6+ ACL
+    # password: &quot;…&quot;</code></pre>
+<p>Metrics: connected and blocked clients, used memory, limit, fragmentation, cache hit rate, keys, expired and evicted keys, commands, network throughput, replication and replicas, persistence to disk (<code>redis.persistence</code>).</p>
+<h2 id="memcached">Memcached<a class="anchor" href="#memcached" aria-hidden="true">#</a></h2>
+<p>The <code>stats</code> command on <code>127.0.0.1:11211</code>: bytes and limit, get hit rate, evictions, connections and refused connections, items, threads.</p>
+<h2 id="mongodb">MongoDB<a class="anchor" href="#mongodb" aria-hidden="true">#</a></h2>
+<p>A connection URI, <code>mongodb://127.0.0.1:27017</code> by default. With authentication on, an account with the <code>clusterMonitor</code> role:</p>
+<pre><code class="language-yaml">integrations:
+  mongodb:
+    uri: &quot;mongodb://hypha:password@127.0.0.1:27017/?authSource=admin&quot;</code></pre>
+<p>Metrics: current and available connections, operations, read and write queues, WiredTiger cache, resident memory, database sizes, replica set state and lag.</p>
+<h2 id="rabbitmq">RabbitMQ<a class="anchor" href="#rabbitmq" aria-hidden="true">#</a></h2>
+<p>The management API (<code>http://127.0.0.1:15672</code>), with an account holding the <code>monitoring</code> tag (without an account: <code>guest</code>, which RabbitMQ only accepts from the machine itself).</p>
+<pre><code class="language-yaml">integrations:
+  rabbitmq:
+    url: http://127.0.0.1:15672
+    username: hypha
+    password: &quot;…&quot;</code></pre>
+<p>Metrics: connections, channels, consumers, queues, ready and unacknowledged messages, publish, deliver and ack rates, node alarms (memory, disk, descriptors) through the <code>rabbitmq.node</code> check, messages per queue.</p>
+<h2 id="opensearch-and-elasticsearch">OpenSearch and Elasticsearch<a class="anchor" href="#opensearch-and-elasticsearch" aria-hidden="true">#</a></h2>
+<p>The REST API of the local node: the agent finds the address port 9200 listens on, or uses <code>url</code>.</p>
+<pre><code class="language-yaml">integrations:
+  opensearch:
+    url: https://127.0.0.1:9200
+    username: hypha
+    password: &quot;…&quot;
+    insecure: false     # true only for a self-signed certificate</code></pre>
+<p>Metrics: cluster health (<code>opensearch.cluster_health</code>), nodes, active, initialising and unassigned shards, pending tasks, JVM heap and garbage collection, disk usage, documents, indexing and search (rate, latency), rejected writes and searches, tripped circuit breakers.</p>
+<h2 id="sql-server">SQL Server<a class="anchor" href="#sql-server" aria-hidden="true">#</a></h2>
+<p>On Windows, through performance counters, when SQL Server is present: <code>mssql.buffer_cache_hit_ratio</code>, <code>mssql.batch_requests_per_s</code>, <code>mssql.user_connections</code>.</p>
+<h2 id="monitor-templates">Monitor templates<a class="anchor" href="#monitor-templates" aria-hidden="true">#</a></h2>
+<p>The <strong>Databases</strong>, <strong>Message queues</strong> and <strong>Search</strong> families of the catalogue: unreachable, replication stopped or lagging, connections almost saturated, Redis memory almost full, Redis persistence failing, growing RabbitMQ queue, RabbitMQ node alarm, degraded OpenSearch cluster, saturated JVM heap, disk at watermark, rejected writes.</p><p class="updated">Updated: 19 November 2026</p><nav class="pager" aria-label="pages"><a href="/en/docs/integrations/"><small>Previous</small>System, web and mail</a><a href="/en/docs/snmp/" style="text-align:right"><small>Next</small>SNMP</a></nav></main></div>
+<footer class="foot"><div class="foot-in"><span class="grow">HYPHA, a S33D product. Hosted in France, on S33D&#x27;s own infrastructure.</span><a href="/en/docs/" aria-current="page">Documentation</a><a href="/en/pricing/">Pricing</a><a href="/en/faq/">FAQ</a><a href="/en/legal-notice/">Legal notice</a><a href="/en/terms/">Terms of sale</a><a href="/en/privacy/">Privacy</a><a href="https://s33d.fr" rel="noopener">s33d.fr</a></div></footer>
+<script>(function(){var c="Copy",d="Copied";document.querySelectorAll('.doc pre').forEach(function(p){var b=document.createElement('button');b.type='button';b.className='copy';b.textContent=c;b.onclick=function(){var x=p.querySelector('code');navigator.clipboard&&navigator.clipboard.writeText(x?x.innerText:p.innerText).then(function(){b.textContent=d;setTimeout(function(){b.textContent=c},1500)})};p.appendChild(b)});var n=document.querySelector('.side details');if(n&&window.matchMedia('(max-width: 860px)').matches)n.removeAttribute('open');document.querySelectorAll('a[data-lang]').forEach(function(a){a.addEventListener('click',function(){try{localStorage.setItem('hypha.lang',a.getAttribute('data-lang'))}catch(e){}})});})();</script>
+</body>
+</html>

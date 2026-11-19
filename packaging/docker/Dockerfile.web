@@ -1,0 +1,9 @@
+# Image « web » de HYPHA auto-hébergé : nginx (HTTPS), interface statique et fichiers
+# d'installation de l'agent, pour que les agents du client s'installent depuis SON serveur.
+# Contexte de construction : racine du dépôt (filtré par Dockerfile.web.dockerignore).
+FROM nginx:stable-alpine
+COPY packaging/docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ui /usr/share/nginx/html
+COPY agent/install/install.sh agent/install/install.ps1 /srv/hypha-install/
+COPY agent/dist/ /srv/hypha-install/
+EXPOSE 443

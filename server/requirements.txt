@@ -1,0 +1,43 @@
+# hypha-server — production en Python 3.14 (Ubuntu 26.04).
+# Versions relevées sur PyPI le 18/11/2026 ; roues cp314 (ou abi3) vérifiées pour linux x86_64.
+fastapi==0.163.2
+starlette==1.10.0
+uvicorn==0.54.0
+uvloop==0.23.0
+httptools==0.9.0
+pydantic==2.14.3
+pydantic-core==2.50.4
+psycopg[binary,pool]==3.3.9
+psycopg-binary==3.3.9
+psycopg-pool==3.3.3
+httpx==0.28.1
+httpcore==1.0.9
+PyJWT[crypto]==2.15.1
+cryptography==50.0.2
+opentelemetry-proto==1.45.2
+protobuf==7.36.2
+dnspython==2.9.2
+
+# Traces OpenTelemetry du serveur (facultatives : actives si HYPHA_OTEL_ENDPOINT est posé).
+# Série alignée sur opentelemetry-proto 1.45.2 ; toutes pures Python sauf wrapt et charset-normalizer
+# (roues cp314). Les spans serveur viennent de la télémétrie native de FastAPI 0.163 : ni
+# opentelemetry-instrumentation-fastapi ni -asgi. psycopg : curseur tracé du serveur (hypha/otel.py).
+opentelemetry-api==1.45.2
+opentelemetry-sdk==1.45.2
+opentelemetry-semantic-conventions==0.66b2
+opentelemetry-exporter-otlp-proto-http==1.45.2
+opentelemetry-exporter-otlp-proto-common==1.45.2
+opentelemetry-exporter-otlp-common==0.66b2
+opentelemetry-exporter-http-transport[requests]==0.66b2
+opentelemetry-instrumentation==0.66b2
+opentelemetry-instrumentation-httpx==0.66b2
+opentelemetry-util-http==0.66b2
+googleapis-common-protos==1.76.0
+requests==2.34.2
+urllib3==2.8.0
+charset-normalizer==3.5.2
+wrapt==2.5.2
+packaging==26.3
+
+# Tests (poste de développement seulement)
+# pytest==9.2.0

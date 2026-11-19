@@ -1,0 +1,14 @@
+{
+  "title": {"fr": "Formule, limites et consommation", "en": "Plan, limits and usage"},
+  "steps": [
+    {"goto": "/#/settings/billing"},
+    {"waitFor": "table", "wait": 2500},
+    {"record": true, "caption": true, "fr": "Formule et facturation : la formule de l'espace et ses limites", "en": "Plan and billing: the workspace's plan and its limits", "dur": 4800, "wait": 5000},
+    {"caption": true, "fr": "Limite atteinte : ce qui dépasse est refusé et signalé, jamais facturé", "en": "Limit reached: what goes beyond is refused and reported, never billed", "dur": 4800, "wait": 5000},
+    {"scroll": 520, "wait": 1200},
+    {"caption": true, "fr": "Les formules, aux prix hors taxes", "en": "The plans, at prices excluding VAT", "dur": 4200, "wait": 4500},
+    {"click": "a[href*='/settings/usage']", "nth": 0, "wait": 3000},
+    {"caption": true, "fr": "Consommation : volumes reçus chaque jour, services les plus bavards", "en": "Usage: volumes received each day, chattiest services", "dur": 4800, "wait": 5000},
+    {"scroll": 450, "wait": 2500}
+  ]
+}

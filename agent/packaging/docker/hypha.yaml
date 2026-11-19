@@ -1,0 +1,31 @@
+# Configuration de l'image Docker de hypha-agent. La clé et le serveur viennent de
+# HYPHA_API_KEY et HYPHA_URL (-e), qui l'emportent sur ce fichier.
+# Suivre des fichiers de l'hôte : les monter (-v /var/log/nginx:/host/log/nginx:ro), puis
+# monter une conf à la place de celle-ci (-v /etc/hypha/hypha.yaml:/etc/hypha/hypha.yaml:ro)
+# qui les déclare (logs.files, chemins vus du conteneur).
+api_key: ""
+url: https://hypha.s33d.fr
+hostname: ""
+tags: {}
+interval: 15s
+buffer: {dir: /var/lib/hypha/buffer, max_mb: 256}
+logs:
+  enabled: true
+  # Pas de journalctl dans l'image : le journal systemd se lit par l'agent installé sur l'hôte.
+  journald: false
+  files: []
+  exclude_patterns: []
+processes: {enabled: true, include: []}
+network: {enabled: true}
+containers: {enabled: auto}
+checks:
+  http: []
+  tcp: []
+statsd: {enabled: true, listen: "127.0.0.1:8125"}
+otlp: {enabled: false, listen: "127.0.0.1:4318"}
+# 0.4.0 : en conteneur, la mise à jour se fait par l'image (hypha/agent:<version>), jamais
+# par l'agent ; pas de systemctl dans l'image, donc pas d'actions sur les services de l'hôte.
+# Synthétiques privés, SNMP et inventaire marchent comme sur un hôte (conf.d/*.yaml monté
+# avec la conf, ou une conf complète montée à la place de celle-ci).
+auto_update: false
+actions: {enabled: false}

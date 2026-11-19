@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Getting started with HYPHA · HYPHA</title>
+<meta name="description" content="Create a HYPHA account, install the first agent and receive the first alert, in ten minutes.">
+<link rel="canonical" href="https://hypha.s33d.fr/en/docs/getting-started/">
+<link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/demarrage/">
+<link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/getting-started/">
+<link rel="alternate" hreflang="x-default" href="https://hypha.s33d.fr/docs/demarrage/">
+<meta name="color-scheme" content="dark light">
+<meta property="og:title" content="Getting started with HYPHA">
+<meta property="og:description" content="Create a HYPHA account, install the first agent and receive the first alert, in ten minutes.">
+<meta property="og:url" content="https://hypha.s33d.fr/en/docs/getting-started/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="HYPHA">
+<link rel="icon" type="image/svg+xml" href="/assets/img/hypha.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('hypha.theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Documentation", "item": "https://hypha.s33d.fr/en/docs/"}, {"@type": "ListItem", "position": 2, "name": "Getting started with HYPHA", "item": "https://hypha.s33d.fr/en/docs/getting-started/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#contenu">Skip to content</a><header class="top"><div class="top-in"><a class="brand" href="/" aria-label="HYPHA"><img src="/assets/img/hypha.svg" alt="" width="28" height="28"><span>HYPHA<small>by S33D</small></span></a><nav aria-label="HYPHA"><a href="/en/docs/" aria-current="page">Documentation</a><a href="/en/pricing/">Pricing</a><a href="/en/faq/" class="hide-sm">FAQ</a><a class="lang" href="/docs/demarrage/" hreflang="fr" data-lang="fr" title="Français">FR</a><a class="btn" href="/">Sign in</a></nav></div></header>
+<div class="wrap"><aside class="side"><details class="nav" open><summary>Documentation contents</summary><h2>Get started</h2><ul><li><a href="/en/docs/">Overview</a></li><li><a href="/en/docs/getting-started/" aria-current="page">Get started</a></li><li><a href="/en/docs/videos/">Videos</a></li></ul><h2>Install the agent</h2><ul><li><a href="/en/docs/agent-linux/">Linux</a></li><li><a href="/en/docs/agent-windows/">Windows</a></li><li><a href="/en/docs/agent-docker/">Docker</a></li><li><a href="/en/docs/kubernetes/">Kubernetes</a></li><li><a href="/en/docs/configuration/">Agent configuration</a></li><li><a href="/en/docs/fleet/">Fleet and updates</a></li></ul><h2>Integrations</h2><ul><li><a href="/en/docs/integrations/">System, web and mail</a></li><li><a href="/en/docs/databases/">Databases</a></li><li><a href="/en/docs/snmp/">SNMP</a></li><li><a href="/en/docs/cloud/">Clouds</a></li><li><a href="/en/docs/virtualization/">Virtualization</a></li></ul><h2>Observe</h2><ul><li><a href="/en/docs/metrics/">Metrics and dashboards</a></li><li><a href="/en/docs/logs/">Logs</a></li><li><a href="/en/docs/traces/">Traces and OpenTelemetry</a></li><li><a href="/en/docs/synthetics/">Synthetic tests</a></li></ul><h2>Alert and act</h2><ul><li><a href="/en/docs/monitors/">Monitors</a></li><li><a href="/en/docs/alerts-and-channels/">Alerts and channels</a></li><li><a href="/en/docs/downtimes/">Downtimes</a></li><li><a href="/en/docs/incidents/">Incidents</a></li><li><a href="/en/docs/slos/">SLOs</a></li><li><a href="/en/docs/status-pages/">Status pages</a></li><li><a href="/en/docs/explain-and-repair/">Explain and repair</a></li></ul><h2>Administer</h2><ul><li><a href="/en/docs/accounts-and-roles/">Accounts and roles</a></li><li><a href="/en/docs/plans-and-billing/">Plans and billing</a></li><li><a href="/en/docs/api/">API</a></li><li><a href="/en/docs/self-hosting/">Self-hosting</a></li><li><a href="/en/docs/security/">Security</a></li></ul></details></aside><main class="doc" id="contenu"><div class="crumbs"><a href="/en/docs/">Documentation</a> › Get started</div><h1>Getting started with HYPHA</h1><p class="lead">One account, one agent, and your first data arrives within a minute. Allow ten minutes.</p><h2 id="1-create-an-account">1. Create an account<a class="anchor" href="#1-create-an-account" aria-hidden="true">#</a></h2>
+<ol><li>Open <a href="https://hypha.s33d.fr">hypha.s33d.fr</a> and choose <strong>Sign in</strong>.</li><li>Sign in with your S33D account, or create one: email address, or a Google, Microsoft, Apple, Facebook or GitHub account.</li><li>On first sign-in, HYPHA creates your <strong>workspace</strong> on the Découverte plan, free and without a credit card.</li></ol>
+<p>A new workspace comes with:</p>
+<ul><li>an email notification channel to your account's address;</li><li>six monitors linked to that channel: host not reporting, disk almost full, memory saturated, systemd unit failed, Windows service stopped, certificate close to expiry (their names are in French for now; rename them at will).</li></ul>
+<p>You are warned of a common outage without setting anything up.</p>
+<blockquote><p>Must your data stay on your premises? Install the same software on your server: see <a href="/en/docs/self-hosting/">Self-hosting</a>.</p></blockquote>
+<h2 id="2-install-the-agent">2. Install the agent<a class="anchor" href="#2-install-the-agent" aria-hidden="true">#</a></h2>
+<p>Open <strong>Settings › Install the agent</strong>. The page gives the command for your system and can create the ingestion key for you (button <strong>Create a key and insert it</strong>).</p>
+<p>On Linux:</p>
+<pre><code class="language-bash">curl -fsSL https://hypha.s33d.fr/install/install.sh | sudo HYPHA_API_KEY=hph_your_key bash</code></pre>
+<p>On Windows, in PowerShell run as administrator:</p>
+<pre><code class="language-powershell">$env:HYPHA_API_KEY=&#x27;hph_your_key&#x27;; iwr -useb https://hypha.s33d.fr/install/install.ps1 | iex</code></pre>
+<p>Details per system: <a href="/en/docs/agent-linux/">Linux</a>, <a href="/en/docs/agent-windows/">Windows</a>, <a href="/en/docs/agent-docker/">Docker</a>, <a href="/en/docs/kubernetes/">Kubernetes</a>.</p>
+<h2 id="3-see-your-data">3. See your data<a class="anchor" href="#3-see-your-data" aria-hidden="true">#</a></h2>
+<p>Within a minute, the host appears in <strong>Infrastructure</strong>. The overview shows its metrics; the host page shows its processes, logs, checks and inventory.</p>
+<p>As long as no agent is connected, the overview shows three steps to guide you.</p>
+<h2 id="4-receive-an-alert">4. Receive an alert<a class="anchor" href="#4-receive-an-alert" aria-hidden="true">#</a></h2>
+<p>The six default monitors already watch the host. To go further:</p>
+<ul><li><strong>Monitors › New monitor › From a template</strong> offers more than 80 templates: CPU, memory, disk full within 48 h, certificates, databases, clouds, Kubernetes;</li><li><strong>Settings › Notification channels</strong> adds Slack, Teams, Telegram, Discord, PagerDuty, a webhook and other channels;</li><li>each channel's <strong>Send a test</strong> button checks that it reaches its destination.</li></ul>
+<h2 id="5-invite-your-team">5. Invite your team<a class="anchor" href="#5-invite-your-team" aria-hidden="true">#</a></h2>
+<p><strong>Settings › Members</strong> invites a person by email address, with a role: read-only, member, administrator or owner. The invitation becomes active at their first sign-in. See <a href="/en/docs/accounts-and-roles/">Accounts and roles</a>.</p>
+<h2 id="next-steps">Next steps<a class="anchor" href="#next-steps" aria-hidden="true">#</a></h2>
+<ul><li>Connect the host's software: <a href="/en/docs/integrations/">Integrations</a> and <a href="/en/docs/databases/">Databases</a>.</li><li>Monitor network devices: <a href="/en/docs/snmp/">SNMP</a>.</li><li>Read an AWS, Azure, Google Cloud, OVHcloud or Scaleway account: <a href="/en/docs/cloud/">Clouds</a>.</li><li>Understand an outage and repair it: <a href="/en/docs/explain-and-repair/">Explain and repair</a>.</li></ul><p class="updated">Updated: 19 November 2026</p><nav class="pager" aria-label="pages"><a href="/en/docs/"><small>Previous</small>Overview</a><a href="/en/docs/videos/" style="text-align:right"><small>Next</small>Videos</a></nav></main></div>
+<footer class="foot"><div class="foot-in"><span class="grow">HYPHA, a S33D product. Hosted in France, on S33D&#x27;s own infrastructure.</span><a href="/en/docs/" aria-current="page">Documentation</a><a href="/en/pricing/">Pricing</a><a href="/en/faq/">FAQ</a><a href="/en/legal-notice/">Legal notice</a><a href="/en/terms/">Terms of sale</a><a href="/en/privacy/">Privacy</a><a href="https://s33d.fr" rel="noopener">s33d.fr</a></div></footer>
+<script>(function(){var c="Copy",d="Copied";document.querySelectorAll('.doc pre').forEach(function(p){var b=document.createElement('button');b.type='button';b.className='copy';b.textContent=c;b.onclick=function(){var x=p.querySelector('code');navigator.clipboard&&navigator.clipboard.writeText(x?x.innerText:p.innerText).then(function(){b.textContent=d;setTimeout(function(){b.textContent=c},1500)})};p.appendChild(b)});var n=document.querySelector('.side details');if(n&&window.matchMedia('(max-width: 860px)').matches)n.removeAttribute('open');document.querySelectorAll('a[data-lang]').forEach(function(a){a.addEventListener('click',function(){try{localStorage.setItem('hypha.lang',a.getAttribute('data-lang'))}catch(e){}})});})();</script>
+</body>
+</html>

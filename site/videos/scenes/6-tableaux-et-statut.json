@@ -1,0 +1,13 @@
+{
+  "title": {"fr": "Tableaux de bord et page de statut", "en": "Dashboards and status page"},
+  "steps": [
+    {"goto": "/#/dashboards"},
+    {"waitFor": "a[href*='/dashboards/']", "wait": 2500},
+    {"record": true, "caption": true, "fr": "Tableaux de bord : ceux de l'équipe et ceux livrés d'office", "en": "Dashboards: your team's and the built-in ones", "dur": 4000, "wait": 4300},
+    {"click": "a[href*='/dashboards/']", "contains": {"fr": "Boutique en ligne", "en": "Online shop"}, "wait": 4000},
+    {"caption": true, "fr": "Valeurs, courbes, classements, journaux et moniteurs sur une grille", "en": "Values, charts, top lists, logs and monitors on one grid", "dur": 4800, "wait": 5200},
+    {"goto": "/status/?p=demo-boutique", "wait": 2500},
+    {"caption": true, "fr": "La page de statut publique suit les moniteurs et les incidents", "en": "The public status page follows monitors and incidents", "dur": 4800, "wait": 3500},
+    {"scroll": 420, "x": 640, "y": 400, "wait": 3000}
+  ]
+}

@@ -1,0 +1,49 @@
+# Paquets .deb et .rpm de hypha-agent, construits par packaging/build.sh (depuis agent/).
+# nfpm ne développe pas les variables dans les chemins source : build.sh copie le binaire
+# de l'architecture voulue en dist/pkg/hypha-agent avant chaque paquet.
+name: hypha-agent
+arch: ${ARCH}
+platform: linux
+version: ${VERSION}
+section: admin
+priority: optional
+maintainer: S33D
+vendor: S33D
+homepage: https://hypha.s33d.fr
+description: |
+  Agent de collecte HYPHA (S33D).
+  Métriques système, journaux (journald, fichiers), contrôles de service, processus,
+  connexions réseau et conteneurs Docker, envoyés au serveur HYPHA.
+contents:
+  - src: ./dist/pkg/hypha-agent
+    dst: /usr/bin/hypha-agent
+    file_info:
+      mode: 0755
+  - src: ./packaging/hypha-agent.service
+    dst: /usr/lib/systemd/system/hypha-agent.service
+    file_info:
+      mode: 0644
+  # Conf posée une seule fois : une mise à jour du paquet ne la remplace jamais.
+  - src: ./packaging/hypha.yaml.example
+    dst: /etc/hypha/hypha.yaml
+    type: config|noreplace
+    file_info:
+      mode: 0600
+  - src: ./packaging/hypha.yaml.example
+    dst: /usr/share/doc/hypha-agent/hypha.yaml.example
+    file_info:
+      mode: 0644
+  # Compléments de conf (conf.d/*.yaml, fusionnés après hypha.yaml, posés par exemple par
+  # Ansible) : ils peuvent porter des secrets, réservés à root.
+  - dst: /etc/hypha/conf.d
+    type: dir
+    file_info:
+      mode: 0700
+  - dst: /var/lib/hypha
+    type: dir
+    file_info:
+      mode: 0700
+scripts:
+  postinstall: ./packaging/scripts/postinstall.sh
+  preremove: ./packaging/scripts/preremove.sh
+  postremove: ./packaging/scripts/postremove.sh

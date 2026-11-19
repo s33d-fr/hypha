@@ -1,0 +1,5 @@
+# Contexte de construction réduit au strict nécessaire (contexte = dossier agent/).
+*
+!dist/hypha-agent-linux-amd64
+!dist/hypha-agent-linux-arm64
+!packaging/docker/hypha.yaml

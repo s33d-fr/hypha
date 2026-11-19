@@ -1,0 +1,12 @@
+# Seuls l'interface, la conf nginx et les fichiers publiés de l'agent entrent dans l'image web.
+*
+!ui/**
+!packaging/docker/nginx.conf
+!agent/install/install.sh
+!agent/install/install.ps1
+!agent/dist/hypha-agent-*
+!agent/dist/*.deb
+!agent/dist/*.rpm
+!agent/dist/SHA256SUMS
+!agent/dist/SHA256SUMS.sig
+!agent/dist/version.txt

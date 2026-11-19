@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monitor Kubernetes · HYPHA</title>
+<meta name="description" content="Monitor a Kubernetes cluster with HYPHA: an agent on each node, API reads with a read-only account, checks and monitor templates.">
+<link rel="canonical" href="https://hypha.s33d.fr/en/docs/kubernetes/">
+<link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/kubernetes/">
+<link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/kubernetes/">
+<link rel="alternate" hreflang="x-default" href="https://hypha.s33d.fr/docs/kubernetes/">
+<meta name="color-scheme" content="dark light">
+<meta property="og:title" content="Monitor Kubernetes">
+<meta property="og:description" content="Monitor a Kubernetes cluster with HYPHA: an agent on each node, API reads with a read-only account, checks and monitor templates.">
+<meta property="og:url" content="https://hypha.s33d.fr/en/docs/kubernetes/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="HYPHA">
+<link rel="icon" type="image/svg+xml" href="/assets/img/hypha.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('hypha.theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Documentation", "item": "https://hypha.s33d.fr/en/docs/"}, {"@type": "ListItem", "position": 2, "name": "Monitor Kubernetes", "item": "https://hypha.s33d.fr/en/docs/kubernetes/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#contenu">Skip to content</a><header class="top"><div class="top-in"><a class="brand" href="/" aria-label="HYPHA"><img src="/assets/img/hypha.svg" alt="" width="28" height="28"><span>HYPHA<small>by S33D</small></span></a><nav aria-label="HYPHA"><a href="/en/docs/" aria-current="page">Documentation</a><a href="/en/pricing/">Pricing</a><a href="/en/faq/" class="hide-sm">FAQ</a><a class="lang" href="/docs/kubernetes/" hreflang="fr" data-lang="fr" title="Français">FR</a><a class="btn" href="/">Sign in</a></nav></div></header>
+<div class="wrap"><aside class="side"><details class="nav" open><summary>Documentation contents</summary><h2>Get started</h2><ul><li><a href="/en/docs/">Overview</a></li><li><a href="/en/docs/getting-started/">Get started</a></li><li><a href="/en/docs/videos/">Videos</a></li></ul><h2>Install the agent</h2><ul><li><a href="/en/docs/agent-linux/">Linux</a></li><li><a href="/en/docs/agent-windows/">Windows</a></li><li><a href="/en/docs/agent-docker/">Docker</a></li><li><a href="/en/docs/kubernetes/" aria-current="page">Kubernetes</a></li><li><a href="/en/docs/configuration/">Agent configuration</a></li><li><a href="/en/docs/fleet/">Fleet and updates</a></li></ul><h2>Integrations</h2><ul><li><a href="/en/docs/integrations/">System, web and mail</a></li><li><a href="/en/docs/databases/">Databases</a></li><li><a href="/en/docs/snmp/">SNMP</a></li><li><a href="/en/docs/cloud/">Clouds</a></li><li><a href="/en/docs/virtualization/">Virtualization</a></li></ul><h2>Observe</h2><ul><li><a href="/en/docs/metrics/">Metrics and dashboards</a></li><li><a href="/en/docs/logs/">Logs</a></li><li><a href="/en/docs/traces/">Traces and OpenTelemetry</a></li><li><a href="/en/docs/synthetics/">Synthetic tests</a></li></ul><h2>Alert and act</h2><ul><li><a href="/en/docs/monitors/">Monitors</a></li><li><a href="/en/docs/alerts-and-channels/">Alerts and channels</a></li><li><a href="/en/docs/downtimes/">Downtimes</a></li><li><a href="/en/docs/incidents/">Incidents</a></li><li><a href="/en/docs/slos/">SLOs</a></li><li><a href="/en/docs/status-pages/">Status pages</a></li><li><a href="/en/docs/explain-and-repair/">Explain and repair</a></li></ul><h2>Administer</h2><ul><li><a href="/en/docs/accounts-and-roles/">Accounts and roles</a></li><li><a href="/en/docs/plans-and-billing/">Plans and billing</a></li><li><a href="/en/docs/api/">API</a></li><li><a href="/en/docs/self-hosting/">Self-hosting</a></li><li><a href="/en/docs/security/">Security</a></li></ul></details></aside><main class="doc" id="contenu"><div class="crumbs"><a href="/en/docs/">Documentation</a> › Install the agent</div><h1>Monitor Kubernetes</h1><p class="lead">Two things to set up: the agent on each node for the system, and a single agent that reads the cluster API with a read-only account.</p><h2 id="the-nodes">The nodes<a class="anchor" href="#the-nodes" aria-hidden="true">#</a></h2>
+<p>Install the agent on each node as on any <a href="/en/docs/agent-linux/">Linux</a> server. It sees the node's system, processes, network and journal. HYPHA does not ship a DaemonSet yet: installing by package or script, or with your usual deployment tool (Ansible, cloud-init), is the intended way.</p>
+<h2 id="the-cluster">The cluster<a class="anchor" href="#the-cluster" aria-hidden="true">#</a></h2>
+<p>A single agent per cluster reads the API: one on a control-plane node, or on a machine that reaches the API. It reads nodes, pods, deployments, statefulsets, daemonsets and warning events. It needs neither metrics-server nor any write permission.</p>
+<h3 id="1-create-the-read-only-account">1. Create the read-only account<a class="anchor" href="#1-create-the-read-only-account" aria-hidden="true">#</a></h3>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Namespace
+metadata:
+  name: hypha
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hypha-lecture
+  namespace: hypha
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: hypha-lecture
+rules:
+  - apiGroups: [&quot;&quot;]
+    resources: [nodes, pods, events, namespaces]
+    verbs: [get, list, watch]
+  - apiGroups: [apps]
+    resources: [deployments, statefulsets, daemonsets, replicasets]
+    verbs: [get, list, watch]
+  - nonResourceURLs: [/version, /healthz, /readyz, /livez]
+    verbs: [get]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: hypha-lecture
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: hypha-lecture
+subjects:
+  - kind: ServiceAccount
+    name: hypha-lecture
+    namespace: hypha
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hypha-lecture-jeton
+  namespace: hypha
+  annotations:
+    kubernetes.io/service-account.name: hypha-lecture
+type: kubernetes.io/service-account-token</code></pre>
+<p>This role gives no access to secrets, configmaps, pod logs or <code>exec</code>. Check it:</p>
+<pre><code class="language-bash">kubectl auth can-i list pods -A --as=system:serviceaccount:hypha:hypha-lecture     # yes
+kubectl auth can-i get secrets -A --as=system:serviceaccount:hypha:hypha-lecture   # no</code></pre>
+<h3 id="2-give-the-token-to-the-agent">2. Give the token to the agent<a class="anchor" href="#2-give-the-token-to-the-agent" aria-hidden="true">#</a></h3>
+<pre><code class="language-bash">umask 077
+kubectl -n hypha get secret hypha-lecture-jeton -o jsonpath=&#x27;{.data.token}&#x27; | base64 -d | sudo tee /etc/hypha/kubernetes.token &gt;/dev/null</code></pre>
+<h3 id="3-declare-the-cluster">3. Declare the cluster<a class="anchor" href="#3-declare-the-cluster" aria-hidden="true">#</a></h3>
+<p><code>/etc/hypha/conf.d/20-kubernetes.yaml</code>:</p>
+<pre><code class="language-yaml">integrations:
+  kubernetes:
+    enabled: true
+    cluster: production            # kube_cluster tag
+    url: https://api.k8s.example:6443
+    token_file: /etc/hypha/kubernetes.token   # read again on every pass
+    ca_file: /etc/kubernetes/pki/ca.crt</code></pre>
+<p>Then <code>sudo hypha-agent check-config &amp;&amp; sudo systemctl restart hypha-agent</code>.</p>
+<p>In a pod whose service account holds this role, the agent finds the API and the mounted token on its own, without <code>url</code> or <code>token_file</code>.</p>
+<p>Several clusters: an <code>instances</code> list, one named entry per cluster (see <a href="/en/docs/configuration/#several-instances">Configuration</a>).</p>
+<h2 id="what-hypha-collects">What HYPHA collects<a class="anchor" href="#what-hypha-collects" aria-hidden="true">#</a></h2>
+<div class="table"><table><thead><tr><th>Data</th><th>Name</th></tr></thead><tbody><tr><td>Nodes, ready nodes</td><td><code>kubernetes.nodes</code>, <code>kubernetes.nodes.ready</code></td></tr><tr><td>Node ready, pressures, cordon (check)</td><td><code>kubernetes.node</code></td></tr><tr><td>Running, pending, failed, unschedulable pods</td><td><code>kubernetes.pods.running</code>, <code>.pending</code>, <code>.failed</code>, <code>.unschedulable</code></td></tr><tr><td>Container restarts</td><td><code>kubernetes.containers.restarts</code></td></tr><tr><td>Workload available (check, pods in CrashLoopBackOff named)</td><td><code>kubernetes.workload</code></td></tr><tr><td>Desired and available replicas</td><td><code>kubernetes.workload.desired</code>, <code>.available</code></td></tr><tr><td>CPU and memory requests per node</td><td><code>kubernetes.node.cpu.requests_pct</code>, <code>kubernetes.node.mem.requests_pct</code></td></tr><tr><td>API reachable</td><td><code>kubernetes.can_connect</code></td></tr></tbody></table></div>
+<p>On a kubeadm node, add <code>/etc/kubernetes/pki/*.crt</code> to the watched certificates (<code>integrations.x509.paths</code>): HYPHA warns you before their one-year expiry.</p>
+<h2 id="monitor-templates">Monitor templates<a class="anchor" href="#monitor-templates" aria-hidden="true">#</a></h2>
+<p>The <strong>Kubernetes</strong> family of the catalogue: cluster unreachable, node unavailable, degraded workload, restarting containers, unschedulable pods.</p><p class="updated">Updated: 19 November 2026</p><nav class="pager" aria-label="pages"><a href="/en/docs/agent-docker/"><small>Previous</small>Docker</a><a href="/en/docs/configuration/" style="text-align:right"><small>Next</small>Agent configuration</a></nav></main></div>
+<footer class="foot"><div class="foot-in"><span class="grow">HYPHA, a S33D product. Hosted in France, on S33D&#x27;s own infrastructure.</span><a href="/en/docs/" aria-current="page">Documentation</a><a href="/en/pricing/">Pricing</a><a href="/en/faq/">FAQ</a><a href="/en/legal-notice/">Legal notice</a><a href="/en/terms/">Terms of sale</a><a href="/en/privacy/">Privacy</a><a href="https://s33d.fr" rel="noopener">s33d.fr</a></div></footer>
+<script>(function(){var c="Copy",d="Copied";document.querySelectorAll('.doc pre').forEach(function(p){var b=document.createElement('button');b.type='button';b.className='copy';b.textContent=c;b.onclick=function(){var x=p.querySelector('code');navigator.clipboard&&navigator.clipboard.writeText(x?x.innerText:p.innerText).then(function(){b.textContent=d;setTimeout(function(){b.textContent=c},1500)})};p.appendChild(b)});var n=document.querySelector('.side details');if(n&&window.matchMedia('(max-width: 860px)').matches)n.removeAttribute('open');document.querySelectorAll('a[data-lang]').forEach(function(a){a.addEventListener('click',function(){try{localStorage.setItem('hypha.lang',a.getAttribute('data-lang'))}catch(e){}})});})();</script>
+</body>
+</html>

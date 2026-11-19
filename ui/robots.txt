@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /v1/
+Disallow: /install/
+Disallow: /share/
+
+Sitemap: https://hypha.s33d.fr/sitemap.xml

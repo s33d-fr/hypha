@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<url><loc>https://hypha.s33d.fr/</loc></url>
+<url><loc>https://hypha.s33d.fr/cgv/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/cgv/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/terms/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/confidentialite/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/confidentialite/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/privacy/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/agent-docker/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/agent-docker/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/agent-docker/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/agent-linux/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/agent-linux/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/agent-linux/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/agent-windows/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/agent-windows/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/agent-windows/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/alertes-et-canaux/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/alertes-et-canaux/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/alerts-and-channels/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/api/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/api/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/api/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/auto-hebergement/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/auto-hebergement/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/self-hosting/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/bases-de-donnees/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/bases-de-donnees/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/databases/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/cloud/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/cloud/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/cloud/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/comptes-et-roles/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/comptes-et-roles/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/accounts-and-roles/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/configuration/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/configuration/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/configuration/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/demarrage/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/demarrage/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/getting-started/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/explication-et-reparation/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/explication-et-reparation/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/explain-and-repair/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/flotte/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/flotte/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/fleet/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/formules-et-facturation/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/formules-et-facturation/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/plans-and-billing/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/incidents/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/incidents/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/incidents/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/integrations/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/integrations/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/integrations/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/journaux/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/journaux/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/logs/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/kubernetes/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/kubernetes/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/kubernetes/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/maintenances/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/maintenances/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/downtimes/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/metriques/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/metriques/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/metrics/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/moniteurs/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/moniteurs/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/monitors/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/pages-de-statut/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/pages-de-statut/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/status-pages/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/securite/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/securite/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/security/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/slo/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/slo/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/slos/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/snmp/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/snmp/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/snmp/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/synthetiques/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/synthetiques/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/synthetics/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/traces/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/traces/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/traces/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/videos/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/videos/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/videos/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/virtualisation/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/virtualisation/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/virtualization/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/accounts-and-roles/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/comptes-et-roles/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/accounts-and-roles/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/agent-docker/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/agent-docker/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/agent-docker/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/agent-linux/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/agent-linux/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/agent-linux/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/agent-windows/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/agent-windows/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/agent-windows/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/alerts-and-channels/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/alertes-et-canaux/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/alerts-and-channels/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/api/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/api/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/api/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/cloud/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/cloud/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/cloud/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/configuration/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/configuration/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/configuration/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/databases/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/bases-de-donnees/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/databases/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/downtimes/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/maintenances/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/downtimes/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/explain-and-repair/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/explication-et-reparation/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/explain-and-repair/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/fleet/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/flotte/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/fleet/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/getting-started/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/demarrage/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/getting-started/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/incidents/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/incidents/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/incidents/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/integrations/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/integrations/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/integrations/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/kubernetes/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/kubernetes/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/kubernetes/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/logs/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/journaux/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/logs/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/metrics/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/metriques/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/metrics/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/monitors/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/moniteurs/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/monitors/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/plans-and-billing/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/formules-et-facturation/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/plans-and-billing/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/security/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/securite/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/security/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/self-hosting/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/auto-hebergement/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/self-hosting/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/slos/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/slo/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/slos/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/snmp/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/snmp/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/snmp/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/status-pages/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/pages-de-statut/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/status-pages/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/synthetics/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/synthetiques/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/synthetics/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/traces/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/traces/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/traces/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/videos/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/videos/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/videos/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/virtualization/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/virtualisation/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/virtualization/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/faq/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/faq/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/faq/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/legal-notice/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/mentions-legales/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/legal-notice/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/pricing/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/tarifs/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/pricing/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/privacy/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/confidentialite/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/privacy/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/terms/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/cgv/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/terms/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/faq/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/faq/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/faq/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/mentions-legales/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/mentions-legales/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/legal-notice/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/tarifs/</loc>
+<lastmod>2026-11-19</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/tarifs/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/pricing/"/>
+</url>
+</urlset>

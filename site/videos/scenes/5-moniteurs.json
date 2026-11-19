@@ -1,0 +1,15 @@
+{
+  "title": {"fr": "Moniteurs : des modèles prêts à l'emploi", "en": "Monitors: ready-made templates"},
+  "steps": [
+    {"goto": "/#/monitors"},
+    {"waitFor": "a[href*='/monitors/']", "wait": 2500},
+    {"record": true, "caption": true, "fr": "Moniteurs : seuils, anomalies, prévisions, synthétiques", "en": "Monitors: thresholds, anomalies, forecasts, synthetics", "dur": 4200, "wait": 4500},
+    {"click": "a[href*='/monitors/']", "contains": {"fr": "Processeur saturé", "en": "CPU saturated"}, "wait": 2800},
+    {"caption": true, "fr": "Un moniteur : sa requête, ses seuils, l'état de chaque groupe", "en": "A monitor: its query, its thresholds, the state of each group", "dur": 4500, "wait": 3000},
+    {"scroll": 400, "wait": 2500},
+    {"hash": "#/monitors/new", "wait": 2500},
+    {"click": "button", "contains": {"fr": "modèle", "en": "template"}, "wait": 2500},
+    {"caption": true, "fr": "Le catalogue : plus de 80 modèles, du disque au cloud", "en": "The catalogue: over 80 templates, from disks to clouds", "dur": 4500, "wait": 3000},
+    {"scroll": 500, "x": 640, "y": 420, "wait": 2500}
+  ]
+}

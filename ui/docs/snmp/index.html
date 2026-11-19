@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Équipements réseau en SNMP · HYPHA</title>
+<meta name="description" content="Superviser switchs, routeurs, NAS, imprimantes et onduleurs en SNMP v1, v2c et v3 depuis un agent HYPHA, sans rien installer sur l&#x27;équipement.">
+<link rel="canonical" href="https://hypha.s33d.fr/docs/snmp/">
+<link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/snmp/">
+<link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/snmp/">
+<link rel="alternate" hreflang="x-default" href="https://hypha.s33d.fr/docs/snmp/">
+<meta name="color-scheme" content="dark light">
+<meta property="og:title" content="Équipements réseau en SNMP">
+<meta property="og:description" content="Superviser switchs, routeurs, NAS, imprimantes et onduleurs en SNMP v1, v2c et v3 depuis un agent HYPHA, sans rien installer sur l&#x27;équipement.">
+<meta property="og:url" content="https://hypha.s33d.fr/docs/snmp/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="HYPHA">
+<link rel="icon" type="image/svg+xml" href="/assets/img/hypha.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('hypha.theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Documentation", "item": "https://hypha.s33d.fr/docs/"}, {"@type": "ListItem", "position": 2, "name": "Équipements réseau en SNMP", "item": "https://hypha.s33d.fr/docs/snmp/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a><header class="top"><div class="top-in"><a class="brand" href="/" aria-label="HYPHA"><img src="/assets/img/hypha.svg" alt="" width="28" height="28"><span>HYPHA<small>par S33D</small></span></a><nav aria-label="HYPHA"><a href="/docs/" aria-current="page">Documentation</a><a href="/tarifs/">Tarifs</a><a href="/faq/" class="hide-sm">FAQ</a><a class="lang" href="/en/docs/snmp/" hreflang="en" data-lang="en" title="English">EN</a><a class="btn" href="/">Se connecter</a></nav></div></header>
+<div class="wrap"><aside class="side"><details class="nav" open><summary>Sommaire de la documentation</summary><h2>Démarrer</h2><ul><li><a href="/docs/">Vue d&#x27;ensemble</a></li><li><a href="/docs/demarrage/">Démarrer</a></li><li><a href="/docs/videos/">Vidéos</a></li></ul><h2>Installer l&#x27;agent</h2><ul><li><a href="/docs/agent-linux/">Linux</a></li><li><a href="/docs/agent-windows/">Windows</a></li><li><a href="/docs/agent-docker/">Docker</a></li><li><a href="/docs/kubernetes/">Kubernetes</a></li><li><a href="/docs/configuration/">Configuration de l&#x27;agent</a></li><li><a href="/docs/flotte/">Flotte et mises à jour</a></li></ul><h2>Intégrations</h2><ul><li><a href="/docs/integrations/">Système, web et messagerie</a></li><li><a href="/docs/bases-de-donnees/">Bases de données</a></li><li><a href="/docs/snmp/" aria-current="page">SNMP</a></li><li><a href="/docs/cloud/">Clouds</a></li><li><a href="/docs/virtualisation/">Virtualisation</a></li></ul><h2>Observer</h2><ul><li><a href="/docs/metriques/">Métriques et tableaux</a></li><li><a href="/docs/journaux/">Journaux</a></li><li><a href="/docs/traces/">Traces et OpenTelemetry</a></li><li><a href="/docs/synthetiques/">Tests synthétiques</a></li></ul><h2>Alerter et agir</h2><ul><li><a href="/docs/moniteurs/">Moniteurs</a></li><li><a href="/docs/alertes-et-canaux/">Alertes et canaux</a></li><li><a href="/docs/maintenances/">Maintenances</a></li><li><a href="/docs/incidents/">Incidents</a></li><li><a href="/docs/slo/">SLO</a></li><li><a href="/docs/pages-de-statut/">Pages de statut</a></li><li><a href="/docs/explication-et-reparation/">Explication et réparation</a></li></ul><h2>Administrer</h2><ul><li><a href="/docs/comptes-et-roles/">Comptes et rôles</a></li><li><a href="/docs/formules-et-facturation/">Formules et facturation</a></li><li><a href="/docs/api/">API</a></li><li><a href="/docs/auto-hebergement/">Auto-hébergement</a></li><li><a href="/docs/securite/">Sécurité</a></li></ul></details></aside><main class="doc" id="contenu"><div class="crumbs"><a href="/docs/">Documentation</a> › Intégrations</div><h1>Équipements réseau en SNMP</h1><p class="lead">Un agent interroge les équipements de son réseau et les publie comme des hôtes à part entière. Les secrets SNMP ne quittent jamais l'agent.</p><h2 id="declarer-un-equipement">Déclarer un équipement<a class="anchor" href="#declarer-un-equipement" aria-hidden="true">#</a></h2>
+<p>Dans la configuration d'un agent qui joint l'équipement, de préférence un fichier <code>conf.d/20-snmp.yaml</code> (droits 600) :</p>
+<pre><code class="language-yaml">snmp:
+  enabled: true
+  interval: 60s
+  devices:
+    # SNMP v2c
+    - {name: switch-baie-1, address: 192.0.2.10, version: 2c, community: lecture, tags: {role: switch}}
+    # SNMP v3, authentification et chiffrement
+    - name: nas-sauvegardes
+      address: 192.0.2.20
+      version: 3
+      user: hypha
+      level: authPriv
+      auth_protocol: sha        # md5, sha, sha224, sha256, sha384, sha512
+      auth_key: &quot;…&quot;             # 8 caractères au moins
+      priv_protocol: aes        # des, aes, aes192, aes256, aes192c, aes256c
+      priv_key: &quot;…&quot;
+      profile: auto</code></pre>
+<p>Autres réglages par équipement : <code>port</code> (161), <code>timeout</code> (5 s), <code>retries</code>, <code>context</code>, <code>interfaces_exclude</code> (motifs), <code>interface_down</code>.</p>
+<p>Conseils :</p>
+<ul><li>préférez SNMPv3 en <code>authPriv</code>, avec un compte en lecture seule limité à l'adresse de l'agent ;</li><li>désactivez la communauté <code>public</code> de l'équipement avant d'activer SNMP ;</li><li>vérifiez avec <code>sudo hypha-agent check-config</code>, puis redémarrez l'agent.</li></ul>
+<h2 id="profils">Profils<a class="anchor" href="#profils" aria-hidden="true">#</a></h2>
+<p><code>profile: auto</code> lit <code>sysObjectID</code> et choisit le profil :</p>
+<div class="table"><table><thead><tr><th>Profil</th><th>Ce qu'il ajoute</th></tr></thead><tbody><tr><td><code>generic</code></td><td>MIB-II, IF-MIB, HOST-RESOURCES-MIB : interfaces, processeur, mémoire, stockage</td></tr><tr><td><code>mikrotik</code></td><td>processeur, températures, ventilateurs, alimentations de RouterOS</td></tr><tr><td><code>synology</code></td><td>état des disques, des volumes et du RAID</td></tr><tr><td>ASUSTOR (détecté)</td><td>températures, ventilateurs, état et température des disques, état et occupation des volumes ; contrôles <code>snmp.disk.health</code> et <code>snmp.volume.health</code></td></tr><tr><td><code>printer</code></td><td>état de l'imprimante et consommables</td></tr><tr><td><code>ups</code></td><td>UPS-MIB : charge de la batterie, autonomie, charge de sortie</td></tr></tbody></table></div>
+<h2 id="mesures-et-controles">Mesures et contrôles<a class="anchor" href="#mesures-et-controles" aria-hidden="true">#</a></h2>
+<div class="table"><table><thead><tr><th>Mesure</th><th>Unité</th></tr></thead><tbody><tr><td><code>snmp.ifBandwidthIn</code>, <code>.ifBandwidthOut</code></td><td>octets par seconde</td></tr><tr><td><code>snmp.ifBandwidthInUsage</code>, <code>.OutUsage</code></td><td>pourcentage du débit de l'interface</td></tr><tr><td><code>snmp.ifInErrors</code>, <code>.ifOutErrors</code>, <code>.ifInDiscards</code>, <code>.ifOutDiscards</code></td><td>paquets par seconde</td></tr><tr><td><code>snmp.ifOperStatus</code>, <code>snmp.ifAdminStatus</code></td><td>état</td></tr><tr><td><code>snmp.cpu.usage</code>, <code>snmp.memory.usage</code>, <code>snmp.storage.usage</code></td><td>pourcentage</td></tr><tr><td><code>snmp.temperature</code>, <code>snmp.fan.speed</code>, <code>snmp.psu.status</code></td><td>degrés, tours par minute, état</td></tr><tr><td><code>snmp.ups.battery.charge</code>, <code>.runtime</code>, <code>.load</code></td><td>pourcentage, secondes</td></tr><tr><td><code>snmp.sysUpTimeInstance</code>, <code>snmp.poll.duration</code></td><td>secondes, millisecondes</td></tr></tbody></table></div>
+<p>Contrôles :</p>
+<ul><li><code>snmp.can_poll</code> : critique si l'équipement ne répond plus ;</li><li><code>snmp.interface.status</code> : critique pour une interface active mais hors service. Avec <code>interface_down: seen</code> (par défaut), seule une interface déjà vue en service compte : un port libre d'un switch reste OK. <code>always</code> applique la règle à toutes les interfaces actives.</li></ul>
+<h2 id="traps">Traps<a class="anchor" href="#traps" aria-hidden="true">#</a></h2>
+<pre><code class="language-yaml">snmp:
+  traps: {enabled: true, listen: &quot;0.0.0.0:162&quot;, community: lecture}</code></pre>
+<p>Chaque trap v1 ou v2c reçu devient un événement (<code>source:snmp type:snmp_trap</code>), 60 par minute au plus. Un moniteur de type « événement » peut alerter dessus.</p>
+<h2 id="dans-l-interface">Dans l'interface<a class="anchor" href="#dans-l-interface" aria-hidden="true">#</a></h2>
+<ul><li><strong>Infrastructure</strong> filtre par type (serveurs ou équipements réseau). La fiche d'un équipement montre son identité et ses interfaces en tableau : nom, alias, état, vitesse, débit, erreurs, avec de petites courbes.</li><li><strong>Réglages › Équipements</strong> liste les équipements vus, l'agent qui les interroge et leur dernier contact.</li><li>La carte du réseau place les équipements comme des nœuds.</li></ul>
+<p>Modèles du catalogue (famille <strong>Réseau</strong>) : interface réseau en panne, équipement injoignable.</p><p class="updated">Mise à jour : 19 novembre 2026</p><nav class="pager" aria-label="pages"><a href="/docs/bases-de-donnees/"><small>Précédent</small>Bases de données</a><a href="/docs/cloud/" style="text-align:right"><small>Suivant</small>Clouds</a></nav></main></div>
+<footer class="foot"><div class="foot-in"><span class="grow">HYPHA, un produit de S33D. Service hébergé en France, sur l&#x27;infrastructure en propre de S33D.</span><a href="/docs/" aria-current="page">Documentation</a><a href="/tarifs/">Tarifs</a><a href="/faq/">FAQ</a><a href="/mentions-legales/">Mentions légales</a><a href="/cgv/">Conditions de vente</a><a href="/confidentialite/">Confidentialité</a><a href="https://s33d.fr" rel="noopener">s33d.fr</a></div></footer>
+<script>(function(){var c="Copier",d="Copi\u00e9";document.querySelectorAll('.doc pre').forEach(function(p){var b=document.createElement('button');b.type='button';b.className='copy';b.textContent=c;b.onclick=function(){var x=p.querySelector('code');navigator.clipboard&&navigator.clipboard.writeText(x?x.innerText:p.innerText).then(function(){b.textContent=d;setTimeout(function(){b.textContent=c},1500)})};p.appendChild(b)});var n=document.querySelector('.side details');if(n&&window.matchMedia('(max-width: 860px)').matches)n.removeAttribute('open');document.querySelectorAll('a[data-lang]').forEach(function(a){a.addEventListener('click',function(){try{localStorage.setItem('hypha.lang',a.getAttribute('data-lang'))}catch(e){}})});})();</script>
+</body>
+</html>

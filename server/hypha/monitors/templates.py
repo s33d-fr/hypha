@@ -1,0 +1,561 @@
+"""Catalogue des modèles de moniteurs (contrat § 19, « Modèles »).
+
+Chaque modèle déclare ses variables (nom, libellé, défaut, type) et une fonction qui rend la
+définition du moniteur ; `build()` vérifie les variables puis l'appelant valide la définition comme
+une création ordinaire. Les filtres d'étiquettes `scope` valent `*` (tout le parc) ou `clé:valeur`.
+"""
+import re
+
+_SCOPE_RE = re.compile(r"^(\*|[a-z0-9_.\-/]+:[^,{}\s]+(,[a-z0-9_.\-/]+:[^,{}\s]+)*)$")
+_NAME_RE = re.compile(r"^[A-Za-z0-9@._:\-]{1,200}$")
+
+SCOPE = {"name": "scope", "label": "Étiquettes visées (* = tout le parc, ex. env:prod)", "type": "scope", "default": "*",
+         "required": False}
+
+
+def _v(name, label, kind="number", default=None, required=False):
+    return {"name": name, "label": label, "type": kind, "default": default, "required": required}
+
+
+def _metric(name, q, comparator, critical, warning=None, window_s=300, aggregation="avg", priority=3, message=""):
+    th = {"critical": critical}
+    if warning is not None:
+        th["warning"] = warning
+    return {"name": name, "type": "metric", "priority": priority, "message": message, "thresholds": th,
+            "query": {"q": q, "window_s": window_s, "aggregation": aggregation, "comparator": comparator}}
+
+
+def _check(name, check, by, priority=2, message=""):
+    return {"name": name, "type": "service_check", "priority": priority, "message": message, "thresholds": {},
+            "query": {"check": check, "by": by, "window_s": 300}}
+
+
+def two(alert: str, recovery: str) -> str:
+    """Message d'alerte et message de retour à la normale : le courriel de retour ne répète pas la panne."""
+    return "{{^is_recovery}}" + alert + "{{/is_recovery}}{{#is_recovery}}" + recovery + "{{/is_recovery}}"
+
+
+ALERT_MSG = ("{{#is_alert}}{{name}} sur {{host}} : {{value}} (seuil {{threshold}}).{{/is_alert}}"
+             "{{#is_warning}}{{name}} sur {{host}} approche du seuil : {{value}}.{{/is_warning}}"
+             "{{#is_recovery}}{{name}} sur {{host}} : retour à la normale après {{duration}}.{{/is_recovery}}")
+
+TEMPLATES = [
+    {"id": "cpu_high", "family": "Système", "name": "Processeur saturé",
+     "description": "Processeur réellement occupé (hors attente disque) au-dessus du seuil pendant 5 minutes.",
+     "vars": [SCOPE, _v("critical", "Seuil critique (%)", default=90), _v("warning", "Seuil d'avertissement (%)", default=80)],
+     "build": lambda v: _metric("Processeur saturé", f"avg:system.cpu.busy{{{v['scope']}}} by {{host}}", ">",
+                                v["critical"], v["warning"], message=ALERT_MSG)},
+    {"id": "disk_iowait", "family": "Système", "name": "Attente disque",
+     "description": "Part du temps où le processeur attend le disque (Linux) au-dessus du seuil : disque saturé ou trop lent.",
+     "vars": [SCOPE, _v("critical", "Seuil critique (%)", default=50), _v("warning", "Seuil d'avertissement (%)", default=30)],
+     "build": lambda v: _metric("Attente disque", f"avg:system.cpu.iowait{{{v['scope']}}} by {{host}}", ">",
+                                v["critical"], v["warning"], message=ALERT_MSG)},
+    {"id": "memory_high", "family": "Système", "name": "Mémoire saturée",
+     "description": "Mémoire utilisée au-dessus du seuil pendant 5 minutes.",
+     "vars": [SCOPE, _v("critical", "Seuil critique (%)", default=95), _v("warning", "Seuil d'avertissement (%)", default=85)],
+     "build": lambda v: _metric("Mémoire saturée", f"avg:system.mem.pct_used{{{v['scope']}}} by {{host}}", ">",
+                                v["critical"], v["warning"], message=ALERT_MSG)},
+    {"id": "disk_forecast", "family": "Système", "name": "Disque plein dans 48 h",
+     "description": "Prévision (Theil-Sen) de l'occupation de chaque point de montage sur 7 jours d'historique.",
+     "vars": [SCOPE, _v("critical", "Occupation jugée pleine (%)", default=95),
+              _v("horizon_h", "Horizon (heures)", default=48)],
+     "build": lambda v: {"name": "Disque plein dans 48 h" if v["horizon_h"] == 48 else f"Disque plein dans {v['horizon_h']:g} h",
+                         "type": "forecast", "priority": 2, "thresholds": {"critical": v["critical"]},
+                         "message": "{{#is_alert}}Le disque {{tags.mount}} de {{host}} sera plein {{eta}}.{{/is_alert}}"
+                                    "{{#is_recovery}}Le disque {{tags.mount}} de {{host}} n'est plus menacé.{{/is_recovery}}",
+                         "query": {"q": f"max:system.disk.in_use{{{v['scope']}}} by {{host,mount}}", "history_s": 604800,
+                                   "horizon_s": int(v["horizon_h"] * 3600), "algorithm": "linear", "comparator": ">"}}},
+    {"id": "inodes_high", "family": "Système", "name": "Inodes épuisés",
+     "description": "Part des inodes utilisés par point de montage.",
+     "vars": [SCOPE, _v("critical", "Seuil critique (%)", default=90), _v("warning", "Seuil d'avertissement (%)", default=80)],
+     "build": lambda v: _metric("Inodes épuisés", f"max:system.fs.inodes.in_use{{{v['scope']}}} by {{host,mount}}", ">",
+                                v["critical"], v["warning"], aggregation="max")},
+    {"id": "swap_high", "family": "Système", "name": "Mémoire d'échange sollicitée",
+     "description": "Part de la mémoire d'échange utilisée.",
+     "vars": [SCOPE, _v("critical", "Seuil critique (%)", default=80), _v("warning", "Seuil d'avertissement (%)", default=50)],
+     "build": lambda v: _metric("Mémoire d'échange sollicitée", f"avg:system.swap.pct_used{{{v['scope']}}} by {{host}}", ">",
+                                v["critical"], v["warning"], window_s=900, priority=4)},
+    {"id": "load_anomaly", "family": "Système", "name": "Charge anormale",
+     "description": "Charge par cœur hors de ses bornes habituelles (mêmes créneaux des 7 derniers jours).",
+     "vars": [SCOPE, _v("bounds", "Largeur des bornes (écarts)", default=3),
+              _v("critical", "Part des points hors bornes (%)", default=60)],
+     "build": lambda v: {"name": "Charge anormale", "type": "anomaly", "priority": 3,
+                         "thresholds": {"critical": v["critical"]},
+                         "query": {"q": f"avg:system.load.norm.1{{{v['scope']}}} by {{host}}", "window_s": 900,
+                                   "algorithm": "agile", "bounds": v["bounds"], "direction": "above",
+                                   "seasonality": "daily"}}},
+    {"id": "host_down", "family": "Système", "name": "Hôte sans nouvelles",
+     "description": "L'agent de l'hôte n'a rien envoyé depuis le délai fixé.",
+     "vars": [_v("tag", "Étiquette visée (clé:valeur, vide = tous)", "text", ""),
+              _v("no_data_s", "Délai sans nouvelles (s)", default=300)],
+     "build": lambda v: {"name": "Hôte sans nouvelles", "type": "host", "priority": 1, "thresholds": {},
+                         "no_data_s": int(v["no_data_s"]),
+                         "message": "{{#is_alert}}{{host}} ne répond plus depuis {{value}} s.{{/is_alert}}"
+                                    "{{#is_recovery}}{{host}} est de retour.{{/is_recovery}}",
+                         "query": {"tags": _tag_dict(v["tag"])}}},
+    {"id": "disk_full", "family": "Système", "name": "Disque presque plein",
+     "description": "Occupation de chaque point de montage au-dessus du seuil pendant 10 minutes.",
+     "vars": [SCOPE, _v("critical", "Seuil critique (%)", default=95), _v("warning", "Seuil d'avertissement (%)", default=90)],
+     "build": lambda v: _metric("Disque presque plein", f"max:system.disk.in_use{{{v['scope']}}} by {{host,mount}}", ">",
+                                v["critical"], v["warning"], window_s=600, aggregation="max", priority=2,
+                                message=two("Le disque {{tags.mount}} de {{host}} est plein à {{value}} %.",
+                                            "Le disque {{tags.mount}} de {{host}} est revenu à {{value}} %."))},
+    {"id": "systemd_unit", "family": "Services", "name": "Unité systemd en échec",
+     "description": "Toute unité systemd en échec signalée par l'agent.",
+     "vars": [], "build": lambda v: _check("Unité systemd en échec", "systemd.unit", ["host", "unit"],
+                                           message=two("{{host}} : l'unité {{tags.unit}} est en échec.",
+                                                       "{{host}} : l'unité {{tags.unit}} est rétablie."))},
+    {"id": "windows_service", "family": "Services", "name": "Service Windows arrêté",
+     "description": "Service Windows automatique arrêté ou service suivi en échec.",
+     "vars": [], "build": lambda v: _check("Service Windows arrêté", "windows.service", ["host", "windows_service"],
+                                           message=two("{{host}} : le service {{tags.windows_service}} est arrêté.",
+                                                       "{{host}} : le service {{tags.windows_service}} est de nouveau en marche."))},
+    {"id": "snmp_interface_down", "family": "Réseau", "name": "Interface réseau en panne",
+     "description": "Interface d'un équipement SNMP administrativement active mais hors service.",
+     "vars": [], "build": lambda v: _check("Interface réseau en panne", "snmp.interface.status", ["host", "interface"])},
+    {"id": "snmp_unreachable", "family": "Réseau", "name": "Équipement injoignable",
+     "description": "Équipement SNMP qui ne répond plus à l'agent qui l'interroge.",
+     "vars": [], "build": lambda v: _check("Équipement injoignable", "snmp.can_poll", ["host"], priority=1)},
+    {"id": "cert_expiry", "family": "Sécurité", "name": "Certificat proche de la fin",
+     "description": "Jours restants des certificats relevés par l'agent (tls.cert.days_left).",
+     "vars": [SCOPE, _v("critical", "Jours restants (critique)", default=7), _v("warning", "Jours restants (avertissement)", default=21)],
+     "build": lambda v: _metric("Certificat proche de la fin", f"min:tls.cert.days_left{{{v['scope']}}} by {{host,cert_path}}", "<",
+                                v["critical"], v["warning"], window_s=3600, aggregation="min", priority=2,
+                                message=two("Le certificat {{tags.cert_path}} de {{host}} expire dans {{value}} jours.",
+                                            "Le certificat {{tags.cert_path}} de {{host}} est renouvelé ({{value}} jours restants)."))},
+    {"id": "synthetic_failed", "family": "Synthétiques", "name": "Synthétique en échec",
+     "description": "Test synthétique en échec plusieurs fois de suite.",
+     "vars": [_v("test_id", "Test synthétique", "synthetic", None, True), _v("failures", "Échecs consécutifs", default=2)],
+     "build": lambda v: {"name": "Synthétique en échec", "type": "synthetic", "priority": 2, "thresholds": {},
+                         "query": {"test_id": int(v["test_id"]), "failures": int(v["failures"])}}},
+    {"id": "security_updates", "family": "Sécurité", "name": "Mises à jour de sécurité en attente",
+     "description": "Hôtes avec des mises à jour de sécurité non appliquées.",
+     "vars": [SCOPE, _v("critical", "Nombre de mises à jour (critique)", default=10)],
+     "build": lambda v: _metric("Mises à jour de sécurité en attente",
+                                f"max:system.updates.security{{{v['scope']}}} by {{host}}", ">", v["critical"], 0,
+                                window_s=3600, aggregation="last", priority=4)},
+    {"id": "reboot_required", "family": "Système", "name": "Redémarrage requis",
+     "description": "Hôtes qui attendent un redémarrage après une mise à jour.",
+     "vars": [SCOPE],
+     "build": lambda v: _metric("Redémarrage requis", f"max:system.reboot_required{{{v['scope']}}} by {{host}}", ">=", 1,
+                                window_s=3600, aggregation="last", priority=5)},
+    {"id": "ssh_bruteforce", "family": "Sécurité", "name": "Attaque SSH par force brute",
+     "description": "Plus de N échecs d'authentification SSH en 5 minutes depuis une même adresse.",
+     "vars": [_v("critical", "Échecs en 5 minutes", default=20)],
+     "build": lambda v: {"name": "Attaque SSH par force brute", "type": "log", "priority": 2,
+                         "thresholds": {"critical": v["critical"]},
+                         "message": "{{#is_alert}}{{value}} échecs d'authentification SSH en 5 min depuis {{group}}.{{/is_alert}}",
+                         "query": {"q": "@evt.outcome:failure @evt.name:authentication", "window_s": 300,
+                                   "comparator": ">", "by": ["@network.client.ip"]}}},
+    {"id": "http_5xx", "family": "Applications", "name": "Erreurs HTTP 5xx",
+     "description": "Part des requêtes d'un service en erreur (spans d'entrée) au-dessus du seuil.",
+     "vars": [_v("service", "Service", "service", None, True), _v("critical", "Part d'erreurs (%)", default=2)],
+     "build": lambda v: {"name": f"Erreurs HTTP 5xx : {v['service']}", "type": "apm", "priority": 2,
+                         "thresholds": {"critical": v["critical"] / 100.0},
+                         "query": {"service": v["service"], "metric": "error_rate", "window_s": 300, "comparator": ">"}}},
+    {"id": "latency_p95", "family": "Applications", "name": "Latence p95 d'un service",
+     "description": "95e centile de la durée des requêtes d'un service.",
+     "vars": [_v("service", "Service", "service", None, True), _v("critical", "p95 critique (ms)", default=1000),
+              _v("warning", "p95 avertissement (ms)", default=500)],
+     "build": lambda v: {"name": f"Latence p95 : {v['service']}", "type": "apm", "priority": 3,
+                         "thresholds": {"critical": v["critical"], "warning": v["warning"]},
+                         "query": {"service": v["service"], "metric": "p95_ms", "window_s": 300, "comparator": ">"}}},
+    {"id": "pg_replication_lag", "family": "Bases de données", "name": "Réplication PostgreSQL en retard",
+     "description": "Retard de rejeu d'un secondaire PostgreSQL (postgresql.replication_delay).",
+     "vars": [SCOPE, _v("critical", "Retard critique (s)", default=300), _v("warning", "Retard d'avertissement (s)", default=60)],
+     "build": lambda v: _metric("Réplication PostgreSQL en retard",
+                                f"max:postgresql.replication_delay{{{v['scope']}}} by {{host}}", ">", v["critical"],
+                                v["warning"], aggregation="max", priority=2)},
+    # § 36 : MySQL et MariaDB.
+    {"id": "mysql_down", "family": "Bases de données", "name": "MySQL injoignable",
+     "description": "L'agent n'arrive plus à lire MySQL ou MariaDB (serveur arrêté, compte refusé).",
+     "vars": [], "build": lambda v: _check("MySQL injoignable", "mysql.can_connect", ["host", "instance"], priority=1,
+                                           message=two("{{host}} : MySQL ou MariaDB injoignable ({{tags.instance}}).",
+                                                       "{{host}} : MySQL ou MariaDB de nouveau joignable."))},
+    {"id": "mysql_replication", "family": "Bases de données", "name": "Réplication MySQL arrêtée",
+     "description": "Fil de lecture ou d'application d'une réplique MySQL ou MariaDB arrêté.",
+     "vars": [], "build": lambda v: _check("Réplication MySQL arrêtée", "mysql.replication", ["host", "instance"], priority=1,
+                                           message=two("{{host}} : réplication arrêtée.", "{{host}} : réplication repartie."))},
+    {"id": "mysql_replication_lag", "family": "Bases de données", "name": "Réplication MySQL en retard",
+     "description": "Retard d'une réplique MySQL ou MariaDB sur sa source.",
+     "vars": [SCOPE, _v("critical", "Retard critique (s)", default=300), _v("warning", "Retard d'avertissement (s)", default=60)],
+     "build": lambda v: _metric("Réplication MySQL en retard", f"max:mysql.replication.lag{{{v['scope']}}} by {{host}}", ">",
+                                v["critical"], v["warning"], aggregation="max", priority=2,
+                                message=two("{{host}} : réplique en retard de {{value}} s.", "{{host}} : réplique revenue à {{value}} s."))},
+    {"id": "mysql_connections", "family": "Bases de données", "name": "Connexions MySQL presque saturées",
+     "description": "Part des connexions utilisées sur max_connections.",
+     "vars": [SCOPE, _v("critical", "Seuil critique (%)", default=90), _v("warning", "Seuil d'avertissement (%)", default=80)],
+     "build": lambda v: _metric("Connexions MySQL presque saturées", f"max:mysql.connections.usage{{{v['scope']}}} by {{host}}", ">",
+                                v["critical"], v["warning"], aggregation="max", priority=2,
+                                message=two("{{host}} : {{value}} % des connexions MySQL utilisées.",
+                                            "{{host}} : connexions MySQL revenues à {{value}} %."))},
+    # § 37 : Redis et Valkey.
+    {"id": "redis_down", "family": "Bases de données", "name": "Redis injoignable",
+     "description": "L'agent n'arrive plus à lire Redis ou Valkey (serveur arrêté, mot de passe refusé).",
+     "vars": [], "build": lambda v: _check("Redis injoignable", "redis.can_connect", ["host", "instance"], priority=1,
+                                           message=two("{{host}} : Redis injoignable ({{tags.instance}}).", "{{host}} : Redis de nouveau joignable."))},
+    {"id": "redis_replication", "family": "Bases de données", "name": "Réplique Redis coupée",
+     "description": "Lien d'une réplique Redis avec son principal coupé.",
+     "vars": [], "build": lambda v: _check("Réplique Redis coupée", "redis.replication", ["host", "instance"], priority=1,
+                                           message=two("{{host}} : la réplique Redis a perdu son principal.", "{{host}} : la réplique Redis a retrouvé son principal."))},
+    {"id": "redis_persistence", "family": "Bases de données", "name": "Sauvegarde Redis en échec",
+     "description": "Dernière sauvegarde RDB ou écriture AOF en échec : un redémarrage perdrait des données.",
+     "vars": [], "build": lambda v: _check("Sauvegarde Redis en échec", "redis.persistence", ["host", "instance"], priority=2,
+                                           message=two("{{host}} : la sauvegarde de Redis échoue.", "{{host}} : la sauvegarde de Redis passe de nouveau."))},
+    {"id": "redis_memory", "family": "Bases de données", "name": "Mémoire Redis presque pleine",
+     "description": "Mémoire utilisée sur maxmemory (seulement si maxmemory est fixé) : au-delà, Redis évince ou refuse.",
+     "vars": [SCOPE, _v("critical", "Seuil critique (%)", default=90), _v("warning", "Seuil d'avertissement (%)", default=80)],
+     "build": lambda v: _metric("Mémoire Redis presque pleine", f"max:redis.mem.usage{{{v['scope']}}} by {{host,instance}}", ">",
+                                v["critical"], v["warning"], aggregation="max", priority=2,
+                                message=two("{{host}} : Redis à {{value}} % de sa mémoire.", "{{host}} : Redis revenu à {{value}} % de sa mémoire."))},
+    # § 38-40 : Memcached, RabbitMQ, MongoDB.
+    {"id": "memcached_down", "family": "Bases de données", "name": "Memcached injoignable",
+     "description": "L'agent n'arrive plus à lire Memcached.",
+     "vars": [], "build": lambda v: _check("Memcached injoignable", "memcached.can_connect", ["host", "instance"], priority=2,
+                                           message=two("{{host}} : Memcached injoignable.", "{{host}} : Memcached de nouveau joignable."))},
+    {"id": "rabbitmq_down", "family": "Files de messages", "name": "RabbitMQ injoignable",
+     "description": "L'agent n'arrive plus à lire l'API de gestion de RabbitMQ.",
+     "vars": [], "build": lambda v: _check("RabbitMQ injoignable", "rabbitmq.can_connect", ["host", "instance"], priority=1,
+                                           message=two("{{host}} : RabbitMQ injoignable.", "{{host}} : RabbitMQ de nouveau joignable."))},
+    {"id": "rabbitmq_node_alarm", "family": "Files de messages", "name": "Nœud RabbitMQ en alarme",
+     "description": "Alarme mémoire ou disque (publications bloquées), nœud arrêté ou partition réseau.",
+     "vars": [], "build": lambda v: _check("Nœud RabbitMQ en alarme", "rabbitmq.node", ["host", "node"], priority=1,
+                                           message=two("{{tags.node}} : RabbitMQ bloque les publications.", "{{tags.node}} : RabbitMQ revenu à la normale."))},
+    {"id": "rabbitmq_queue_backlog", "family": "Files de messages", "name": "File RabbitMQ qui s'accumule",
+     "description": "Messages prêts en attente dans une file au-delà du seuil (consommateurs absents ou trop lents).",
+     "vars": [SCOPE, _v("critical", "Messages en attente (critique)", default=1000), _v("warning", "Messages en attente (avertissement)", default=100)],
+     "build": lambda v: _metric("File RabbitMQ qui s'accumule", f"max:rabbitmq.queue.messages.ready{{{v['scope']}}} by {{host,queue}}", ">",
+                                v["critical"], v["warning"], window_s=600, aggregation="min", priority=3,
+                                message=two("File {{tags.queue}} : {{value}} messages en attente.", "File {{tags.queue}} : revenue à {{value}} messages."))},
+    {"id": "mongodb_down", "family": "Bases de données", "name": "MongoDB injoignable",
+     "description": "L'agent n'arrive plus à lire MongoDB.",
+     "vars": [], "build": lambda v: _check("MongoDB injoignable", "mongodb.can_connect", ["host", "instance"], priority=1,
+                                           message=two("{{host}} : MongoDB injoignable.", "{{host}} : MongoDB de nouveau joignable."))},
+    {"id": "mongodb_replication", "family": "Bases de données", "name": "Jeu de réplicas MongoDB dégradé",
+     "description": "Aucun primaire, membre injoignable ou dans un état anormal.",
+     "vars": [], "build": lambda v: _check("Jeu de réplicas MongoDB dégradé", "mongodb.replication", ["host", "instance"], priority=1,
+                                           message=two("{{host}} : jeu de réplicas MongoDB dégradé.", "{{host}} : jeu de réplicas MongoDB rétabli."))},
+    {"id": "mongodb_replication_lag", "family": "Bases de données", "name": "Secondaire MongoDB en retard",
+     "description": "Retard d'un secondaire sur le primaire.",
+     "vars": [SCOPE, _v("critical", "Retard critique (s)", default=300), _v("warning", "Retard d'avertissement (s)", default=60)],
+     "build": lambda v: _metric("Secondaire MongoDB en retard", f"max:mongodb.replication.lag{{{v['scope']}}} by {{host,member}}", ">",
+                                v["critical"], v["warning"], aggregation="max", priority=2,
+                                message=two("{{tags.member}} : {{value}} s de retard.", "{{tags.member}} : revenu à {{value}} s de retard."))},
+    # § 41 : OpenSearch et Elasticsearch.
+    {"id": "opensearch_down", "family": "Recherche", "name": "OpenSearch injoignable",
+     "description": "L'agent n'arrive plus à lire le nœud OpenSearch ou Elasticsearch de sa machine.",
+     "vars": [], "build": lambda v: _check("OpenSearch injoignable", "opensearch.can_connect", ["host", "instance"], priority=1,
+                                           message=two("{{host}} : nœud OpenSearch injoignable.", "{{host}} : nœud OpenSearch de nouveau joignable."))},
+    {"id": "opensearch_cluster_health", "family": "Recherche", "name": "Grappe OpenSearch dégradée",
+     "description": "Santé de la grappe : jaune (réplique non attribuée) en avertissement, rouge (fragment primaire perdu) en critique.",
+     "vars": [], "build": lambda v: _check("Grappe OpenSearch dégradée", "opensearch.cluster_health", ["cluster"], priority=1,
+                                           message=two("Grappe {{tags.cluster}} dégradée.", "Grappe {{tags.cluster}} revenue au vert."))},
+    {"id": "opensearch_heap", "family": "Recherche", "name": "Tas JVM OpenSearch saturé",
+     "description": "Tas JVM d'un nœud au-dessus du seuil pendant 10 minutes (pauses de GC, disjoncteurs).",
+     "vars": [SCOPE, _v("critical", "Seuil critique (%)", default=90), _v("warning", "Seuil d'avertissement (%)", default=80)],
+     "build": lambda v: _metric("Tas JVM OpenSearch saturé", f"max:opensearch.jvm.heap.usage{{{v['scope']}}} by {{host}}", ">",
+                                v["critical"], v["warning"], window_s=600, aggregation="min", priority=2,
+                                message=two("{{host}} : tas JVM à {{value}} %.", "{{host}} : tas JVM revenu à {{value}} %."))},
+    {"id": "opensearch_disk", "family": "Recherche", "name": "Disque OpenSearch au filigrane",
+     "description": "Disque des données d'un nœud. 85 % : plus de nouveau fragment ; 90 % : fragments déplacés ; 95 % : index en lecture seule.",
+     "vars": [SCOPE, _v("critical", "Seuil critique (%)", default=90), _v("warning", "Seuil d'avertissement (%)", default=85)],
+     "build": lambda v: _metric("Disque OpenSearch au filigrane", f"max:opensearch.fs.usage{{{v['scope']}}} by {{host}}", ">",
+                                v["critical"], v["warning"], aggregation="max", priority=2,
+                                message=two("{{host}} : disque OpenSearch à {{value}} %.", "{{host}} : disque OpenSearch revenu à {{value}} %."))},
+    {"id": "opensearch_rejections", "family": "Recherche", "name": "Écritures OpenSearch rejetées",
+     "description": "Le pool d'écriture d'un nœud rejette des requêtes : les documents envoyés sont perdus si le client ne réessaie pas.",
+     "vars": [SCOPE, _v("critical", "Rejets en 5 minutes", default=0)],
+     "build": lambda v: _metric("Écritures OpenSearch rejetées", f"sum:opensearch.thread_pool.rejected.write{{{v['scope']}}} by {{host}}", ">",
+                                v["critical"], aggregation="sum", priority=2,
+                                message=two("{{host}} : {{value}} écriture(s) rejetée(s) en 5 minutes.", "{{host}} : plus aucune écriture rejetée."))},
+    # § 43 : KVM et libvirt (virsh sur l'hôte).
+    {"id": "libvirt_domain", "family": "Virtualisation", "name": "VM KVM en défaut",
+     "description": "Domaine libvirt planté, mis en pause sur erreur d'entrée-sortie (stockage plein) ou arrêté alors que son démarrage automatique est actif.",
+     "vars": [], "build": lambda v: _check("VM KVM en défaut", "libvirt.domain", ["host", "libvirt_domain"], priority=1,
+                                           message=two("{{host}} : VM {{tags.libvirt_domain}} en défaut.", "{{host}} : VM {{tags.libvirt_domain}} revenue à la normale."))},
+    {"id": "libvirt_pool", "family": "Virtualisation", "name": "Pool de stockage KVM inactif",
+     "description": "Pool libvirt inaccessible, ou inactif alors que son démarrage automatique est actif.",
+     "vars": [], "build": lambda v: _check("Pool de stockage KVM inactif", "libvirt.pool", ["host", "libvirt_pool"], priority=1,
+                                           message=two("{{host}} : pool {{tags.libvirt_pool}} inactif.", "{{host}} : pool {{tags.libvirt_pool}} de nouveau actif."))},
+    {"id": "libvirt_pool_full", "family": "Virtualisation", "name": "Pool de stockage KVM presque plein",
+     "description": "Occupation d'un pool libvirt. Plein, il met en pause les VM qui écrivent.",
+     "vars": [SCOPE, _v("critical", "Seuil critique (%)", default=90), _v("warning", "Seuil d'avertissement (%)", default=80)],
+     "build": lambda v: _metric("Pool de stockage KVM presque plein", f"max:libvirt.pool.usage{{{v['scope']}}} by {{host,libvirt_pool}}", ">",
+                                v["critical"], v["warning"], aggregation="max", priority=2,
+                                message=two("{{host}} : pool {{tags.libvirt_pool}} occupé à {{value}} %.",
+                                            "{{host}} : pool {{tags.libvirt_pool}} revenu à {{value}} %."))},
+    # § 46 : AWS (EC2, EBS, alarmes CloudWatch, par l'API en lecture seule).
+    {"id": "aws_connector", "family": "Cloud", "name": "Connecteur AWS en échec",
+     "description": "L'agent n'arrive plus à lire le compte AWS (clés refusées, droits IAM retirés, région injoignable).",
+     "vars": [], "build": lambda v: _check("Connecteur AWS en échec", "aws.can_connect", ["host"], priority=2,
+                                           message=two("{{host}} : lecture du compte AWS en échec.", "{{host}} : compte AWS de nouveau lu."))},
+    {"id": "aws_ec2_status", "family": "Cloud", "name": "Instance EC2 en défaut",
+     "description": "Contrôles d'état d'une instance EC2 en échec (critique) ou événement planifié par AWS : redémarrage, retrait (avertissement).",
+     "vars": [], "build": lambda v: _check("Instance EC2 en défaut", "aws.ec2.status", ["aws_region", "aws_instance"], priority=1,
+                                           message=two("Instance {{tags.aws_instance}} ({{tags.aws_region}}) en défaut.",
+                                                       "Instance {{tags.aws_instance}} ({{tags.aws_region}}) revenue à la normale."))},
+    {"id": "aws_ebs_volume", "family": "Cloud", "name": "Volume EBS en erreur",
+     "description": "Volume EBS à l'état « error ».",
+     "vars": [], "build": lambda v: _check("Volume EBS en erreur", "aws.ebs.volume", ["aws_region", "aws_volume"], priority=1,
+                                           message=two("Volume {{tags.aws_volume}} en erreur.", "Volume {{tags.aws_volume}} revenu à la normale."))},
+    {"id": "aws_cloudwatch_alarm", "family": "Cloud", "name": "Alarme CloudWatch déclenchée",
+     "description": "Une alarme CloudWatch du compte est à l'état ALARM (HYPHA relaie les alarmes déjà définies chez AWS).",
+     "vars": [], "build": lambda v: _check("Alarme CloudWatch déclenchée", "aws.cloudwatch.alarm", ["aws_region", "aws_alarm"], priority=2,
+                                           message=two("Alarme CloudWatch {{tags.aws_alarm}} déclenchée.", "Alarme CloudWatch {{tags.aws_alarm}} revenue à OK."))},
+    {"id": "aws_ec2_cpu", "family": "Cloud", "name": "Instance EC2 saturée",
+     "description": "CPU moyen d'une instance (CloudWatch, avec « metrics: true » côté agent : lecture facturée par AWS).",
+     "vars": [SCOPE, _v("critical", "Seuil critique (%)", default=90), _v("warning", "Seuil d'avertissement (%)", default=80)],
+     "build": lambda v: _metric("Instance EC2 saturée", f"avg:aws.ec2.cpu.usage{{{v['scope']}}} by {{aws_instance}}", ">",
+                                v["critical"], v["warning"], window_s=900, aggregation="avg", priority=3,
+                                message=two("Instance {{tags.aws_instance}} : CPU à {{value}} %.", "Instance {{tags.aws_instance}} : CPU revenu à {{value}} %."))},
+    # § 47 à 49 : Scaleway, Azure, Google Cloud (API en lecture seule).
+    {"id": "scaleway_connector", "family": "Cloud", "name": "Connecteur Scaleway en échec",
+     "description": "L'agent n'arrive plus à lire Scaleway (clé refusée, droits retirés).",
+     "vars": [], "build": lambda v: _check("Connecteur Scaleway en échec", "scaleway.can_connect", ["host"], priority=2,
+                                           message=two("{{host}} : lecture de Scaleway en échec.", "{{host}} : Scaleway de nouveau lu."))},
+    {"id": "scaleway_server", "family": "Cloud", "name": "Instance Scaleway en défaut",
+     "description": "Instance verrouillée par Scaleway (critique) ou maintenance planifiée (avertissement).",
+     "vars": [], "build": lambda v: _check("Instance Scaleway en défaut", "scaleway.instance.state", ["scw_zone", "scw_server"], priority=1,
+                                           message=two("Serveur {{tags.scw_server}} ({{tags.scw_zone}}) en défaut.",
+                                                       "Serveur {{tags.scw_server}} ({{tags.scw_zone}}) revenu à la normale."))},
+    {"id": "scaleway_metal", "family": "Cloud", "name": "Serveur Elastic Metal en défaut",
+     "description": "Serveur Elastic Metal en erreur, verrouillé, ou qui ne répond plus au ping de Scaleway.",
+     "vars": [], "build": lambda v: _check("Serveur Elastic Metal en défaut", "scaleway.baremetal.state", ["scw_zone", "scw_server"], priority=1,
+                                           message=two("Serveur {{tags.scw_server}} ({{tags.scw_zone}}) en défaut.",
+                                                       "Serveur {{tags.scw_server}} ({{tags.scw_zone}}) revenu à la normale."))},
+    {"id": "azure_connector", "family": "Cloud", "name": "Connecteur Azure en échec",
+     "description": "L'agent n'arrive plus à lire Azure (secret du principal de service expiré ou refusé, rôle retiré).",
+     "vars": [], "build": lambda v: _check("Connecteur Azure en échec", "azure.can_connect", ["host"], priority=2,
+                                           message=two("{{host}} : lecture d'Azure en échec.", "{{host}} : Azure de nouveau lu."))},
+    {"id": "azure_vm_health", "family": "Cloud", "name": "VM Azure indisponible",
+     "description": "Santé d'une VM vue par Azure (Resource Health) : indisponible (critique) ou dégradée (avertissement).",
+     "vars": [], "build": lambda v: _check("VM Azure indisponible", "azure.vm.health", ["azure_subscription", "azure_vm"], priority=1,
+                                           message=two("VM {{tags.azure_vm}} en défaut selon Azure.", "VM {{tags.azure_vm}} de nouveau disponible selon Azure."))},
+    {"id": "azure_alerts", "family": "Cloud", "name": "Alertes Azure Monitor déclenchées",
+     "description": "Alertes d'Azure Monitor déclenchées sur l'abonnement (Sev0 et Sev1 en critique) ; revient au vert quand plus aucune n'est déclenchée.",
+     "vars": [], "build": lambda v: _check("Alertes Azure Monitor déclenchées", "azure.alerts", ["azure_subscription"], priority=2,
+                                           message=two("Abonnement {{tags.azure_subscription}} : alertes Azure Monitor déclenchées.",
+                                                       "Abonnement {{tags.azure_subscription}} : plus aucune alerte Azure Monitor."))},
+    {"id": "gcp_connector", "family": "Cloud", "name": "Connecteur Google Cloud en échec",
+     "description": "L'agent n'arrive plus à lire Google Cloud (clé du compte de service refusée, rôle retiré, projet introuvable).",
+     "vars": [], "build": lambda v: _check("Connecteur Google Cloud en échec", "gcp.can_connect", ["host"], priority=2,
+                                           message=two("{{host}} : lecture de Google Cloud en échec.", "{{host}} : Google Cloud de nouveau lu."))},
+    {"id": "gcp_instance", "family": "Cloud", "name": "Instance Compute Engine en réparation",
+     "description": "Instance Compute Engine que Google répare (panne de son hôte) ou dans un état inattendu.",
+     "vars": [], "build": lambda v: _check("Instance Compute Engine en réparation", "gcp.instance.status", ["gcp_project", "gcp_instance"], priority=1,
+                                           message=two("Instance {{tags.gcp_instance}} ({{tags.gcp_project}}) en défaut.",
+                                                       "Instance {{tags.gcp_instance}} ({{tags.gcp_project}}) revenue à la normale."))},
+    # § 44 : Proxmox VE (pvesh sur un nœud, ou API avec un jeton PVEAuditor).
+    {"id": "proxmox_connector", "family": "Virtualisation", "name": "Proxmox injoignable",
+     "description": "L'agent n'arrive plus à lire Proxmox VE (pvesh ou API : service arrêté, jeton refusé).",
+     "vars": [], "build": lambda v: _check("Proxmox injoignable", "proxmox.can_connect", ["host"], priority=1,
+                                           message=two("{{host}} : Proxmox illisible.", "{{host}} : Proxmox de nouveau lu."))},
+    {"id": "proxmox_quorum", "family": "Virtualisation", "name": "Quorum Proxmox perdu",
+     "description": "La grappe Proxmox a perdu son quorum : configuration en lecture seule, plus de démarrage ni de migration.",
+     "vars": [], "build": lambda v: _check("Quorum Proxmox perdu", "proxmox.cluster.quorum", ["proxmox_cluster"], priority=1,
+                                           message=two("Grappe {{tags.proxmox_cluster}} : quorum perdu.", "Grappe {{tags.proxmox_cluster}} : quorum retrouvé."))},
+    {"id": "proxmox_node", "family": "Virtualisation", "name": "Nœud Proxmox hors ligne",
+     "description": "Un nœud de la grappe Proxmox est hors ligne.",
+     "vars": [], "build": lambda v: _check("Nœud Proxmox hors ligne", "proxmox.node", ["proxmox_cluster", "proxmox_node"], priority=1,
+                                           message=two("Nœud {{tags.proxmox_node}} hors ligne.", "Nœud {{tags.proxmox_node}} de nouveau en ligne."))},
+    {"id": "proxmox_storage", "family": "Virtualisation", "name": "Stockage Proxmox indisponible",
+     "description": "Un stockage d'un nœud en ligne n'est plus disponible (NFS, Ceph, iSCSI, disque).",
+     "vars": [], "build": lambda v: _check("Stockage Proxmox indisponible", "proxmox.storage", ["proxmox_node", "proxmox_storage"], priority=1,
+                                           message=two("Stockage {{tags.proxmox_storage}} de {{tags.proxmox_node}} indisponible.",
+                                                       "Stockage {{tags.proxmox_storage}} de {{tags.proxmox_node}} de nouveau disponible."))},
+    {"id": "proxmox_storage_full", "family": "Virtualisation", "name": "Stockage Proxmox presque plein",
+     "description": "Occupation d'un stockage Proxmox.",
+     "vars": [SCOPE, _v("critical", "Seuil critique (%)", default=90), _v("warning", "Seuil d'avertissement (%)", default=80)],
+     "build": lambda v: _metric("Stockage Proxmox presque plein", f"max:proxmox.storage.usage{{{v['scope']}}} by {{proxmox_node,proxmox_storage}}", ">",
+                                v["critical"], v["warning"], aggregation="max", priority=2,
+                                message=two("Stockage {{tags.proxmox_storage}} de {{tags.proxmox_node}} occupé à {{value}} %.",
+                                            "Stockage {{tags.proxmox_storage}} de {{tags.proxmox_node}} revenu à {{value}} %."))},
+    {"id": "proxmox_guest_ha", "family": "Virtualisation", "name": "Invité HA Proxmox hors de son état",
+     "description": "VM ou conteneur géré par la haute disponibilité en erreur, ou arrêté alors qu'il doit tourner.",
+     "vars": [], "build": lambda v: _check("Invité HA Proxmox hors de son état", "proxmox.guest.ha", ["proxmox_cluster", "proxmox_vmid"], priority=1,
+                                           message=two("Invité {{tags.proxmox_vmid}} ({{tags.proxmox_guest}}) hors de son état HA.",
+                                                       "Invité {{tags.proxmox_vmid}} ({{tags.proxmox_guest}}) revenu dans son état HA."))},
+    {"id": "proxmox_backup", "family": "Virtualisation", "name": "Sauvegarde Proxmox en échec",
+     "description": "La dernière sauvegarde (vzdump) d'un nœud a échoué ; levé dès que la suivante réussit.",
+     "vars": [], "build": lambda v: _check("Sauvegarde Proxmox en échec", "proxmox.backup", ["proxmox_cluster", "proxmox_node"], priority=2,
+                                           message=two("{{tags.proxmox_node}} : dernière sauvegarde en échec.", "{{tags.proxmox_node}} : sauvegarde de nouveau réussie."))},
+    # § 45 : Hyper-V (Get-VM sur l'hôte Windows).
+    {"id": "hyperv_vm", "family": "Virtualisation", "name": "VM Hyper-V en défaut",
+     "description": "VM en état critique (stockage injoignable), en pause, arrêtée alors qu'elle doit toujours démarrer, ou système invité muet.",
+     "vars": [], "build": lambda v: _check("VM Hyper-V en défaut", "hyperv.vm", ["host", "hyperv_vm"], priority=1,
+                                           message=two("{{host}} : VM {{tags.hyperv_vm}} en défaut.", "{{host}} : VM {{tags.hyperv_vm}} revenue à la normale."))},
+    {"id": "hyperv_replication", "family": "Virtualisation", "name": "Réplication Hyper-V dégradée",
+     "description": "Santé de la réplication Hyper-V d'une VM en avertissement ou critique.",
+     "vars": [], "build": lambda v: _check("Réplication Hyper-V dégradée", "hyperv.vm.replication", ["host", "hyperv_vm"], priority=2,
+                                           message=two("{{host}} : réplication de {{tags.hyperv_vm}} dégradée.", "{{host}} : réplication de {{tags.hyperv_vm}} rétablie."))},
+    {"id": "hyperv_checkpoint_old", "family": "Virtualisation", "name": "Point de contrôle Hyper-V ancien",
+     "description": "Point de contrôle conservé trop longtemps (son AVHDX grossit et ralentit la VM).",
+     "vars": [SCOPE, _v("critical", "Âge critique (jours)", default=30), _v("warning", "Âge d'avertissement (jours)", default=7)],
+     "build": lambda v: _metric("Point de contrôle Hyper-V ancien", f"max:hyperv.vm.checkpoint.age{{{v['scope']}}} by {{host,hyperv_vm}}",
+                                ">", v["critical"], v["warning"], window_s=3600, aggregation="max", priority=4,
+                                message=two("{{host}} : la VM {{tags.hyperv_vm}} garde un point de contrôle de {{value}} jours.",
+                                            "{{host}} : la VM {{tags.hyperv_vm}} n'a plus de point de contrôle ancien."))},
+    # § 42 : Kubernetes (API de la grappe, compte de service en lecture seule).
+    {"id": "kube_connector", "family": "Kubernetes", "name": "Grappe Kubernetes injoignable",
+     "description": "L'agent n'arrive plus à lire l'API de la grappe (plan de contrôle arrêté, jeton refusé, droits retirés).",
+     "vars": [], "build": lambda v: _check("Grappe Kubernetes injoignable", "kubernetes.can_connect", ["kube_cluster"], priority=1,
+                                           message=two("Grappe {{tags.kube_cluster}} : API illisible.", "Grappe {{tags.kube_cluster}} : API de nouveau lue."))},
+    {"id": "kube_node", "family": "Kubernetes", "name": "Nœud Kubernetes indisponible",
+     "description": "Nœud NotReady ou muet (critique), ou sous pression mémoire, disque ou PID (avertissement).",
+     "vars": [], "build": lambda v: _check("Nœud Kubernetes indisponible", "kubernetes.node", ["kube_cluster", "kube_node"], priority=1,
+                                           message=two("Nœud {{tags.kube_node}} indisponible.", "Nœud {{tags.kube_node}} de nouveau prêt."))},
+    {"id": "kube_workload", "family": "Kubernetes", "name": "Charge Kubernetes dégradée",
+     "description": "Déploiement, statefulset, daemonset ou pod statique sans toutes ses répliques, pod en CrashLoopBackOff "
+                    "ou image introuvable, déploiement bloqué.",
+     "vars": [], "build": lambda v: _check("Charge Kubernetes dégradée", "kubernetes.workload",
+                                           ["kube_cluster", "kube_namespace", "kube_kind", "kube_workload"], priority=2,
+                                           message=two("{{tags.kube_kind}} {{tags.kube_namespace}}/{{tags.kube_workload}} dégradé.",
+                                                       "{{tags.kube_kind}} {{tags.kube_namespace}}/{{tags.kube_workload}} rétabli."))},
+    {"id": "kube_restarts", "family": "Kubernetes", "name": "Conteneurs Kubernetes qui redémarrent",
+     "description": "Redémarrages de conteneurs d'un espace de noms sur 15 minutes.",
+     "vars": [SCOPE, _v("critical", "Redémarrages en 15 min (critique)", default=5), _v("warning", "Redémarrages en 15 min (avertissement)", default=2)],
+     "build": lambda v: _metric("Conteneurs Kubernetes qui redémarrent", f"sum:kubernetes.containers.restarts{{{v['scope']}}} by {{kube_namespace}}", ">=",
+                                v["critical"], v["warning"], window_s=900, aggregation="sum", priority=3,
+                                message=two("{{tags.kube_namespace}} : {{value}} redémarrage(s) de conteneur en 15 min.",
+                                            "{{tags.kube_namespace}} : redémarrages revenus à {{value}}."))},
+    {"id": "kube_unschedulable", "family": "Kubernetes", "name": "Pods Kubernetes impossibles à placer",
+     "description": "Pods en attente faute de nœud capable de les recevoir (ressources, affinités, nœuds fermés) depuis 10 minutes.",
+     "vars": [SCOPE],
+     "build": lambda v: _metric("Pods Kubernetes impossibles à placer", f"max:kubernetes.pods.unschedulable{{{v['scope']}}} by {{kube_cluster}}", ">",
+                                0, window_s=600, aggregation="min", priority=2,
+                                message=two("Grappe {{tags.kube_cluster}} : {{value}} pod(s) sans nœud.", "Grappe {{tags.kube_cluster}} : tous les pods sont placés."))},
+    {"id": "postfix_queue", "family": "Messagerie", "name": "File d'attente postfix",
+     "description": "Messages en attente dans la file différée de postfix.",
+     "vars": [SCOPE, _v("critical", "Messages différés (critique)", default=100), _v("warning", "Messages différés (avertissement)", default=20)],
+     "build": lambda v: _metric("File d'attente postfix", _postfix_q(v["scope"]), ">", v["critical"], v["warning"],
+                                window_s=900, aggregation="last", priority=3)},
+    {"id": "new_error", "family": "Applications", "name": "Nouvelle erreur applicative",
+     "description": "Un problème nouveau ou régressé apparaît dans le suivi des erreurs.",
+     "vars": [_v("service", "Service (vide = tous)", "service", "")],
+     "build": lambda v: {"name": "Nouvelle erreur applicative" + (f" : {v['service']}" if v["service"] else ""),
+                         "type": "error_tracking", "priority": 3, "thresholds": {"critical": 0},
+                         "query": {"service": v["service"] or None, "new_only": True, "window_s": 300, "comparator": ">"}}},
+    # § 34 : connecteur OVHcloud de l'agent (contrôles relevés par l'API d'OVH, en lecture seule).
+    {"id": "ovh_server_state", "family": "Cloud", "name": "Serveur OVH en défaut",
+     "description": "État d'un serveur dédié vu par OVH (en erreur, piraté, éteint).",
+     "vars": [], "build": lambda v: _check("Serveur OVH en défaut", "ovh.dedicated_server.state", ["ovh_service", "ovh_name"],
+                                           priority=1, message=two("OVH signale le serveur {{tags.ovh_name}} en défaut.",
+                                                                   "Le serveur {{tags.ovh_name}} est de nouveau normal chez OVH."))},
+    {"id": "ovh_ip_spam", "family": "Cloud", "name": "Adresse IP OVH bloquée pour spam",
+     "description": "OVH a bloqué l'envoi de courrier d'une adresse IP (anti-spam).",
+     "vars": [], "build": lambda v: _check("Adresse IP OVH bloquée pour spam", "ovh.ip.spam", ["ovh_ip_block"], priority=1,
+                                           message=two("OVH bloque une adresse du bloc {{tags.ovh_ip_block}} pour spam.",
+                                                       "Plus aucune adresse du bloc {{tags.ovh_ip_block}} n'est bloquée pour spam."))},
+    {"id": "ovh_ip_antihack", "family": "Cloud", "name": "Adresse IP OVH bloquée pour piratage",
+     "description": "OVH a bloqué une adresse IP pour activité malveillante sortante.",
+     "vars": [], "build": lambda v: _check("Adresse IP OVH bloquée pour piratage", "ovh.ip.antihack", ["ovh_ip_block"], priority=1,
+                                           message=two("OVH bloque une adresse du bloc {{tags.ovh_ip_block}} pour piratage.",
+                                                       "Plus aucune adresse du bloc {{tags.ovh_ip_block}} n'est bloquée pour piratage."))},
+    {"id": "ovh_ip_mitigation", "family": "Cloud", "name": "Attaque DDoS en cours (OVH)",
+     "description": "Mitigation automatique d'OVH déclenchée sur une adresse IP.",
+     "vars": [], "build": lambda v: _check("Attaque DDoS en cours (OVH)", "ovh.ip.mitigation", ["ovh_ip_block"], priority=2,
+                                           message=two("Mitigation anti-DDoS automatique en cours sur le bloc {{tags.ovh_ip_block}}.",
+                                                       "Fin de la mitigation automatique sur le bloc {{tags.ovh_ip_block}}."))},
+    {"id": "ovh_service_renewal", "family": "Cloud", "name": "Échéance d'un service OVH",
+     "description": "Service ou domaine OVH sans renouvellement automatique proche de l'échéance, expiré ou impayé.",
+     "vars": [], "build": lambda v: _check("Échéance d'un service OVH", "ovh.service.renewal", ["ovh_service", "ovh_name", "ovh_type"],
+                                           priority=2, message=two("{{tags.ovh_name}} : échéance OVH à traiter.",
+                                                                   "{{tags.ovh_name}} : échéance OVH réglée."))},
+    {"id": "ovh_connector", "family": "Cloud", "name": "Connecteur OVH en échec",
+     "description": "L'agent n'arrive plus à lire l'API d'OVH (identifiants, droits, réseau).",
+     "vars": [], "build": lambda v: _check("Connecteur OVH en échec", "ovhcloud.can_connect", ["host"], priority=3,
+                                           message=two("{{host}} ne lit plus l'API d'OVH.", "{{host}} lit de nouveau l'API d'OVH."))},
+    # § 35 : ESXi et vCenter lus par l'agent (API vSphere, rôle ReadOnly).
+    {"id": "vsphere_host_status", "family": "Virtualisation", "name": "Hôte ESXi en défaut",
+     "description": "Hôte ESXi déconnecté, en alarme ou en maintenance.",
+     "vars": [], "build": lambda v: _check("Hôte ESXi en défaut", "vsphere.host.status", ["vsphere_target", "vsphere_host"], priority=1,
+                                           message=two("L'hôte ESXi {{tags.vsphere_host}} est en défaut.",
+                                                       "L'hôte ESXi {{tags.vsphere_host}} est revenu à la normale."))},
+    {"id": "vsphere_datastore_status", "family": "Virtualisation", "name": "Datastore inaccessible",
+     "description": "Datastore vSphere inaccessible ou en alarme.",
+     "vars": [], "build": lambda v: _check("Datastore inaccessible", "vsphere.datastore.status", ["vsphere_target", "vsphere_datastore"],
+                                           priority=1, message=two("Le datastore {{tags.vsphere_datastore}} est en défaut.",
+                                                                   "Le datastore {{tags.vsphere_datastore}} est de nouveau accessible."))},
+    {"id": "vsphere_datastore_full", "family": "Virtualisation", "name": "Datastore presque plein",
+     "description": "Occupation d'un datastore vSphere au-dessus du seuil.",
+     "vars": [SCOPE, _v("critical", "Seuil critique (%)", default=90), _v("warning", "Seuil d'avertissement (%)", default=80)],
+     "build": lambda v: _metric("Datastore presque plein", f"max:vsphere.datastore.in_use{{{v['scope']}}} by {{vsphere_target,vsphere_datastore}}",
+                                ">", v["critical"], v["warning"], window_s=600, aggregation="max", priority=2,
+                                message=two("Le datastore {{tags.vsphere_datastore}} est plein à {{value}} %.",
+                                            "Le datastore {{tags.vsphere_datastore}} est revenu à {{value}} %."))},
+    {"id": "vsphere_vm_status", "family": "Virtualisation", "name": "VM vSphere en défaut",
+     "description": "VM allumée en alarme, ou dont le système invité ne répond plus (VMware Tools).",
+     "vars": [], "build": lambda v: _check("VM vSphere en défaut", "vsphere.vm.status", ["vsphere_target", "vsphere_vm"], priority=2,
+                                           message=two("La VM {{tags.vsphere_vm}} est en défaut.", "La VM {{tags.vsphere_vm}} est revenue à la normale."))},
+    {"id": "vsphere_snapshot_old", "family": "Virtualisation", "name": "Instantané de VM ancien",
+     "description": "Instantané conservé trop longtemps (il grossit et ralentit la VM).",
+     "vars": [SCOPE, _v("critical", "Âge critique (jours)", default=30), _v("warning", "Âge d'avertissement (jours)", default=7)],
+     "build": lambda v: _metric("Instantané de VM ancien", f"max:vsphere.vm.snapshot.age{{{v['scope']}}} by {{vsphere_target,vsphere_vm}}",
+                                ">", v["critical"], v["warning"], window_s=3600, aggregation="max", priority=4,
+                                message=two("La VM {{tags.vsphere_vm}} garde un instantané de {{value}} jours.",
+                                            "La VM {{tags.vsphere_vm}} n'a plus d'instantané ancien."))},
+    {"id": "vsphere_connector", "family": "Virtualisation", "name": "Connecteur vSphere en échec",
+     "description": "L'agent n'arrive plus à lire un ESXi ou un vCenter (réseau, compte, certificat).",
+     "vars": [], "build": lambda v: _check("Connecteur vSphere en échec", "vsphere.can_connect", ["vsphere_target"], priority=3,
+                                           message=two("La cible vSphere {{tags.vsphere_target}} n'est plus lue.",
+                                                       "La cible vSphere {{tags.vsphere_target}} est de nouveau lue."))},
+]
+BY_ID = {t["id"]: t for t in TEMPLATES}
+
+
+def _tag_dict(tag: str) -> dict:
+    if not tag:
+        return {}
+    k, _, val = tag.partition(":")
+    return {k: val}
+
+
+def _postfix_q(scope: str) -> str:
+    inner = "queue:deferred" if scope == "*" else f"{scope},queue:deferred"
+    return f"max:postfix.queue.size{{{inner}}} by {{host}}"
+
+
+def catalogue() -> list[dict]:
+    """Modèles livrés, sans la fonction de construction, avec la définition par défaut quand elle existe."""
+    out = []
+    for t in TEMPLATES:
+        item = {k: v for k, v in t.items() if k != "build"}
+        if all(not var["required"] for var in t["vars"]):
+            item["definition"] = t["build"](_defaults(t, {}))
+        out.append(item)
+    return out
+
+
+def _defaults(t: dict, given: dict) -> dict:
+    return {var["name"]: given.get(var["name"], var["default"]) for var in t["vars"]}
+
+
+def build(template_id: str, given: dict | None) -> dict:
+    """Définition du moniteur tirée d'un modèle ; ValueError si une variable manque ou est invalide."""
+    t = BY_ID.get(template_id)
+    if t is None:
+        raise ValueError(f"modèle inconnu : {template_id}")
+    given = given or {}
+    if not isinstance(given, dict):
+        raise ValueError("vars doit être un objet")
+    unknown = set(given) - {v["name"] for v in t["vars"]}
+    if unknown:
+        raise ValueError(f"variable inconnue pour ce modèle : {sorted(unknown)[0]}")
+    values = _defaults(t, given)
+    for var in t["vars"]:
+        name, value = var["name"], values[var["name"]]
+        if var["required"] and value in (None, ""):
+            raise ValueError(f"la variable {name} est obligatoire")
+        if var["type"] == "number" and (isinstance(value, bool) or not isinstance(value, (int, float))):
+            raise ValueError(f"la variable {name} doit être un nombre")
+        if var["type"] == "synthetic" and (isinstance(value, bool) or not isinstance(value, int)):
+            raise ValueError(f"la variable {name} doit être l'identifiant d'un test")
+        if var["type"] == "scope" and (not isinstance(value, str) or not _SCOPE_RE.match(value)):
+            raise ValueError(f"la variable {name} vaut * ou clé:valeur[,clé:valeur]")
+        if var["type"] == "service" and value not in (None, "") and (
+                not isinstance(value, str) or not _NAME_RE.match(value)):
+            raise ValueError(f"la variable {name} doit être un nom de service")
+        if var["type"] == "text" and name == "tag" and value and (
+                not isinstance(value, str) or not _SCOPE_RE.match(value) or "," in value or value == "*"):
+            raise ValueError("la variable tag vaut clé:valeur, ou vide")
+    return t["build"](values)

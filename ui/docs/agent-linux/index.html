@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Installer l&#x27;agent sous Linux · HYPHA</title>
+<meta name="description" content="Installer hypha-agent sous Linux en une commande, ou par paquet .deb et .rpm ; vérifier, mettre à jour et désinstaller.">
+<link rel="canonical" href="https://hypha.s33d.fr/docs/agent-linux/">
+<link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/agent-linux/">
+<link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/agent-linux/">
+<link rel="alternate" hreflang="x-default" href="https://hypha.s33d.fr/docs/agent-linux/">
+<meta name="color-scheme" content="dark light">
+<meta property="og:title" content="Installer l&#x27;agent sous Linux">
+<meta property="og:description" content="Installer hypha-agent sous Linux en une commande, ou par paquet .deb et .rpm ; vérifier, mettre à jour et désinstaller.">
+<meta property="og:url" content="https://hypha.s33d.fr/docs/agent-linux/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="HYPHA">
+<link rel="icon" type="image/svg+xml" href="/assets/img/hypha.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('hypha.theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Documentation", "item": "https://hypha.s33d.fr/docs/"}, {"@type": "ListItem", "position": 2, "name": "Installer l'agent sous Linux", "item": "https://hypha.s33d.fr/docs/agent-linux/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a><header class="top"><div class="top-in"><a class="brand" href="/" aria-label="HYPHA"><img src="/assets/img/hypha.svg" alt="" width="28" height="28"><span>HYPHA<small>par S33D</small></span></a><nav aria-label="HYPHA"><a href="/docs/" aria-current="page">Documentation</a><a href="/tarifs/">Tarifs</a><a href="/faq/" class="hide-sm">FAQ</a><a class="lang" href="/en/docs/agent-linux/" hreflang="en" data-lang="en" title="English">EN</a><a class="btn" href="/">Se connecter</a></nav></div></header>
+<div class="wrap"><aside class="side"><details class="nav" open><summary>Sommaire de la documentation</summary><h2>Démarrer</h2><ul><li><a href="/docs/">Vue d&#x27;ensemble</a></li><li><a href="/docs/demarrage/">Démarrer</a></li><li><a href="/docs/videos/">Vidéos</a></li></ul><h2>Installer l&#x27;agent</h2><ul><li><a href="/docs/agent-linux/" aria-current="page">Linux</a></li><li><a href="/docs/agent-windows/">Windows</a></li><li><a href="/docs/agent-docker/">Docker</a></li><li><a href="/docs/kubernetes/">Kubernetes</a></li><li><a href="/docs/configuration/">Configuration de l&#x27;agent</a></li><li><a href="/docs/flotte/">Flotte et mises à jour</a></li></ul><h2>Intégrations</h2><ul><li><a href="/docs/integrations/">Système, web et messagerie</a></li><li><a href="/docs/bases-de-donnees/">Bases de données</a></li><li><a href="/docs/snmp/">SNMP</a></li><li><a href="/docs/cloud/">Clouds</a></li><li><a href="/docs/virtualisation/">Virtualisation</a></li></ul><h2>Observer</h2><ul><li><a href="/docs/metriques/">Métriques et tableaux</a></li><li><a href="/docs/journaux/">Journaux</a></li><li><a href="/docs/traces/">Traces et OpenTelemetry</a></li><li><a href="/docs/synthetiques/">Tests synthétiques</a></li></ul><h2>Alerter et agir</h2><ul><li><a href="/docs/moniteurs/">Moniteurs</a></li><li><a href="/docs/alertes-et-canaux/">Alertes et canaux</a></li><li><a href="/docs/maintenances/">Maintenances</a></li><li><a href="/docs/incidents/">Incidents</a></li><li><a href="/docs/slo/">SLO</a></li><li><a href="/docs/pages-de-statut/">Pages de statut</a></li><li><a href="/docs/explication-et-reparation/">Explication et réparation</a></li></ul><h2>Administrer</h2><ul><li><a href="/docs/comptes-et-roles/">Comptes et rôles</a></li><li><a href="/docs/formules-et-facturation/">Formules et facturation</a></li><li><a href="/docs/api/">API</a></li><li><a href="/docs/auto-hebergement/">Auto-hébergement</a></li><li><a href="/docs/securite/">Sécurité</a></li></ul></details></aside><main class="doc" id="contenu"><div class="crumbs"><a href="/docs/">Documentation</a> › Installer l&#x27;agent</div><h1>Installer l&#x27;agent sous Linux</h1><p class="lead">Un seul binaire, sans dépendance, pour amd64 et arm64. Il tourne en service systemd et pèse moins d'un pour cent d'un cœur.</p><h2 id="ce-qu-il-faut">Ce qu'il faut<a class="anchor" href="#ce-qu-il-faut" aria-hidden="true">#</a></h2>
+<ul><li>Une distribution avec systemd, en amd64 ou arm64 (Debian, Ubuntu, Red Hat, Rocky, Alma, Fedora, Raspberry Pi OS 64 bits…).</li><li>Un accès sortant en HTTPS vers <code>hypha.s33d.fr</code>, directement ou par un mandataire. L'agent n'ouvre aucun port sur l'hôte.</li><li>Une clé d'ingestion : <strong>Réglages › Clés API</strong>, ou le bouton <strong>Créer une clé et l'insérer</strong> de la page <strong>Installer l'agent</strong>.</li></ul>
+<h2 id="installer-en-une-commande">Installer en une commande<a class="anchor" href="#installer-en-une-commande" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash">curl -fsSL https://hypha.s33d.fr/install/install.sh | sudo HYPHA_API_KEY=hph_votre_cle bash</code></pre>
+<p>Le script télécharge le binaire de votre architecture, vérifie sa somme SHA-256, écrit <code>/etc/hypha/hypha.yaml</code> (droits 600), pose l'unité <code>hypha-agent.service</code>, puis la démarre. Il ne pose aucune question et peut être rejoué : une même version ne redémarre pas le service.</p>
+<p>Variables acceptées :</p>
+<div class="table"><table><thead><tr><th>Variable</th><th>Rôle</th></tr></thead><tbody><tr><td><code>HYPHA_API_KEY</code></td><td>clé d'ingestion, obligatoire à la première installation</td></tr><tr><td><code>HYPHA_URL</code></td><td>serveur visé, <code>https://hypha.s33d.fr</code> par défaut ; votre adresse en auto-hébergement</td></tr><tr><td><code>HYPHA_TAGS</code></td><td>étiquettes ajoutées à tout ce que l'agent envoie : <code>env:prod,role:web</code> ou <code>{&quot;env&quot;:&quot;prod&quot;}</code></td></tr><tr><td><code>HYPHA_HOSTNAME</code></td><td>nom de l'hôte dans HYPHA (par défaut, le nom système)</td></tr><tr><td><code>HYPHA_FORCE_CONF</code></td><td><code>1</code> réécrit <code>api_key</code> et <code>url</code> d'une configuration existante</td></tr></tbody></table></div>
+<p><code>HYPHA_TAGS</code> et <code>HYPHA_HOSTNAME</code> ne servent qu'à la création du fichier : une configuration existante n'est jamais réécrite, sauf <code>api_key</code> et <code>url</code> avec <code>HYPHA_FORCE_CONF=1</code>.</p>
+<h2 id="installer-par-paquet">Installer par paquet<a class="anchor" href="#installer-par-paquet" aria-hidden="true">#</a></h2>
+<p>Les paquets <code>.deb</code> et <code>.rpm</code> sont publiés à côté du binaire, sous <a href="https://hypha.s33d.fr/install/SHA256SUMS">hypha.s33d.fr/install/</a> :</p>
+<pre><code class="language-bash"># Debian, Ubuntu (remplacer 0.4.21 par la version de version.txt)
+curl -fsSLO https://hypha.s33d.fr/install/hypha-agent_0.4.21_amd64.deb
+sudo apt install ./hypha-agent_0.4.21_amd64.deb
+
+# Red Hat, Rocky, Alma, Fedora
+sudo dnf install https://hypha.s33d.fr/install/hypha-agent-0.4.21-1.x86_64.rpm</code></pre>
+<p>Le paquet pose la configuration d'exemple. Renseignez <code>api_key</code> dans <code>/etc/hypha/hypha.yaml</code>, puis :</p>
+<pre><code class="language-bash">sudo systemctl start hypha-agent</code></pre>
+<p>Un agent installé par paquet se met à jour par le gestionnaire de paquets ; le script d'installation refuse alors de le remplacer.</p>
+<h2 id="verifier">Vérifier<a class="anchor" href="#verifier" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash">sudo hypha-agent status          # état des collecteurs et du dernier envoi
+sudo hypha-agent check-config    # configuration fusionnée, secrets masqués, erreurs avec leur fichier
+systemctl status hypha-agent
+journalctl -u hypha-agent -n 50</code></pre>
+<p>L'hôte apparaît dans <strong>Infrastructure</strong> dans la minute. La page <strong>Réglages › Agents</strong> montre sa version, l'état de chaque collecteur et la dernière erreur.</p>
+<h2 id="ce-que-l-agent-collecte-d-office">Ce que l'agent collecte d'office<a class="anchor" href="#ce-que-l-agent-collecte-d-office" aria-hidden="true">#</a></h2>
+<ul><li>Mesures du système toutes les 15 secondes : processeur, mémoire, échange, disques, entrées-sorties, réseau, charge, processus.</li><li>Journal systemd (<code>journalctl</code>), repris après le dernier envoi réussi.</li><li>Instantané des processus et des connexions réseau chaque minute.</li><li>Conteneurs Docker si <code>/var/run/docker.sock</code> existe.</li><li>Inventaire matériel et logiciel au démarrage puis toutes les 6 heures.</li><li>Unités systemd en échec et timers en retard, mises à jour en attente, horloge, certificats, capteurs et disques SMART quand les outils sont présents.</li><li>Les logiciels détectés : PostgreSQL, MySQL, Redis, nginx, HAProxy, Postfix et les autres <a href="/docs/integrations/">intégrations</a>.</li></ul>
+<p>Tout se règle dans <code>/etc/hypha/hypha.yaml</code> et <code>/etc/hypha/conf.d/*.yaml</code> : voir la <a href="/docs/configuration/">référence de configuration</a>.</p>
+<h2 id="droits-et-empreinte">Droits et empreinte<a class="anchor" href="#droits-et-empreinte" aria-hidden="true">#</a></h2>
+<ul><li>L'agent tourne en <code>root</code> pour lire tous les journaux et le <code>/proc</code> de chaque processus.</li><li>L'unité systemd le durcit : <code>/usr</code>, <code>/boot</code> et <code>/etc</code> en lecture seule pour lui, <code>/home</code> en lecture seule, <code>/tmp</code> privé, aucune élévation de droits ; il n'écrit que sous <code>/var/lib/hypha</code>.</li><li>Priorité basse (<code>Nice=10</code>, entrées-sorties en tâche de fond) et plafonds en cas d'emballement : 25 % d'un cœur, 256 Mo de mémoire.</li><li>Si le serveur est injoignable, les envois attendent dans un tampon disque (256 Mo par défaut), puis repartent.</li></ul>
+<h2 id="mettre-a-jour">Mettre à jour<a class="anchor" href="#mettre-a-jour" aria-hidden="true">#</a></h2>
+<ul><li>Script : rejouez la commande d'installation ; seule une nouvelle version redémarre le service.</li><li>Automatique : avec <code>auto_update: true</code>, l'agent suit la version cible fixée dans <strong>Réglages › Agents</strong> et vérifie la signature de chaque binaire. Voir <a href="/docs/flotte/">Flotte et mises à jour</a>.</li><li>Paquet : <code>apt upgrade</code> ou <code>dnf upgrade</code> après avoir téléchargé le nouveau paquet.</li></ul>
+<h2 id="desinstaller">Désinstaller<a class="anchor" href="#desinstaller" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash">curl -fsSL https://hypha.s33d.fr/install/install.sh | sudo bash -s -- --uninstall</code></pre>
+<p>La configuration (<code>/etc/hypha</code>) et l'état (<code>/var/lib/hypha</code>) sont gardés. Pour tout effacer : <code>sudo rm -rf /etc/hypha /var/lib/hypha</code>. Un agent installé par paquet se retire par <code>apt remove hypha-agent</code> ou <code>dnf remove hypha-agent</code>.</p><p class="updated">Mise à jour : 19 novembre 2026</p><nav class="pager" aria-label="pages"><a href="/docs/videos/"><small>Précédent</small>Vidéos</a><a href="/docs/agent-windows/" style="text-align:right"><small>Suivant</small>Windows</a></nav></main></div>
+<footer class="foot"><div class="foot-in"><span class="grow">HYPHA, un produit de S33D. Service hébergé en France, sur l&#x27;infrastructure en propre de S33D.</span><a href="/docs/" aria-current="page">Documentation</a><a href="/tarifs/">Tarifs</a><a href="/faq/">FAQ</a><a href="/mentions-legales/">Mentions légales</a><a href="/cgv/">Conditions de vente</a><a href="/confidentialite/">Confidentialité</a><a href="https://s33d.fr" rel="noopener">s33d.fr</a></div></footer>
+<script>(function(){var c="Copier",d="Copi\u00e9";document.querySelectorAll('.doc pre').forEach(function(p){var b=document.createElement('button');b.type='button';b.className='copy';b.textContent=c;b.onclick=function(){var x=p.querySelector('code');navigator.clipboard&&navigator.clipboard.writeText(x?x.innerText:p.innerText).then(function(){b.textContent=d;setTimeout(function(){b.textContent=c},1500)})};p.appendChild(b)});var n=document.querySelector('.side details');if(n&&window.matchMedia('(max-width: 860px)').matches)n.removeAttribute('open');document.querySelectorAll('a[data-lang]').forEach(function(a){a.addEventListener('click',function(){try{localStorage.setItem('hypha.lang',a.getAttribute('data-lang'))}catch(e){}})});})();</script>
+</body>
+</html>

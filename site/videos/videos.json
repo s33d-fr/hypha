@@ -1,0 +1,152 @@
+{
+  "1-premiers-pas": {
+    "date": "2026-11-19",
+    "duration": 30,
+    "title": {
+      "fr": "Premiers pas : de l'agent à la fiche d'un hôte",
+      "en": "First steps: from the agent to a host page"
+    },
+    "steps": {
+      "fr": [
+        "Réglages › Installer l'agent : la commande de chaque système.",
+        "La vue d'ensemble : hôtes en ligne, alertes, CPU du parc, journaux par statut.",
+        "Infrastructure : la liste des hôtes, leur charge et leur état.",
+        "La fiche de web-02 : processeur, mémoire, charge, disques et réseau."
+      ],
+      "en": [
+        "Settings › Install the agent: the command for each system.",
+        "The overview: hosts online, alerts, fleet CPU, logs by status.",
+        "Infrastructure: the host list, their load and their state.",
+        "The web-02 page: CPU, memory, load, disks and network."
+      ]
+    }
+  },
+  "2-journaux": {
+    "date": "2026-11-19",
+    "duration": 29,
+    "title": {
+      "fr": "Journaux : chercher, filtrer, regrouper",
+      "en": "Logs: search, filter, group"
+    },
+    "steps": {
+      "fr": [
+        "La page Journaux et l'histogramme par statut.",
+        "La requête status:error OR status:critical filtre les lignes ; les facettes se mettent à jour.",
+        "Le détail d'une ligne : attributs, étiquettes, contexte.",
+        "L'onglet Motifs regroupe les messages semblables et les compte."
+      ],
+      "en": [
+        "The Logs page and its histogram by status.",
+        "The query status:error OR status:critical filters the lines; facets update.",
+        "A line in detail: attributes, tags, context.",
+        "The Patterns tab groups similar messages and counts them."
+      ]
+    }
+  },
+  "3-traces": {
+    "date": "2026-11-19",
+    "duration": 33,
+    "title": {
+      "fr": "Traces : du service à la requête",
+      "en": "Traces: from the service to the request"
+    },
+    "steps": {
+      "fr": [
+        "APM : les services, leur débit, leurs erreurs et leur latence.",
+        "Le service shop-api : opérations et ressources.",
+        "Une trace de commande en cascade : PostgreSQL, Redis et le service de stock.",
+        "La carte des services, tirée des traces."
+      ],
+      "en": [
+        "APM: services, their throughput, errors and latency.",
+        "The shop-api service: operations and resources.",
+        "A checkout trace as a waterfall: PostgreSQL, Redis and the stock service.",
+        "The service map, drawn from the traces."
+      ]
+    }
+  },
+  "4-alerte-expliquee": {
+    "date": "2026-11-19",
+    "duration": 27,
+    "title": {
+      "fr": "Une alerte expliquée, une réparation proposée",
+      "en": "An alert explained, a repair proposed"
+    },
+    "steps": {
+      "fr": [
+        "La vue Problèmes : quatre alertes en cours, classées par priorité.",
+        "Le bouton Expliquer de l'alerte « Unité systemd en échec » : shop-worker.service sur web-01.",
+        "Le panneau d'explication : le service tué par le manque de mémoire, les lignes de journal qui le prouvent, le correctif. L'attente de l'analyse est coupée.",
+        "Le geste proposé, « Redémarrer shop-worker.service sur web-01 », à valider d'un clic."
+      ],
+      "en": [
+        "The Problems view: four current alerts, sorted by priority.",
+        "The Explain button of the \"systemd unit failed\" alert: shop-worker.service on web-01.",
+        "The explanation panel: the service killed by memory exhaustion, the log lines that prove it, the fix. The wait for the analysis is cut.",
+        "The proposed action, \"Restart shop-worker.service on web-01\", to approve in one click."
+      ]
+    }
+  },
+  "5-moniteurs": {
+    "date": "2026-11-19",
+    "duration": 24,
+    "title": {
+      "fr": "Moniteurs : des modèles prêts à l'emploi",
+      "en": "Monitors: ready-made templates"
+    },
+    "steps": {
+      "fr": [
+        "La liste des moniteurs et leur état.",
+        "Le moniteur « Processeur saturé » : requête, seuils, état de chaque groupe et historique.",
+        "Nouveau moniteur : le catalogue de modèles, par famille."
+      ],
+      "en": [
+        "The monitor list and their state.",
+        "The \"CPU saturated\" monitor: query, thresholds, state of each group and history.",
+        "New monitor: the template catalogue, by family."
+      ]
+    }
+  },
+  "6-tableaux-et-statut": {
+    "date": "2026-11-19",
+    "duration": 24,
+    "title": {
+      "fr": "Tableaux de bord et page de statut",
+      "en": "Dashboards and status page"
+    },
+    "steps": {
+      "fr": [
+        "La liste des tableaux de bord.",
+        "Le tableau « Boutique en ligne » : valeurs, courbes, classement, journaux et moniteurs.",
+        "La page de statut publique de la boutique : composants, disponibilité sur 90 jours, incident en cours."
+      ],
+      "en": [
+        "The dashboard list.",
+        "The \"Online shop\" dashboard: values, charts, top list, logs and monitors.",
+        "The shop's public status page: components, 90-day availability, ongoing incident."
+      ]
+    }
+  },
+  "7-formule-et-consommation": {
+    "date": "2026-11-19",
+    "duration": 26,
+    "title": {
+      "fr": "Formule, limites et consommation",
+      "en": "Plan, limits and usage"
+    },
+    "steps": {
+      "fr": [
+        "Réglages › Formule et facturation : la formule Découverte de l'espace de démonstration, ses limites et leur usage (5 hôtes sur 5).",
+        "Une limite atteinte : ce qui dépasse est refusé et signalé, jamais facturé.",
+        "Les formules Découverte, Pro et Entreprise, aux prix hors taxes.",
+        "Réglages › Consommation : les volumes reçus chaque jour et les services les plus bavards."
+      ],
+      "en": [
+        "Settings › Plan and billing: the demo workspace's Découverte plan, its limits and their use (5 hosts out of 5).",
+        "A reached limit: what goes beyond is refused and reported, never billed.",
+        "The Découverte, Pro and Entreprise plans, at prices excluding VAT.",
+        "Settings › Usage: volumes received each day and the chattiest services."
+      ]
+    }
+  }
+}

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hyperviseurs : vSphere, Proxmox VE, Hyper-V, KVM et VirtualBox · HYPHA</title>
+<meta name="description" content="Superviser ESXi et vCenter, Proxmox VE, Hyper-V, KVM avec libvirt et VirtualBox avec HYPHA, en lecture seule : hôtes, VM, datastores, sauvegardes, instantanés.">
+<link rel="canonical" href="https://hypha.s33d.fr/docs/virtualisation/">
+<link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/virtualisation/">
+<link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/virtualization/">
+<link rel="alternate" hreflang="x-default" href="https://hypha.s33d.fr/docs/virtualisation/">
+<meta name="color-scheme" content="dark light">
+<meta property="og:title" content="Hyperviseurs : vSphere, Proxmox VE, Hyper-V, KVM et VirtualBox">
+<meta property="og:description" content="Superviser ESXi et vCenter, Proxmox VE, Hyper-V, KVM avec libvirt et VirtualBox avec HYPHA, en lecture seule : hôtes, VM, datastores, sauvegardes, instantanés.">
+<meta property="og:url" content="https://hypha.s33d.fr/docs/virtualisation/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="HYPHA">
+<link rel="icon" type="image/svg+xml" href="/assets/img/hypha.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('hypha.theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Documentation", "item": "https://hypha.s33d.fr/docs/"}, {"@type": "ListItem", "position": 2, "name": "Hyperviseurs : vSphere, Proxmox VE, Hyper-V, KVM et VirtualBox", "item": "https://hypha.s33d.fr/docs/virtualisation/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a><header class="top"><div class="top-in"><a class="brand" href="/" aria-label="HYPHA"><img src="/assets/img/hypha.svg" alt="" width="28" height="28"><span>HYPHA<small>par S33D</small></span></a><nav aria-label="HYPHA"><a href="/docs/" aria-current="page">Documentation</a><a href="/tarifs/">Tarifs</a><a href="/faq/" class="hide-sm">FAQ</a><a class="lang" href="/en/docs/virtualization/" hreflang="en" data-lang="en" title="English">EN</a><a class="btn" href="/">Se connecter</a></nav></div></header>
+<div class="wrap"><aside class="side"><details class="nav" open><summary>Sommaire de la documentation</summary><h2>Démarrer</h2><ul><li><a href="/docs/">Vue d&#x27;ensemble</a></li><li><a href="/docs/demarrage/">Démarrer</a></li><li><a href="/docs/videos/">Vidéos</a></li></ul><h2>Installer l&#x27;agent</h2><ul><li><a href="/docs/agent-linux/">Linux</a></li><li><a href="/docs/agent-windows/">Windows</a></li><li><a href="/docs/agent-docker/">Docker</a></li><li><a href="/docs/kubernetes/">Kubernetes</a></li><li><a href="/docs/configuration/">Configuration de l&#x27;agent</a></li><li><a href="/docs/flotte/">Flotte et mises à jour</a></li></ul><h2>Intégrations</h2><ul><li><a href="/docs/integrations/">Système, web et messagerie</a></li><li><a href="/docs/bases-de-donnees/">Bases de données</a></li><li><a href="/docs/snmp/">SNMP</a></li><li><a href="/docs/cloud/">Clouds</a></li><li><a href="/docs/virtualisation/" aria-current="page">Virtualisation</a></li></ul><h2>Observer</h2><ul><li><a href="/docs/metriques/">Métriques et tableaux</a></li><li><a href="/docs/journaux/">Journaux</a></li><li><a href="/docs/traces/">Traces et OpenTelemetry</a></li><li><a href="/docs/synthetiques/">Tests synthétiques</a></li></ul><h2>Alerter et agir</h2><ul><li><a href="/docs/moniteurs/">Moniteurs</a></li><li><a href="/docs/alertes-et-canaux/">Alertes et canaux</a></li><li><a href="/docs/maintenances/">Maintenances</a></li><li><a href="/docs/incidents/">Incidents</a></li><li><a href="/docs/slo/">SLO</a></li><li><a href="/docs/pages-de-statut/">Pages de statut</a></li><li><a href="/docs/explication-et-reparation/">Explication et réparation</a></li></ul><h2>Administrer</h2><ul><li><a href="/docs/comptes-et-roles/">Comptes et rôles</a></li><li><a href="/docs/formules-et-facturation/">Formules et facturation</a></li><li><a href="/docs/api/">API</a></li><li><a href="/docs/auto-hebergement/">Auto-hébergement</a></li><li><a href="/docs/securite/">Sécurité</a></li></ul></details></aside><main class="doc" id="contenu"><div class="crumbs"><a href="/docs/">Documentation</a> › Intégrations</div><h1>Hyperviseurs : vSphere, Proxmox VE, Hyper-V, KVM et VirtualBox</h1><p class="lead">L'état des hyperviseurs et de leurs VM, lu en lecture seule, à côté des agents installés dans les VM.</p><h2 id="vmware-vsphere-esxi-et-vcenter">VMware vSphere (ESXi et vCenter)<a class="anchor" href="#vmware-vsphere-esxi-et-vcenter" aria-hidden="true">#</a></h2>
+<p>On n'installe pas d'agent sur un ESXi : un agent de votre parc interroge l'API vSphere avec un compte au rôle <strong>ReadOnly</strong>.</p>
+<pre><code class="language-yaml">integrations:
+  vsphere:
+    interval: 60s
+    targets:
+      - name: vcenter
+        url: https://vcenter.exemple/sdk
+        username: hypha@vsphere.local
+        password: &quot;…&quot;
+        thumbprint: &quot;AA:BB:…&quot;     # empreinte SHA-1 d&#x27;un certificat autosigné
+        # insecure: true          # à éviter : accepte n&#x27;importe quel certificat
+        tags: {site: paris}</code></pre>
+<p>Ce que HYPHA relève :</p>
+<ul><li>hôtes ESXi : état, alarmes, mode maintenance, CPU, mémoire, VM en marche, durée de fonctionnement (<code>vsphere.host.*</code>) ;</li><li>datastores : accessibilité et occupation (<code>vsphere.datastore.*</code>) ;</li><li>VM : alimentation, état, signal du système invité, CPU, mémoire, ancienneté du plus vieil instantané (<code>vsphere.vm.*</code>) ;</li><li>événements de vSphere.</li></ul>
+<p>Les hôtes ESXi et les VM deviennent des ressources dans <strong>Infrastructure</strong>. Une VM qui porte aussi un agent HYPHA est rapprochée de son hôte par son numéro de série (« VMware-… ») : une seule ligne, et sa fiche montre ce que vSphere en dit.</p>
+<h2 id="proxmox-ve">Proxmox VE<a class="anchor" href="#proxmox-ve" aria-hidden="true">#</a></h2>
+<p>Deux façons de lire la grappe :</p>
+<ul><li><strong>Sur un nœud Proxmox</strong> : l'agent utilise <code>pvesh</code> en root, sans compte, dans une unité systemd à part et bornée. Seul le premier nœud en ligne lit la grappe : les autres agents se taisent, sans doublon.</li><li><strong>À distance</strong> : l'API avec un jeton au rôle <strong>PVEAuditor</strong>.</li></ul>
+<pre><code class="language-yaml">integrations:
+  proxmox:
+    url: https://pve.exemple:8006
+    token_id: &quot;hypha@pve!lecture&quot;
+    token_secret: &quot;…&quot;
+    ca_file: /etc/hypha/pve-ca.pem</code></pre>
+<p>Contrôles : quorum de la grappe, nœud hors ligne, stockage indisponible, invité HA hors de l'état demandé, dernière sauvegarde (vzdump) de chaque nœud en échec, levé dès que la suivante réussit. Mesures des nœuds, des stockages et des invités (VM et conteneurs). Les tâches en échec deviennent des événements.</p>
+<h2 id="hyper-v">Hyper-V<a class="anchor" href="#hyper-v" aria-hidden="true">#</a></h2>
+<p>Sous Windows, l'agent lit <code>Get-VM</code> quand le service Hyper-V est présent ; aucun réglage.</p>
+<ul><li>Contrôle <code>hyperv.vm</code> par VM : état critique (stockage injoignable), pause, arrêt d'une VM dont le démarrage automatique est « toujours », signal de vie du système invité perdu.</li><li>Contrôle <code>hyperv.vm.replication</code> : santé de la réplication.</li><li>Mesures : CPU, mémoire attribuée et demandée, vCPU, durée de fonctionnement, nombre de points de contrôle et âge du plus ancien (un fichier AVHDX oublié grossit sans fin).</li></ul>
+<h2 id="kvm-et-libvirt">KVM et libvirt<a class="anchor" href="#kvm-et-libvirt" aria-hidden="true">#</a></h2>
+<p>Sur l'hôte, <code>virsh</code> en lecture seule (<code>qemu:///system</code> par défaut, réglable par <code>uri</code>).</p>
+<ul><li>Domaines : état et raison, CPU, vCPU, mémoire, disques, réseau (<code>libvirt.domain.*</code>).</li><li>Contrôles : domaine planté, mis en pause sur erreur d'entrée-sortie (pool plein, le cas classique), arrêté alors que son démarrage automatique est actif ; pool de stockage inactif ou inaccessible.</li><li>Pools : occupation et espace disponible (<code>libvirt.pool.*</code>).</li></ul>
+<h2 id="virtualbox">VirtualBox<a class="anchor" href="#virtualbox" aria-hidden="true">#</a></h2>
+<p>L'agent de l'hôte relève les VM déclarées et en marche, et signale une VM à démarrage automatique arrêtée (<code>virtualbox.vm.running</code>). Réglage <code>user</code> pour ne suivre qu'un compte.</p>
+<h2 id="modeles-de-moniteurs">Modèles de moniteurs<a class="anchor" href="#modeles-de-moniteurs" aria-hidden="true">#</a></h2>
+<p>Famille <strong>Virtualisation</strong> du catalogue : connecteur vSphere en échec, hôte ESXi en défaut, datastore inaccessible ou presque plein, VM vSphere en défaut, instantané ancien ; Proxmox injoignable, quorum perdu, nœud hors ligne, stockage indisponible ou presque plein, invité HA hors de son état, sauvegarde en échec ; VM Hyper-V en défaut, point de contrôle ancien, réplication dégradée ; VM KVM en défaut, pool inactif ou presque plein.</p><p class="updated">Mise à jour : 19 novembre 2026</p><nav class="pager" aria-label="pages"><a href="/docs/cloud/"><small>Précédent</small>Clouds</a><a href="/docs/metriques/" style="text-align:right"><small>Suivant</small>Métriques et tableaux</a></nav></main></div>
+<footer class="foot"><div class="foot-in"><span class="grow">HYPHA, un produit de S33D. Service hébergé en France, sur l&#x27;infrastructure en propre de S33D.</span><a href="/docs/" aria-current="page">Documentation</a><a href="/tarifs/">Tarifs</a><a href="/faq/">FAQ</a><a href="/mentions-legales/">Mentions légales</a><a href="/cgv/">Conditions de vente</a><a href="/confidentialite/">Confidentialité</a><a href="https://s33d.fr" rel="noopener">s33d.fr</a></div></footer>
+<script>(function(){var c="Copier",d="Copi\u00e9";document.querySelectorAll('.doc pre').forEach(function(p){var b=document.createElement('button');b.type='button';b.className='copy';b.textContent=c;b.onclick=function(){var x=p.querySelector('code');navigator.clipboard&&navigator.clipboard.writeText(x?x.innerText:p.innerText).then(function(){b.textContent=d;setTimeout(function(){b.textContent=c},1500)})};p.appendChild(b)});var n=document.querySelector('.side details');if(n&&window.matchMedia('(max-width: 860px)').matches)n.removeAttribute('open');document.querySelectorAll('a[data-lang]').forEach(function(a){a.addEventListener('click',function(){try{localStorage.setItem('hypha.lang',a.getAttribute('data-lang'))}catch(e){}})});})();</script>
+</body>
+</html>

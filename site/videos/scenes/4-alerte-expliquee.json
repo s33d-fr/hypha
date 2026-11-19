@@ -1,0 +1,18 @@
+{
+  "title": {"fr": "Une alerte expliquée, une réparation proposée", "en": "An alert explained, a repair proposed"},
+  "steps": [
+    {"goto": "/#/problems"},
+    {"waitFor": ".explain-btn", "wait": 2500},
+    {"record": true, "caption": true, "fr": "Problèmes : les alertes en cours, par priorité", "en": "Problems: current alerts, by priority", "dur": 4000, "wait": 4300},
+    {"move": ".explain-btn", "within": "tr", "contains": "shop-worker", "wait": 600},
+    {"caption": true, "fr": "« Expliquer » : HYPHA rassemble journaux, métriques et processus", "en": "\"Explain\": HYPHA gathers logs, metrics and processes", "dur": 4200, "wait": 400},
+    {"click": ".explain-btn", "within": "tr", "contains": "shop-worker", "wait": 3600},
+    {"pause": true},
+    {"waitFor": ".explain-content .md", "timeout": 90000, "wait": 3000},
+    {"resume": true, "wait": 600},
+    {"caption": true, "fr": "Ce qui se passe, la cause probable et ses preuves, le correctif", "en": "What is happening, the probable cause and its evidence, the fix", "dur": 5000, "wait": 5500},
+    {"eval": "(() => { const a = document.querySelector('.explain-actions'); if (a) a.scrollIntoView({ behavior: 'smooth', block: 'center' }); })()", "wait": 1800},
+    {"move": ".explain-actions .btn", "wait": 400},
+    {"caption": true, "fr": "Le geste proposé se valide d'un clic ; l'agent l'exécute et rend la sortie", "en": "The proposed action is approved in one click; the agent runs it and returns the output", "dur": 5000, "wait": 5500}
+  ]
+}

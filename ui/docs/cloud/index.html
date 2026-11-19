@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clouds AWS, Azure, Google Cloud, OVHcloud et Scaleway · HYPHA</title>
+<meta name="description" content="Connecteurs cloud de HYPHA en lecture seule : instances AWS EC2, volumes EBS et alarmes CloudWatch, VM Azure et Resource Health, Compute Engine, serveurs OVHcloud, Scaleway Instances et Elastic Metal.">
+<link rel="canonical" href="https://hypha.s33d.fr/docs/cloud/">
+<link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/cloud/">
+<link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/cloud/">
+<link rel="alternate" hreflang="x-default" href="https://hypha.s33d.fr/docs/cloud/">
+<meta name="color-scheme" content="dark light">
+<meta property="og:title" content="Clouds AWS, Azure, Google Cloud, OVHcloud et Scaleway">
+<meta property="og:description" content="Connecteurs cloud de HYPHA en lecture seule : instances AWS EC2, volumes EBS et alarmes CloudWatch, VM Azure et Resource Health, Compute Engine, serveurs OVHcloud, Scaleway Instances et Elastic Metal.">
+<meta property="og:url" content="https://hypha.s33d.fr/docs/cloud/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="HYPHA">
+<link rel="icon" type="image/svg+xml" href="/assets/img/hypha.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('hypha.theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Documentation", "item": "https://hypha.s33d.fr/docs/"}, {"@type": "ListItem", "position": 2, "name": "Clouds AWS, Azure, Google Cloud, OVHcloud et Scaleway", "item": "https://hypha.s33d.fr/docs/cloud/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a><header class="top"><div class="top-in"><a class="brand" href="/" aria-label="HYPHA"><img src="/assets/img/hypha.svg" alt="" width="28" height="28"><span>HYPHA<small>par S33D</small></span></a><nav aria-label="HYPHA"><a href="/docs/" aria-current="page">Documentation</a><a href="/tarifs/">Tarifs</a><a href="/faq/" class="hide-sm">FAQ</a><a class="lang" href="/en/docs/cloud/" hreflang="en" data-lang="en" title="English">EN</a><a class="btn" href="/">Se connecter</a></nav></div></header>
+<div class="wrap"><aside class="side"><details class="nav" open><summary>Sommaire de la documentation</summary><h2>Démarrer</h2><ul><li><a href="/docs/">Vue d&#x27;ensemble</a></li><li><a href="/docs/demarrage/">Démarrer</a></li><li><a href="/docs/videos/">Vidéos</a></li></ul><h2>Installer l&#x27;agent</h2><ul><li><a href="/docs/agent-linux/">Linux</a></li><li><a href="/docs/agent-windows/">Windows</a></li><li><a href="/docs/agent-docker/">Docker</a></li><li><a href="/docs/kubernetes/">Kubernetes</a></li><li><a href="/docs/configuration/">Configuration de l&#x27;agent</a></li><li><a href="/docs/flotte/">Flotte et mises à jour</a></li></ul><h2>Intégrations</h2><ul><li><a href="/docs/integrations/">Système, web et messagerie</a></li><li><a href="/docs/bases-de-donnees/">Bases de données</a></li><li><a href="/docs/snmp/">SNMP</a></li><li><a href="/docs/cloud/" aria-current="page">Clouds</a></li><li><a href="/docs/virtualisation/">Virtualisation</a></li></ul><h2>Observer</h2><ul><li><a href="/docs/metriques/">Métriques et tableaux</a></li><li><a href="/docs/journaux/">Journaux</a></li><li><a href="/docs/traces/">Traces et OpenTelemetry</a></li><li><a href="/docs/synthetiques/">Tests synthétiques</a></li></ul><h2>Alerter et agir</h2><ul><li><a href="/docs/moniteurs/">Moniteurs</a></li><li><a href="/docs/alertes-et-canaux/">Alertes et canaux</a></li><li><a href="/docs/maintenances/">Maintenances</a></li><li><a href="/docs/incidents/">Incidents</a></li><li><a href="/docs/slo/">SLO</a></li><li><a href="/docs/pages-de-statut/">Pages de statut</a></li><li><a href="/docs/explication-et-reparation/">Explication et réparation</a></li></ul><h2>Administrer</h2><ul><li><a href="/docs/comptes-et-roles/">Comptes et rôles</a></li><li><a href="/docs/formules-et-facturation/">Formules et facturation</a></li><li><a href="/docs/api/">API</a></li><li><a href="/docs/auto-hebergement/">Auto-hébergement</a></li><li><a href="/docs/securite/">Sécurité</a></li></ul></details></aside><main class="doc" id="contenu"><div class="crumbs"><a href="/docs/">Documentation</a> › Intégrations</div><h1>Clouds AWS, Azure, Google Cloud, OVHcloud et Scaleway</h1><p class="lead">Un agent lit l'API du fournisseur avec un compte en lecture seule. Les instances deviennent des ressources dans HYPHA, à côté de vos hôtes.</p><h2 id="principe">Principe<a class="anchor" href="#principe" aria-hidden="true">#</a></h2>
+<ul><li>Le connecteur tourne dans un agent de votre choix : il lui faut seulement un accès sortant vers l'API du fournisseur.</li><li>Il s'active dès que ses identifiants sont posés. Rangez-les dans un fichier <code>conf.d</code> réservé à root (600).</li><li>Chaque instance ou serveur devient une <strong>ressource cloud</strong> : un hôte sans agent, rattaché à l'agent qui l'interroge, avec son état chez le fournisseur et ses contrôles.</li><li>Si un agent HYPHA tourne aussi dans l'instance, HYPHA rapproche les deux (même numéro de série, ou même adresse publique) et n'affiche qu'une ligne. La fiche de l'hôte montre alors « Vu par les connecteurs ».</li><li>Plusieurs comptes ou projets : une liste <code>instances</code> (voir <a href="/docs/configuration/#plusieurs-instances">Configuration</a>).</li><li>Chaque connecteur publie <code>&lt;nom&gt;.can_connect</code>. Le catalogue de moniteurs porte un modèle « connecteur en échec » par fournisseur.</li></ul>
+<h2 id="aws">AWS<a class="anchor" href="#aws" aria-hidden="true">#</a></h2>
+<p>Lecture d'EC2, d'EBS, des alarmes CloudWatch et de l'identité du compte, par une politique IAM en lecture seule :</p>
+<pre><code class="language-json">{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [{
+    &quot;Effect&quot;: &quot;Allow&quot;,
+    &quot;Action&quot;: [&quot;ec2:DescribeInstances&quot;, &quot;ec2:DescribeInstanceStatus&quot;, &quot;ec2:DescribeVolumes&quot;,
+               &quot;cloudwatch:DescribeAlarms&quot;, &quot;sts:GetCallerIdentity&quot;],
+    &quot;Resource&quot;: &quot;*&quot;
+  }]
+}</code></pre>
+<pre><code class="language-yaml">integrations:
+  aws:
+    access_key_id: AKIA…
+    secret_access_key: &quot;…&quot;
+    regions: [eu-west-3, eu-central-1]
+    interval: 5m
+    metrics: false</code></pre>
+<ul><li>Instances : état, type, adresses, contrôles d'état d'EC2 et événements planifiés (<code>aws.ec2.status</code>).</li><li>Volumes EBS en erreur (<code>aws.ebs.volume</code>), alarmes CloudWatch déclenchées (<code>aws.cloudwatch.alarm</code>).</li><li><code>metrics: true</code> ajoute le CPU des instances par <code>cloudwatch:GetMetricData</code> (à ajouter à la politique). Cet appel est facturé par AWS à votre compte : il reste coupé par défaut.</li></ul>
+<h2 id="azure">Azure<a class="anchor" href="#azure" aria-hidden="true">#</a></h2>
+<p>Un principal de service au rôle <strong>Lecteur</strong> sur chaque abonnement suivi :</p>
+<pre><code class="language-bash">az ad sp create-for-rbac --name hypha-lecture --role Reader --scopes /subscriptions/&lt;id-abonnement&gt;</code></pre>
+<pre><code class="language-yaml">integrations:
+  azure:
+    tenant_id: &quot;…&quot;
+    client_id: &quot;…&quot;
+    client_secret: &quot;…&quot;
+    subscriptions: [&quot;&lt;id-abonnement&gt;&quot;]</code></pre>
+<ul><li>VM : taille, système, état d'alimentation, adresses (interfaces et IP publiques).</li><li>Santé vue par Azure (Resource Health) : contrôle <code>azure.vm.health</code>. Une VM désallouée par son propriétaire n'est pas une panne.</li><li>Alertes d'Azure Monitor déclenchées : un contrôle par abonnement, qui revient au vert dès qu'aucune n'est active.</li></ul>
+<h2 id="google-cloud">Google Cloud<a class="anchor" href="#google-cloud" aria-hidden="true">#</a></h2>
+<p>Un compte de service au rôle <strong>Lecteur de Compute</strong> (<code>roles/compute.viewer</code>) et sa clé JSON, dans un fichier à part :</p>
+<pre><code class="language-yaml">integrations:
+  gcp:
+    credentials_file: /etc/hypha/gcp-lecture.json   # 600, root
+    projects: [mon-projet]</code></pre>
+<p>Les instances de toutes les zones du projet : état, type, adresses (<code>gcp.instance.status</code>). Une instance que Google répare (<code>REPAIRING</code>) passe en critique.</p>
+<h2 id="ovhcloud">OVHcloud<a class="anchor" href="#ovhcloud" aria-hidden="true">#</a></h2>
+<p>Une application de l'API OVHcloud et une clé « consumer » limitée aux lectures : droits <code>GET</code> sur <code>/dedicated/server*</code>, <code>/ip*</code> et <code>/domain*</code>.</p>
+<pre><code class="language-yaml">integrations:
+  ovhcloud:
+    endpoint: https://eu.api.ovh.com/1.0
+    application_key: &quot;…&quot;
+    application_secret: &quot;…&quot;
+    consumer_key: &quot;…&quot;
+    interval: 15m</code></pre>
+<p>Ce que l'agent d'une machine ne voit pas :</p>
+<ul><li>l'état de chaque serveur dédié vu par OVHcloud (<code>ovh.dedicated_server.state</code>) ;</li><li>les adresses IP bloquées pour spam (<code>ovh.ip.spam</code>) ou pour piratage (<code>ovh.ip.antihack</code>) ;</li><li>la mitigation anti-DDoS en cours (<code>ovh.ip.mitigation</code>) ;</li><li>l'échéance des services et des domaines (<code>ovh.service.renewal</code>, <code>ovh.service.days_left</code>), relue toutes les 6 heures ;</li><li>les interventions et tâches d'OVHcloud sur vos serveurs, en événements.</li></ul>
+<p>Seuls des <code>GET</code> partent, espacés de 200 ms ; 5 minutes au moins entre deux passages.</p>
+<h2 id="scaleway">Scaleway<a class="anchor" href="#scaleway" aria-hidden="true">#</a></h2>
+<p>La clé d'API d'un membre IAM aux droits <code>InstancesReadOnly</code> et <code>ElasticMetalReadOnly</code> :</p>
+<pre><code class="language-yaml">integrations:
+  scaleway:
+    secret_key: &quot;…&quot;
+    zones: [fr-par-1, fr-par-2, nl-ams-1]</code></pre>
+<p>Par zone : les instances (état, verrouillage, maintenances planifiées) et les serveurs Elastic Metal (état, réponse au ping de Scaleway).</p>
+<h2 id="ce-que-cela-coute">Ce que cela coûte<a class="anchor" href="#ce-que-cela-coute" aria-hidden="true">#</a></h2>
+<ul><li>Côté fournisseur : les lectures d'EC2, de STS, d'Azure Resource Manager et de Compute Engine ne sont pas facturées ; chez AWS, <code>DescribeAlarms</code> entre dans le volume d'appels CloudWatch offert chaque mois, et <code>metrics: true</code> est facturé. Vérifiez les conditions de votre fournisseur.</li><li>Côté HYPHA : chaque ressource lue par un connecteur compte comme un équipement. Voir les <a href="/tarifs/">tarifs</a>.</li></ul><p class="updated">Mise à jour : 19 novembre 2026</p><nav class="pager" aria-label="pages"><a href="/docs/snmp/"><small>Précédent</small>SNMP</a><a href="/docs/virtualisation/" style="text-align:right"><small>Suivant</small>Virtualisation</a></nav></main></div>
+<footer class="foot"><div class="foot-in"><span class="grow">HYPHA, un produit de S33D. Service hébergé en France, sur l&#x27;infrastructure en propre de S33D.</span><a href="/docs/" aria-current="page">Documentation</a><a href="/tarifs/">Tarifs</a><a href="/faq/">FAQ</a><a href="/mentions-legales/">Mentions légales</a><a href="/cgv/">Conditions de vente</a><a href="/confidentialite/">Confidentialité</a><a href="https://s33d.fr" rel="noopener">s33d.fr</a></div></footer>
+<script>(function(){var c="Copier",d="Copi\u00e9";document.querySelectorAll('.doc pre').forEach(function(p){var b=document.createElement('button');b.type='button';b.className='copy';b.textContent=c;b.onclick=function(){var x=p.querySelector('code');navigator.clipboard&&navigator.clipboard.writeText(x?x.innerText:p.innerText).then(function(){b.textContent=d;setTimeout(function(){b.textContent=c},1500)})};p.appendChild(b)});var n=document.querySelector('.side details');if(n&&window.matchMedia('(max-width: 860px)').matches)n.removeAttribute('open');document.querySelectorAll('a[data-lang]').forEach(function(a){a.addEventListener('click',function(){try{localStorage.setItem('hypha.lang',a.getAttribute('data-lang'))}catch(e){}})});})();</script>
+</body>
+</html>

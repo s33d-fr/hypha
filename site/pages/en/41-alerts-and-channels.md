@@ -1,0 +1,65 @@
+---
+id: alerts
+path: /en/docs/alerts-and-channels/
+title: Alerts, Problems view and notification channels
+nav: Alerts and channels
+section: Alert and act
+order: 41
+updated: 2026-11-19
+description: The HYPHA Problems view, acknowledgement, priorities, escalations, and the eleven notification channels: email, webhook, Slack, Teams, Telegram, Discord, Google Chat, Mattermost, ntfy, PagerDuty, Opsgenie.
+lead: A single list of what is wrong, sorted by priority, and notifications that reach the place where the team works.
+---
+## The Problems view
+
+At the top of the sidebar, **Problems** lists every monitor group of the workspace that is not OK, sorted by priority then age. A count of unacknowledged problems stays visible in the sidebar.
+
+For each line: priority, state, monitor, group, host, value, running duration, acknowledgement, last notification. Actions:
+
+- **Acknowledge**, with a comment: renotifications and escalations stop; a return to OK clears the acknowledgement. Multiple selection acknowledges in bulk.
+- **Explain**: S33D's AI describes the probable cause (see [Explain and repair](/en/docs/explain-and-repair/)).
+- **Put in downtime** (see [Downtimes](/en/docs/downtimes/)).
+- **Open an incident**, pre-filled with the monitor, the group and their history (see [Incidents](/en/docs/incidents/)).
+
+Filters: priority, state, acknowledged or not, held by a downtime or a dependency, free text.
+
+## Priorities
+
+| Priority | Colour | Suggested use |
+|---|---|---|
+| P1 | red | service down for customers |
+| P2 | orange | outage getting worse or hitting a feature |
+| P3 | yellow | degradation to handle within the day |
+| P4 | blue | to schedule |
+| P5 | grey | information |
+
+## Notification channels
+
+**Settings › Notification channels** (administrator role). Each channel has a **Send a test** button.
+
+| Channel | Settings |
+|---|---|
+| Email | one or more addresses; plain HTML message with the state, value, threshold, link to the monitor and to the explanation, and the host's latest log lines |
+| Webhook | address and headers; JSON body `{monitor, group, state, value, message, url}` |
+| Slack, Microsoft Teams, Google Chat, Discord, Mattermost | incoming webhook address |
+| Telegram | bot token and chat identifier |
+| ntfy | server, topic, optional token |
+| PagerDuty | routing key (Events API v2): trigger then resolve |
+| Opsgenie | API key and region (EU or US): create then close |
+
+Each send has 10 seconds to succeed, and two retries. A channel's secrets (tokens, keys, headers) are never shown again.
+
+SMS notifications, planned for the Pro and Entreprise plans (€0.10 excl. VAT each), are not open yet.
+
+## Escalations
+
+In a monitor's options: if a group stays non-OK and unacknowledged after a delay (for example 15 minutes), HYPHA notifies other channels, with their own message. Several steps can follow each other.
+
+## Scheduled reports
+
+**Settings › Reports** sends by email, on the chosen schedule:
+
+- a **summary**: host availability, alerts by priority, noisiest monitors, problem duration, SLOs, incidents, hosts that appeared or disappeared, pending security updates, certificates to renew within 30 days;
+- the **SLO status**;
+- a **dashboard** rendered as values and small charts.
+
+Each report has a preview and a send-now button.

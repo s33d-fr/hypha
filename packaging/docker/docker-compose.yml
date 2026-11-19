@@ -1,0 +1,72 @@
+# HYPHA auto-hébergé : PostgreSQL 18, API, worker, nginx (interface, binaires de l'agent, routage de
+# /api et /v1). Les images viennent du registre S33D ; aucun dépôt de code n'est nécessaire.
+#
+#   cp env.example .env         # puis remplir (notice : https://hypha.s33d.fr/auto-hebergement/)
+#   mkdir -p certs              # certs/fullchain.pem et certs/privkey.pem
+#   docker compose up -d
+#
+# Seul nginx publie un port, en HTTPS. L'API n'est joignable que par le réseau interne du projet.
+# Les données (métriques, journaux, traces) restent dans le volume hypha-db, chez vous.
+name: hypha
+
+x-server: &server
+  image: registre-vm.s33d.fr/hypha/server:${HYPHA_VERSION:-0.4.7}
+  env_file: .env
+  environment:
+    HYPHA_MODE: selfhosted
+    HYPHA_DB_WRITE: postgresql://hypha:${HYPHA_DB_PASSWORD:?HYPHA_DB_PASSWORD manque dans .env}@db:5432/hypha
+    HYPHA_LISTEN: 0.0.0.0:8231
+    # L'API ne reçoit que du nginx du projet (port non publié) : X-Forwarded-For est digne de foi.
+    HYPHA_TRUSTED_PROXIES: "*"
+  restart: unless-stopped
+
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: hypha
+      POSTGRES_USER: hypha
+      POSTGRES_PASSWORD: ${HYPHA_DB_PASSWORD:?HYPHA_DB_PASSWORD manque dans .env}
+    volumes:
+      - hypha-db:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hypha -d hypha"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  migrate:
+    <<: *server
+    command: ["migrate"]
+    restart: "no"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api:
+    <<: *server
+    command: ["api"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  worker:
+    <<: *server
+    command: ["worker"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  nginx:
+    image: registre-vm.s33d.fr/hypha/web:${HYPHA_VERSION:-0.4.7}
+    ports:
+      - "${HYPHA_HTTPS_PORT:-443}:443"
+    volumes:
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  hypha-db:

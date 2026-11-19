@@ -1,0 +1,16 @@
+{
+  "title": {"fr": "Premiers pas : de l'agent à la fiche d'un hôte", "en": "First steps: from the agent to a host page"},
+  "steps": [
+    {"goto": "/#/settings/install"},
+    {"waitFor": ".code", "wait": 2500},
+    {"record": true, "caption": true, "fr": "Réglages › Installer l'agent : une commande par système", "en": "Settings › Install the agent: one command per system", "dur": 4500, "wait": 4800},
+    {"click": "a.nav-item", "contains": {"fr": "Vue d’ensemble", "en": "Overview"}, "wait": 1200},
+    {"caption": true, "fr": "La vue d'ensemble : hôtes, alertes et tendances", "en": "The overview: hosts, alerts and trends", "dur": 4000, "wait": 4300},
+    {"click": "a.nav-item", "contains": {"fr": "Infrastructure", "en": "Infrastructure"}, "wait": 1500},
+    {"caption": true, "fr": "Infrastructure : chaque hôte, sa charge et son état", "en": "Infrastructure: every host, its load and its state", "dur": 4000, "wait": 4300},
+    {"click": "a[href*='/infrastructure/host/']", "contains": "web-02", "wait": 3800},
+    {"caption": true, "fr": "La fiche d'un hôte : métriques, processus, journaux, contrôles", "en": "A host page: metrics, processes, logs, checks", "dur": 4500, "wait": 3000},
+    {"scroll": 420, "wait": 2200},
+    {"scroll": 420, "wait": 2500}
+  ]
+}

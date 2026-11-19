@@ -1,0 +1,7 @@
+# Seuls le serveur et le schéma entrent dans l'image.
+*
+!server/requirements.txt
+!server/hypha/**
+!schema/*.sql
+**/__pycache__
+**/*.pyc

@@ -1,0 +1,42 @@
+[Unit]
+Description=HYPHA : agent de collecte (métriques, journaux, contrôles)
+Documentation=https://hypha.s33d.fr
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# root : lecture de tous les journaux et du /proc de tous les processus (contrat § 5).
+# La réduction des droits est prévue plus tard.
+User=root
+# Mise à jour signée (contrat § 27) : /usr est en lecture seule pour l'agent (ProtectSystem) ;
+# il prépare le binaire vérifié sous /var/lib/hypha/update puis sort, et cette commande, lancée
+# avec tous les droits (+) avant l'agent, revérifie la signature et le pose. Sans préparation,
+# elle ne fait rien ; en échec, l'ancien binaire reste et l'agent démarre quand même (-).
+ExecStartPre=-+/usr/bin/hypha-agent apply-update
+ExecStart=/usr/bin/hypha-agent run --config /etc/hypha/hypha.yaml
+Restart=always
+RestartSec=10
+KillMode=mixed
+TimeoutStopSec=30
+StateDirectory=hypha
+StateDirectoryMode=0700
+
+# L'agent ne doit jamais gêner l'hôte qu'il surveille : priorité basse et plafonds.
+# Les plafonds ne servent qu'en cas d'emballement (l'agent vise < 1 % d'un cœur, < 60 Mo).
+Nice=10
+IOSchedulingClass=idle
+CPUQuota=25%
+MemoryHigh=128M
+MemoryMax=256M
+TasksMax=64
+LimitNOFILE=8192
+
+# Durcissement : /usr, /boot et /etc en lecture seule pour l'agent, qui n'écrit que sous /var/lib/hypha.
+NoNewPrivileges=yes
+ProtectSystem=full
+ProtectHome=read-only
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

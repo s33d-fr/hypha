@@ -1,0 +1,15 @@
+{
+  "title": {"fr": "Traces : du service à la requête", "en": "Traces: from the service to the request"},
+  "steps": [
+    {"goto": "/#/apm?t=1h"},
+    {"waitFor": "a[href*='/apm/service/']", "wait": 2500},
+    {"record": true, "caption": true, "fr": "APM : débit, erreurs et latence de chaque service", "en": "APM: throughput, errors and latency of every service", "dur": 4000, "wait": 4300},
+    {"click": "a[href*='/apm/service/']", "contains": "shop-api", "wait": 2500},
+    {"caption": true, "fr": "Un service : opérations, ressources et déploiements", "en": "A service: operations, resources and deployments", "dur": 4200, "wait": 4500},
+    {"hash": "#/apm/traces?service=shop-api&t=1h", "wait": 2500},
+    {"click": "tbody tr", "contains": "POST /api/commande", "wait": 3500},
+    {"caption": true, "fr": "Une trace en cascade : base, cache, service de stock", "en": "A trace waterfall: database, cache, stock service", "dur": 4500, "wait": 5000},
+    {"hash": "#/services/map?t=1h", "wait": 3500},
+    {"caption": true, "fr": "La carte des services, tirée des traces", "en": "The service map, drawn from the traces", "dur": 4000, "wait": 4500}
+  ]
+}

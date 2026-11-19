@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancer l&#x27;agent en conteneur Docker · HYPHA</title>
+<meta name="description" content="Lancer hypha-agent dans un conteneur Docker qui observe l&#x27;hôte et ses conteneurs ; volumes, droits et fichiers journaux.">
+<link rel="canonical" href="https://hypha.s33d.fr/docs/agent-docker/">
+<link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/agent-docker/">
+<link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/agent-docker/">
+<link rel="alternate" hreflang="x-default" href="https://hypha.s33d.fr/docs/agent-docker/">
+<meta name="color-scheme" content="dark light">
+<meta property="og:title" content="Lancer l&#x27;agent en conteneur Docker">
+<meta property="og:description" content="Lancer hypha-agent dans un conteneur Docker qui observe l&#x27;hôte et ses conteneurs ; volumes, droits et fichiers journaux.">
+<meta property="og:url" content="https://hypha.s33d.fr/docs/agent-docker/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="HYPHA">
+<link rel="icon" type="image/svg+xml" href="/assets/img/hypha.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('hypha.theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Documentation", "item": "https://hypha.s33d.fr/docs/"}, {"@type": "ListItem", "position": 2, "name": "Lancer l'agent en conteneur Docker", "item": "https://hypha.s33d.fr/docs/agent-docker/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a><header class="top"><div class="top-in"><a class="brand" href="/" aria-label="HYPHA"><img src="/assets/img/hypha.svg" alt="" width="28" height="28"><span>HYPHA<small>par S33D</small></span></a><nav aria-label="HYPHA"><a href="/docs/" aria-current="page">Documentation</a><a href="/tarifs/">Tarifs</a><a href="/faq/" class="hide-sm">FAQ</a><a class="lang" href="/en/docs/agent-docker/" hreflang="en" data-lang="en" title="English">EN</a><a class="btn" href="/">Se connecter</a></nav></div></header>
+<div class="wrap"><aside class="side"><details class="nav" open><summary>Sommaire de la documentation</summary><h2>Démarrer</h2><ul><li><a href="/docs/">Vue d&#x27;ensemble</a></li><li><a href="/docs/demarrage/">Démarrer</a></li><li><a href="/docs/videos/">Vidéos</a></li></ul><h2>Installer l&#x27;agent</h2><ul><li><a href="/docs/agent-linux/">Linux</a></li><li><a href="/docs/agent-windows/">Windows</a></li><li><a href="/docs/agent-docker/" aria-current="page">Docker</a></li><li><a href="/docs/kubernetes/">Kubernetes</a></li><li><a href="/docs/configuration/">Configuration de l&#x27;agent</a></li><li><a href="/docs/flotte/">Flotte et mises à jour</a></li></ul><h2>Intégrations</h2><ul><li><a href="/docs/integrations/">Système, web et messagerie</a></li><li><a href="/docs/bases-de-donnees/">Bases de données</a></li><li><a href="/docs/snmp/">SNMP</a></li><li><a href="/docs/cloud/">Clouds</a></li><li><a href="/docs/virtualisation/">Virtualisation</a></li></ul><h2>Observer</h2><ul><li><a href="/docs/metriques/">Métriques et tableaux</a></li><li><a href="/docs/journaux/">Journaux</a></li><li><a href="/docs/traces/">Traces et OpenTelemetry</a></li><li><a href="/docs/synthetiques/">Tests synthétiques</a></li></ul><h2>Alerter et agir</h2><ul><li><a href="/docs/moniteurs/">Moniteurs</a></li><li><a href="/docs/alertes-et-canaux/">Alertes et canaux</a></li><li><a href="/docs/maintenances/">Maintenances</a></li><li><a href="/docs/incidents/">Incidents</a></li><li><a href="/docs/slo/">SLO</a></li><li><a href="/docs/pages-de-statut/">Pages de statut</a></li><li><a href="/docs/explication-et-reparation/">Explication et réparation</a></li></ul><h2>Administrer</h2><ul><li><a href="/docs/comptes-et-roles/">Comptes et rôles</a></li><li><a href="/docs/formules-et-facturation/">Formules et facturation</a></li><li><a href="/docs/api/">API</a></li><li><a href="/docs/auto-hebergement/">Auto-hébergement</a></li><li><a href="/docs/securite/">Sécurité</a></li></ul></details></aside><main class="doc" id="contenu"><div class="crumbs"><a href="/docs/">Documentation</a> › Installer l&#x27;agent</div><h1>Lancer l&#x27;agent en conteneur Docker</h1><p class="lead">L'image de l'agent observe l'hôte qui la porte, ses processus, son réseau et ses conteneurs.</p><h2 id="lancer">Lancer<a class="anchor" href="#lancer" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash">docker run -d --name hypha-agent --restart unless-stopped --network host --pid host \
+  --cap-add SYS_PTRACE --security-opt apparmor=unconfined \
+  -v /proc:/host/proc:ro -v /sys:/host/sys:ro -v /:/host/root:ro \
+  -v /var/run/docker.sock:/var/run/docker.sock:ro \
+  -v hypha-agent:/var/lib/hypha \
+  -e HYPHA_API_KEY=hph_votre_cle -e HYPHA_URL=https://hypha.s33d.fr \
+  registre-vm.s33d.fr/hypha/agent-docker:0.4.21</code></pre>
+<p>La page <strong>Réglages › Installer l'agent</strong>, onglet <strong>Docker</strong>, donne la commande avec la version publiée du moment.</p>
+<div class="table"><table><thead><tr><th>Option</th><th>Pourquoi</th></tr></thead><tbody><tr><td><code>--network host</code>, <code>--pid host</code></td><td>voir le réseau et les processus de l'hôte, pas ceux du conteneur</td></tr><tr><td><code>--cap-add SYS_PTRACE</code>, <code>apparmor=unconfined</code></td><td>rattacher chaque connexion à son processus</td></tr><tr><td><code>/proc</code>, <code>/sys</code>, <code>/</code> en lecture seule</td><td>mesures du système et des disques de l'hôte</td></tr><tr><td><code>docker.sock</code> en lecture seule</td><td>liste et mesures des conteneurs</td></tr><tr><td>volume <code>hypha-agent</code></td><td>identité de l'agent et tampon d'envoi, gardés d'un redémarrage à l'autre</td></tr></tbody></table></div>
+<h2 id="suivre-des-fichiers-journaux">Suivre des fichiers journaux<a class="anchor" href="#suivre-des-fichiers-journaux" aria-hidden="true">#</a></h2>
+<p>L'image ne lit pas le journal systemd de l'hôte : pour lui, installez l'agent sur l'hôte (<a href="/docs/agent-linux/">Linux</a>). Pour suivre des fichiers, montez-les puis montez une configuration qui les déclare :</p>
+<pre><code class="language-bash">-v /var/log/nginx:/host/log/nginx:ro \
+-v /etc/hypha/hypha.yaml:/etc/hypha/hypha.yaml:ro</code></pre>
+<pre><code class="language-yaml">logs:
+  enabled: true
+  journald: false
+  files:
+    - {path: /host/log/nginx/*.log, service: nginx, source: nginx}</code></pre>
+<p><code>HYPHA_API_KEY</code> et <code>HYPHA_URL</code> passés par <code>-e</code> l'emportent sur le fichier.</p>
+<h2 id="ce-qui-change-en-conteneur">Ce qui change en conteneur<a class="anchor" href="#ce-qui-change-en-conteneur" aria-hidden="true">#</a></h2>
+<ul><li>La mise à jour se fait par l'image (<code>docker pull</code> d'une nouvelle version), jamais par l'agent.</li><li>Les actions à distance sur les services de l'hôte ne sont pas disponibles : l'image n'a pas <code>systemctl</code>.</li><li>Les tests synthétiques privés, le SNMP, l'inventaire et les intégrations fonctionnent comme sur un hôte ; leurs réglages se montent dans <code>/etc/hypha/conf.d/</code>.</li></ul>
+<h2 id="relais-opentelemetry-et-statsd">Relais OpenTelemetry et StatsD<a class="anchor" href="#relais-opentelemetry-et-statsd" aria-hidden="true">#</a></h2>
+<p>Avec <code>--network host</code>, les applications de l'hôte joignent le relais OTLP de l'agent sur <code>127.0.0.1:4318</code> et StatsD sur <code>127.0.0.1:8125/udp</code>. Activez <code>otlp.enabled: true</code> dans la configuration montée. Voir <a href="/docs/traces/">Traces</a>.</p><p class="updated">Mise à jour : 19 novembre 2026</p><nav class="pager" aria-label="pages"><a href="/docs/agent-windows/"><small>Précédent</small>Windows</a><a href="/docs/kubernetes/" style="text-align:right"><small>Suivant</small>Kubernetes</a></nav></main></div>
+<footer class="foot"><div class="foot-in"><span class="grow">HYPHA, un produit de S33D. Service hébergé en France, sur l&#x27;infrastructure en propre de S33D.</span><a href="/docs/" aria-current="page">Documentation</a><a href="/tarifs/">Tarifs</a><a href="/faq/">FAQ</a><a href="/mentions-legales/">Mentions légales</a><a href="/cgv/">Conditions de vente</a><a href="/confidentialite/">Confidentialité</a><a href="https://s33d.fr" rel="noopener">s33d.fr</a></div></footer>
+<script>(function(){var c="Copier",d="Copi\u00e9";document.querySelectorAll('.doc pre').forEach(function(p){var b=document.createElement('button');b.type='button';b.className='copy';b.textContent=c;b.onclick=function(){var x=p.querySelector('code');navigator.clipboard&&navigator.clipboard.writeText(x?x.innerText:p.innerText).then(function(){b.textContent=d;setTimeout(function(){b.textContent=c},1500)})};p.appendChild(b)});var n=document.querySelector('.side details');if(n&&window.matchMedia('(max-width: 860px)').matches)n.removeAttribute('open');document.querySelectorAll('a[data-lang]').forEach(function(a){a.addEventListener('click',function(){try{localStorage.setItem('hypha.lang',a.getAttribute('data-lang'))}catch(e){}})});})();</script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+# Configuration de hypha-agent (contrat HYPHA § 5, compléments 0.4.0 : CONTRAT-04).
+# Linux : /etc/hypha/hypha.yaml (droits 600). Windows : C:\ProgramData\Hypha\hypha.yaml.
+# Vérifier après modification : hypha-agent check-config (affiche la conf fusionnée, secrets
+# masqués, et le fichier d'origine de chaque erreur).
+# Les variables d'environnement HYPHA_API_KEY et HYPHA_URL l'emportent sur ce fichier.
+#
+# Compléments : les fichiers conf.d/*.yaml du même dossier sont lus ensuite, dans l'ordre
+# alphabétique, et fusionnés par clé (récursivement pour les objets ; une liste remplace la
+# liste ; une clé absente garde sa valeur). Exemple : conf.d/10-parc.yaml posé par Ansible.
+# Un fichier illisible ou invalide arrête l'agent : jamais de conf à moitié lue.
+
+# Clé d'ingestion (Réglages → Clés API dans l'interface HYPHA). Obligatoire.
+api_key: ""
+
+# Serveur de collecte : hypha.s33d.fr, ou l'adresse du serveur auto-hébergé.
+url: https://hypha.s33d.fr
+
+# Nom de l'hôte dans HYPHA ; vide = nom système, en minuscules.
+hostname: ""
+
+# Étiquettes ajoutées à tout ce que l'agent envoie (clés : a-z 0-9 _ . - /).
+tags: {}
+#  env: prod
+#  role: web
+
+# Cadence des métriques et des contrôles.
+interval: 15s
+
+# Vérification du certificat du serveur : ne la couper que pour un serveur auto-hébergé
+# à certificat interne, en connaissance de cause.
+tls_skip_verify: false
+
+# Mandataire HTTP pour joindre le serveur (vide = variables HTTPS_PROXY / NO_PROXY).
+proxy: ""
+
+# Tampon disque des envois en échec (serveur injoignable) : les plus anciens sont jetés
+# au-delà de max_mb.
+buffer:
+  dir: /var/lib/hypha/buffer
+  max_mb: 256
+
+logs:
+  enabled: true
+  # Linux : journal systemd (journalctl), repris après le dernier envoi réussi.
+  journald: true
+  # Windows : journaux d'événements lus.
+  windows_eventlog: [System, Application]
+  # Fichiers suivis (motifs glob). Une ligne JSON est décodée : message/msg, level.
+  files: []
+  #  - {path: /var/log/nginx/*.log, service: nginx, source: nginx}
+  # Lignes jamais envoyées (expressions régulières sur le message).
+  exclude_patterns: []
+
+# Instantané des processus (60 s) : les 30 premiers par CPU et par mémoire, plus ceux
+# dont le nom ou la ligne de commande correspond à include (expressions régulières).
+processes:
+  enabled: true
+  include: []
+
+# Métriques réseau et instantané des connexions (60 s).
+network:
+  enabled: true
+  # Interfaces ignorées (motifs glob). Valeur par défaut :
+  # exclude_interfaces: [lo, "docker*", "veth*", "br-*", "virbr*", "cali*", "flannel*", "cni*", "Loopback Pseudo-Interface*"]
+
+# Conteneurs Docker (30 s) : auto = si /var/run/docker.sock existe ; true ; false.
+containers:
+  enabled: auto
+
+checks:
+  # Unités systemd suivies. Les unités en échec sont TOUJOURS signalées, suivies ou non.
+  systemd_units: []
+  # Services Windows suivis. Un service à démarrage automatique arrêté est TOUJOURS signalé.
+  windows_services: []
+  # Services automatiques à ne pas signaler quand ils sont arrêtés : expressions régulières
+  # (sans distinction de casse), en plus de la liste intégrée (services de mise à jour
+  # Google et Edge, services sur déclencheur…). Exemple : ["^MonAppliMaj", "^Veeam"]
+  windows_services_exclude: []
+  # Signaler les services automatiques arrêtés : auto = oui sur Windows Server, non sur une
+  # édition de poste de travail (les logiciels de constructeur y en laissent beaucoup) ;
+  # always ; never.
+  windows_auto_services: auto
+  # Contrôles HTTP : statut attendu (200 par défaut), délai (5 s par défaut).
+  http: []
+  #  - {name: site, url: "https://exemple.fr/", expect_status: 200, timeout: 5s}
+  # Contrôles TCP : ouverture du port (délai 3 s par défaut).
+  tcp: []
+  #  - {name: base, address: "192.0.2.20:5432", timeout: 3s}
+  # Présence de processus : contrôle process.up (CRIT hors de [min, max]) et métrique
+  # process.count. match : exact (nom, défaut), contains ou regex (nom ou ligne de commande).
+  # min vaut 1 si ni min ni max ne sont donnés.
+  processes: []
+  #  - {name: nginx}
+  #  - {name: gunicorn, match: contains, min: 2}
+  #  - {name: "^php-fpm[0-9.]*$", match: regex, min: 1, max: 1}
+
+# Intégrations : métriques des logiciels de l'hôte, noms compatibles Datadog, à chaque
+# intervalle. L'état de chacune apparaît dans l'interface (Agents) : ok, absent, disabled,
+# ou l'erreur rencontrée.
+integrations:
+  # PostgreSQL : auto = actif si la socket <socket_dir>/.s.PGSQL.<port> existe. Connexion
+  # par cette socket en tant qu'utilisateur système « user » (authentification peer, sans
+  # mot de passe, comme « sudo -u postgres psql »), ou par dsn s'il est renseigné
+  # (exemple : postgres://hypha:motdepasse@127.0.0.1:5432/postgres?sslmode=disable ;
+  # le rôle a besoin de pg_monitor). Session en lecture seule.
+  # dbm : requêtes les plus coûteuses (toutes les 5 min, 50 premières par durée totale) si
+  # l'extension pg_stat_statements existe dans la base postgres (auto), true, false.
+  postgres:
+    enabled: auto
+    dsn: ""
+    socket_dir: /var/run/postgresql
+    port: 5432
+    user: postgres
+    dbm: auto
+  # HAProxy : auto = actif si la socket d'administration existe (« show stat »), ou si url
+  # est renseignée (page CSV des stats, par exemple http://127.0.0.1:8404/stats;csv).
+  haproxy:
+    enabled: auto
+    socket: /run/haproxy/admin.sock
+    url: ""
+  # nginx : page stub_status (location /nginx_status { stub_status; allow 127.0.0.1; deny all; }).
+  nginx:
+    enabled: false
+    url: http://127.0.0.1/nginx_status
+  # Intégrations suivantes : auto = active après une première lecture réussie (logiciel
+  # absent : état « absent », aucun contrôle, nouvel essai toutes les 10 min) ; true ; false.
+  # Chacune publie <nom>.can_connect, ne casse jamais l'agent si l'outil manque.
+  # Apache : page mod_status (?auto) ; apache.net.hits, .bytes_per_s, .performance.*, .conns_total.
+  apache: {enabled: auto, url: "http://127.0.0.1/server-status?auto"}
+  # BIND : canal de statistiques JSON (statistics-channels { inet 127.0.0.1 port 8053; };),
+  # sinon « rndc status » (clients récursifs seuls).
+  bind: {enabled: auto, url: "http://127.0.0.1:8053/json"}
+  # Postfix : postqueue -j (files d'attente) ; remises (sent, deferred, bounced) comptées
+  # dans les journaux collectés (journald ou mail.log).
+  postfix: {enabled: auto}
+  # Dovecot : doveadm stats dump (2.2 et 2.3) et doveadm who.
+  dovecot: {enabled: auto}
+  # OpenVPN : fichiers de statut (serveur : clients ; client : débit du tunnel). Un fichier
+  # figé depuis 10 min passe openvpn.can_connect en CRIT.
+  openvpn:
+    enabled: auto
+    status_files: ["/run/openvpn-server/status-*.log", "/run/openvpn/*.status", "/var/log/openvpn/*status*.log",
+                   "/var/log/openvpn-status.log", "/etc/openvpn/*status*.log", "/etc/openvpn/server/*status*.log"]
+  # fail2ban : fail2ban-client status (relu toutes les 5 minutes : l'outil est en Python).
+  fail2ban: {enabled: auto}
+  # Certificats posés sur l'hôte : tls.cert.days_left, contrôle tls.cert.expiry
+  # (WARN sous 21 j, CRIT sous 7 j). Relus toutes les heures.
+  x509:
+    enabled: auto
+    paths: ["/etc/letsencrypt/live/*/cert.pem", "/etc/ssl/*/fullchain.pem"]
+  # SMART : smartctl (toutes les 30 min, sans réveiller un disque en veille).
+  smart: {enabled: auto}
+  # Capteurs du noyau (/sys/class/hwmon) : system.temperature, system.fan.rpm.
+  hwmon: {enabled: auto}
+  # Horloge : chronyc, timedatectl ou ntpq (Windows : w32tm) ; ntp.offset, contrôle ntp.in_sync.
+  ntp: {enabled: auto}
+  # VirtualBox : VM déclarées (VirtualBox.xml des comptes) et en marche (processus) ;
+  # contrôle virtualbox.vm.running des VM en démarrage automatique. user : un seul compte.
+  virtualbox: {enabled: auto, user: ""}
+  # Timers systemd : contrôle systemd.timer (CRIT si le dernier passage a échoué, WARN si un
+  # timer actif n'a pas tourné depuis deux périodes).
+  systemd_timers: {enabled: auto}
+  # Mises à jour en attente (sans « apt update » : liste du cache, relue toutes les heures) :
+  # system.updates.pending, .security, system.reboot_required ; Windows : windows.updates.pending.
+  updates: {enabled: auto}
+  # Windows : IIS et SQL Server par compteurs de performance.
+  iis: {enabled: auto}
+  mssql: {enabled: auto}
+  # Plusieurs cibles pour une même intégration (ovhcloud, mysql, redis, memcached, rabbitmq,
+  # mongodb, opensearch, kubernetes, libvirt, proxmox, aws, scaleway, azure, gcp) : une liste
+  # « instances », chacune nommée (name : minuscules, chiffres, - et _) et décodée sur les valeurs
+  # par défaut de l'intégration, activée sauf « enabled: false ». Ses mesures, contrôles et
+  # ressources portent l'étiquette instance_name. Les listes de plusieurs fichiers conf.d
+  # s'additionnent : un fichier par compte ou par grappe. Exemple :
+  # proxmox:
+  #   instances:
+  #     - name: grappe-b
+  #       url: https://pve-b.exemple:8006
+  #       token_id: hypha@pve!lecture
+  #       token_secret: "…"
+
+# Réception des métriques applicatives au format DogStatsD (UDP, boucle locale seulement).
+statsd:
+  enabled: true
+  listen: 127.0.0.1:8125
+
+# Relais OpenTelemetry (OTLP/HTTP) : les applications de l'hôte visent 127.0.0.1:4318,
+# l'agent transmet au serveur en ajoutant la clé.
+otlp:
+  enabled: false
+  listen: 127.0.0.1:4318
+
+# --- 0.4.0 -----------------------------------------------------------------------------
+
+# Canal de contrôle : l'agent interroge le serveur (aucun port ouvert sur l'hôte) pour les
+# actions à distance, les tests synthétiques privés et la version cible.
+control:
+  enabled: true
+  interval: 30s
+
+# Mise à jour automatique vers la version cible fixée dans l'interface (Flotte). Les fichiers
+# de <url>/install/ ne sont posés qu'après vérification de la signature ed25519 de
+# SHA256SUMS (clé publique embarquée dans l'agent), de leur somme SHA-256, de leur version, et
+# de la conf en place par la nouvelle version. Jamais en conteneur (mettre l'image à jour).
+auto_update: false
+
+# Actions à distance : gestes nommés, validés par un humain dans l'interface, exécutés ici
+# seulement s'ils passent cette liste blanche (sinon refused_by_agent, avec le motif).
+# Le service de l'agent n'est jamais touché, quelle que soit la liste.
+actions:
+  enabled: false
+  # Gestes admis : restart_service, start_service, stop_service, run_script, update_agent.
+  allow: [restart_service, start_service, stop_service]
+  # Unités systemd ou services Windows admis (motifs) ; "*" = tous, sauf deny_services.
+  services: ["*"]
+  deny_services: ["sshd*", "ssh*", "hypha-agent*", "systemd-*"]
+  # Scripts nommés (chemin absolu, propriétaire root, non modifiable par le groupe ou par
+  # tous) : lancés sans argument, sortie bornée à 64 Kio. Sous l'unité systemd, /usr et /etc
+  # restent en lecture seule pour eux (ProtectSystem).
+  scripts: {}
+  #  vider-cache-nginx: /etc/hypha/scripts/vider-cache-nginx.sh
+  timeout: 120s
+
+# Emplacement privé de tests synthétiques : les tests dont un emplacement est agent:<hôte>
+# tournent depuis le réseau de cet hôte (adresses internes comprises).
+synthetics:
+  enabled: false
+  max_concurrent: 4
+
+# Inventaire matériel et logiciel (CMDB légère) : au démarrage puis à cet intervalle,
+# envoyé seulement s'il a changé, et au moins une fois par jour.
+inventory:
+  enabled: true
+  interval: 6h
+  packages: true
+
+# Équipements réseau interrogés en SNMP depuis cet hôte (switchs, box, NAS, imprimantes,
+# onduleurs), publiés comme des hôtes à part entière. Les secrets SNMP restent ici : rien
+# n'en part vers le serveur. profile : auto (d'après sysObjectID), generic, mikrotik,
+# synology, printer, ups. interface_down : seen (défaut : CRIT seulement pour une interface
+# déjà vue en service ; un port libre reste OK) ou always.
+snmp:
+  enabled: true
+  interval: 60s
+  devices: []
+  #  - {name: switch-01, address: 192.0.2.252, version: 2c, community: public, tags: {role: switch}}
+  #  - {name: nas, address: 192.0.2.40, version: 3, user: hypha, auth_protocol: sha, auth_key: "…",
+  #     priv_protocol: aes, priv_key: "…", level: authPriv, profile: auto}
+  # Traps v1/v2c reçus : événements source=snmp, type=snmp_trap (60 par minute au plus).
+  traps: {enabled: false, listen: "0.0.0.0:162", community: public}

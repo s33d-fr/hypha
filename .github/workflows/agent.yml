@@ -1,0 +1,172 @@
+# Builds the HYPHA agent from this repository: Windows amd64, Linux amd64 and arm64.
+# - Version: from the tag vX.Y.Z; any other build is 0.0.0-dev+<commit>.
+# - Reproducible: same Go version and flags as agent/packaging/build.sh, so the Linux binaries of
+#   a tag are byte-identical to those built by packaging/build.sh for the same version.
+# - Windows: version resource (product name "HYPHA agent", product version of the tag) generated
+#   by go-winres before the build, as required by SignPath Foundation's artifact configuration.
+# - Signing: on a version tag only, through SignPath (manual approval in SignPath). The job is
+#   skipped while the repository secret SIGNPATH_API_TOKEN does not exist.
+#   Repository variables: SIGNPATH_ORGANIZATION_ID (required), SIGNPATH_PROJECT_SLUG (default
+#   "hypha"), SIGNPATH_SIGNING_POLICY_SLUG (default "release-signing"),
+#   SIGNPATH_ARTIFACT_CONFIGURATION_SLUG (default "hypha-agent-windows").
+# Third-party actions are pinned by commit.
+name: agent
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+    paths: ['agent/**', '.github/workflows/agent.yml']
+  pull_request:
+    paths: ['agent/**', '.github/workflows/agent.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: agent-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  GO_VERSION: '1.26.8'
+  GOTOOLCHAIN: local
+  CGO_ENABLED: '0'
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache-dependency-path: agent/go.sum
+      - name: Vet and test
+        working-directory: agent
+        run: |
+          go vet ./...
+          GOOS=windows go vet ./...
+          go test -count=1 ./...
+
+  build:
+    needs: test
+    runs-on: ubuntu-24.04
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      signpath: ${{ steps.signpath.outputs.enabled }}
+      windows-artifact-id: ${{ steps.upload-windows.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache-dependency-path: agent/go.sum
+
+      - name: Version
+        id: version
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            v="${GITHUB_REF_NAME#v}"
+            [[ "$v" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "::error::tag $GITHUB_REF_NAME is not vX.Y.Z"; exit 1; }
+            echo "version=$v" >> "$GITHUB_OUTPUT"
+            echo "winver=$v" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=0.0.0-dev+${GITHUB_SHA::12}" >> "$GITHUB_OUTPUT"
+            echo "winver=0.0.0" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Windows version resource
+        working-directory: agent/cmd/hypha-agent
+        env:
+          WINVER: ${{ steps.version.outputs.winver }}
+        run: |
+          go install github.com/tc-hib/go-winres@v0.3.3
+          "$(go env GOPATH)/bin/go-winres" simply --arch amd64 --manifest none \
+            --product-name "HYPHA agent" --file-description "HYPHA monitoring agent" \
+            --copyright "Copyright 2026 S33D" --original-filename hypha-agent.exe \
+            --product-version "$WINVER" --file-version "$WINVER"
+          ls -l ./*.syso
+
+      - name: Build
+        working-directory: agent
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          mkdir -p dist
+          for target in linux/amd64 linux/arm64 windows/amd64; do
+            os="${target%/*}" arch="${target#*/}" ext=""
+            [ "$os" = windows ] && ext=.exe
+            GOOS="$os" GOARCH="$arch" go build -trimpath -buildvcs=false -ldflags "-s -w -X main.version=$VERSION" \
+              -o "dist/hypha-agent-$os-$arch$ext" ./cmd/hypha-agent
+          done
+          cd dist && sha256sum hypha-agent-* | tee SHA256SUMS
+
+      - name: Upload Windows binary (unsigned)
+        id: upload-windows
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: hypha-agent-windows-amd64
+          path: agent/dist/hypha-agent-windows-amd64.exe
+          if-no-files-found: error
+
+      - name: Upload Linux binaries and sums
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: hypha-agent-linux
+          path: |
+            agent/dist/hypha-agent-linux-amd64
+            agent/dist/hypha-agent-linux-arm64
+            agent/dist/SHA256SUMS
+          if-no-files-found: error
+
+      - name: SignPath configured?
+        id: signpath
+        env:
+          SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
+        run: |
+          if [ -n "$SIGNPATH_API_TOKEN" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::SIGNPATH_API_TOKEN is not set: Windows signing skipped"
+          fi
+
+  sign:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v') && needs.build.outputs.signpath == 'true'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - name: Submit signing request to SignPath
+        uses: signpath/github-action-submit-signing-request@c92b958760219087e01f8d67a1669ed57afe2627 # v2.3
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG || 'hypha' }}
+          signing-policy-slug: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG || 'release-signing' }}
+          artifact-configuration-slug: ${{ vars.SIGNPATH_ARTIFACT_CONFIGURATION_SLUG || 'hypha-agent-windows' }}
+          github-artifact-id: ${{ needs.build.outputs.windows-artifact-id }}
+          parameters: |
+            version: "${{ needs.build.outputs.version }}"
+          wait-for-completion: true
+          wait-for-completion-timeout-in-seconds: 3600
+          output-artifact-directory: signed
+
+      - name: Checksum of the signed binary
+        run: cd signed && sha256sum hypha-agent-windows-amd64.exe | tee SHA256SUMS
+
+      - name: Upload Windows binary (signed)
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: hypha-agent-windows-amd64-signed
+          path: |
+            signed/hypha-agent-windows-amd64.exe
+            signed/SHA256SUMS
+          if-no-files-found: error

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Self-hosting · HYPHA</title>
+<meta name="description" content="Install HYPHA on your own server with Docker Compose (Libre plan): requirements, installation, accounts, local AI, update, backup. Your data stays with you.">
+<link rel="canonical" href="https://hypha.s33d.fr/en/docs/self-hosting/">
+<link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/auto-hebergement/">
+<link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/self-hosting/">
+<link rel="alternate" hreflang="x-default" href="https://hypha.s33d.fr/docs/auto-hebergement/">
+<meta name="color-scheme" content="dark light">
+<meta property="og:title" content="Self-hosting">
+<meta property="og:description" content="Install HYPHA on your own server with Docker Compose (Libre plan): requirements, installation, accounts, local AI, update, backup. Your data stays with you.">
+<meta property="og:url" content="https://hypha.s33d.fr/en/docs/self-hosting/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="HYPHA">
+<link rel="icon" type="image/svg+xml" href="/assets/img/hypha.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('hypha.theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Documentation", "item": "https://hypha.s33d.fr/en/docs/"}, {"@type": "ListItem", "position": 2, "name": "Self-hosting", "item": "https://hypha.s33d.fr/en/docs/self-hosting/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#contenu">Skip to content</a><header class="top"><div class="top-in"><a class="brand" href="/" aria-label="HYPHA"><img src="/assets/img/hypha.svg" alt="" width="28" height="28"><span>HYPHA<small>by S33D</small></span></a><nav aria-label="HYPHA"><a href="/en/docs/" aria-current="page">Documentation</a><a href="/en/pricing/">Pricing</a><a href="/en/faq/" class="hide-sm">FAQ</a><a class="lang" href="/docs/auto-hebergement/" hreflang="fr" data-lang="fr" title="Français">FR</a><a class="btn" href="/">Sign in</a></nav></div></header>
+<div class="wrap"><aside class="side"><details class="nav" open><summary>Documentation contents</summary><h2>Get started</h2><ul><li><a href="/en/docs/">Overview</a></li><li><a href="/en/docs/getting-started/">Get started</a></li><li><a href="/en/docs/videos/">Videos</a></li></ul><h2>Install the agent</h2><ul><li><a href="/en/docs/agent-linux/">Linux</a></li><li><a href="/en/docs/agent-windows/">Windows</a></li><li><a href="/en/docs/agent-docker/">Docker</a></li><li><a href="/en/docs/kubernetes/">Kubernetes</a></li><li><a href="/en/docs/configuration/">Agent configuration</a></li><li><a href="/en/docs/fleet/">Fleet and updates</a></li></ul><h2>Integrations</h2><ul><li><a href="/en/docs/integrations/">System, web and mail</a></li><li><a href="/en/docs/databases/">Databases</a></li><li><a href="/en/docs/snmp/">SNMP</a></li><li><a href="/en/docs/cloud/">Clouds</a></li><li><a href="/en/docs/virtualization/">Virtualization</a></li></ul><h2>Observe</h2><ul><li><a href="/en/docs/metrics/">Metrics and dashboards</a></li><li><a href="/en/docs/logs/">Logs</a></li><li><a href="/en/docs/traces/">Traces and OpenTelemetry</a></li><li><a href="/en/docs/synthetics/">Synthetic tests</a></li></ul><h2>Alert and act</h2><ul><li><a href="/en/docs/monitors/">Monitors</a></li><li><a href="/en/docs/alerts-and-channels/">Alerts and channels</a></li><li><a href="/en/docs/downtimes/">Downtimes</a></li><li><a href="/en/docs/incidents/">Incidents</a></li><li><a href="/en/docs/slos/">SLOs</a></li><li><a href="/en/docs/status-pages/">Status pages</a></li><li><a href="/en/docs/explain-and-repair/">Explain and repair</a></li></ul><h2>Administer</h2><ul><li><a href="/en/docs/accounts-and-roles/">Accounts and roles</a></li><li><a href="/en/docs/plans-and-billing/">Plans and billing</a></li><li><a href="/en/docs/api/">API</a></li><li><a href="/en/docs/self-hosting/" aria-current="page">Self-hosting</a></li><li><a href="/en/docs/security/">Security</a></li></ul></details></aside><main class="doc" id="contenu"><div class="crumbs"><a href="/en/docs/">Documentation</a> › Administer</div><h1>Self-hosting</h1><p class="lead">The same software as hypha.s33d.fr, on your machine, free and without limits. Your metrics, logs and traces stay in your PostgreSQL database.</p><h2 id="requirements">Requirements<a class="anchor" href="#requirements" aria-hidden="true">#</a></h2>
+<ul><li>A 64-bit Linux server (amd64 or arm64) with Docker and Docker Compose.</li><li>Memory and disk according to the number of monitored hosts and the log retention.</li><li>A DNS name and its TLS certificate (<code>fullchain.pem</code>, <code>privkey.pem</code>). Only the HTTPS port is published.</li></ul>
+<h2 id="install">Install<a class="anchor" href="#install" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash">mkdir hypha &amp;&amp; cd hypha
+curl -fsSLO https://hypha.s33d.fr/auto-hebergement/docker-compose.yml
+curl -fsSL https://hypha.s33d.fr/auto-hebergement/env.example -o .env</code></pre>
+<p>Fill in <code>.env</code>. The four required values:</p>
+<pre><code class="language-bash">HYPHA_DB_PASSWORD=     # openssl rand -hex 24
+HYPHA_PUBLIC_URL=      # https://hypha.your-domain.com
+HYPHA_ADMIN_PASSWORD=  # password of the &quot;admin&quot; account
+HYPHA_SECRET=          # openssl rand -hex 32</code></pre>
+<p>Install the certificate, then start:</p>
+<pre><code class="language-bash">mkdir certs
+cp /path/fullchain.pem /path/privkey.pem certs/
+docker compose up -d</code></pre>
+<p>On first start, HYPHA creates the database, the organisation (<code>HYPHA_ORG_NAME</code>), the administration account (<code>HYPHA_ADMIN_LOGIN</code>, <code>admin</code> by default) and six base monitors. Open <code>HYPHA_PUBLIC_URL</code> and sign in.</p>
+<p>Then install the agents from <strong>Settings › Install the agent</strong>: the command downloads the agent from your server and links it to it (<code>HYPHA_URL</code>).</p>
+<h2 id="what-the-kit-contains">What the kit contains<a class="anchor" href="#what-the-kit-contains" aria-hidden="true">#</a></h2>
+<div class="table"><table><thead><tr><th>Service</th><th>Role</th></tr></thead><tbody><tr><td><code>db</code></td><td>PostgreSQL 18; data in the <code>hypha-db</code> volume</td></tr><tr><td><code>migrate</code></td><td>updates the schema, then stops</td></tr><tr><td><code>api</code></td><td>HYPHA API and agent intake</td></tr><tr><td><code>worker</code></td><td>monitors, synthetic tests, notifications, database partitions</td></tr><tr><td><code>nginx</code></td><td>interface, signed agent binaries, the only published port (HTTPS)</td></tr></tbody></table></div>
+<p>Public images: <code>registre-vm.s33d.fr/hypha/server</code> and <code>registre-vm.s33d.fr/hypha/web</code>, for amd64 and arm64.</p>
+<h2 id="useful-settings">Useful settings<a class="anchor" href="#useful-settings" aria-hidden="true">#</a></h2>
+<div class="table"><table><thead><tr><th>Variable</th><th>Purpose</th></tr></thead><tbody><tr><td><code>HYPHA_SMTP_HOST</code>, <code>_PORT</code>, <code>_USER</code>, <code>_PASSWORD</code>, <code>_FROM</code>, <code>_SECURITY</code></td><td>sending alerts by email</td></tr><tr><td><code>HYPHA_OIDC_ISSUER</code>, <code>_CLIENT_ID</code>, <code>_CLIENT_SECRET</code></td><td>OpenID Connect sign-in, in addition to local accounts; only invited accounts get in</td></tr><tr><td><code>HYPHA_LLM_URL</code>, <code>HYPHA_LLM_MODEL</code></td><td>your Ollama-style model server, for outage explanations and postmortems; empty, the feature is off</td></tr><tr><td><code>HYPHA_ALLOW_PRIVATE_TARGETS</code></td><td>allow synthetic tests and webhooks towards internal addresses</td></tr><tr><td><code>HYPHA_LOG_LEVEL</code></td><td>server log level</td></tr><tr><td><code>HYPHA_OTEL_ENDPOINT</code>, <code>HYPHA_OTEL_SAMPLE</code></td><td>traces of the server itself, through an agent's OTLP relay</td></tr></tbody></table></div>
+<h2 id="accounts">Accounts<a class="anchor" href="#accounts" aria-hidden="true">#</a></h2>
+<p>When self-hosting, accounts are local. Add them from <strong>Settings › Members</strong>, or from the command line:</p>
+<pre><code class="language-bash">docker compose exec api python -m hypha create-user --org &lt;slug&gt; --login maria --role member</code></pre>
+<h2 id="update">Update<a class="anchor" href="#update" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash"># in .env: HYPHA_VERSION=&lt;new version&gt;
+docker compose pull
+docker compose up -d</code></pre>
+<p>The <code>migrate</code> service runs migrations before the API restarts. The kit serves the signed agent binaries and their signature: your agents update from your server (see <a href="/en/docs/fleet/">Fleet and updates</a>).</p>
+<h2 id="back-up">Back up<a class="anchor" href="#back-up" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash">docker compose exec -T db pg_dump -U hypha -Fc hypha &gt; hypha-$(date +%F).dump</code></pre>
+<h2 id="licences">Licences<a class="anchor" href="#licences" aria-hidden="true">#</a></h2>
+<p>The server and interface are distributed under the <strong>AGPL v3</strong> licence, the agent under the <strong>Apache 2.0</strong> licence. The Libre plan has no limit and no billing. Support with guaranteed response times is part of the Entreprise plan of the hosted service.</p><p class="updated">Updated: 19 November 2026</p><nav class="pager" aria-label="pages"><a href="/en/docs/api/"><small>Previous</small>API</a><a href="/en/docs/security/" style="text-align:right"><small>Next</small>Security</a></nav></main></div>
+<footer class="foot"><div class="foot-in"><span class="grow">HYPHA, a S33D product. Hosted in France, on S33D&#x27;s own infrastructure.</span><a href="/en/docs/" aria-current="page">Documentation</a><a href="/en/pricing/">Pricing</a><a href="/en/faq/">FAQ</a><a href="/en/legal-notice/">Legal notice</a><a href="/en/terms/">Terms of sale</a><a href="/en/privacy/">Privacy</a><a href="https://s33d.fr" rel="noopener">s33d.fr</a></div></footer>
+<script>(function(){var c="Copy",d="Copied";document.querySelectorAll('.doc pre').forEach(function(p){var b=document.createElement('button');b.type='button';b.className='copy';b.textContent=c;b.onclick=function(){var x=p.querySelector('code');navigator.clipboard&&navigator.clipboard.writeText(x?x.innerText:p.innerText).then(function(){b.textContent=d;setTimeout(function(){b.textContent=c},1500)})};p.appendChild(b)});var n=document.querySelector('.side details');if(n&&window.matchMedia('(max-width: 860px)').matches)n.removeAttribute('open');document.querySelectorAll('a[data-lang]').forEach(function(a){a.addEventListener('click',function(){try{localStorage.setItem('hypha.lang',a.getAttribute('data-lang'))}catch(e){}})});})();</script>
+</body>
+</html>

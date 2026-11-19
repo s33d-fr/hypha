@@ -1,0 +1,19 @@
+# Secrets and signing keys
+.env
+*.env
+/signing/
+
+# Build outputs
+agent/dist/
+dist/
+*.syso
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+venv/
+.venv/
+
+# Node
+node_modules/

@@ -1,0 +1,15 @@
+{
+  "title": {"fr": "Journaux : chercher, filtrer, regrouper", "en": "Logs: search, filter, group"},
+  "steps": [
+    {"goto": "/#/logs?t=1h"},
+    {"waitFor": ".log-row", "wait": 2500},
+    {"record": true, "caption": true, "fr": "Journaux : tout le parc au même endroit", "en": "Logs: the whole fleet in one place", "dur": 3800, "wait": 4000},
+    {"type": ".querybar input", "text": "status:error OR status:critical", "enter": true, "wait": 2500},
+    {"caption": true, "fr": "Une requête filtre ; les facettes comptent par service, hôte et statut", "en": "A query filters; facets count by service, host and status", "dur": 4500, "wait": 4500},
+    {"click": ".log-row", "nth": 0, "wait": 1500},
+    {"caption": true, "fr": "Le détail d'une ligne, ses attributs et son contexte", "en": "A line in detail, with its attributes and context", "dur": 4000, "wait": 4200},
+    {"eval": "document.querySelectorAll('.drawer, .drawer-back').forEach((e) => e.remove())", "wait": 300},
+    {"click": ".tabs [role=tab]", "nth": 1, "wait": 2500},
+    {"caption": true, "fr": "Motifs : les messages semblables regroupés, comptés", "en": "Patterns: similar messages grouped and counted", "dur": 4500, "wait": 5000}
+  ]
+}

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Référence de configuration de l&#x27;agent · HYPHA</title>
+<meta name="description" content="Toutes les clés de hypha.yaml et de conf.d : clé, serveur, étiquettes, journaux, processus, réseau, contrôles, intégrations, SNMP, actions, mises à jour.">
+<link rel="canonical" href="https://hypha.s33d.fr/docs/configuration/">
+<link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/configuration/">
+<link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/configuration/">
+<link rel="alternate" hreflang="x-default" href="https://hypha.s33d.fr/docs/configuration/">
+<meta name="color-scheme" content="dark light">
+<meta property="og:title" content="Référence de configuration de l&#x27;agent">
+<meta property="og:description" content="Toutes les clés de hypha.yaml et de conf.d : clé, serveur, étiquettes, journaux, processus, réseau, contrôles, intégrations, SNMP, actions, mises à jour.">
+<meta property="og:url" content="https://hypha.s33d.fr/docs/configuration/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="HYPHA">
+<link rel="icon" type="image/svg+xml" href="/assets/img/hypha.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('hypha.theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Documentation", "item": "https://hypha.s33d.fr/docs/"}, {"@type": "ListItem", "position": 2, "name": "Référence de configuration de l'agent", "item": "https://hypha.s33d.fr/docs/configuration/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a><header class="top"><div class="top-in"><a class="brand" href="/" aria-label="HYPHA"><img src="/assets/img/hypha.svg" alt="" width="28" height="28"><span>HYPHA<small>par S33D</small></span></a><nav aria-label="HYPHA"><a href="/docs/" aria-current="page">Documentation</a><a href="/tarifs/">Tarifs</a><a href="/faq/" class="hide-sm">FAQ</a><a class="lang" href="/en/docs/configuration/" hreflang="en" data-lang="en" title="English">EN</a><a class="btn" href="/">Se connecter</a></nav></div></header>
+<div class="wrap"><aside class="side"><details class="nav" open><summary>Sommaire de la documentation</summary><h2>Démarrer</h2><ul><li><a href="/docs/">Vue d&#x27;ensemble</a></li><li><a href="/docs/demarrage/">Démarrer</a></li><li><a href="/docs/videos/">Vidéos</a></li></ul><h2>Installer l&#x27;agent</h2><ul><li><a href="/docs/agent-linux/">Linux</a></li><li><a href="/docs/agent-windows/">Windows</a></li><li><a href="/docs/agent-docker/">Docker</a></li><li><a href="/docs/kubernetes/">Kubernetes</a></li><li><a href="/docs/configuration/" aria-current="page">Configuration de l&#x27;agent</a></li><li><a href="/docs/flotte/">Flotte et mises à jour</a></li></ul><h2>Intégrations</h2><ul><li><a href="/docs/integrations/">Système, web et messagerie</a></li><li><a href="/docs/bases-de-donnees/">Bases de données</a></li><li><a href="/docs/snmp/">SNMP</a></li><li><a href="/docs/cloud/">Clouds</a></li><li><a href="/docs/virtualisation/">Virtualisation</a></li></ul><h2>Observer</h2><ul><li><a href="/docs/metriques/">Métriques et tableaux</a></li><li><a href="/docs/journaux/">Journaux</a></li><li><a href="/docs/traces/">Traces et OpenTelemetry</a></li><li><a href="/docs/synthetiques/">Tests synthétiques</a></li></ul><h2>Alerter et agir</h2><ul><li><a href="/docs/moniteurs/">Moniteurs</a></li><li><a href="/docs/alertes-et-canaux/">Alertes et canaux</a></li><li><a href="/docs/maintenances/">Maintenances</a></li><li><a href="/docs/incidents/">Incidents</a></li><li><a href="/docs/slo/">SLO</a></li><li><a href="/docs/pages-de-statut/">Pages de statut</a></li><li><a href="/docs/explication-et-reparation/">Explication et réparation</a></li></ul><h2>Administrer</h2><ul><li><a href="/docs/comptes-et-roles/">Comptes et rôles</a></li><li><a href="/docs/formules-et-facturation/">Formules et facturation</a></li><li><a href="/docs/api/">API</a></li><li><a href="/docs/auto-hebergement/">Auto-hébergement</a></li><li><a href="/docs/securite/">Sécurité</a></li></ul></details></aside><main class="doc" id="contenu"><div class="crumbs"><a href="/docs/">Documentation</a> › Installer l&#x27;agent</div><h1>Référence de configuration de l&#x27;agent</h1><p class="lead">Un fichier principal, des compléments dans conf.d, et une commande qui vérifie le tout avant de redémarrer.</p><h2 id="ou-se-trouve-la-configuration">Où se trouve la configuration<a class="anchor" href="#ou-se-trouve-la-configuration" aria-hidden="true">#</a></h2>
+<div class="table"><table><thead><tr><th>Système</th><th>Fichier principal</th><th>Compléments</th></tr></thead><tbody><tr><td>Linux</td><td><code>/etc/hypha/hypha.yaml</code> (600)</td><td><code>/etc/hypha/conf.d/*.yaml</code></td></tr><tr><td>Windows</td><td><code>C:\ProgramData\Hypha\hypha.yaml</code></td><td><code>C:\ProgramData\Hypha\conf.d\*.yaml</code></td></tr><tr><td>Docker</td><td><code>/etc/hypha/hypha.yaml</code> dans le conteneur</td><td><code>/etc/hypha/conf.d/</code> monté</td></tr></tbody></table></div>
+<p>Règles de lecture :</p>
+<ul><li>Les fichiers <code>conf.d/*.yaml</code> sont lus après le fichier principal, dans l'ordre alphabétique, et fusionnés clé par clé : un objet se fusionne, une liste remplace la liste, une clé absente garde sa valeur.</li><li>Les variables <code>HYPHA_API_KEY</code> et <code>HYPHA_URL</code> l'emportent sur les fichiers.</li><li>Un fichier illisible ou invalide arrête l'agent : jamais de configuration à moitié lue. Une clé inconnue n'est qu'un avertissement.</li></ul>
+<p>Avant chaque redémarrage :</p>
+<pre><code class="language-bash">sudo hypha-agent check-config</code></pre>
+<p>La commande affiche la configuration fusionnée, secrets masqués, et nomme le fichier d'origine de chaque erreur.</p>
+<h2 id="cles-generales">Clés générales<a class="anchor" href="#cles-generales" aria-hidden="true">#</a></h2>
+<div class="table"><table><thead><tr><th>Clé</th><th>Défaut</th><th>Rôle</th></tr></thead><tbody><tr><td><code>api_key</code></td><td>(obligatoire)</td><td>clé d'ingestion, <code>hph_</code> suivi de 40 caractères</td></tr><tr><td><code>url</code></td><td><code>https://hypha.s33d.fr</code></td><td>serveur de collecte ; votre adresse en auto-hébergement</td></tr><tr><td><code>hostname</code></td><td>nom système</td><td>nom de l'hôte dans HYPHA</td></tr><tr><td><code>tags</code></td><td><code>{}</code></td><td>étiquettes ajoutées à tout ce que l'agent envoie ; clés <code>a-z 0-9 _ . - /</code></td></tr><tr><td><code>interval</code></td><td><code>15s</code></td><td>cadence des mesures et des contrôles (1 s au moins)</td></tr><tr><td><code>tls_skip_verify</code></td><td><code>false</code></td><td>ne coupez la vérification du certificat que pour un serveur auto-hébergé à certificat interne</td></tr><tr><td><code>proxy</code></td><td>(vide)</td><td>mandataire HTTP ; vide = variables <code>HTTPS_PROXY</code> et <code>NO_PROXY</code></td></tr><tr><td><code>buffer.dir</code>, <code>buffer.max_mb</code></td><td><code>/var/lib/hypha/buffer</code>, <code>256</code></td><td>tampon disque des envois en échec ; les plus anciens partent au-delà</td></tr></tbody></table></div>
+<h2 id="journaux">Journaux<a class="anchor" href="#journaux" aria-hidden="true">#</a></h2>
+<pre><code class="language-yaml">logs:
+  enabled: true
+  journald: true                       # Linux : journal systemd
+  windows_eventlog: [System, Application]
+  files:
+    - {path: /var/log/nginx/*.log, service: nginx, source: nginx}
+    - {path: /srv/app/logs/*.json, service: boutique}
+  exclude_patterns: [&quot;GET /health&quot;]    # expressions régulières, lignes jamais envoyées</code></pre>
+<p>Une ligne JSON est décodée : <code>message</code> ou <code>msg</code> devient le message, <code>level</code> ou <code>severity</code> le statut, le reste part en attributs. Un message est tronqué à 32 Kio. Pour réduire le volume côté serveur, voir aussi les <a href="/docs/journaux/#filtres-d-exclusion-et-echantillonnage">filtres d'exclusion</a>.</p>
+<h2 id="processus-reseau-conteneurs">Processus, réseau, conteneurs<a class="anchor" href="#processus-reseau-conteneurs" aria-hidden="true">#</a></h2>
+<pre><code class="language-yaml">processes:
+  enabled: true
+  include: [&quot;^java&quot;, &quot;gunicorn&quot;]   # toujours relevés, en plus des 30 premiers par CPU et par mémoire
+network:
+  enabled: true
+  # exclude_interfaces: [lo, &quot;docker*&quot;, &quot;veth*&quot;, &quot;br-*&quot;, &quot;virbr*&quot;, &quot;cali*&quot;, &quot;flannel*&quot;, &quot;cni*&quot;]
+containers:
+  enabled: auto                     # auto = si /var/run/docker.sock existe</code></pre>
+<h2 id="controles">Contrôles<a class="anchor" href="#controles" aria-hidden="true">#</a></h2>
+<pre><code class="language-yaml">checks:
+  systemd_units: [nginx.service]    # suivies ; une unité en échec est TOUJOURS signalée
+  windows_services: [W3SVC]         # suivis ; un service automatique arrêté est signalé
+  windows_services_exclude: [&quot;^Veeam&quot;]
+  windows_auto_services: auto       # auto, always, never
+  http:
+    - {name: site, url: &quot;https://exemple.fr/&quot;, expect_status: 200, timeout: 5s}
+  tcp:
+    - {name: base, address: &quot;192.0.2.5:5432&quot;, timeout: 3s}
+  processes:
+    - {name: nginx}
+    - {name: gunicorn, match: contains, min: 2}
+    - {name: &quot;^php-fpm[0-9.]*$&quot;, match: regex, min: 1, max: 1}</code></pre>
+<p>Les contrôles HTTP et TCP partent de l'hôte : ils voient les adresses internes. Pour des tests planifiés avec historique et assertions, voir les <a href="/docs/synthetiques/">tests synthétiques</a>.</p>
+<h2 id="integrations">Intégrations<a class="anchor" href="#integrations" aria-hidden="true">#</a></h2>
+<p>Chaque intégration s'active seule quand son logiciel est détecté (<code>enabled: auto</code>), ou se force (<code>true</code>) et se coupe (<code>false</code>). Son état apparaît dans <strong>Réglages › Agents</strong> : ok, absent, coupée, ou l'erreur rencontrée. Le détail de chacune est sur les pages <a href="/docs/integrations/">Intégrations</a>, <a href="/docs/bases-de-donnees/">Bases de données</a>, <a href="/docs/snmp/">SNMP</a>, <a href="/docs/cloud/">Clouds</a>, <a href="/docs/virtualisation/">Virtualisation</a> et <a href="/docs/kubernetes/">Kubernetes</a>.</p>
+<h3 id="plusieurs-instances">Plusieurs instances<a class="anchor" href="#plusieurs-instances" aria-hidden="true">#</a></h3>
+<p>Pour lire plusieurs cibles d'une même intégration (ovhcloud, mysql, redis, memcached, rabbitmq, mongodb, opensearch, kubernetes, libvirt, proxmox, aws, scaleway, azure, gcp), donnez une liste <code>instances</code>. Chaque entrée porte un <code>name</code> (minuscules, chiffres, <code>-</code> et <code>_</code>), reprend les valeurs par défaut de l'intégration et s'additionne d'un fichier <code>conf.d</code> à l'autre. Ses données portent l'étiquette <code>instance_name</code>.</p>
+<pre><code class="language-yaml">integrations:
+  redis:
+    instances:
+      - {name: sessions, address: &quot;127.0.0.1:6379&quot;}
+      - {name: file, address: &quot;127.0.0.1:6380&quot;, password: &quot;…&quot;}</code></pre>
+<h2 id="metriques-applicatives-et-traces">Métriques applicatives et traces<a class="anchor" href="#metriques-applicatives-et-traces" aria-hidden="true">#</a></h2>
+<pre><code class="language-yaml">statsd:
+  enabled: true
+  listen: 127.0.0.1:8125     # format DogStatsD : nom:valeur|g|c|ms|h|s|#etiquette:valeur
+otlp:
+  enabled: false
+  listen: 127.0.0.1:4318     # OTLP/HTTP : l&#x27;agent relaie vers HYPHA en ajoutant la clé</code></pre>
+<p>Une écoute hors de la boucle locale déclenche un avertissement : elle ouvre le port au réseau.</p>
+<h2 id="canal-de-controle-mises-a-jour-actions">Canal de contrôle, mises à jour, actions<a class="anchor" href="#canal-de-controle-mises-a-jour-actions" aria-hidden="true">#</a></h2>
+<pre><code class="language-yaml">control:
+  enabled: true
+  interval: 30s            # l&#x27;agent interroge le serveur ; aucun port ouvert sur l&#x27;hôte
+auto_update: false         # suivre la version cible fixée dans Réglages › Agents
+actions:
+  enabled: false
+  allow: [restart_service, start_service, stop_service]   # aussi : run_script, update_agent
+  services: [&quot;*&quot;]
+  deny_services: [&quot;sshd*&quot;, &quot;ssh*&quot;, &quot;hypha-agent*&quot;, &quot;systemd-*&quot;]
+  scripts:
+    vider-cache: /etc/hypha/scripts/vider-cache.sh
+  timeout: 120s
+synthetics:
+  enabled: false           # emplacement privé de tests synthétiques
+  max_concurrent: 4
+inventory:
+  enabled: true
+  interval: 6h
+  packages: true</code></pre>
+<p>Les actions sont coupées par défaut. Le service de l'agent n'est jamais touché, quelle que soit la liste. Un script nommé doit avoir un chemin absolu, appartenir à root et n'être modifiable ni par le groupe ni par les autres ; il est lancé sans argument et sa sortie est bornée à 64 Kio. Voir <a href="/docs/explication-et-reparation/">Explication et réparation</a> et <a href="/docs/flotte/">Flotte et mises à jour</a>.</p>
+<h2 id="snmp">SNMP<a class="anchor" href="#snmp" aria-hidden="true">#</a></h2>
+<pre><code class="language-yaml">snmp:
+  enabled: true
+  interval: 60s
+  devices:
+    - {name: switch-baie-1, address: 192.0.2.10, version: 2c, community: lecture, tags: {role: switch}}
+  traps: {enabled: false, listen: &quot;0.0.0.0:162&quot;, community: public}</code></pre>
+<p>Le détail des versions, des profils et des réglages SNMPv3 est sur la page <a href="/docs/snmp/">SNMP</a>. Les secrets SNMP restent dans la configuration de l'agent : ils ne partent jamais vers le serveur.</p><p class="updated">Mise à jour : 19 novembre 2026</p><nav class="pager" aria-label="pages"><a href="/docs/kubernetes/"><small>Précédent</small>Kubernetes</a><a href="/docs/flotte/" style="text-align:right"><small>Suivant</small>Flotte et mises à jour</a></nav></main></div>
+<footer class="foot"><div class="foot-in"><span class="grow">HYPHA, un produit de S33D. Service hébergé en France, sur l&#x27;infrastructure en propre de S33D.</span><a href="/docs/" aria-current="page">Documentation</a><a href="/tarifs/">Tarifs</a><a href="/faq/">FAQ</a><a href="/mentions-legales/">Mentions légales</a><a href="/cgv/">Conditions de vente</a><a href="/confidentialite/">Confidentialité</a><a href="https://s33d.fr" rel="noopener">s33d.fr</a></div></footer>
+<script>(function(){var c="Copier",d="Copi\u00e9";document.querySelectorAll('.doc pre').forEach(function(p){var b=document.createElement('button');b.type='button';b.className='copy';b.textContent=c;b.onclick=function(){var x=p.querySelector('code');navigator.clipboard&&navigator.clipboard.writeText(x?x.innerText:p.innerText).then(function(){b.textContent=d;setTimeout(function(){b.textContent=c},1500)})};p.appendChild(b)});var n=document.querySelector('.side details');if(n&&window.matchMedia('(max-width: 860px)').matches)n.removeAttribute('open');document.querySelectorAll('a[data-lang]').forEach(function(a){a.addEventListener('click',function(){try{localStorage.setItem('hypha.lang',a.getAttribute('data-lang'))}catch(e){}})});})();</script>
+</body>
+</html>
