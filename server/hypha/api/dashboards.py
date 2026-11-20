@@ -1,5 +1,6 @@
 """Tableaux de bord (contrat § 7 ; § 30 : nouveaux widgets, dossiers, rafraîchissement, export et
 import, clonage, partage public en lecture)."""
+import copy
 import re
 import secrets
 from datetime import datetime, timezone
@@ -13,6 +14,7 @@ from ..errors import QueryError, bad_request, not_found
 from ..query import formulas as FX
 from ..runtime import rt
 from ..util import TAG_KEY_RE, jdump
+from . import dashboard_catalogue as CAT
 from .common import done, ok
 from .default_dashboards import DEFAULTS
 
@@ -239,6 +241,29 @@ async def import_dashboard(request: Request, data: dict = Body(...), p: Principa
         row = await _insert(conn, p.org_id, p.user_id, d)
         await audit.record(conn, org_id=p.org_id, principal=p, action="import", object_type="dashboard",
                            object_id=row["id"], summary=f"tableau « {d['title']} » importé", after=d, request=request)
+    return ok(row, 201)
+
+
+# Catalogue des tableaux prêts (0.5.0) : routes fixes avant /dashboards/{dashboard_id}.
+
+@router.get("/dashboards/catalogue")
+async def dashboard_catalogue(p: Principal = Depends(viewer)):
+    return ok(CAT.catalogue())
+
+
+@router.post("/dashboards/catalogue/{catalogue_id}")
+async def install_from_catalogue(catalogue_id: str, request: Request, p: Principal = Depends(member)):
+    """Installe un tableau du catalogue : il devient un tableau ordinaire de l'espace (modifiable,
+    clonable, exportable) ; installer deux fois donne deux tableaux."""
+    src = CAT.get(catalogue_id)
+    if src is None:
+        raise not_found("tableau du catalogue introuvable")
+    d = _validated(copy.deepcopy({k: src[k] for k in EXPORT_KEYS if k in src}))
+    async with rt().db.writer() as conn:
+        row = await _insert(conn, p.org_id, p.user_id, d)
+        await audit.record(conn, org_id=p.org_id, principal=p, action="install", object_type="dashboard",
+                           object_id=row["id"], summary=f"tableau « {d['title']} » installé depuis le catalogue",
+                           after={"catalogue": catalogue_id, "title": d["title"]}, request=request)
     return ok(row, 201)
 
 

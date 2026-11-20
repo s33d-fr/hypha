@@ -5,9 +5,9 @@ title: Monitors and templates
 nav: Monitors
 section: Alert and act
 order: 40
-updated: 2026-11-19
+updated: 2026-11-20
 description: HYPHA monitor types (metric, host, check, logs, APM, synthetic, anomaly, forecast, outlier, composite, change, event, process, errors, SLO), their thresholds, options and the template catalogue.
-lead: A monitor evaluates data every minute and changes state. Start from a catalogue template, there are more than 80, or write your own with a live preview.
+lead: A monitor evaluates data every minute and changes state. Start from a catalogue template, there are more than 90, or write your own with a live preview.
 ---
 {{video:5-moniteurs}}
 
@@ -69,7 +69,7 @@ Variables: `{{name}}`, `{{group}}`, `{{host}}`, `{{value}}`, `{{last_value}}`, `
 
 ## The template catalogue
 
-**Monitors › New monitor › From a template**: more than 80 templates by family, each with its variables (targeted tags, thresholds, service). Template names and descriptions, and the monitors they create, are written in French for now; any monitor can be renamed.
+**Monitors › New monitor › From a template**: more than 90 templates by family, each with its variables (targeted tags, thresholds, service). Template names and descriptions, and the monitors they create, are written in French for now; any monitor can be renamed.
 
 | Family | Examples |
 |---|---|
@@ -82,5 +82,6 @@ Variables: `{{name}}`, `{{group}}`, `{{host}}`, `{{value}}`, `{{last_value}}`, `
 | Mail | Postfix queue |
 | Synthetics | synthetic test failing |
 | Kubernetes, Cloud, Virtualization | clusters, nodes, AWS, Azure, Google Cloud, OVHcloud, Scaleway, vSphere, Proxmox, Hyper-V, KVM |
+| Generic collection | OpenMetrics target unreachable, series cap reached, Nagios plugin alerting, syslog reception failing, silent syslog device, dropped syslog lines, severe errors received by syslog |
 
 A new workspace receives six catalogue monitors, linked to an email channel to the account's address: host not reporting, disk almost full, memory saturated, systemd unit failed, Windows service stopped, certificate close to expiry.

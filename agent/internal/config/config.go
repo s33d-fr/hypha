@@ -39,6 +39,8 @@ type Config struct {
 	Checks        ChecksConfig       `yaml:"checks"`
 	StatsD        ListenerConfig     `yaml:"statsd"`
 	OTLP          ListenerConfig     `yaml:"otlp"`
+	// 0.5.0 : réception syslog (coupée par défaut).
+	Syslog SyslogConfig `yaml:"syslog"`
 	Integrations  IntegrationsConfig `yaml:"integrations"`
 
 	// 0.4.0 (CONTRAT-04) : mise à jour signée, canal de contrôle, actions à distance,
@@ -60,6 +62,9 @@ type Config struct {
 	origins map[string]string
 	// instErrs : erreurs de décodage des instances (§ 50), rendues par Validate.
 	instErrs []string
+	// NagiosFiles : fichiers qui déclarent integrations.nagios (contrôle de leur propriétaire
+	// avant de lancer la moindre commande).
+	NagiosFiles []string `yaml:"-"`
 	// Warnings : remarques non bloquantes (clé inconnue, URL en clair…).
 	Warnings []string `yaml:"-"`
 	// Sources des valeurs surchargées par l'environnement, pour check-config.
@@ -181,6 +186,10 @@ type IntegrationsConfig struct {
 	GCP        GCPConfig        `yaml:"gcp"`
 	VSphere  VSphereConfig  `yaml:"vsphere"`
 
+	// 0.5.0 : moteurs génériques (v05.go).
+	OpenMetrics []OpenMetricsInstance `yaml:"openmetrics"`
+	Nagios      []NagiosCheck         `yaml:"nagios"`
+
 	// Extra : entrées « instances » décodées (§ 50), remplies par normalize.
 	Extra InstanceLists `yaml:"-"`
 }
@@ -274,6 +283,7 @@ var DefaultExcludeInterfaces = []string{
 func Default() *Config {
 	c := defaultsV03()
 	defaultsV04(c)
+	defaultsV05(c)
 	return c
 }
 
@@ -398,6 +408,7 @@ func (c *Config) normalize() {
 		}
 	}
 	c.normalizeV04()
+	c.normalizeV05()
 	c.normalizeInstances()
 }
 
@@ -532,6 +543,7 @@ func (c *Config) Validate(requireKey bool) []string {
 		}
 	}
 	c.validateV04(add, warn)
+	c.validateV05(add, warn)
 	c.validateInstances(add, warn)
 	// Avec plusieurs fichiers, chaque erreur nomme celui qui a posé la clé fautive.
 	if len(c.Files) > 1 {

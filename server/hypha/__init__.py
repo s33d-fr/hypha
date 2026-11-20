@@ -1,3 +1,3 @@
 """HYPHA : serveur d'observabilité S33D (ingestion, API de l'interface, alertes, synthétiques)."""
 
-__version__ = "0.4.7"
+__version__ = "0.5.0"

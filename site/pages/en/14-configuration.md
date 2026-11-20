@@ -5,7 +5,7 @@ title: Agent configuration reference
 nav: Agent configuration
 section: Install the agent
 order: 14
-updated: 2026-11-19
+updated: 2026-11-20
 description: Every key of hypha.yaml and conf.d: key, server, tags, logs, processes, network, checks, integrations, SNMP, actions, updates.
 lead: One main file, additions in conf.d, and a command that checks it all before a restart.
 ---
@@ -94,7 +94,7 @@ HTTP and TCP checks start from the host: they see internal addresses. For schedu
 
 ## Integrations
 
-Each integration turns itself on when its software is detected (`enabled: auto`), or is forced (`true`) or turned off (`false`). Its state shows in **Settings › Agents**: ok, absent, disabled, or the error met. Each one is described on the [Integrations](/en/docs/integrations/), [Databases](/en/docs/databases/), [SNMP](/en/docs/snmp/), [Clouds](/en/docs/cloud/), [Virtualization](/en/docs/virtualization/) and [Kubernetes](/en/docs/kubernetes/) pages.
+Each integration turns itself on when its software is detected (`enabled: auto`), or is forced (`true`) or turned off (`false`). Its state shows in **Settings › Agents**: ok, absent, disabled, or the error met. Each one is described on the [Integrations](/en/docs/integrations/), [Databases](/en/docs/databases/), [SNMP](/en/docs/snmp/), [Clouds](/en/docs/cloud/), [Virtualization](/en/docs/virtualization/), [Kubernetes](/en/docs/kubernetes/) and [Generic collection](/en/docs/generic-collection/) pages (`integrations.openmetrics`, `integrations.nagios`: lists, which also add up across `conf.d` files).
 
 ### Several instances
 
@@ -120,6 +120,8 @@ otlp:
 ```
 
 Listening outside the loopback triggers a warning: it opens the port to the network.
+
+Syslog reception (`syslog:`, off by default) is described in [Generic collection](/en/docs/generic-collection/#syslog-reception).
 
 ## Control channel, updates, actions
 

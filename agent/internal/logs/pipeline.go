@@ -73,6 +73,17 @@ func (p *Pipeline) Submit(ctx context.Context, e Entry) bool {
 	}
 }
 
+// TrySubmit confie une ligne sans attendre ; faux si la file est pleine (réception syslog : une
+// rafale d'un équipement ne doit pas bloquer la lecture de la socket).
+func (p *Pipeline) TrySubmit(e Entry) bool {
+	select {
+	case p.in <- e:
+		return true
+	default:
+		return false
+	}
+}
+
 // Run regroupe et envoie jusqu'à l'arrêt, puis envoie le dernier lot.
 func (p *Pipeline) Run(ctx context.Context) {
 	var (

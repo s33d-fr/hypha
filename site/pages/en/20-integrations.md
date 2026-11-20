@@ -5,7 +5,7 @@ title: System, web and mail integrations
 nav: System, web and mail
 section: Integrations
 order: 20
-updated: 2026-11-19
+updated: 2026-11-20
 description: HYPHA agent integrations: nginx, Apache, HAProxy, IIS, BIND, Postfix, Dovecot, rspamd, Exchange, OpenVPN, fail2ban, certificates, SMART, sensors, clock, updates, systemd timers, VirtualBox.
 lead: The agent recognises installed software and collects its metrics, with Datadog-compatible names. Most integrations turn themselves on.
 ---
@@ -98,5 +98,7 @@ The agent listens for StatsD in DogStatsD format on `127.0.0.1:8125/udp`, aggreg
 ```bash
 echo "shop.orders:1|c|#env:prod" | nc -u -w0 127.0.0.1 8125
 ```
+
+For an application that already publishes Prometheus metrics, Nagios or Centreon plugins, or logs sent over syslog, see [Generic collection](/en/docs/generic-collection/).
 
 Counters (`c`) become sums, gauges (`g`) values, timers (`ms`, `h`) distributions (`.avg`, `.max`, `.p50`, `.p95`, `.p99`, `.count`). For OpenTelemetry metrics, see [Traces](/en/docs/traces/).

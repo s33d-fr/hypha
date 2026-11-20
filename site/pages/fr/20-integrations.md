@@ -5,7 +5,7 @@ title: Intégrations du système, du web et de la messagerie
 nav: Système, web et messagerie
 section: Intégrations
 order: 20
-updated: 2026-11-19
+updated: 2026-11-20
 description: Intégrations de l'agent HYPHA : nginx, Apache, HAProxy, IIS, BIND, Postfix, Dovecot, rspamd, Exchange, OpenVPN, fail2ban, certificats, SMART, capteurs, horloge, mises à jour, timers systemd, VirtualBox.
 lead: L'agent reconnaît les logiciels installés et relève leurs mesures, aux noms compatibles Datadog. La plupart s'activent seules.
 ---
@@ -98,5 +98,7 @@ L'agent écoute StatsD au format DogStatsD sur `127.0.0.1:8125/udp`, agrège sur
 ```bash
 echo "boutique.commandes:1|c|#env:prod" | nc -u -w0 127.0.0.1 8125
 ```
+
+Pour une application qui publie déjà ses mesures au format Prometheus, des plugins Nagios ou Centreon, ou des journaux envoyés par syslog, voir [Collecte générique](/docs/collecte-generique/).
 
 Les compteurs (`c`) deviennent des sommes, les jauges (`g`) des valeurs, les durées (`ms`, `h`) des distributions (`.avg`, `.max`, `.p50`, `.p95`, `.p99`, `.count`). Pour les métriques OpenTelemetry, voir [Traces](/docs/traces/).

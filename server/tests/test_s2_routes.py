@@ -769,6 +769,21 @@ def test_dashboard_export_import_clone_share(c):
     assert actions[:4] == ["import", "import", "clone", "share"]
 
 
+def test_dashboard_catalogue_install(c):
+    r = c.get("/api/v1/dashboards/catalogue", headers=UI)
+    assert r.status_code == 200, r.text
+    cat = {d["id"]: d for d in r.json()}
+    assert {"postgresql", "openmetrics", "nagios", "syslog", "node_exporter"} <= set(cat)
+    assert cat["postgresql"]["widget_count"] > 5 and "widgets" not in cat["postgresql"]
+    r = c.post("/api/v1/dashboards/catalogue/syslog", headers=UI)
+    assert r.status_code == 201, r.text
+    ins = c.db.sql("INSERT INTO dashboards")[-1][2]
+    assert ins[1] == "Journaux reçus par syslog" and ins[5] == "Collecte générique"
+    assert any(w["type"] == "log_stream" for w in json.loads(ins[3]))
+    assert c.post("/api/v1/dashboards/catalogue/inconnu", headers=UI).status_code == 404
+    assert [e[2][3] for e in audited(c.db, "dashboard")][-1] == "install"
+
+
 def test_public_dashboard(c, monkeypatch):
     from hypha.api import public_dashboards as pub
     from hypha.query import compose

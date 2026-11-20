@@ -56,13 +56,18 @@
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/cloud/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/cloud/"/>
 </url>
+<url><loc>https://hypha.s33d.fr/docs/collecte-generique/</loc>
+<lastmod>2026-11-20</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/collecte-generique/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/generic-collection/"/>
+</url>
 <url><loc>https://hypha.s33d.fr/docs/comptes-et-roles/</loc>
 <lastmod>2026-11-19</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/comptes-et-roles/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/accounts-and-roles/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/docs/configuration/</loc>
-<lastmod>2026-11-19</lastmod>
+<lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/configuration/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/configuration/"/>
 </url>
@@ -92,7 +97,7 @@
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/incidents/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/docs/integrations/</loc>
-<lastmod>2026-11-19</lastmod>
+<lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/integrations/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/integrations/"/>
 </url>
@@ -112,12 +117,12 @@
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/downtimes/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/docs/metriques/</loc>
-<lastmod>2026-11-19</lastmod>
+<lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/metriques/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/metrics/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/docs/moniteurs/</loc>
-<lastmod>2026-11-19</lastmod>
+<lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/moniteurs/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/monitors/"/>
 </url>
@@ -202,7 +207,7 @@
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/cloud/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/en/docs/configuration/</loc>
-<lastmod>2026-11-19</lastmod>
+<lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/configuration/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/configuration/"/>
 </url>
@@ -226,6 +231,11 @@
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/flotte/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/fleet/"/>
 </url>
+<url><loc>https://hypha.s33d.fr/en/docs/generic-collection/</loc>
+<lastmod>2026-11-20</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/collecte-generique/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/generic-collection/"/>
+</url>
 <url><loc>https://hypha.s33d.fr/en/docs/getting-started/</loc>
 <lastmod>2026-11-19</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/demarrage/"/>
@@ -237,7 +247,7 @@
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/incidents/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/en/docs/integrations/</loc>
-<lastmod>2026-11-19</lastmod>
+<lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/integrations/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/integrations/"/>
 </url>
@@ -252,12 +262,12 @@
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/logs/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/en/docs/metrics/</loc>
-<lastmod>2026-11-19</lastmod>
+<lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/metriques/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/metrics/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/en/docs/monitors/</loc>
-<lastmod>2026-11-19</lastmod>
+<lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/moniteurs/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/monitors/"/>
 </url>

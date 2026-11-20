@@ -5,7 +5,7 @@ title: Référence de configuration de l'agent
 nav: Configuration de l'agent
 section: Installer l'agent
 order: 14
-updated: 2026-11-19
+updated: 2026-11-20
 description: Toutes les clés de hypha.yaml et de conf.d : clé, serveur, étiquettes, journaux, processus, réseau, contrôles, intégrations, SNMP, actions, mises à jour.
 lead: Un fichier principal, des compléments dans conf.d, et une commande qui vérifie le tout avant de redémarrer.
 ---
@@ -94,7 +94,7 @@ Les contrôles HTTP et TCP partent de l'hôte : ils voient les adresses internes
 
 ## Intégrations
 
-Chaque intégration s'active seule quand son logiciel est détecté (`enabled: auto`), ou se force (`true`) et se coupe (`false`). Son état apparaît dans **Réglages › Agents** : ok, absent, coupée, ou l'erreur rencontrée. Le détail de chacune est sur les pages [Intégrations](/docs/integrations/), [Bases de données](/docs/bases-de-donnees/), [SNMP](/docs/snmp/), [Clouds](/docs/cloud/), [Virtualisation](/docs/virtualisation/) et [Kubernetes](/docs/kubernetes/).
+Chaque intégration s'active seule quand son logiciel est détecté (`enabled: auto`), ou se force (`true`) et se coupe (`false`). Son état apparaît dans **Réglages › Agents** : ok, absent, coupée, ou l'erreur rencontrée. Le détail de chacune est sur les pages [Intégrations](/docs/integrations/), [Bases de données](/docs/bases-de-donnees/), [SNMP](/docs/snmp/), [Clouds](/docs/cloud/), [Virtualisation](/docs/virtualisation/), [Kubernetes](/docs/kubernetes/) et [Collecte générique](/docs/collecte-generique/) (`integrations.openmetrics`, `integrations.nagios` : des listes, qui s'additionnent elles aussi d'un fichier `conf.d` à l'autre).
 
 ### Plusieurs instances
 
@@ -120,6 +120,8 @@ otlp:
 ```
 
 Une écoute hors de la boucle locale déclenche un avertissement : elle ouvre le port au réseau.
+
+La réception syslog (`syslog:`, coupée par défaut) est décrite dans [Collecte générique](/docs/collecte-generique/#reception-syslog).
 
 ## Canal de contrôle, mises à jour, actions
 

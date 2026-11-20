@@ -16,7 +16,7 @@ lead: HYPHA monitors servers, applications, networks and clouds. It tells you th
 <a class="card" href="/en/docs/videos/"><b>Videos</b><span>Seven short demos recorded in the real interface.</span></a>
 <a class="card" href="/en/docs/agent-linux/"><b>Install the agent</b><span>Linux, Windows, Docker and Kubernetes.</span></a>
 <a class="card" href="/en/docs/integrations/"><b>Integrations</b><span>Databases, mail, web servers, SNMP, clouds and hypervisors.</span></a>
-<a class="card" href="/en/docs/monitors/"><b>Monitors</b><span>Thresholds, anomalies, forecasts and more than 80 ready-made templates.</span></a>
+<a class="card" href="/en/docs/monitors/"><b>Monitors</b><span>Thresholds, anomalies, forecasts and more than 90 ready-made templates.</span></a>
 <a class="card" href="/en/docs/explain-and-repair/"><b>Explain and repair</b><span>The cause of an outage, its evidence, then the action approved in one click.</span></a>
 <a class="card" href="/en/docs/api/"><b>API</b><span>Keys, data intake, OpenTelemetry, automation.</span></a>
 <a class="card" href="/en/docs/self-hosting/"><b>Self-hosting</b><span>The same software on your server, your data stays with you.</span></a>

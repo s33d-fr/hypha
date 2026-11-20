@@ -16,7 +16,7 @@ lead: HYPHA supervise serveurs, applications, réseau et clouds. Il dit la cause
 <a class="card" href="/docs/videos/"><b>Vidéos</b><span>Sept démonstrations courtes tournées dans la vraie interface.</span></a>
 <a class="card" href="/docs/agent-linux/"><b>Installer l'agent</b><span>Linux, Windows, Docker et Kubernetes.</span></a>
 <a class="card" href="/docs/integrations/"><b>Intégrations</b><span>Bases, messagerie, serveurs web, SNMP, clouds et hyperviseurs.</span></a>
-<a class="card" href="/docs/moniteurs/"><b>Moniteurs</b><span>Seuils, anomalies, prévisions et plus de 80 modèles prêts à l'emploi.</span></a>
+<a class="card" href="/docs/moniteurs/"><b>Moniteurs</b><span>Seuils, anomalies, prévisions et plus de 90 modèles prêts à l'emploi.</span></a>
 <a class="card" href="/docs/explication-et-reparation/"><b>Explication et réparation</b><span>La cause d'une panne, ses preuves, puis le geste validé d'un clic.</span></a>
 <a class="card" href="/docs/api/"><b>API</b><span>Clés, envoi de données, OpenTelemetry, automatisation.</span></a>
 <a class="card" href="/docs/auto-hebergement/"><b>Auto-hébergement</b><span>Le même logiciel sur votre serveur, vos données chez vous.</span></a>

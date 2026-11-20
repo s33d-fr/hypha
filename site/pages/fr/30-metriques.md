@@ -5,7 +5,7 @@ title: Métriques et tableaux de bord
 nav: Métriques et tableaux
 section: Observer
 order: 30
-updated: 2026-11-19
+updated: 2026-11-20
 description: Le langage de requête des métriques HYPHA, ses formules et fonctions, l'explorateur, les tableaux de bord, leurs widgets et le partage public en lecture.
 lead: Une requête courte, des formules, des fonctions, et une grille de widgets que toute l'équipe partage.
 ---
@@ -60,6 +60,20 @@ Fonctions du tableau :
 - clonage, dossiers, rafraîchissement automatique, mode TV en plein écran ;
 - export et import en JSON.
 
+### Catalogue de tableaux prêts
+
+**Tableaux de bord › Catalogue** : une trentaine de tableaux prêts, rangés par famille, installés d'un clic dans l'espace ; un tableau installé devient un tableau ordinaire (modifiable, clonable, exportable), et installer deux fois donne deux tableaux. Leurs requêtes visent les mesures que l'agent publie : un tableau reste vide tant que l'intégration n'est pas active.
+
+| Famille | Tableaux |
+|---|---|
+| Système | vue système, vue réseau, système en détail, matériel (SMART, capteurs), Windows (IIS, SQL Server) |
+| Bases de données, recherche, files | PostgreSQL, MySQL et MariaDB, Redis et Valkey, Memcached, MongoDB, OpenSearch et Elasticsearch, RabbitMQ |
+| Web, messagerie, réseau, sécurité | nginx et Apache, HAProxy, messagerie (Postfix, Dovecot, rspamd, Exchange), DNS BIND, équipements SNMP, certificats et accès |
+| Conteneurs, virtualisation, cloud | Docker, Kubernetes, KVM et VirtualBox, Proxmox VE, Hyper-V, VMware vSphere, clouds (AWS, Azure, Google Cloud, Scaleway, OVHcloud) |
+| Collecte générique | cibles OpenMetrics, node_exporter, serveur Prometheus, plugins Nagios et Centreon, journaux reçus par syslog (voir [Collecte générique](/docs/collecte-generique/)) |
+
+API : `GET /api/v1/dashboards/catalogue`, `POST /api/v1/dashboards/catalogue/{id}`.
+
 ### Partage public en lecture
 
 Un administrateur peut publier un tableau par un lien secret (`/share/?t=…`). Le lien n'exécute que les requêtes des widgets du tableau, en lecture. Il se retire à tout moment.
@@ -67,5 +81,6 @@ Un administrateur peut publier un tableau par un lien secret (`/share/?t=…`). 
 ## Envoyer vos mesures
 
 - StatsD : voir [Intégrations](/docs/integrations/#vos-propres-mesures).
+- Pages `/metrics` au format Prometheus ou OpenMetrics : voir [Collecte générique](/docs/collecte-generique/).
 - OpenTelemetry : métriques OTLP sur `/v1/metrics`, voir [Traces](/docs/traces/).
 - Événements de déploiement : voir [API](/docs/api/#evenements).

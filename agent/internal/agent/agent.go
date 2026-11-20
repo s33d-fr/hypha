@@ -36,7 +36,9 @@ import (
 	"s33d.fr/hypha/agent/internal/logs"
 	"s33d.fr/hypha/agent/internal/metrics"
 	"s33d.fr/hypha/agent/internal/model"
+	"s33d.fr/hypha/agent/internal/nagios"
 	"s33d.fr/hypha/agent/internal/netconn"
+	"s33d.fr/hypha/agent/internal/openmetrics"
 	"s33d.fr/hypha/agent/internal/otlp"
 	"s33d.fr/hypha/agent/internal/procs"
 	"s33d.fr/hypha/agent/internal/sender"
@@ -45,6 +47,7 @@ import (
 	"s33d.fr/hypha/agent/internal/statsd"
 	"s33d.fr/hypha/agent/internal/status"
 	"s33d.fr/hypha/agent/internal/synthetics"
+	"s33d.fr/hypha/agent/internal/syslog"
 	"s33d.fr/hypha/agent/internal/update"
 	"s33d.fr/hypha/agent/internal/updates"
 )
@@ -104,6 +107,10 @@ type Agent struct {
 	restart      atomic.Bool
 	integrFirst  atomic.Bool
 	cancelRun    context.CancelFunc
+	// 0.5.0 : moteurs génériques (v05.go).
+	omMgr     *openmetrics.Manager
+	nagiosMgr *nagios.Manager
+	syslogSrv *syslog.Server
 	controlPause time.Time // canal de contrôle en pause jusqu'à cette heure (erreurs)
 	controlFails int
 
@@ -190,6 +197,7 @@ func New(cfg *config.Config, opt Options) (*Agent, error) {
 	if err := a.setupV04(); err != nil {
 		return nil, err
 	}
+	a.setupV05()
 
 	// État initial, envoyé avec le premier inventaire ; chaque collecteur le met à jour ensuite.
 	a.status.Set("checks", "ok")
@@ -285,13 +293,15 @@ func (a *Agent) runForever(ctx context.Context) error {
 		every("docker", containersEvery, containersEvery, a.containersCycle)
 	}
 	every("status", 5*time.Second, statusFileEvery, func(context.Context, time.Time) { a.writeStatusFile() })
-	a.startV04(ctx, every, func(fn func()) {
+	goRun := func(fn func()) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
 			a.safe("v04", fn)
 		}()
-	})
+	}
+	a.startV04(ctx, every, goRun)
+	a.startV05(ctx, goRun)
 
 	<-ctx.Done()
 	a.log.Info("arrêt demandé")
@@ -334,6 +344,7 @@ func (a *Agent) runOnce(ctx context.Context) error {
 	a.metricsCycle(ctx, now)
 	a.integrationsCycle(ctx, now)
 	a.integr.Close()
+	a.onceV05(ctx)
 	if a.snmp != nil {
 		a.snmp.PollAll(ctx)
 	}
@@ -446,6 +457,10 @@ func (a *Agent) metricsCycle(ctx context.Context, now time.Time) {
 		if dropped > 0 && a.limiter.Allow("statsd-dropped") {
 			a.log.Warn("StatsD : trop de séries distinctes, valeurs jetées", "jetées", dropped)
 		}
+	}
+	if s, c := a.flushSyslog(now); len(s)+len(c) > 0 {
+		series = append(series, s...)
+		extraChecks = append(extraChecks, c...)
 	}
 
 	if ps, pc, err := a.checks.Processes(ctx, now, a.tags); err != nil {
@@ -620,6 +635,9 @@ func (a *Agent) startLogs(ctx context.Context, once bool) <-chan struct{} {
 	lc := a.cfg.Logs
 	if !lc.Enabled {
 		a.status.Set("logs", "disabled")
+		if a.cfg.Syslog.Enabled {
+			a.status.Set("syslog", "erreur : logs.enabled est faux, les lignes reçues n'auraient nulle part où aller")
+		}
 		close(done)
 		return done
 	}
@@ -675,6 +693,9 @@ func (a *Agent) startLogs(ctx context.Context, once bool) <-chan struct{} {
 			e := logs.NewEventlog(lc.WindowsEventlog, pipe, a.store, a.log, setter("eventlog"))
 			start(e.Run, e.Once, e.FlushState)
 		}
+	}
+	if a.cfg.Syslog.Enabled && !once {
+		a.startSyslog(pipe, start)
 	}
 	go func() {
 		sources.Wait()

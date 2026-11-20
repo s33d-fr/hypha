@@ -98,6 +98,9 @@ func (c *Config) applyDocs(docs []fileDoc) error {
 	merged := &yaml.Node{Kind: yaml.MappingNode, Tag: "!!map"}
 	for _, d := range docs {
 		c.Files = append(c.Files, d.path)
+		if declaresNagios(d.root) {
+			c.NagiosFiles = append(c.NagiosFiles, d.path)
+		}
 		if d.root != nil {
 			mergeMapping(merged, d.root, "", d.path, c.origins)
 		}
@@ -128,8 +131,9 @@ func mergeMapping(dst, src *yaml.Node, prefix, file string, origins map[string]s
 			mergeMapping(cur, v, p+".", file, origins)
 			continue
 		}
-		if k.Value == "instances" && cur.Kind == yaml.SequenceNode && v.Kind == yaml.SequenceNode {
-			// § 50 : un fichier conf.d par compte ou par grappe, les instances s'additionnent.
+		if (k.Value == "instances" || concatLists[p]) && cur.Kind == yaml.SequenceNode && v.Kind == yaml.SequenceNode {
+			// § 50 : un fichier conf.d par compte ou par grappe, les instances s'additionnent ;
+			// de même les cibles OpenMetrics et les plugins Nagios (0.5.0).
 			joined := *cur
 			joined.Content = append(append([]*yaml.Node{}, cur.Content...), v.Content...)
 			dst.Content[j+1] = &joined
@@ -137,6 +141,21 @@ func mergeMapping(dst, src *yaml.Node, prefix, file string, origins map[string]s
 		}
 		dst.Content[j+1] = v
 	}
+}
+
+// concatLists : listes qui s'additionnent d'un fichier à l'autre au lieu de se remplacer.
+var concatLists = map[string]bool{"integrations.openmetrics": true, "integrations.nagios": true}
+
+// declaresNagios dit si un document pose integrations.nagios.
+func declaresNagios(root *yaml.Node) bool {
+	if root == nil {
+		return false
+	}
+	i := findKey(root, "integrations")
+	if i < 0 || root.Content[i+1].Kind != yaml.MappingNode {
+		return false
+	}
+	return findKey(root.Content[i+1], "nagios") >= 0
 }
 
 func markOrigins(v *yaml.Node, p, file string, origins map[string]string) {
@@ -214,6 +233,13 @@ func redact(n *yaml.Node) {
 				v.Value, v.Tag, v.Style = "****", "!!str", 0
 			case (k == "dsn" || k == "uri") && v.Kind == yaml.ScalarNode:
 				v.Value = redactDSN(v.Value)
+			case k == "headers" && v.Kind == yaml.MappingNode:
+				// En-têtes d'une cible OpenMetrics : Authorization, X-Api-Key… jamais affichés.
+				for j := 1; j < len(v.Content); j += 2 {
+					if x := v.Content[j]; x.Kind == yaml.ScalarNode && x.Value != "" {
+						x.Value, x.Tag, x.Style = "****", "!!str", 0
+					}
+				}
 			default:
 				redact(v)
 			}

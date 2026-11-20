@@ -146,7 +146,7 @@ func (a *Agent) capabilities() *model.Capabilities {
 		Actions:      a.actions.Capabilities(),
 		Synthetics:   a.synth != nil,
 		AutoUpdate:   a.cfg.AutoUpdate && a.updateOff == "" && a.cfg.Control.Enabled,
-		Integrations: a.integr.Active(),
+		Integrations: append(a.integr.Active(), a.capabilitiesV05()...),
 	}
 	if !a.cfg.Control.Enabled {
 		c.Actions.Enabled, c.Actions.Kinds, c.Actions.Scripts = false, []string{}, []string{}

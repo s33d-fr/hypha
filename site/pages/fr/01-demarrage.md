@@ -52,7 +52,7 @@ Tant qu'aucun agent n'est relié, la vue d'ensemble affiche trois étapes pour v
 
 Les six moniteurs posés d'office surveillent déjà l'hôte. Pour aller plus loin :
 
-- **Moniteurs › Nouveau moniteur › Depuis un modèle** propose plus de 80 modèles : processeur, mémoire, disque plein dans 48 h, certificats, bases de données, clouds, Kubernetes ;
+- **Moniteurs › Nouveau moniteur › Depuis un modèle** propose plus de 90 modèles : processeur, mémoire, disque plein dans 48 h, certificats, bases de données, clouds, Kubernetes ;
 - **Réglages › Canaux de notification** ajoute Slack, Teams, Telegram, Discord, PagerDuty, un webhook et d'autres canaux ;
 - le bouton **Envoyer un essai** de chaque canal vérifie qu'il arrive à destination.
 

@@ -10,16 +10,24 @@ sécurité du § 23 (sshd, sudo, su, fail2ban).
 Statut déduit du code HTTP : une ligne `info` dont `http.status_code` vaut ≥ 500 devient `error`,
 ≥ 400 devient `warning` ; un statut plus grave déjà posé n'est jamais abaissé. La règle vaut aussi
 pour un code HTTP déjà présent dans les attributs (journal JSON décodé par l'agent, OTLP).
+
+Modèles d'analyse par équipement (0.5.0, point d'accroche de la vague 4) : une ligne reçue par la
+réception syslog de l'agent (`source:syslog`) dont l'attribut `syslog.parser` nomme un modèle de
+`DEVICE_PARSERS` passe par ce modèle avant le reste. Le modèle rend des attributs (même règle : rien
+d'existant n'est écrasé) et, s'il le faut, un statut (`status`), qui ne peut que rendre la ligne plus
+grave. Livré : `kv` (paires clé=valeur, valeurs entre guillemets admises).
 """
 import json
 import re
+from collections.abc import Callable
 from urllib.parse import urlsplit
 
-from .body import LOG_COLUMNS
+from .body import LOG_COLUMNS, LOG_STATUSES
 
 _I_STATUS = LOG_COLUMNS.index("status")
 _I_MESSAGE = LOG_COLUMNS.index("message")
 _I_ATTRS = LOG_COLUMNS.index("attributes")
+_I_SOURCE = LOG_COLUMNS.index("source")
 
 _UVICORN_PREFIXES = ("INFO:", "WARNING:", "ERROR:", "DEBUG:", "CRITICAL:", "TRACE:")
 
@@ -205,6 +213,64 @@ def merge(attrs: dict, produced: dict) -> bool:
     return changed
 
 
+# ── modèles d'analyse par équipement (syslog) ──────────────────────────────────
+
+DEVICE_PARSERS: dict[str, Callable[[str], dict | None]] = {}
+
+
+def device_parser(name: str):
+    """Déclare un modèle d'analyse : fonction message → attributs (noms à points), ou None."""
+    def register(fn):
+        DEVICE_PARSERS[name] = fn
+        return fn
+    return register
+
+
+_KV = re.compile(r'(?:^|[\s,;])([A-Za-z_][A-Za-z0-9_\-]{0,63})=("(?:[^"\\]|\\.)*"|[^\s,;"]*)')
+_INT = re.compile(r"^-?\d{1,15}$")
+MAX_KV = 60
+
+
+@device_parser("kv")
+def parse_kv(message: str) -> dict | None:
+    """Paires clé=valeur (pare-feux Fortinet, Stormshield, Sophos, Palo Alto en mode clé-valeur…) :
+    chaque clé devient un attribut de premier niveau ; un entier reste un nombre."""
+    if not message or "=" not in message or len(message) > 16384:
+        return None
+    out = {}
+    for m in _KV.finditer(message):
+        key, raw = m.group(1), m.group(2)
+        if raw.startswith('"'):
+            value = raw[1:-1].replace('\\"', '"').replace("\\\\", "\\")
+        else:
+            value = int(raw) if _INT.match(raw) else raw
+        if isinstance(value, str):
+            value = value[:1000]
+        out.setdefault(key, value)
+        if len(out) >= MAX_KV:
+            break
+    return out or None
+
+
+def _graver(current: str, wanted) -> str:
+    """Le plus grave des deux statuts (un modèle ne rend jamais une ligne moins grave)."""
+    if wanted not in LOG_STATUSES or current not in LOG_STATUSES:
+        return current
+    return wanted if LOG_STATUSES.index(wanted) < LOG_STATUSES.index(current) else current
+
+
+def device_attributes(attrs: dict, message: str) -> dict | None:
+    sl = attrs.get("syslog")
+    name = sl.get("parser") if isinstance(sl, dict) else None
+    fn = DEVICE_PARSERS.get(name) if isinstance(name, str) else None
+    if fn is None:
+        return None
+    try:
+        return fn(message)
+    except Exception:  # un modèle ne fait jamais tomber l'ingestion
+        return None
+
+
 def http_status_code(attrs: dict) -> int | None:
     for value in ((attrs.get("http") or {}).get("status_code") if isinstance(attrs.get("http"), dict) else None,
                   attrs.get("http.status_code")):
@@ -229,6 +295,8 @@ def deduced_status(status: str, code: int | None) -> str:
 
 def process_row(row: tuple) -> tuple:
     message, status, attrs_json = row[_I_MESSAGE], row[_I_STATUS], row[_I_ATTRS]
+    if row[_I_SOURCE] == "syslog" and '"parser"' in (attrs_json or ""):
+        return _process_device(row)
     produced = parse_access(message)
     if produced is None:
         produced = parse_security(message)
@@ -237,6 +305,26 @@ def process_row(row: tuple) -> tuple:
     attrs = json.loads(attrs_json or "{}")
     changed = merge(attrs, produced) if produced else False
     new_status = deduced_status(status, http_status_code(attrs))
+    if not changed and new_status == status:
+        return row
+    out = list(row)
+    out[_I_STATUS] = new_status
+    if changed:
+        out[_I_ATTRS] = json.dumps(attrs, ensure_ascii=False, separators=(",", ":"))
+    return tuple(out)
+
+
+def _process_device(row: tuple) -> tuple:
+    message, status = row[_I_MESSAGE], row[_I_STATUS]
+    attrs = json.loads(row[_I_ATTRS] or "{}")
+    produced = dict(device_attributes(attrs, message) or {})
+    new_status = _graver(status, produced.pop("status", None))
+    changed = merge(attrs, produced) if produced else False
+    for extra in (parse_access(message), parse_security(message)):
+        if extra:
+            changed = merge(attrs, extra) or changed
+            break
+    new_status = deduced_status(new_status, http_status_code(attrs))
     if not changed and new_status == status:
         return row
     out = list(row)

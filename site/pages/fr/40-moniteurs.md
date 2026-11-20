@@ -5,9 +5,9 @@ title: Moniteurs et modèles
 nav: Moniteurs
 section: Alerter et agir
 order: 40
-updated: 2026-11-19
+updated: 2026-11-20
 description: Les types de moniteurs HYPHA (métrique, hôte, contrôle, journaux, APM, synthétique, anomalie, prévision, écart, composite, variation, événement, processus, erreurs, SLO), leurs seuils, leurs options et le catalogue de modèles.
-lead: Un moniteur évalue des données chaque minute et change d'état. Partez d'un modèle du catalogue, il y en a plus de 80, ou écrivez le vôtre avec l'aperçu en direct.
+lead: Un moniteur évalue des données chaque minute et change d'état. Partez d'un modèle du catalogue, il y en a plus de 90, ou écrivez le vôtre avec l'aperçu en direct.
 ---
 {{video:5-moniteurs}}
 
@@ -69,7 +69,7 @@ Variables : `{{name}}`, `{{group}}`, `{{host}}`, `{{value}}`, `{{last_value}}`, 
 
 ## Le catalogue de modèles
 
-**Moniteurs › Nouveau moniteur › Depuis un modèle** : plus de 80 modèles par famille, chacun avec ses variables (étiquettes visées, seuils, service).
+**Moniteurs › Nouveau moniteur › Depuis un modèle** : plus de 90 modèles par famille, chacun avec ses variables (étiquettes visées, seuils, service).
 
 | Famille | Exemples |
 |---|---|
@@ -82,5 +82,6 @@ Variables : `{{name}}`, `{{group}}`, `{{host}}`, `{{value}}`, `{{last_value}}`, 
 | Messagerie | file d'attente Postfix |
 | Synthétiques | synthétique en échec |
 | Kubernetes, Cloud, Virtualisation | grappes, nœuds, AWS, Azure, Google Cloud, OVHcloud, Scaleway, vSphere, Proxmox, Hyper-V, KVM |
+| Collecte générique | cible OpenMetrics injoignable, plafond de séries atteint, plugin Nagios en alerte, réception syslog en échec, équipement syslog muet, lignes syslog jetées, erreurs graves reçues par syslog |
 
 Un espace neuf reçoit six moniteurs du catalogue, reliés à un canal e-mail vers l'adresse du compte : hôte sans nouvelles, disque presque plein, mémoire saturée, unité systemd en échec, service Windows arrêté, certificat proche de la fin.

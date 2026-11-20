@@ -284,6 +284,19 @@ func cmdCheckConfig(args []string) int {
 		len(cfg.Checks.SystemdUnits), len(cfg.Checks.WindowsServices), len(cfg.Checks.HTTP), len(cfg.Checks.TCP))
 	fmt.Printf("StatsD         : %v %s ; OTLP : %v %s\n", cfg.StatsD.Enabled, cfg.StatsD.Listen, cfg.OTLP.Enabled, cfg.OTLP.Listen)
 	fmt.Printf("Conteneurs     : %s ; processus : %v ; réseau : %v\n", cfg.Containers.Enabled, cfg.Processes.Enabled, cfg.Network.Enabled)
+	var om, ng []string
+	for _, o := range cfg.Integrations.OpenMetrics {
+		om = append(om, o.Name+" "+o.URL)
+	}
+	for _, n := range cfg.Integrations.Nagios {
+		ng = append(ng, n.Name)
+	}
+	fmt.Printf("OpenMetrics    : %d cible(s) %v ; plugins Nagios : %d %v\n", len(om), om, len(ng), ng)
+	if cfg.Syslog.Enabled {
+		fmt.Printf("Syslog         : actif, udp=%q tcp=%q, %d lignes/s au plus\n", cfg.Syslog.UDP, cfg.Syslog.TCP, cfg.Syslog.RateLimit)
+	} else {
+		fmt.Printf("Syslog         : coupé\n")
+	}
 	fmt.Printf("Contrôle       : canal=%v (%s) ; mise à jour automatique=%v\n", cfg.Control.Enabled, cfg.Control.Interval.D(), cfg.AutoUpdate)
 	if cfg.Actions.Enabled {
 		fmt.Printf("Actions        : actives, gestes %s, services %v, interdits %v, scripts %v, délai %s\n",

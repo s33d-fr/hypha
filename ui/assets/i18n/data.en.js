@@ -1088,4 +1088,16 @@ export default {
   'cert.origin.smtp': 'SMTP',
   'cert.origin.imap': 'IMAP',
   'cert.origin.pop3': 'POP3',
+  // Catalogue de tableaux prêts (0.5.0)
+  'dash.cat.button': 'Catalog',
+  'dash.cat.title': 'Ready-made dashboard catalog',
+  'dash.cat.intro': 'A catalog dashboard installs in one click into this workspace, then edits like any other. Dashboards rely on the metrics published by the agent: they stay empty until the matching integration is active.',
+  'dash.cat.search_ph': 'Search a software, a family…',
+  'dash.cat.install': 'Install',
+  'dash.cat.installed': 'Dashboard “{title}” installed',
+  'dash.cat.no_match': 'No dashboard matches.',
+  'dash.cat.none': 'The catalog is empty.',
+  'dash.cat.missing': 'This server has no catalog yet (version older than 0.5.0).',
+  'dash.cat.widgets_one': '{n} widget',
+  'dash.cat.widgets_other': '{n} widgets',
 };

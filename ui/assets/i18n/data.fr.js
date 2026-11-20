@@ -1088,4 +1088,16 @@ export default {
   'cert.origin.smtp': 'SMTP',
   'cert.origin.imap': 'IMAP',
   'cert.origin.pop3': 'POP3',
+  // Catalogue de tableaux prêts (0.5.0)
+  'dash.cat.button': 'Catalogue',
+  'dash.cat.title': 'Catalogue de tableaux prêts',
+  'dash.cat.intro': "Un tableau du catalogue s'installe d'un clic dans cet espace, puis se modifie comme les autres. Les tableaux s'appuient sur les mesures publiées par l'agent : ils restent vides tant que l'intégration correspondante n'est pas active.",
+  'dash.cat.search_ph': 'Chercher un logiciel, une famille…',
+  'dash.cat.install': 'Installer',
+  'dash.cat.installed': 'Tableau « {title} » installé',
+  'dash.cat.no_match': 'Aucun tableau ne correspond.',
+  'dash.cat.none': 'Le catalogue est vide.',
+  'dash.cat.missing': 'Ce serveur ne propose pas encore de catalogue (version antérieure à la 0.5.0).',
+  'dash.cat.widgets_one': '{n} widget',
+  'dash.cat.widgets_other': '{n} widgets',
 };

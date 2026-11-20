@@ -248,3 +248,60 @@ snmp:
   #     priv_protocol: aes, priv_key: "…", level: authPriv, profile: auto}
   # Traps v1/v2c reçus : événements source=snmp, type=snmp_trap (60 par minute au plus).
   traps: {enabled: false, listen: "0.0.0.0:162", community: public}
+
+# --- 0.5.0 : moteurs génériques ----------------------------------------------------------
+
+# Lecteur OpenMetrics/Prometheus (dans « integrations: » ci-dessus) : une entrée par cible.
+# profile : node_exporter, prometheus (port, chemin, métriques, renommages et étiquettes par
+# défaut). Compteurs envoyés en débits par seconde, jauges telles quelles, histogrammes et
+# résumés en .count, .sum, .avg et centiles (p50, p95, p99). labels : étiquettes gardées comme
+# tags (liste blanche, « * » = toutes) ; les séries qui ne diffèrent que par une étiquette
+# écartée sont additionnées. max_series : plafond de séries par instance (2000), au-delà
+# séries écartées et avertissement. Les listes de plusieurs fichiers conf.d s'additionnent.
+# integrations:
+#   openmetrics:
+#     - profile: node_exporter                  # http://127.0.0.1:9100/metrics
+#     - name: monappli
+#       url: https://appli.exemple:8443/metrics
+#       interval: 30s
+#       timeout: 10s
+#       namespace: monappli
+#       metrics: [http_requests_total, "job_*", "re:queue_(depth|age)_.*"]
+#       exclude_metrics: ["go_*"]
+#       rename: {http_requests_total: http.requests}
+#       labels: [code, method]
+#       bearer_token_file: /etc/hypha/monappli.token   # relu à chaque relevé
+#       ca_file: /etc/hypha/ca-interne.pem
+#       max_series: 2000
+#
+# Plugins Nagios, Monitoring Plugins ou Centreon (dans « integrations: ») : commandes lues dans
+# CE fichier seulement (jamais envoyées par le serveur), qui doit appartenir à root et n'être
+# modifiable ni par le groupe ni par les autres ; l'exécutable aussi. Lancement direct, sans
+# shell ($, *, | restent des caractères ordinaires) ; un simple nom est cherché dans
+# /usr/lib/nagios/plugins, /usr/lib/monitoring-plugins, /usr/lib/centreon/plugins…
+# Code de sortie 0/1/2/3 → contrôle nagios.check OK/WARN/CRIT/UNKNOWN (étiquette nagios_check) ;
+# données de performance → nagios.perfdata (étiquette perf_label) et .warn, .crit, .min, .max.
+# integrations:
+#   nagios:
+#     - name: disque-racine
+#       command: check_disk -w 20% -c 10% -p /
+#       interval: 60s
+#       timeout: 30s
+#       user: nagios            # compte qui lance le plugin (facultatif, Linux)
+#     - name: http-local
+#       command: [check_http, -H, 127.0.0.1, -u, /sante]
+
+# Réception syslog (UDP et TCP, RFC 3164 et 5424, trames octet-counting ou fin de ligne).
+# Coupée par défaut. L'agent n'ouvre aucun pare-feu : à régler à part. Le port 80 est refusé.
+# Les lignes reçues partent comme journaux (source syslog, étiquette syslog_host = nom ou
+# adresse de l'émetteur, statut d'après la sévérité). parsers : modèle d'analyse appliqué par
+# le serveur à certains émetteurs (attribut syslog.parser ; kv = paires clé=valeur).
+syslog:
+  enabled: false
+  udp: 0.0.0.0:514
+  tcp: 0.0.0.0:514
+  allowed_sources: []          # adresses ou réseaux admis ; vide = tous
+  max_connections: 64
+  rate_limit: 2000             # lignes par seconde, au-delà jetées et comptées
+  parsers: []
+  #  - {match: 192.0.2.0/24, parser: kv}

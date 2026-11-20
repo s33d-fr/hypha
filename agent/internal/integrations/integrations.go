@@ -158,6 +158,9 @@ func (r *Runner) Active() []string {
 
 // ObserveLog passe une ligne de journal aux intégrations qui en tirent des métriques.
 func (r *Runner) ObserveLog(l *model.Log) {
+	if l.Source == "syslog" {
+		return // lignes reçues d'autres machines : jamais comptées comme celles de l'hôte
+	}
 	for _, it := range r.list {
 		if o, ok := it.(logObserver); ok {
 			o.observe(l)

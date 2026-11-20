@@ -149,6 +149,62 @@ function newDashboardDialog(ctx, base, folders) {
   });
 }
 
+// ── Catalogue des tableaux prêts (0.5.0) ──────────────────────────────────
+// Un tableau du catalogue s'installe d'un clic et devient un tableau ordinaire de l'espace.
+function catalogueDialog(ctx) {
+  const body = h('div', { class: 'col gap-3' }, h('div', { class: 'state sm' }, h('span', { class: 'spinner' })));
+  const m = modal({ title: t('dash.cat.title'), body, wide: true });
+  let all = [];
+  let q = '';
+  function draw() {
+    clear(body);
+    const cards = h('div');
+    const search = searchInput({ placeholder: t('dash.cat.search_ph'), value: q, slash: false, onInput: (v) => { q = v; drawCards(); } });
+    body.appendChild(h('p', { class: 'small text-2' }, t('dash.cat.intro')));
+    body.appendChild(search);
+    body.appendChild(cards);
+    function drawCards() {
+      clear(cards);
+      const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+      const list = all.filter((x) => words.every((w) => [x.title, x.description, x.family, (x.integrations || []).join(' ')].join(' ').toLowerCase().includes(w)));
+      if (!list.length) { cards.appendChild(empty(null, t('dash.cat.no_match'))); return; }
+      for (const f of Array.from(new Set(list.map((x) => x.family)))) {
+        cards.appendChild(h('h4', { class: 'tpl-family' }, f));
+        cards.appendChild(h('div', { class: 'tpl-grid' }, list.filter((x) => x.family === f).map((x) => {
+          const btn = h('button', { class: 'btn sm primary', type: 'button' }, icon('download', 12), t('dash.cat.install'));
+          btn.addEventListener('click', async () => {
+            btn.disabled = true;
+            try {
+              const r = await post('/dashboards/catalogue/' + encodeURIComponent(x.id), {});
+              const id = r && (r.id || (r.dashboard && r.dashboard.id));
+              m.close();
+              toast(t('dash.cat.installed', { title: x.title }), 'ok');
+              if (id) ctx.navigate('/dashboards/' + id); else ctx.refresh();
+            } catch (e) { btn.disabled = false; toast(errorMessage(e), 'error'); }
+          });
+          return h('div', { class: 'tpl-card' },
+            h('div', { class: 'row' }, h('b', { class: 'grow' }, x.title), h('span', { class: 'badge muted' }, tn('dash.cat.widgets', x.widget_count || 0))),
+            x.description ? h('span', { class: 'small text-2' }, x.description) : null,
+            h('div', { class: 'row wrap', style: { gap: '4px' } }, (x.integrations || []).map((i) => h('span', { class: 'tag mono xsmall' }, i))),
+            canWrite(ctx.me) ? h('div', { class: 'row' }, h('span', { class: 'spacer' }), btn) : null);
+        })));
+      }
+    }
+    drawCards();
+    setTimeout(() => search.input.focus(), 0);
+  }
+  get('/dashboards/catalogue', null, { signal: ctx.signal }).then((r) => {
+    all = asList(r, 'dashboards');
+    if (!all.length) { clear(body); body.appendChild(empty(null, t('dash.cat.none'))); return; }
+    draw();
+  }).catch((e) => {
+    if (isAbort(e)) return;
+    clear(body);
+    body.appendChild(isMissingRoute(e) ? h('div', { class: 'callout' }, icon('info', 16), h('span', { class: 'small' }, t('dash.cat.missing'))) : errorState(e));
+  });
+  return m;
+}
+
 // ── Liste ─────────────────────────────────────────────────────────────────
 async function renderList(root, ctx) {
   const { signal, href, params } = ctx;
@@ -162,6 +218,7 @@ async function renderList(root, ctx) {
   search.style.flex = '1 1 300px';
   const writable = canWrite(ctx.me);
   root.appendChild(h('div', { class: 'querybar' }, search,
+    h('button', { class: 'btn', type: 'button', onclick: () => catalogueDialog(ctx) }, icon('layers', 14), t('dash.cat.button')),
     writable ? h('button', { class: 'btn', type: 'button', onclick: () => importDialog(ctx) }, icon('upload', 14), t('dash.import.button')) : null,
     writable ? h('button', { class: 'btn primary', type: 'button', onclick: () => newDashboardDialog(ctx, null, folders()) }, icon('plus', 14), t('dash.new')) : null));
   root.appendChild(folderEl);

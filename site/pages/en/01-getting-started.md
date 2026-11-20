@@ -52,7 +52,7 @@ As long as no agent is connected, the overview shows three steps to guide you.
 
 The six default monitors already watch the host. To go further:
 
-- **Monitors › New monitor › From a template** offers more than 80 templates: CPU, memory, disk full within 48 h, certificates, databases, clouds, Kubernetes;
+- **Monitors › New monitor › From a template** offers more than 90 templates: CPU, memory, disk full within 48 h, certificates, databases, clouds, Kubernetes;
 - **Settings › Notification channels** adds Slack, Teams, Telegram, Discord, PagerDuty, a webhook and other channels;
 - each channel's **Send a test** button checks that it reaches its destination.
 

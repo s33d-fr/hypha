@@ -5,7 +5,7 @@ title: Metrics and dashboards
 nav: Metrics and dashboards
 section: Observe
 order: 30
-updated: 2026-11-19
+updated: 2026-11-20
 description: The HYPHA metric query language, its formulas and functions, the explorer, dashboards, their widgets and public read-only sharing.
 lead: A short query, formulas, functions, and a grid of widgets the whole team shares.
 ---
@@ -60,6 +60,20 @@ Dashboard features:
 - cloning, folders, automatic refresh, full-screen TV mode;
 - JSON export and import.
 
+### Ready-made dashboard catalogue
+
+**Dashboards › Catalog**: about thirty ready-made dashboards, sorted by family, installed in one click into the workspace; an installed dashboard becomes a regular one (editable, clonable, exportable), and installing twice gives two dashboards. Their queries target the metrics the agent publishes: a dashboard stays empty until the integration is active. Dashboard titles are in French for now; any dashboard can be renamed.
+
+| Family | Dashboards |
+|---|---|
+| System | system view, network view, system in detail, hardware (SMART, sensors), Windows (IIS, SQL Server) |
+| Databases, search, queues | PostgreSQL, MySQL and MariaDB, Redis and Valkey, Memcached, MongoDB, OpenSearch and Elasticsearch, RabbitMQ |
+| Web, mail, network, security | nginx and Apache, HAProxy, mail (Postfix, Dovecot, rspamd, Exchange), BIND DNS, SNMP devices, certificates and access |
+| Containers, virtualization, cloud | Docker, Kubernetes, KVM and VirtualBox, Proxmox VE, Hyper-V, VMware vSphere, clouds (AWS, Azure, Google Cloud, Scaleway, OVHcloud) |
+| Generic collection | OpenMetrics targets, node_exporter, Prometheus server, Nagios and Centreon plugins, logs received by syslog (see [Generic collection](/en/docs/generic-collection/)) |
+
+API: `GET /api/v1/dashboards/catalogue`, `POST /api/v1/dashboards/catalogue/{id}`.
+
 ### Public read-only sharing
 
 An administrator can publish a dashboard through a secret link (`/share/?t=…`). The link only runs the queries of the dashboard's widgets, read-only. It can be withdrawn at any time.
@@ -67,5 +81,6 @@ An administrator can publish a dashboard through a secret link (`/share/?t=…`)
 ## Send your metrics
 
 - StatsD: see [Integrations](/en/docs/integrations/#your-own-metrics).
+- `/metrics` pages in Prometheus or OpenMetrics format: see [Generic collection](/en/docs/generic-collection/).
 - OpenTelemetry: OTLP metrics on `/v1/metrics`, see [Traces](/en/docs/traces/).
 - Deployment events: see [API](/en/docs/api/#events).

@@ -134,3 +134,47 @@ def test_url_path():
     assert P.url_path("/a/b?c=1#x") == "/a/b"
     assert P.url_path("https://hypha.s33d.fr/api?x=1") == "/api"
     assert P.url_path("http://h") == "/"
+
+
+# ── modèles d'analyse par équipement (syslog, 0.5.0) ───────────────────────────
+
+def syslog_row(message, parser=None, status="info"):
+    attrs = {"syslog": {"facility": "local7", "severity": 6}, "network": {"client": {"ip": "192.0.2.1"}}}
+    if parser:
+        attrs["syslog"]["parser"] = parser
+    return B.log_row(1, 10, "agent-01", TS, message, status, "syslog", "syslog", attrs, {"syslog_host": "fw01"}, None, None)
+
+
+def test_kv_parser():
+    out = P.parse_kv('date=2026-11-20 time=03:00:00 devname="FGT 60F" logid="0000000013" type=traffic srcport=443 '
+                     'msg="a \\"b\\" c" vide= action=deny')
+    assert out["devname"] == "FGT 60F" and out["srcport"] == 443 and out["logid"] == "0000000013"
+    assert out["msg"] == 'a "b" c' and out["vide"] == "" and out["action"] == "deny"
+    assert P.parse_kv("aucune paire ici") is None
+
+
+def test_device_parser_dispatch_and_status():
+    r = P.process_row(syslog_row('action=deny srcip=203.0.113.9 dstport=22', parser="kv"))
+    a = attrs_of(r)
+    assert a["action"] == "deny" and a["srcip"] == "203.0.113.9" and a["dstport"] == 22
+    assert a["syslog"]["parser"] == "kv" and a["network"]["client"]["ip"] == "192.0.2.1"
+    # Modèle inconnu, ou ligne sans modèle : rien ne change (hors découpages ordinaires).
+    plain = syslog_row("action=deny")
+    assert P.process_row(plain) == plain
+    unknown = syslog_row("action=deny", parser="inconnu")
+    assert attrs_of(P.process_row(unknown)) == attrs_of(unknown)
+    # Un modèle peut aggraver le statut, jamais l'abaisser ; un attribut existant n'est pas écrasé.
+    P.DEVICE_PARSERS["essai"] = lambda m: {"status": "critical", "syslog.parser": "autre", "evt.name": "x"}
+    P.DEVICE_PARSERS["doux"] = lambda m: {"status": "debug"}
+    P.DEVICE_PARSERS["casse"] = lambda m: 1 / 0
+    try:
+        r = P.process_row(syslog_row("x", parser="essai"))
+        assert status_of(r) == "critical" and attrs_of(r)["syslog"]["parser"] == "essai" and attrs_of(r)["evt"]["name"] == "x"
+        assert status_of(P.process_row(syslog_row("x", parser="doux", status="error"))) == "error"
+        assert status_of(P.process_row(syslog_row("x", parser="casse"))) == "info"
+    finally:
+        for k in ("essai", "doux", "casse"):
+            P.DEVICE_PARSERS.pop(k, None)
+    # Les découpages ordinaires s'appliquent aussi (sshd relayé par syslog).
+    r = P.process_row(syslog_row("Failed password for root from 198.51.100.4 port 2222 ssh2", parser="kv"))
+    assert attrs_of(r)["evt"]["outcome"] == "failure"
