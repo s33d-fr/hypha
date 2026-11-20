@@ -336,3 +336,7 @@ def _process_device(row: tuple) -> tuple:
 
 def process_rows(rows: list[tuple]) -> list[tuple]:
     return [process_row(r) for r in rows]
+
+
+# Modèles des équipements réseau et de sécurité (vague 4) : ils s'inscrivent dans DEVICE_PARSERS.
+from . import equipements  # noqa: E402,F401

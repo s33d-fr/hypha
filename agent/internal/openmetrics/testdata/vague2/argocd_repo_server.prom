@@ -1,0 +1,33 @@
+# TYPE argocd_git_request_duration_seconds histogram
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="fetch",le="0.1"} 0
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="fetch",le="0.25"} 0
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="fetch",le="0.5"} 0
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="fetch",le="1"} 1
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="fetch",le="2"} 1
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="fetch",le="4"} 1
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="fetch",le="10"} 1
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="fetch",le="20"} 1
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="fetch",le="+Inf"} 1
+argocd_git_request_duration_seconds_sum{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="fetch"} 0.727267742
+argocd_git_request_duration_seconds_count{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="fetch"} 1
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="ls-remote",le="0.1"} 0
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="ls-remote",le="0.25"} 0
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="ls-remote",le="0.5"} 2
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="ls-remote",le="1"} 2
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="ls-remote",le="2"} 2
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="ls-remote",le="4"} 2
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="ls-remote",le="10"} 2
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="ls-remote",le="20"} 2
+argocd_git_request_duration_seconds_bucket{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="ls-remote",le="+Inf"} 2
+argocd_git_request_duration_seconds_sum{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="ls-remote"} 0.698898056
+argocd_git_request_duration_seconds_count{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="ls-remote"} 2
+# TYPE argocd_git_request_total counter
+argocd_git_request_total{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="fetch"} 1
+argocd_git_request_total{repo="https://github.com/argoproj/argocd-example-apps.git",request_type="ls-remote"} 2
+# TYPE argocd_redis_request_total counter
+argocd_redis_request_total{command="get",failed="false",initiator="argocd-repo-server"} 13
+argocd_redis_request_total{command="set",failed="false",initiator="argocd-repo-server"} 4
+# TYPE argocd_repo_pending_request_total gauge
+argocd_repo_pending_request_total{repo="https://github.com/argoproj/argocd-example-apps.git"} 0
+# TYPE go_gc_gogc_percent gauge
+go_gc_gogc_percent 100

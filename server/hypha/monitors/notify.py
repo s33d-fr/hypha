@@ -1,8 +1,10 @@
 """Envoi des notifications sans bloquer la boucle du worker (contrat §§ 7, 18).
 
 Canaux : courriel (SMTP, HTML + texte), webhook, Slack, Teams, Telegram, Discord, Google Chat,
-Mattermost (format Slack), ntfy, PagerDuty (Events API v2 : trigger/resolve) et Opsgenie
-(create/close par alias). Délai de 10 s par appel, deux reprises espacées.
+Mattermost (format Slack), ntfy, PagerDuty (Events API v2 : trigger/resolve), Opsgenie
+(create/close par alias) et notifications push (Web Push vers les appareils des destinataires,
+hypha/push). Délai de 10 s par appel, deux reprises espacées (le push reprend lui-même appareil par
+appareil : un échec n'y est jamais renvoyé aux appareils déjà servis).
 
 Les envois du worker passent par une file traitée en tâche de fond. Une notification perdue (file
 pleine, worker arrêté) est journalisée ; l'état du moniteur, lui, est déjà en base avec son
@@ -20,6 +22,7 @@ from urllib.parse import quote
 import httpx
 
 from ..config import Settings
+from ..push import service as push
 from ..synthetics.netguard import TargetRefused, check_url
 
 log = logging.getLogger("hypha.notify")
@@ -76,8 +79,9 @@ class Notice:
 
 
 class Notifier:
-    def __init__(self, settings: Settings, max_queue: int = 2000, concurrency: int = 5):
+    def __init__(self, settings: Settings, max_queue: int = 2000, concurrency: int = 5, db=None):
         self.settings = settings
+        self.db = db                  # base du worker : destinataires des canaux push
         self.queue: asyncio.Queue[Notice] = asyncio.Queue(maxsize=max_queue)
         self.sem = asyncio.Semaphore(concurrency)
         self.client: httpx.AsyncClient | None = None
@@ -104,23 +108,26 @@ class Notifier:
 
     async def _deliver(self, n: Notice) -> None:
         async with self.sem:
-            await deliver(self.settings, self.client, n)
+            await deliver(self.settings, self.client, n, self.db)
 
 
 def make_client() -> httpx.AsyncClient:
     return httpx.AsyncClient(timeout=TIMEOUT_S, follow_redirects=False, headers={"User-Agent": "HYPHA-Notifier/0.4"})
 
 
-async def deliver(settings: Settings, client: httpx.AsyncClient, n: Notice) -> tuple[bool, str]:
+async def deliver(settings: Settings, client: httpx.AsyncClient, n: Notice, db=None) -> tuple[bool, str]:
     """Trois essais au plus ; rend (réussi, détail)."""
     last = ""
     for attempt, pause in ATTEMPTS:
         try:
-            await send(settings, client, n)
-            return True, "envoyé"
+            detail = await send(settings, client, n, db)
+            return True, detail or "envoyé"
         except TargetRefused as e:
             log.error("canal %s refusé : %s", n.channel["id"], e)
             return False, f"adresse refusée : {e}"
+        except push.PushRefused as e:
+            log.error("canal push %s : %s (%s)", n.channel["id"], e, n.subject)
+            return False, str(e)
         except Exception as e:
             last = str(e) or type(e).__name__
             log.warning("envoi %s vers le canal %s (essai %s) en échec : %s",
@@ -246,8 +253,17 @@ async def _post(client, url, payload=None, headers=None, allow_private=False):
     return r
 
 
-async def send(settings: Settings, client: httpx.AsyncClient, n: Notice) -> None:
+def _runtime_db():
+    from ..runtime import rt
+    return rt().db
+
+
+async def send(settings: Settings, client: httpx.AsyncClient, n: Notice, db=None) -> str | None:
+    """Un envoi ; rend un détail facultatif (push : appareils servis). `db` : base du worker, sinon celle
+    du processus API."""
     kind, cfg = n.channel["kind"], n.channel.get("config") or {}
+    if kind == "push":
+        return await push.send_notice(settings, client, n, db or _runtime_db())
     if kind == "email":
         await asyncio.to_thread(send_email, settings, cfg.get("to") or [], n)
         return

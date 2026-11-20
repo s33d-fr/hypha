@@ -256,4 +256,8 @@ async function renderProfile(root, ctx) {
     panel(t('profile.prefs'), h('div', { class: 'col gap-3' },
       field(t('profile.lang'), select(languages().map((l) => ({ value: l.code, label: l.label })), getLang(), (v) => { setLang(v); ctx.refresh(); }), t('profile.lang_hint')),
       field(t('profile.theme'), select([{ value: 'dark', label: t('theme.dark') }, { value: 'light', label: t('theme.light') }], getTheme(), (v) => { setTheme(v); ctx.refresh(); }))))));
+  // Application installable et notifications push de cet appareil.
+  const push = h('div', { class: 'col gap-3 mt-3', id: 'notifications' });
+  root.appendChild(push);
+  await (await import('./settings-push.js')).renderPushPanels(push, ctx);
 }

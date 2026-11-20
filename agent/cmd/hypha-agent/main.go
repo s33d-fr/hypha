@@ -279,7 +279,7 @@ func cmdCheckConfig(args []string) int {
 	fmt.Printf("Intervalle     : %s\n", cfg.Interval.D())
 	fmt.Printf("Tampon disque  : %s (%d Mo au plus)\n", cfg.Buffer.Dir, cfg.Buffer.MaxMB)
 	fmt.Printf("Journaux       : actifs=%v journald=%v eventlog=%v fichiers=%d exclusions=%d\n",
-		cfg.Logs.Enabled, cfg.Logs.Journald, cfg.Logs.WindowsEventlog, len(cfg.Logs.Files), len(cfg.Logs.ExcludePatterns))
+		cfg.Logs.Enabled, cfg.Logs.Journald, config.EventlogNames(cfg.Logs.WindowsEventlog), len(cfg.Logs.Files), len(cfg.Logs.ExcludePatterns))
 	fmt.Printf("Contrôles      : systemd=%d services Windows=%d http=%d tcp=%d\n",
 		len(cfg.Checks.SystemdUnits), len(cfg.Checks.WindowsServices), len(cfg.Checks.HTTP), len(cfg.Checks.TCP))
 	fmt.Printf("StatsD         : %v %s ; OTLP : %v %s\n", cfg.StatsD.Enabled, cfg.StatsD.Listen, cfg.OTLP.Enabled, cfg.OTLP.Listen)

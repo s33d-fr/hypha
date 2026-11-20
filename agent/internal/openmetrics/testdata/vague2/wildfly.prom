@@ -1,0 +1,61 @@
+# TYPE base_classloader_loadedClasses_count gauge
+base_classloader_loadedClasses_count 17382.0
+# TYPE base_cpu_processCpuLoad gauge
+base_cpu_processCpuLoad 0.0
+# TYPE base_gc_total counter
+base_gc_total{name="Copy"} 27.0
+base_gc_total{name="MarkSweepCompact"} 3.0
+# TYPE base_jvm_uptime_seconds gauge
+base_jvm_uptime_seconds 40.300000000000004
+# TYPE base_memory_maxHeap_bytes gauge
+base_memory_maxHeap_bytes 3.8928384E8
+# TYPE base_memory_usedHeap_bytes gauge
+base_memory_usedHeap_bytes 7.2036336E7
+# TYPE base_memory_usedNonHeap_bytes gauge
+base_memory_usedNonHeap_bytes 1.044878E8
+# TYPE base_thread_count gauge
+base_thread_count 48.0
+# TYPE wildfly_datasources_pool_active_count gauge
+wildfly_datasources_pool_active_count{data_source="ExampleDS"} 0.0
+# TYPE wildfly_datasources_pool_available_count gauge
+wildfly_datasources_pool_available_count{data_source="ExampleDS"} 20.0
+# TYPE wildfly_datasources_pool_average_get_time gauge
+wildfly_datasources_pool_average_get_time{data_source="ExampleDS"} 0.0
+# TYPE wildfly_datasources_pool_idle_count gauge
+wildfly_datasources_pool_idle_count{data_source="ExampleDS"} 0.0
+# TYPE wildfly_datasources_pool_in_use_count gauge
+wildfly_datasources_pool_in_use_count{data_source="ExampleDS"} 0.0
+# TYPE wildfly_datasources_pool_max_used_count gauge
+wildfly_datasources_pool_max_used_count{data_source="ExampleDS"} 0.0
+# TYPE wildfly_datasources_pool_timed_out gauge
+wildfly_datasources_pool_timed_out{data_source="ExampleDS"} 0.0
+# TYPE wildfly_datasources_pool_wait_count gauge
+wildfly_datasources_pool_wait_count{data_source="ExampleDS"} 0.0
+# TYPE wildfly_ee_hung_thread_count gauge
+wildfly_ee_hung_thread_count{managed_executor_service="default"} 0.0
+wildfly_ee_hung_thread_count{managed_scheduled_executor_service="default"} 0.0
+# TYPE wildfly_request_controller_active_requests gauge
+wildfly_request_controller_active_requests 0.0
+# TYPE wildfly_transactions_number_of_aborted_transactions_total counter
+wildfly_transactions_number_of_aborted_transactions_total 0.0
+# TYPE wildfly_transactions_number_of_application_rollbacks_total counter
+wildfly_transactions_number_of_application_rollbacks_total 0.0
+# TYPE wildfly_transactions_number_of_committed_transactions_total counter
+wildfly_transactions_number_of_committed_transactions_total 0.0
+# TYPE wildfly_transactions_number_of_inflight_transactions gauge
+wildfly_transactions_number_of_inflight_transactions 0.0
+# TYPE wildfly_transactions_number_of_resource_rollbacks_total counter
+wildfly_transactions_number_of_resource_rollbacks_total 0.0
+# TYPE wildfly_transactions_number_of_timed_out_transactions_total counter
+wildfly_transactions_number_of_timed_out_transactions_total 0.0
+# TYPE wildfly_transactions_number_of_transactions_total counter
+wildfly_transactions_number_of_transactions_total 0.0
+# TYPE wildfly_undertow_error_count_total counter
+wildfly_undertow_error_count_total{server="default-server",http_listener="default"} 0.0
+wildfly_undertow_error_count_total{server="default-server",https_listener="https"} 0.0
+# TYPE wildfly_undertow_max_processing_time_seconds gauge
+wildfly_undertow_max_processing_time_seconds{server="default-server",http_listener="default"} 0.0
+wildfly_undertow_max_processing_time_seconds{server="default-server",https_listener="https"} 0.0
+# TYPE wildfly_undertow_request_count_total counter
+wildfly_undertow_request_count_total{server="default-server",http_listener="default"} 20.0
+wildfly_undertow_request_count_total{server="default-server",https_listener="https"} 0.0

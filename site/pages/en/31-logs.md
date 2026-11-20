@@ -12,7 +12,7 @@ lead: Every log of the fleet in one place, searched in one line, parsed and mask
 ## Where logs come from
 
 - **Linux**: the systemd journal and the files declared in `logs.files`.
-- **Windows**: event logs (System and Application by default).
+- **Windows**: event logs (System and Application by default; other channels and filters: see [Windows](/en/docs/windows/)).
 - **Applications**: OpenTelemetry (`/v1/logs`), directly or through the agent's relay.
 - A JSON line is decoded by the agent: `message` or `msg`, `level` or `severity`, the rest as attributes.
 

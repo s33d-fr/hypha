@@ -19,6 +19,7 @@ from .api import actions, audit_routes, downtimes, incidents, problems, reports,
 from .api import (certificates, dbm, error_tracking, fleet, inventory, logs_extra, metadata, network,
                   public_dashboards, services)
 from .api import billing
+from .api import push as push_routes
 from .ingest import agent_routes
 from .auth import accounts, routes as auth_routes
 from .auth.oidc import OidcClient
@@ -178,4 +179,6 @@ def create_app() -> FastAPI:
     # Formules et facturation (contrat § 52) ; le webhook Stripe est public et signé.
     app.include_router(billing.router, prefix="/api/v1")
     app.include_router(billing.public_router)
+    # Notifications push : appareils des utilisateurs, acquittement depuis une notification.
+    app.include_router(push_routes.router, prefix="/api/v1")
     return app

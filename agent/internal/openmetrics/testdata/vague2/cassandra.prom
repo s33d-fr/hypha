@@ -1,0 +1,116 @@
+# TYPE cassandra_cache_capacity gauge
+cassandra_cache_capacity{cache="CounterCache"} 1.2582912E7
+cassandra_cache_capacity{cache="KeyCache"} 2.62144E7
+cassandra_cache_capacity{cache="RowCache"} 0.0
+# TYPE cassandra_cache_hitrate gauge
+cassandra_cache_hitrate{cache="CounterCache"} NaN
+cassandra_cache_hitrate{cache="KeyCache"} 0.87248322147651
+cassandra_cache_hitrate{cache="RowCache"} NaN
+# TYPE cassandra_cache_size gauge
+cassandra_cache_size{cache="CounterCache"} 0.0
+cassandra_cache_size{cache="KeyCache"} 1704.0
+cassandra_cache_size{cache="RowCache"} 0.0
+# TYPE cassandra_client_connectednativeclients gauge
+cassandra_client_connectednativeclients 0.0
+# TYPE cassandra_clientrequest_failures_total counter
+cassandra_clientrequest_failures_total{scope="CASRead"} 0.0
+cassandra_clientrequest_failures_total{scope="CASWrite"} 0.0
+cassandra_clientrequest_failures_total{scope="RangeSlice"} 0.0
+cassandra_clientrequest_failures_total{scope="Read"} 0.0
+# TYPE cassandra_clientrequest_latency_99thpercentile gauge
+cassandra_clientrequest_latency_99thpercentile{scope="CASRead"} 0.0
+cassandra_clientrequest_latency_99thpercentile{scope="CASWrite"} 0.0
+cassandra_clientrequest_latency_99thpercentile{scope="RangeSlice"} 219342.0
+cassandra_clientrequest_latency_99thpercentile{scope="Read"} 61214.0
+# TYPE cassandra_clientrequest_latency_mean gauge
+cassandra_clientrequest_latency_mean{scope="CASRead"} NaN
+cassandra_clientrequest_latency_mean{scope="CASWrite"} NaN
+cassandra_clientrequest_latency_mean{scope="RangeSlice"} 107605.3
+cassandra_clientrequest_latency_mean{scope="Read"} 3941.969696969697
+# TYPE cassandra_clientrequest_requests_total counter
+cassandra_clientrequest_requests_total{scope="CASRead"} 0.0
+cassandra_clientrequest_requests_total{scope="CASWrite"} 0.0
+cassandra_clientrequest_requests_total{scope="RangeSlice"} 10.0
+cassandra_clientrequest_requests_total{scope="Read"} 33.0
+# TYPE cassandra_clientrequest_timeouts_total counter
+cassandra_clientrequest_timeouts_total{scope="CASRead"} 0.0
+cassandra_clientrequest_timeouts_total{scope="CASWrite"} 0.0
+cassandra_clientrequest_timeouts_total{scope="RangeSlice"} 0.0
+cassandra_clientrequest_timeouts_total{scope="Read"} 0.0
+# TYPE cassandra_clientrequest_unavailables_total counter
+cassandra_clientrequest_unavailables_total{scope="CASRead"} 0.0
+cassandra_clientrequest_unavailables_total{scope="CASWrite"} 0.0
+cassandra_clientrequest_unavailables_total{scope="RangeSlice"} 0.0
+cassandra_clientrequest_unavailables_total{scope="Read"} 0.0
+# TYPE cassandra_commitlog_pendingtasks gauge
+cassandra_commitlog_pendingtasks 0.0
+# TYPE cassandra_commitlog_totalcommitlogsize gauge
+cassandra_commitlog_totalcommitlogsize 6.7108864E7
+# TYPE cassandra_compaction_bytescompacted_total counter
+cassandra_compaction_bytescompacted_total 1068.0
+# TYPE cassandra_compaction_completedtasks_total counter
+cassandra_compaction_completedtasks_total 50.0
+# TYPE cassandra_compaction_pendingtasks gauge
+cassandra_compaction_pendingtasks 0.0
+# TYPE cassandra_droppedmessage_dropped_total counter
+cassandra_droppedmessage_dropped_total{message_type="BATCH_REMOVE"} 0.0
+cassandra_droppedmessage_dropped_total{message_type="BATCH_REMOVE_REQ"} 0.0
+cassandra_droppedmessage_dropped_total{message_type="BATCH_REMOVE_RSP"} 0.0
+cassandra_droppedmessage_dropped_total{message_type="BATCH_STORE"} 0.0
+# TYPE cassandra_storage_exceptions_total counter
+cassandra_storage_exceptions_total 0.0
+# TYPE cassandra_storage_load gauge
+cassandra_storage_load 122234.0
+# TYPE cassandra_storage_totalhints_total counter
+cassandra_storage_totalhints_total 0.0
+# TYPE cassandra_storage_totalhintsinprogress gauge
+cassandra_storage_totalhintsinprogress 0.0
+# TYPE cassandra_threadpools_activetasks gauge
+cassandra_threadpools_activetasks{path="internal",pool="CacheCleanupExecutor"} 0.0
+cassandra_threadpools_activetasks{path="internal",pool="CompactionExecutor"} 0.0
+cassandra_threadpools_activetasks{path="internal",pool="GossipStage"} 0.0
+cassandra_threadpools_activetasks{path="internal",pool="HintsDispatcher"} 0.0
+# TYPE cassandra_threadpools_pendingtasks gauge
+cassandra_threadpools_pendingtasks{path="internal",pool="CacheCleanupExecutor"} 0.0
+cassandra_threadpools_pendingtasks{path="internal",pool="CompactionExecutor"} 0.0
+cassandra_threadpools_pendingtasks{path="internal",pool="GossipStage"} 0.0
+cassandra_threadpools_pendingtasks{path="internal",pool="HintsDispatcher"} 0.0
+# TYPE cassandra_threadpools_totalblockedtasks_total counter
+cassandra_threadpools_totalblockedtasks_total{path="internal",pool="CacheCleanupExecutor"} 0.0
+cassandra_threadpools_totalblockedtasks_total{path="internal",pool="CompactionExecutor"} 0.0
+cassandra_threadpools_totalblockedtasks_total{path="internal",pool="GossipStage"} 0.0
+cassandra_threadpools_totalblockedtasks_total{path="internal",pool="HintsDispatcher"} 0.0
+# TYPE jmx_exporter_build_info gauge
+jmx_exporter_build_info{name="jmx_prometheus_javaagent",version="1.7.0"} 1
+# TYPE jmx_scrape_duration_seconds gauge
+jmx_scrape_duration_seconds 0.0
+# TYPE jmx_scrape_error gauge
+jmx_scrape_error 0.0
+# TYPE jvm_classes_currently_loaded gauge
+jvm_classes_currently_loaded 11367.0
+# TYPE jvm_gc_collection_seconds summary
+jvm_gc_collection_seconds_count{gc="G1 Old Generation"} 0
+jvm_gc_collection_seconds_sum{gc="G1 Old Generation"} 0.0
+jvm_gc_collection_seconds_count{gc="G1 Young Generation"} 4
+jvm_gc_collection_seconds_sum{gc="G1 Young Generation"} 0.121
+# TYPE jvm_memory_committed_bytes gauge
+jvm_memory_committed_bytes{area="heap"} 5.36870912E8
+jvm_memory_committed_bytes{area="nonheap"} 8.1788928E7
+# TYPE jvm_memory_max_bytes gauge
+jvm_memory_max_bytes{area="heap"} 5.36870912E8
+jvm_memory_max_bytes{area="nonheap"} -1.0
+# TYPE jvm_memory_used_bytes gauge
+jvm_memory_used_bytes{area="heap"} 2.08045568E8
+jvm_memory_used_bytes{area="nonheap"} 7.9673888E7
+# TYPE jvm_threads_current gauge
+jvm_threads_current 64.0
+# TYPE jvm_threads_deadlocked gauge
+jvm_threads_deadlocked 0.0
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 31.81
+# TYPE process_max_fds gauge
+process_max_fds 524288.0
+# TYPE process_open_fds gauge
+process_open_fds 207.0
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 7.94181632E8

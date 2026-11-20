@@ -1,0 +1,398 @@
+# TYPE admission_wait_queue_length_sql_kv_response_user_low_pri gauge
+admission_wait_queue_length_sql_kv_response_user_low_pri{node_id="1"} 0
+# TYPE sql_new_conns counter
+sql_new_conns{node_id="1"} 2
+# TYPE sql_conns gauge
+sql_conns{node_id="1"} 0
+# TYPE sql_failure_count counter
+sql_failure_count{node_id="1"} 0
+# TYPE requests_slow_raft gauge
+requests_slow_raft{store="1",node_id="1"} 0
+# TYPE sql_txn_rollback_count counter
+sql_txn_rollback_count{node_id="1"} 0
+# TYPE sql_query_count counter
+sql_query_count{node_id="1"} 4
+# TYPE liveness_livenodes gauge
+liveness_livenodes{node_id="1"} 1
+# TYPE sql_update_count counter
+sql_update_count{node_id="1"} 0
+# TYPE capacity gauge
+capacity{store="1",node_id="1"} 1.02915489792e+11
+# TYPE security_certificate_expiration_node gauge
+security_certificate_expiration_node{node_id="1"} 0
+# TYPE ranges_overreplicated gauge
+ranges_overreplicated{store="1",node_id="1"} 0
+# TYPE sql_txn_latency histogram
+sql_txn_latency_bucket{node_id="1",le="11585.237502960395"} 0
+sql_txn_latency_bucket{node_id="1",le="13777.246867516858"} 0
+sql_txn_latency_bucket{node_id="1",le="16384"} 0
+sql_txn_latency_bucket{node_id="1",le="19483.96937220458"} 0
+sql_txn_latency_bucket{node_id="1",le="23170.47500592079"} 0
+sql_txn_latency_bucket{node_id="1",le="27554.493735033717"} 0
+sql_txn_latency_bucket{node_id="1",le="32768"} 0
+sql_txn_latency_bucket{node_id="1",le="38967.93874440916"} 0
+sql_txn_latency_bucket{node_id="1",le="46340.95001184158"} 0
+sql_txn_latency_bucket{node_id="1",le="55108.98747006743"} 0
+sql_txn_latency_bucket{node_id="1",le="65536"} 0
+sql_txn_latency_bucket{node_id="1",le="77935.87748881833"} 0
+sql_txn_latency_bucket{node_id="1",le="92681.90002368316"} 0
+sql_txn_latency_bucket{node_id="1",le="110217.97494013487"} 0
+sql_txn_latency_bucket{node_id="1",le="131072"} 0
+sql_txn_latency_bucket{node_id="1",le="155871.75497763665"} 0
+sql_txn_latency_bucket{node_id="1",le="185363.80004736633"} 0
+sql_txn_latency_bucket{node_id="1",le="220435.94988026973"} 0
+sql_txn_latency_bucket{node_id="1",le="262144"} 0
+sql_txn_latency_bucket{node_id="1",le="311743.5099552733"} 0
+sql_txn_latency_bucket{node_id="1",le="370727.60009473265"} 0
+sql_txn_latency_bucket{node_id="1",le="440871.89976053947"} 0
+sql_txn_latency_bucket{node_id="1",le="524288"} 0
+sql_txn_latency_bucket{node_id="1",le="623487.0199105466"} 0
+sql_txn_latency_bucket{node_id="1",le="741455.2001894653"} 0
+sql_txn_latency_bucket{node_id="1",le="881743.7995210789"} 0
+sql_txn_latency_bucket{node_id="1",le="1.048576e+06"} 0
+sql_txn_latency_bucket{node_id="1",le="1.2469740398210932e+06"} 0
+sql_txn_latency_bucket{node_id="1",le="1.4829104003789306e+06"} 0
+sql_txn_latency_bucket{node_id="1",le="1.7634875990421579e+06"} 0
+sql_txn_latency_bucket{node_id="1",le="2.097152e+06"} 0
+sql_txn_latency_bucket{node_id="1",le="2.4939480796421864e+06"} 0
+sql_txn_latency_bucket{node_id="1",le="2.965820800757861e+06"} 0
+sql_txn_latency_bucket{node_id="1",le="3.5269751980843158e+06"} 0
+sql_txn_latency_bucket{node_id="1",le="4.194304e+06"} 0
+sql_txn_latency_bucket{node_id="1",le="4.987896159284373e+06"} 1
+sql_txn_latency_bucket{node_id="1",le="5.931641601515722e+06"} 1
+sql_txn_latency_bucket{node_id="1",le="7.0539503961686315e+06"} 1
+sql_txn_latency_bucket{node_id="1",le="8.388608e+06"} 1
+sql_txn_latency_bucket{node_id="1",le="9.975792318568746e+06"} 1
+sql_txn_latency_bucket{node_id="1",le="1.1863283203031445e+07"} 1
+sql_txn_latency_bucket{node_id="1",le="1.4107900792337263e+07"} 1
+sql_txn_latency_bucket{node_id="1",le="1.6777216e+07"} 1
+sql_txn_latency_bucket{node_id="1",le="1.995158463713749e+07"} 1
+sql_txn_latency_bucket{node_id="1",le="2.372656640606289e+07"} 2
+sql_txn_latency_bucket{node_id="1",le="2.8215801584674526e+07"} 2
+sql_txn_latency_bucket{node_id="1",le="3.3554432e+07"} 2
+sql_txn_latency_bucket{node_id="1",le="3.990316927427498e+07"} 2
+sql_txn_latency_bucket{node_id="1",le="4.745313281212578e+07"} 2
+sql_txn_latency_bucket{node_id="1",le="5.643160316934905e+07"} 2
+sql_txn_latency_bucket{node_id="1",le="6.7108864e+07"} 2
+sql_txn_latency_bucket{node_id="1",le="7.980633854854997e+07"} 2
+sql_txn_latency_bucket{node_id="1",le="9.490626562425156e+07"} 2
+sql_txn_latency_bucket{node_id="1",le="1.128632063386981e+08"} 2
+sql_txn_latency_bucket{node_id="1",le="1.34217728e+08"} 2
+sql_txn_latency_bucket{node_id="1",le="1.5961267709709993e+08"} 2
+sql_txn_latency_bucket{node_id="1",le="1.8981253124850312e+08"} 2
+sql_txn_latency_bucket{node_id="1",le="2.257264126773962e+08"} 2
+sql_txn_latency_bucket{node_id="1",le="2.68435456e+08"} 2
+sql_txn_latency_bucket{node_id="1",le="3.1922535419419986e+08"} 2
+sql_txn_latency_bucket{node_id="1",le="3.7962506249700624e+08"} 2
+sql_txn_latency_bucket{node_id="1",le="4.514528253547924e+08"} 2
+sql_txn_latency_bucket{node_id="1",le="5.36870912e+08"} 2
+sql_txn_latency_bucket{node_id="1",le="6.384507083883997e+08"} 2
+sql_txn_latency_bucket{node_id="1",le="7.592501249940125e+08"} 2
+sql_txn_latency_bucket{node_id="1",le="9.029056507095848e+08"} 2
+sql_txn_latency_bucket{node_id="1",le="1.073741824e+09"} 2
+sql_txn_latency_bucket{node_id="1",le="1.2769014167767994e+09"} 2
+sql_txn_latency_bucket{node_id="1",le="1.518500249988025e+09"} 2
+sql_txn_latency_bucket{node_id="1",le="1.8058113014191697e+09"} 2
+sql_txn_latency_bucket{node_id="1",le="2.147483648e+09"} 2
+sql_txn_latency_bucket{node_id="1",le="2.553802833553599e+09"} 2
+sql_txn_latency_bucket{node_id="1",le="3.03700049997605e+09"} 2
+sql_txn_latency_bucket{node_id="1",le="3.6116226028383393e+09"} 2
+sql_txn_latency_bucket{node_id="1",le="4.294967296e+09"} 2
+sql_txn_latency_bucket{node_id="1",le="5.107605667107198e+09"} 2
+sql_txn_latency_bucket{node_id="1",le="6.0740009999521e+09"} 2
+sql_txn_latency_bucket{node_id="1",le="7.223245205676679e+09"} 2
+sql_txn_latency_bucket{node_id="1",le="8.589934592e+09"} 2
+sql_txn_latency_bucket{node_id="1",le="1.0215211334214396e+10"} 2
+sql_txn_latency_bucket{node_id="1",le="1.21480019999042e+10"} 2
+sql_txn_latency_bucket{node_id="1",le="1.4446490411353357e+10"} 2
+sql_txn_latency_bucket{node_id="1",le="1.7179869184e+10"} 2
+sql_txn_latency_bucket{node_id="1",le="2.043042266842879e+10"} 2
+sql_txn_latency_bucket{node_id="1",le="2.42960039998084e+10"} 2
+sql_txn_latency_bucket{node_id="1",le="2.8892980822706715e+10"} 2
+sql_txn_latency_bucket{node_id="1",le="3.4359738368e+10"} 2
+sql_txn_latency_bucket{node_id="1",le="4.086084533685758e+10"} 2
+sql_txn_latency_bucket{node_id="1",le="4.85920079996168e+10"} 2
+sql_txn_latency_bucket{node_id="1",le="5.778596164541343e+10"} 2
+sql_txn_latency_bucket{node_id="1",le="6.8719476736e+10"} 2
+sql_txn_latency_bucket{node_id="1",le="8.172169067371516e+10"} 2
+sql_txn_latency_bucket{node_id="1",le="9.71840159992336e+10"} 2
+sql_txn_latency_bucket{node_id="1",le="1.1557192329082686e+11"} 2
+sql_txn_latency_bucket{node_id="1",le="1.37438953472e+11"} 2
+sql_txn_latency_bucket{node_id="1",le="1.6344338134743033e+11"} 2
+sql_txn_latency_bucket{node_id="1",le="1.943680319984672e+11"} 2
+sql_txn_latency_bucket{node_id="1",le="2.3114384658165372e+11"} 2
+sql_txn_latency_bucket{node_id="1",le="2.74877906944e+11"} 2
+sql_txn_latency_bucket{node_id="1",le="3e+11"} 2
+sql_txn_latency_bucket{node_id="1",le="+Inf"} 2
+sql_txn_latency_sum{node_id="1"} 2.7907382e+07
+sql_txn_latency_count{node_id="1"} 2
+# TYPE requests_slow_lease gauge
+requests_slow_lease{store="1",node_id="1"} 0
+# TYPE storage_l0_sublevels gauge
+storage_l0_sublevels{store="1",node_id="1"} 0
+# TYPE sql_mem_root_current gauge
+sql_mem_root_current{node_id="1"} 2.304e+06
+# TYPE ranges gauge
+ranges{store="1",node_id="1"} 87
+# TYPE sys_rss gauge
+sys_rss{node_id="1"} 4.79186944e+08
+# TYPE sql_txn_abort_count counter
+sql_txn_abort_count{node_id="1"} 0
+# TYPE sql_txn_begin_count counter
+sql_txn_begin_count{node_id="1"} 0
+# TYPE sys_host_disk_read_bytes counter
+sys_host_disk_read_bytes{node_id="1"} 5.9670528e+07
+# TYPE capacity_used gauge
+capacity_used{store="1",node_id="1"} 2.796554e+07
+# TYPE sys_goroutines gauge
+sys_goroutines{node_id="1"} 375
+# TYPE sql_delete_count counter
+sql_delete_count{node_id="1"} 0
+# TYPE rocksdb_read_amplification gauge
+rocksdb_read_amplification{store="1",node_id="1"} 0
+# TYPE liveness_heartbeatfailures counter
+liveness_heartbeatfailures{node_id="1"} 0
+# TYPE replicas gauge
+replicas{store="1",node_id="1"} 87
+# TYPE sql_service_latency histogram
+sql_service_latency_bucket{node_id="1",le="11585.237502960395"} 0
+sql_service_latency_bucket{node_id="1",le="13777.246867516858"} 0
+sql_service_latency_bucket{node_id="1",le="16384"} 0
+sql_service_latency_bucket{node_id="1",le="19483.96937220458"} 0
+sql_service_latency_bucket{node_id="1",le="23170.47500592079"} 0
+sql_service_latency_bucket{node_id="1",le="27554.493735033717"} 0
+sql_service_latency_bucket{node_id="1",le="32768"} 0
+sql_service_latency_bucket{node_id="1",le="38967.93874440916"} 0
+sql_service_latency_bucket{node_id="1",le="46340.95001184158"} 0
+sql_service_latency_bucket{node_id="1",le="55108.98747006743"} 0
+sql_service_latency_bucket{node_id="1",le="65536"} 0
+sql_service_latency_bucket{node_id="1",le="77935.87748881833"} 0
+sql_service_latency_bucket{node_id="1",le="92681.90002368316"} 0
+sql_service_latency_bucket{node_id="1",le="110217.97494013487"} 0
+sql_service_latency_bucket{node_id="1",le="131072"} 0
+sql_service_latency_bucket{node_id="1",le="155871.75497763665"} 0
+sql_service_latency_bucket{node_id="1",le="185363.80004736633"} 0
+sql_service_latency_bucket{node_id="1",le="220435.94988026973"} 0
+sql_service_latency_bucket{node_id="1",le="262144"} 0
+sql_service_latency_bucket{node_id="1",le="311743.5099552733"} 0
+sql_service_latency_bucket{node_id="1",le="370727.60009473265"} 0
+sql_service_latency_bucket{node_id="1",le="440871.89976053947"} 0
+sql_service_latency_bucket{node_id="1",le="524288"} 0
+sql_service_latency_bucket{node_id="1",le="623487.0199105466"} 0
+sql_service_latency_bucket{node_id="1",le="741455.2001894653"} 0
+sql_service_latency_bucket{node_id="1",le="881743.7995210789"} 0
+sql_service_latency_bucket{node_id="1",le="1.048576e+06"} 0
+sql_service_latency_bucket{node_id="1",le="1.2469740398210932e+06"} 0
+sql_service_latency_bucket{node_id="1",le="1.4829104003789306e+06"} 0
+sql_service_latency_bucket{node_id="1",le="1.7634875990421579e+06"} 0
+sql_service_latency_bucket{node_id="1",le="2.097152e+06"} 1
+sql_service_latency_bucket{node_id="1",le="2.4939480796421864e+06"} 1
+sql_service_latency_bucket{node_id="1",le="2.965820800757861e+06"} 1
+sql_service_latency_bucket{node_id="1",le="3.5269751980843158e+06"} 1
+sql_service_latency_bucket{node_id="1",le="4.194304e+06"} 2
+sql_service_latency_bucket{node_id="1",le="4.987896159284373e+06"} 3
+sql_service_latency_bucket{node_id="1",le="5.931641601515722e+06"} 3
+sql_service_latency_bucket{node_id="1",le="7.0539503961686315e+06"} 3
+sql_service_latency_bucket{node_id="1",le="8.388608e+06"} 3
+sql_service_latency_bucket{node_id="1",le="9.975792318568746e+06"} 3
+sql_service_latency_bucket{node_id="1",le="1.1863283203031445e+07"} 3
+sql_service_latency_bucket{node_id="1",le="1.4107900792337263e+07"} 3
+sql_service_latency_bucket{node_id="1",le="1.6777216e+07"} 3
+sql_service_latency_bucket{node_id="1",le="1.995158463713749e+07"} 3
+sql_service_latency_bucket{node_id="1",le="2.372656640606289e+07"} 3
+sql_service_latency_bucket{node_id="1",le="2.8215801584674526e+07"} 3
+sql_service_latency_bucket{node_id="1",le="3.3554432e+07"} 3
+sql_service_latency_bucket{node_id="1",le="3.990316927427498e+07"} 3
+sql_service_latency_bucket{node_id="1",le="4.745313281212578e+07"} 3
+sql_service_latency_bucket{node_id="1",le="5.643160316934905e+07"} 3
+sql_service_latency_bucket{node_id="1",le="6.7108864e+07"} 3
+sql_service_latency_bucket{node_id="1",le="7.980633854854997e+07"} 3
+sql_service_latency_bucket{node_id="1",le="9.490626562425156e+07"} 3
+sql_service_latency_bucket{node_id="1",le="1.128632063386981e+08"} 3
+sql_service_latency_bucket{node_id="1",le="1.34217728e+08"} 3
+sql_service_latency_bucket{node_id="1",le="1.5961267709709993e+08"} 3
+sql_service_latency_bucket{node_id="1",le="1.8981253124850312e+08"} 3
+sql_service_latency_bucket{node_id="1",le="2.257264126773962e+08"} 3
+sql_service_latency_bucket{node_id="1",le="2.68435456e+08"} 3
+sql_service_latency_bucket{node_id="1",le="3.1922535419419986e+08"} 3
+sql_service_latency_bucket{node_id="1",le="3.7962506249700624e+08"} 3
+sql_service_latency_bucket{node_id="1",le="4.514528253547924e+08"} 3
+sql_service_latency_bucket{node_id="1",le="5.36870912e+08"} 3
+sql_service_latency_bucket{node_id="1",le="6.384507083883997e+08"} 3
+sql_service_latency_bucket{node_id="1",le="7.592501249940125e+08"} 3
+sql_service_latency_bucket{node_id="1",le="9.029056507095848e+08"} 3
+sql_service_latency_bucket{node_id="1",le="1.073741824e+09"} 3
+sql_service_latency_bucket{node_id="1",le="1.2769014167767994e+09"} 3
+sql_service_latency_bucket{node_id="1",le="1.518500249988025e+09"} 3
+sql_service_latency_bucket{node_id="1",le="1.8058113014191697e+09"} 3
+sql_service_latency_bucket{node_id="1",le="2.147483648e+09"} 3
+sql_service_latency_bucket{node_id="1",le="2.553802833553599e+09"} 3
+sql_service_latency_bucket{node_id="1",le="3.03700049997605e+09"} 3
+sql_service_latency_bucket{node_id="1",le="3.6116226028383393e+09"} 3
+sql_service_latency_bucket{node_id="1",le="4.294967296e+09"} 3
+sql_service_latency_bucket{node_id="1",le="5.107605667107198e+09"} 3
+sql_service_latency_bucket{node_id="1",le="6.0740009999521e+09"} 3
+sql_service_latency_bucket{node_id="1",le="7.223245205676679e+09"} 3
+sql_service_latency_bucket{node_id="1",le="8.589934592e+09"} 3
+sql_service_latency_bucket{node_id="1",le="1.0215211334214396e+10"} 3
+sql_service_latency_bucket{node_id="1",le="1.21480019999042e+10"} 3
+sql_service_latency_bucket{node_id="1",le="1.4446490411353357e+10"} 3
+sql_service_latency_bucket{node_id="1",le="1.7179869184e+10"} 3
+sql_service_latency_bucket{node_id="1",le="2.043042266842879e+10"} 3
+sql_service_latency_bucket{node_id="1",le="2.42960039998084e+10"} 3
+sql_service_latency_bucket{node_id="1",le="2.8892980822706715e+10"} 3
+sql_service_latency_bucket{node_id="1",le="3.4359738368e+10"} 3
+sql_service_latency_bucket{node_id="1",le="4.086084533685758e+10"} 3
+sql_service_latency_bucket{node_id="1",le="4.85920079996168e+10"} 3
+sql_service_latency_bucket{node_id="1",le="5.778596164541343e+10"} 3
+sql_service_latency_bucket{node_id="1",le="6.8719476736e+10"} 3
+sql_service_latency_bucket{node_id="1",le="8.172169067371516e+10"} 3
+sql_service_latency_bucket{node_id="1",le="9.71840159992336e+10"} 3
+sql_service_latency_bucket{node_id="1",le="1.1557192329082686e+11"} 3
+sql_service_latency_bucket{node_id="1",le="1.37438953472e+11"} 3
+sql_service_latency_bucket{node_id="1",le="1.6344338134743033e+11"} 3
+sql_service_latency_bucket{node_id="1",le="1.943680319984672e+11"} 3
+sql_service_latency_bucket{node_id="1",le="2.3114384658165372e+11"} 3
+sql_service_latency_bucket{node_id="1",le="2.74877906944e+11"} 3
+sql_service_latency_bucket{node_id="1",le="3e+11"} 3
+sql_service_latency_bucket{node_id="1",le="+Inf"} 3
+sql_service_latency_sum{node_id="1"} 1.0447052e+07
+sql_service_latency_count{node_id="1"} 3
+# TYPE txn_aborts counter
+txn_aborts{node_id="1"} 5
+# TYPE requests_slow_latch gauge
+requests_slow_latch{store="1",node_id="1"} 0
+# TYPE sys_host_disk_write_bytes counter
+sys_host_disk_write_bytes{node_id="1"} 3.314499584e+09
+# TYPE sys_cpu_combined_percent_normalized gauge
+sys_cpu_combined_percent_normalized{node_id="1"} 0.0287481459142026
+# TYPE admission_io_overload gauge
+admission_io_overload{store="1",node_id="1"} 0
+# TYPE clock_offset_meannanos gauge
+clock_offset_meannanos{node_id="1"} 0
+# TYPE livebytes gauge
+livebytes{store="1",node_id="1"} 3.713051e+06
+# TYPE replicas_leaseholders gauge
+replicas_leaseholders{store="1",node_id="1"} 87
+# TYPE security_certificate_expiration_ca gauge
+security_certificate_expiration_ca{node_id="1"} 0
+# TYPE replicas_leaders gauge
+replicas_leaders{store="1",node_id="1"} 87
+# TYPE sql_exec_latency histogram
+sql_exec_latency_bucket{node_id="1",le="11585.237502960395"} 0
+sql_exec_latency_bucket{node_id="1",le="13777.246867516858"} 0
+sql_exec_latency_bucket{node_id="1",le="16384"} 0
+sql_exec_latency_bucket{node_id="1",le="19483.96937220458"} 0
+sql_exec_latency_bucket{node_id="1",le="23170.47500592079"} 0
+sql_exec_latency_bucket{node_id="1",le="27554.493735033717"} 0
+sql_exec_latency_bucket{node_id="1",le="32768"} 0
+sql_exec_latency_bucket{node_id="1",le="38967.93874440916"} 0
+sql_exec_latency_bucket{node_id="1",le="46340.95001184158"} 0
+sql_exec_latency_bucket{node_id="1",le="55108.98747006743"} 0
+sql_exec_latency_bucket{node_id="1",le="65536"} 0
+sql_exec_latency_bucket{node_id="1",le="77935.87748881833"} 0
+sql_exec_latency_bucket{node_id="1",le="92681.90002368316"} 0
+sql_exec_latency_bucket{node_id="1",le="110217.97494013487"} 0
+sql_exec_latency_bucket{node_id="1",le="131072"} 0
+sql_exec_latency_bucket{node_id="1",le="155871.75497763665"} 0
+sql_exec_latency_bucket{node_id="1",le="185363.80004736633"} 0
+sql_exec_latency_bucket{node_id="1",le="220435.94988026973"} 0
+sql_exec_latency_bucket{node_id="1",le="262144"} 0
+sql_exec_latency_bucket{node_id="1",le="311743.5099552733"} 0
+sql_exec_latency_bucket{node_id="1",le="370727.60009473265"} 0
+sql_exec_latency_bucket{node_id="1",le="440871.89976053947"} 0
+sql_exec_latency_bucket{node_id="1",le="524288"} 0
+sql_exec_latency_bucket{node_id="1",le="623487.0199105466"} 0
+sql_exec_latency_bucket{node_id="1",le="741455.2001894653"} 0
+sql_exec_latency_bucket{node_id="1",le="881743.7995210789"} 0
+sql_exec_latency_bucket{node_id="1",le="1.048576e+06"} 0
+sql_exec_latency_bucket{node_id="1",le="1.2469740398210932e+06"} 1
+sql_exec_latency_bucket{node_id="1",le="1.4829104003789306e+06"} 2
+sql_exec_latency_bucket{node_id="1",le="1.7634875990421579e+06"} 2
+sql_exec_latency_bucket{node_id="1",le="2.097152e+06"} 2
+sql_exec_latency_bucket{node_id="1",le="2.4939480796421864e+06"} 2
+sql_exec_latency_bucket{node_id="1",le="2.965820800757861e+06"} 2
+sql_exec_latency_bucket{node_id="1",le="3.5269751980843158e+06"} 3
+sql_exec_latency_bucket{node_id="1",le="4.194304e+06"} 3
+sql_exec_latency_bucket{node_id="1",le="4.987896159284373e+06"} 3
+sql_exec_latency_bucket{node_id="1",le="5.931641601515722e+06"} 3
+sql_exec_latency_bucket{node_id="1",le="7.0539503961686315e+06"} 3
+sql_exec_latency_bucket{node_id="1",le="8.388608e+06"} 3
+sql_exec_latency_bucket{node_id="1",le="9.975792318568746e+06"} 3
+sql_exec_latency_bucket{node_id="1",le="1.1863283203031445e+07"} 3
+sql_exec_latency_bucket{node_id="1",le="1.4107900792337263e+07"} 3
+sql_exec_latency_bucket{node_id="1",le="1.6777216e+07"} 3
+sql_exec_latency_bucket{node_id="1",le="1.995158463713749e+07"} 3
+sql_exec_latency_bucket{node_id="1",le="2.372656640606289e+07"} 3
+sql_exec_latency_bucket{node_id="1",le="2.8215801584674526e+07"} 3
+sql_exec_latency_bucket{node_id="1",le="3.3554432e+07"} 3
+sql_exec_latency_bucket{node_id="1",le="3.990316927427498e+07"} 3
+sql_exec_latency_bucket{node_id="1",le="4.745313281212578e+07"} 3
+sql_exec_latency_bucket{node_id="1",le="5.643160316934905e+07"} 3
+sql_exec_latency_bucket{node_id="1",le="6.7108864e+07"} 3
+sql_exec_latency_bucket{node_id="1",le="7.980633854854997e+07"} 3
+sql_exec_latency_bucket{node_id="1",le="9.490626562425156e+07"} 3
+sql_exec_latency_bucket{node_id="1",le="1.128632063386981e+08"} 3
+sql_exec_latency_bucket{node_id="1",le="1.34217728e+08"} 3
+sql_exec_latency_bucket{node_id="1",le="1.5961267709709993e+08"} 3
+sql_exec_latency_bucket{node_id="1",le="1.8981253124850312e+08"} 3
+sql_exec_latency_bucket{node_id="1",le="2.257264126773962e+08"} 3
+sql_exec_latency_bucket{node_id="1",le="2.68435456e+08"} 3
+sql_exec_latency_bucket{node_id="1",le="3.1922535419419986e+08"} 3
+sql_exec_latency_bucket{node_id="1",le="3.7962506249700624e+08"} 3
+sql_exec_latency_bucket{node_id="1",le="4.514528253547924e+08"} 3
+sql_exec_latency_bucket{node_id="1",le="5.36870912e+08"} 3
+sql_exec_latency_bucket{node_id="1",le="6.384507083883997e+08"} 3
+sql_exec_latency_bucket{node_id="1",le="7.592501249940125e+08"} 3
+sql_exec_latency_bucket{node_id="1",le="9.029056507095848e+08"} 3
+sql_exec_latency_bucket{node_id="1",le="1.073741824e+09"} 3
+sql_exec_latency_bucket{node_id="1",le="1.2769014167767994e+09"} 3
+sql_exec_latency_bucket{node_id="1",le="1.518500249988025e+09"} 3
+sql_exec_latency_bucket{node_id="1",le="1.8058113014191697e+09"} 3
+sql_exec_latency_bucket{node_id="1",le="2.147483648e+09"} 3
+sql_exec_latency_bucket{node_id="1",le="2.553802833553599e+09"} 3
+sql_exec_latency_bucket{node_id="1",le="3.03700049997605e+09"} 3
+sql_exec_latency_bucket{node_id="1",le="3.6116226028383393e+09"} 3
+sql_exec_latency_bucket{node_id="1",le="4.294967296e+09"} 3
+sql_exec_latency_bucket{node_id="1",le="5.107605667107198e+09"} 3
+sql_exec_latency_bucket{node_id="1",le="6.0740009999521e+09"} 3
+sql_exec_latency_bucket{node_id="1",le="7.223245205676679e+09"} 3
+sql_exec_latency_bucket{node_id="1",le="8.589934592e+09"} 3
+sql_exec_latency_bucket{node_id="1",le="1.0215211334214396e+10"} 3
+sql_exec_latency_bucket{node_id="1",le="1.21480019999042e+10"} 3
+sql_exec_latency_bucket{node_id="1",le="1.4446490411353357e+10"} 3
+sql_exec_latency_bucket{node_id="1",le="1.7179869184e+10"} 3
+sql_exec_latency_bucket{node_id="1",le="2.043042266842879e+10"} 3
+sql_exec_latency_bucket{node_id="1",le="2.42960039998084e+10"} 3
+sql_exec_latency_bucket{node_id="1",le="2.8892980822706715e+10"} 3
+sql_exec_latency_bucket{node_id="1",le="3.4359738368e+10"} 3
+sql_exec_latency_bucket{node_id="1",le="4.086084533685758e+10"} 3
+sql_exec_latency_bucket{node_id="1",le="4.85920079996168e+10"} 3
+sql_exec_latency_bucket{node_id="1",le="5.778596164541343e+10"} 3
+sql_exec_latency_bucket{node_id="1",le="6.8719476736e+10"} 3
+sql_exec_latency_bucket{node_id="1",le="8.172169067371516e+10"} 3
+sql_exec_latency_bucket{node_id="1",le="9.71840159992336e+10"} 3
+sql_exec_latency_bucket{node_id="1",le="1.1557192329082686e+11"} 3
+sql_exec_latency_bucket{node_id="1",le="1.37438953472e+11"} 3
+sql_exec_latency_bucket{node_id="1",le="1.6344338134743033e+11"} 3
+sql_exec_latency_bucket{node_id="1",le="1.943680319984672e+11"} 3
+sql_exec_latency_bucket{node_id="1",le="2.3114384658165372e+11"} 3
+sql_exec_latency_bucket{node_id="1",le="2.74877906944e+11"} 3
+sql_exec_latency_bucket{node_id="1",le="3e+11"} 3
+sql_exec_latency_bucket{node_id="1",le="+Inf"} 3
+sql_exec_latency_sum{node_id="1"} 5.593697e+06
+sql_exec_latency_count{node_id="1"} 3
+# TYPE txn_commits counter
+txn_commits{node_id="1"} 1640
+# TYPE sql_insert_count counter
+sql_insert_count{node_id="1"} 1
+# TYPE sql_select_count counter
+sql_select_count{node_id="1"} 2
+# TYPE ranges_unavailable gauge
+ranges_unavailable{store="1",node_id="1"} 0
+# TYPE sql_txn_commit_count counter
+sql_txn_commit_count{node_id="1"} 0
+# TYPE capacity_available gauge
+capacity_available{store="1",node_id="1"} 8.4494311424e+10
+# TYPE ranges_underreplicated gauge
+ranges_underreplicated{store="1",node_id="1"} 0

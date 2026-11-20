@@ -5,7 +5,7 @@ title: Auto-hébergement
 nav: Auto-hébergement
 section: Administrer
 order: 53
-updated: 2026-11-19
+updated: 2026-11-20
 description: Installer HYPHA sur votre serveur avec Docker Compose (formule Libre) : prérequis, installation, comptes, IA locale, mise à jour, sauvegarde. Vos données restent chez vous.
 lead: Le même logiciel que hypha.s33d.fr, sur votre machine, gratuit et sans limite. Vos mesures, journaux et traces restent dans votre base PostgreSQL.
 ---
@@ -62,6 +62,7 @@ Images publiques : `registre-vm.s33d.fr/hypha/server` et `registre-vm.s33d.fr/hy
 |---|---|
 | `HYPHA_SMTP_HOST`, `_PORT`, `_USER`, `_PASSWORD`, `_FROM`, `_SECURITY` | envoi des alertes par e-mail |
 | `HYPHA_OIDC_ISSUER`, `_CLIENT_ID`, `_CLIENT_SECRET` | connexion OpenID Connect, en plus des comptes locaux ; seuls les comptes invités entrent |
+| `HYPHA_VAPID_PRIVATE_KEY`, `HYPHA_VAPID_SUBJECT` | notifications push vers les téléphones et ordinateurs : clé générée par `docker compose exec api python -m hypha vapid-key` (voir [Application mobile](/docs/application-mobile/)) ; vide, le canal est coupé |
 | `HYPHA_LLM_URL`, `HYPHA_LLM_MODEL` | votre serveur de modèle de type Ollama, pour l'explication des pannes et le post-mortem ; vide, la fonction est coupée |
 | `HYPHA_ALLOW_PRIVATE_TARGETS` | autoriser les tests synthétiques et les webhooks vers des adresses internes |
 | `HYPHA_LOG_LEVEL` | niveau du journal du serveur |

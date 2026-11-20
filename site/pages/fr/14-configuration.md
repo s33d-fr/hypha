@@ -94,11 +94,11 @@ Les contrôles HTTP et TCP partent de l'hôte : ils voient les adresses internes
 
 ## Intégrations
 
-Chaque intégration s'active seule quand son logiciel est détecté (`enabled: auto`), ou se force (`true`) et se coupe (`false`). Son état apparaît dans **Réglages › Agents** : ok, absent, coupée, ou l'erreur rencontrée. Le détail de chacune est sur les pages [Intégrations](/docs/integrations/), [Bases de données](/docs/bases-de-donnees/), [SNMP](/docs/snmp/), [Clouds](/docs/cloud/), [Virtualisation](/docs/virtualisation/), [Kubernetes](/docs/kubernetes/) et [Collecte générique](/docs/collecte-generique/) (`integrations.openmetrics`, `integrations.nagios` : des listes, qui s'additionnent elles aussi d'un fichier `conf.d` à l'autre).
+Chaque intégration s'active seule quand son logiciel est détecté (`enabled: auto`), ou se force (`true`) et se coupe (`false`). Son état apparaît dans **Réglages › Agents** : ok, absent, coupée, ou l'erreur rencontrée. Le détail de chacune est sur les pages [Intégrations](/docs/integrations/), [Bases de données](/docs/bases-de-donnees/), [SNMP](/docs/snmp/), [Clouds](/docs/cloud/), [Virtualisation](/docs/virtualisation/), [Kubernetes](/docs/kubernetes/), [IA et GPU](/docs/ia-et-gpu/) et [Collecte générique](/docs/collecte-generique/) (`integrations.openmetrics`, `integrations.nagios` : des listes, qui s'additionnent elles aussi d'un fichier `conf.d` à l'autre).
 
 ### Plusieurs instances
 
-Pour lire plusieurs cibles d'une même intégration (ovhcloud, mysql, redis, memcached, rabbitmq, mongodb, opensearch, kubernetes, libvirt, proxmox, aws, scaleway, azure, gcp), donnez une liste `instances`. Chaque entrée porte un `name` (minuscules, chiffres, `-` et `_`), reprend les valeurs par défaut de l'intégration et s'additionne d'un fichier `conf.d` à l'autre. Ses données portent l'étiquette `instance_name`.
+Pour lire plusieurs cibles d'une même intégration (ovhcloud, mysql, redis, memcached, rabbitmq, mongodb, opensearch, kubernetes, libvirt, proxmox, aws, scaleway, azure, gcp, ollama, phpfpm, varnish, squid, lighttpd, supervisord, pgbouncer, proxysql, clickhouse, couchdb, couchbase, zookeeper, ceph, openldap, powerdns, powerdns_recursor, keycloak, nexus, harbor, fluentd, wazuh, suricata), donnez une liste `instances`. Chaque entrée porte un `name` (minuscules, chiffres, `-` et `_`), reprend les valeurs par défaut de l'intégration et s'additionne d'un fichier `conf.d` à l'autre. Ses données portent l'étiquette `instance_name`.
 
 ```yaml
 integrations:

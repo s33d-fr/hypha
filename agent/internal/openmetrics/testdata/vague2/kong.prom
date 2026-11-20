@@ -1,0 +1,90 @@
+# TYPE kong_bandwidth_bytes counter
+kong_bandwidth_bytes{service="amont",route="tout",direction="egress",workspace="default",consumer=""} 19761
+kong_bandwidth_bytes{service="amont",route="tout",direction="ingress",workspace="default",consumer=""} 3360
+# TYPE kong_datastore_reachable gauge
+kong_datastore_reachable 1
+# TYPE kong_http_requests_total counter
+kong_http_requests_total{service="amont",route="tout",code="200",source="service",workspace="default",consumer=""} 20
+kong_http_requests_total{service="amont",route="tout",code="404",source="service",workspace="default",consumer=""} 20
+# TYPE kong_kong_latency_ms histogram
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="1"} 39
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="2"} 39
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="5"} 39
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="7"} 39
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="10"} 39
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="15"} 39
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="20"} 40
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="30"} 40
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="50"} 40
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="75"} 40
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="100"} 40
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="200"} 40
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="500"} 40
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="750"} 40
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="1000"} 40
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="3000"} 40
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="6000"} 40
+kong_kong_latency_ms_bucket{service="amont",route="tout",workspace="default",le="+Inf"} 40
+kong_kong_latency_ms_count{service="amont",route="tout",workspace="default"} 40
+kong_kong_latency_ms_sum{service="amont",route="tout",workspace="default"} 38
+# TYPE kong_memory_lua_shared_dict_bytes gauge
+kong_memory_lua_shared_dict_bytes{node_id="343ce2ad-7097-49c7-bbcd-3c288b142555",shared_dict="kong",kong_subsystem="http"} 40960
+kong_memory_lua_shared_dict_bytes{node_id="343ce2ad-7097-49c7-bbcd-3c288b142555",shared_dict="kong_cluster_events",kong_subsystem="http"} 40960
+kong_memory_lua_shared_dict_bytes{node_id="343ce2ad-7097-49c7-bbcd-3c288b142555",shared_dict="kong_core_db_cache",kong_subsystem="http"} 798720
+kong_memory_lua_shared_dict_bytes{node_id="343ce2ad-7097-49c7-bbcd-3c288b142555",shared_dict="kong_core_db_cache_miss",kong_subsystem="http"} 86016
+# TYPE kong_memory_lua_shared_dict_total_bytes gauge
+kong_memory_lua_shared_dict_total_bytes{node_id="343ce2ad-7097-49c7-bbcd-3c288b142555",shared_dict="kong",kong_subsystem="http"} 5242880
+kong_memory_lua_shared_dict_total_bytes{node_id="343ce2ad-7097-49c7-bbcd-3c288b142555",shared_dict="kong_cluster_events",kong_subsystem="http"} 5242880
+kong_memory_lua_shared_dict_total_bytes{node_id="343ce2ad-7097-49c7-bbcd-3c288b142555",shared_dict="kong_core_db_cache",kong_subsystem="http"} 134217728
+kong_memory_lua_shared_dict_total_bytes{node_id="343ce2ad-7097-49c7-bbcd-3c288b142555",shared_dict="kong_core_db_cache_miss",kong_subsystem="http"} 12582912
+# TYPE kong_memory_workers_lua_vms_bytes gauge
+kong_memory_workers_lua_vms_bytes{node_id="343ce2ad-7097-49c7-bbcd-3c288b142555",pid="1405",kong_subsystem="http"} 55358488
+kong_memory_workers_lua_vms_bytes{node_id="343ce2ad-7097-49c7-bbcd-3c288b142555",pid="1406",kong_subsystem="http"} 54500093
+kong_memory_workers_lua_vms_bytes{node_id="343ce2ad-7097-49c7-bbcd-3c288b142555",pid="1407",kong_subsystem="http"} 54501333
+kong_memory_workers_lua_vms_bytes{node_id="343ce2ad-7097-49c7-bbcd-3c288b142555",pid="1408",kong_subsystem="http"} 54526741
+# TYPE kong_nginx_connections_total gauge
+kong_nginx_connections_total{node_id="343ce2ad-7097-49c7-bbcd-3c288b142555",subsystem="http",state="accepted"} 45
+kong_nginx_connections_total{node_id="343ce2ad-7097-49c7-bbcd-3c288b142555",subsystem="http",state="active"} 5
+kong_nginx_connections_total{node_id="343ce2ad-7097-49c7-bbcd-3c288b142555",subsystem="http",state="handled"} 45
+kong_nginx_connections_total{node_id="343ce2ad-7097-49c7-bbcd-3c288b142555",subsystem="http",state="reading"} 0
+# TYPE kong_nginx_metric_errors_total counter
+kong_nginx_metric_errors_total 0
+# TYPE kong_nginx_requests_total gauge
+kong_nginx_requests_total{node_id="343ce2ad-7097-49c7-bbcd-3c288b142555",subsystem="http"} 45
+# TYPE kong_nginx_timers gauge
+kong_nginx_timers{state="pending"} 1
+kong_nginx_timers{state="running"} 265
+# TYPE kong_request_latency_ms histogram
+kong_request_latency_ms_bucket{service="amont",route="tout",workspace="default",le="25"} 40
+kong_request_latency_ms_bucket{service="amont",route="tout",workspace="default",le="50"} 40
+kong_request_latency_ms_bucket{service="amont",route="tout",workspace="default",le="80"} 40
+kong_request_latency_ms_bucket{service="amont",route="tout",workspace="default",le="100"} 40
+kong_request_latency_ms_bucket{service="amont",route="tout",workspace="default",le="250"} 40
+kong_request_latency_ms_bucket{service="amont",route="tout",workspace="default",le="400"} 40
+kong_request_latency_ms_bucket{service="amont",route="tout",workspace="default",le="700"} 40
+kong_request_latency_ms_bucket{service="amont",route="tout",workspace="default",le="1000"} 40
+kong_request_latency_ms_bucket{service="amont",route="tout",workspace="default",le="2000"} 40
+kong_request_latency_ms_bucket{service="amont",route="tout",workspace="default",le="5000"} 40
+kong_request_latency_ms_bucket{service="amont",route="tout",workspace="default",le="10000"} 40
+kong_request_latency_ms_bucket{service="amont",route="tout",workspace="default",le="30000"} 40
+kong_request_latency_ms_bucket{service="amont",route="tout",workspace="default",le="60000"} 40
+kong_request_latency_ms_bucket{service="amont",route="tout",workspace="default",le="+Inf"} 40
+kong_request_latency_ms_count{service="amont",route="tout",workspace="default"} 40
+kong_request_latency_ms_sum{service="amont",route="tout",workspace="default"} 71
+# TYPE kong_upstream_latency_ms histogram
+kong_upstream_latency_ms_bucket{service="amont",route="tout",workspace="default",le="25"} 40
+kong_upstream_latency_ms_bucket{service="amont",route="tout",workspace="default",le="50"} 40
+kong_upstream_latency_ms_bucket{service="amont",route="tout",workspace="default",le="80"} 40
+kong_upstream_latency_ms_bucket{service="amont",route="tout",workspace="default",le="100"} 40
+kong_upstream_latency_ms_bucket{service="amont",route="tout",workspace="default",le="250"} 40
+kong_upstream_latency_ms_bucket{service="amont",route="tout",workspace="default",le="400"} 40
+kong_upstream_latency_ms_bucket{service="amont",route="tout",workspace="default",le="700"} 40
+kong_upstream_latency_ms_bucket{service="amont",route="tout",workspace="default",le="1000"} 40
+kong_upstream_latency_ms_bucket{service="amont",route="tout",workspace="default",le="2000"} 40
+kong_upstream_latency_ms_bucket{service="amont",route="tout",workspace="default",le="5000"} 40
+kong_upstream_latency_ms_bucket{service="amont",route="tout",workspace="default",le="10000"} 40
+kong_upstream_latency_ms_bucket{service="amont",route="tout",workspace="default",le="30000"} 40
+kong_upstream_latency_ms_bucket{service="amont",route="tout",workspace="default",le="60000"} 40
+kong_upstream_latency_ms_bucket{service="amont",route="tout",workspace="default",le="+Inf"} 40
+kong_upstream_latency_ms_count{service="amont",route="tout",workspace="default"} 40
+kong_upstream_latency_ms_sum{service="amont",route="tout",workspace="default"} 25

@@ -1,0 +1,26 @@
+# TYPE gitaly_burdenmonitor_active_rpcs gauge
+gitaly_burdenmonitor_active_rpcs 0
+# TYPE gitaly_catfile_processes gauge
+gitaly_catfile_processes 0
+# TYPE gitaly_catfile_processes_total counter
+gitaly_catfile_processes_total 0
+# TYPE gitaly_command_cpu_seconds_total counter
+gitaly_command_cpu_seconds_total{cmd="git",git_version="",grpc_method="",grpc_service="",mode="system",reference_backend="",subcmd=""} 0.003237
+gitaly_command_cpu_seconds_total{cmd="git",git_version="",grpc_method="",grpc_service="",mode="user",reference_backend="",subcmd=""} 0
+# TYPE gitaly_commands_running gauge
+gitaly_commands_running{cmd="",grpc_method="",grpc_service="",subcmd=""} 0
+# TYPE gitaly_concurrency_limiting_in_progress gauge
+gitaly_concurrency_limiting_in_progress{authenticated="true",grpc_method="ReplicateRepository",grpc_service="gitaly.RepositoryService",system="gitaly"} 0
+# TYPE gitaly_concurrency_limiting_queued gauge
+gitaly_concurrency_limiting_queued{authenticated="true",grpc_method="ReplicateRepository",grpc_service="gitaly.RepositoryService",system="gitaly"} 0
+# TYPE gitaly_pack_objects_in_progress gauge
+gitaly_pack_objects_in_progress{auth="authenticated"} 0
+# TYPE gitaly_pack_objects_queued gauge
+gitaly_pack_objects_queued{auth="authenticated"} 0
+# TYPE grpc_server_handled_total counter
+grpc_server_handled_total{grpc_code="Aborted",grpc_method="AdvertiseBundleURI",grpc_service="gitaly.SmartHTTPService",grpc_type="unary"} 0
+grpc_server_handled_total{grpc_code="Aborted",grpc_method="ApplyBfgObjectMapStream",grpc_service="gitaly.CleanupService",grpc_type="bidi_stream"} 0
+grpc_server_handled_total{grpc_code="Aborted",grpc_method="BackupCustomHooks",grpc_service="gitaly.RepositoryService",grpc_type="server_stream"} 0
+grpc_server_handled_total{grpc_code="Aborted",grpc_method="BackupPartition",grpc_service="gitaly.PartitionService",grpc_type="unary"} 0
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 3.6364288e+08

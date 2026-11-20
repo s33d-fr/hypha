@@ -12,7 +12,7 @@
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/privacy/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/docs/</loc>
-<lastmod>2026-11-19</lastmod>
+<lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/"/>
 </url>
@@ -32,7 +32,7 @@
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/agent-windows/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/docs/alertes-et-canaux/</loc>
-<lastmod>2026-11-19</lastmod>
+<lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/alertes-et-canaux/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/alerts-and-channels/"/>
 </url>
@@ -41,13 +41,23 @@
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/api/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/api/"/>
 </url>
+<url><loc>https://hypha.s33d.fr/docs/application-mobile/</loc>
+<lastmod>2026-11-20</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/application-mobile/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/mobile-app/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/applications-et-services/</loc>
+<lastmod>2026-11-20</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/applications-et-services/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/applications-and-services/"/>
+</url>
 <url><loc>https://hypha.s33d.fr/docs/auto-hebergement/</loc>
-<lastmod>2026-11-19</lastmod>
+<lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/auto-hebergement/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/self-hosting/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/docs/bases-de-donnees/</loc>
-<lastmod>2026-11-19</lastmod>
+<lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/bases-de-donnees/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/databases/"/>
 </url>
@@ -76,6 +86,11 @@
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/demarrage/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/getting-started/"/>
 </url>
+<url><loc>https://hypha.s33d.fr/docs/equipements-syslog/</loc>
+<lastmod>2026-11-20</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/equipements-syslog/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/syslog-devices/"/>
+</url>
 <url><loc>https://hypha.s33d.fr/docs/explication-et-reparation/</loc>
 <lastmod>2026-11-19</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/explication-et-reparation/"/>
@@ -90,6 +105,11 @@
 <lastmod>2026-11-19</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/formules-et-facturation/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/plans-and-billing/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/ia-et-gpu/</loc>
+<lastmod>2026-11-20</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/ia-et-gpu/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/ai-and-gpu/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/docs/incidents/</loc>
 <lastmod>2026-11-19</lastmod>
@@ -110,6 +130,11 @@
 <lastmod>2026-11-19</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/kubernetes/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/kubernetes/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/logiciels-prometheus/</loc>
+<lastmod>2026-11-20</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/logiciels-prometheus/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/prometheus-software/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/docs/maintenances/</loc>
 <lastmod>2026-11-19</lastmod>
@@ -166,8 +191,13 @@
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/virtualisation/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/virtualization/"/>
 </url>
+<url><loc>https://hypha.s33d.fr/docs/windows/</loc>
+<lastmod>2026-11-20</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/windows/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/windows/"/>
+</url>
 <url><loc>https://hypha.s33d.fr/en/docs/</loc>
-<lastmod>2026-11-19</lastmod>
+<lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/"/>
 </url>
@@ -191,8 +221,13 @@
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/agent-windows/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/agent-windows/"/>
 </url>
+<url><loc>https://hypha.s33d.fr/en/docs/ai-and-gpu/</loc>
+<lastmod>2026-11-20</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/ia-et-gpu/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/ai-and-gpu/"/>
+</url>
 <url><loc>https://hypha.s33d.fr/en/docs/alerts-and-channels/</loc>
-<lastmod>2026-11-19</lastmod>
+<lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/alertes-et-canaux/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/alerts-and-channels/"/>
 </url>
@@ -200,6 +235,11 @@
 <lastmod>2026-11-19</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/api/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/api/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/applications-and-services/</loc>
+<lastmod>2026-11-20</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/applications-et-services/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/applications-and-services/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/en/docs/cloud/</loc>
 <lastmod>2026-11-19</lastmod>
@@ -212,7 +252,7 @@
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/configuration/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/en/docs/databases/</loc>
-<lastmod>2026-11-19</lastmod>
+<lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/bases-de-donnees/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/databases/"/>
 </url>
@@ -266,6 +306,11 @@
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/metriques/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/metrics/"/>
 </url>
+<url><loc>https://hypha.s33d.fr/en/docs/mobile-app/</loc>
+<lastmod>2026-11-20</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/application-mobile/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/mobile-app/"/>
+</url>
 <url><loc>https://hypha.s33d.fr/en/docs/monitors/</loc>
 <lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/moniteurs/"/>
@@ -276,13 +321,18 @@
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/formules-et-facturation/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/plans-and-billing/"/>
 </url>
+<url><loc>https://hypha.s33d.fr/en/docs/prometheus-software/</loc>
+<lastmod>2026-11-20</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/logiciels-prometheus/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/prometheus-software/"/>
+</url>
 <url><loc>https://hypha.s33d.fr/en/docs/security/</loc>
 <lastmod>2026-11-19</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/securite/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/security/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/en/docs/self-hosting/</loc>
-<lastmod>2026-11-19</lastmod>
+<lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/auto-hebergement/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/self-hosting/"/>
 </url>
@@ -306,6 +356,11 @@
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/synthetiques/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/synthetics/"/>
 </url>
+<url><loc>https://hypha.s33d.fr/en/docs/syslog-devices/</loc>
+<lastmod>2026-11-20</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/equipements-syslog/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/syslog-devices/"/>
+</url>
 <url><loc>https://hypha.s33d.fr/en/docs/traces/</loc>
 <lastmod>2026-11-19</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/traces/"/>
@@ -320,6 +375,11 @@
 <lastmod>2026-11-19</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/virtualisation/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/virtualization/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/windows/</loc>
+<lastmod>2026-11-20</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/windows/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/windows/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/en/faq/</loc>
 <lastmod>2026-11-19</lastmod>

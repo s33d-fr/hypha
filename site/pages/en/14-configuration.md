@@ -94,11 +94,11 @@ HTTP and TCP checks start from the host: they see internal addresses. For schedu
 
 ## Integrations
 
-Each integration turns itself on when its software is detected (`enabled: auto`), or is forced (`true`) or turned off (`false`). Its state shows in **Settings › Agents**: ok, absent, disabled, or the error met. Each one is described on the [Integrations](/en/docs/integrations/), [Databases](/en/docs/databases/), [SNMP](/en/docs/snmp/), [Clouds](/en/docs/cloud/), [Virtualization](/en/docs/virtualization/), [Kubernetes](/en/docs/kubernetes/) and [Generic collection](/en/docs/generic-collection/) pages (`integrations.openmetrics`, `integrations.nagios`: lists, which also add up across `conf.d` files).
+Each integration turns itself on when its software is detected (`enabled: auto`), or is forced (`true`) or turned off (`false`). Its state shows in **Settings › Agents**: ok, absent, disabled, or the error met. Each one is described on the [Integrations](/en/docs/integrations/), [Databases](/en/docs/databases/), [SNMP](/en/docs/snmp/), [Clouds](/en/docs/cloud/), [Virtualization](/en/docs/virtualization/), [Kubernetes](/en/docs/kubernetes/), [AI and GPU](/en/docs/ai-and-gpu/) and [Generic collection](/en/docs/generic-collection/) pages (`integrations.openmetrics`, `integrations.nagios`: lists, which also add up across `conf.d` files).
 
 ### Several instances
 
-To read several targets of one integration (ovhcloud, mysql, redis, memcached, rabbitmq, mongodb, opensearch, kubernetes, libvirt, proxmox, aws, scaleway, azure, gcp), give an `instances` list. Each entry has a `name` (lowercase letters, digits, `-` and `_`), starts from the integration's defaults, and adds up across `conf.d` files. Its data carries the `instance_name` tag.
+To read several targets of one integration (ovhcloud, mysql, redis, memcached, rabbitmq, mongodb, opensearch, kubernetes, libvirt, proxmox, aws, scaleway, azure, gcp, ollama, phpfpm, varnish, squid, lighttpd, supervisord, pgbouncer, proxysql, clickhouse, couchdb, couchbase, zookeeper, ceph, openldap, powerdns, powerdns_recursor, keycloak, nexus, harbor, fluentd, wazuh, suricata), give an `instances` list. Each entry has a `name` (lowercase letters, digits, `-` and `_`), starts from the integration's defaults, and adds up across `conf.d` files. Its data carries the `instance_name` tag.
 
 ```yaml
 integrations:

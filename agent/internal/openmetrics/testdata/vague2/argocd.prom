@@ -1,0 +1,43 @@
+# TYPE argocd_app_info gauge
+argocd_app_info{autosync_enabled="false",dest_namespace="essai",dest_server="https://kubernetes.default.svc",health_status="Healthy",hydrator_status="",name="chemin-absent",namespace="argocd",operation="",phase="",project="default",repo="https://github.com/argoproj/argocd-example-apps",sync_status="Unknown"} 1
+argocd_app_info{autosync_enabled="true",dest_namespace="essai-guestbook",dest_server="https://kubernetes.default.svc",health_status="Healthy",hydrator_status="",name="guestbook",namespace="argocd",operation="",phase="Succeeded",project="default",repo="https://github.com/argoproj/argocd-example-apps",sync_status="Synced"} 1
+# TYPE argocd_app_orphaned_resources_count gauge
+argocd_app_orphaned_resources_count{name="chemin-absent",namespace="argocd",project="default"} 0
+argocd_app_orphaned_resources_count{name="guestbook",namespace="argocd",project="default"} 0
+# TYPE argocd_app_reconcile histogram
+argocd_app_reconcile_bucket{dest_server="",namespace="argocd",le="0.25"} 6
+argocd_app_reconcile_bucket{dest_server="",namespace="argocd",le="0.5"} 6
+argocd_app_reconcile_bucket{dest_server="",namespace="argocd",le="1"} 6
+argocd_app_reconcile_bucket{dest_server="",namespace="argocd",le="2"} 6
+argocd_app_reconcile_bucket{dest_server="",namespace="argocd",le="4"} 6
+argocd_app_reconcile_bucket{dest_server="",namespace="argocd",le="8"} 6
+argocd_app_reconcile_bucket{dest_server="",namespace="argocd",le="16"} 6
+argocd_app_reconcile_bucket{dest_server="",namespace="argocd",le="+Inf"} 6
+argocd_app_reconcile_sum{dest_server="",namespace="argocd"} 0.052770911
+argocd_app_reconcile_count{dest_server="",namespace="argocd"} 6
+argocd_app_reconcile_bucket{dest_server="https://kubernetes.default.svc",namespace="argocd",le="0.25"} 4
+argocd_app_reconcile_bucket{dest_server="https://kubernetes.default.svc",namespace="argocd",le="0.5"} 4
+argocd_app_reconcile_bucket{dest_server="https://kubernetes.default.svc",namespace="argocd",le="1"} 4
+argocd_app_reconcile_bucket{dest_server="https://kubernetes.default.svc",namespace="argocd",le="2"} 4
+argocd_app_reconcile_bucket{dest_server="https://kubernetes.default.svc",namespace="argocd",le="4"} 4
+argocd_app_reconcile_bucket{dest_server="https://kubernetes.default.svc",namespace="argocd",le="8"} 6
+argocd_app_reconcile_bucket{dest_server="https://kubernetes.default.svc",namespace="argocd",le="16"} 6
+argocd_app_reconcile_bucket{dest_server="https://kubernetes.default.svc",namespace="argocd",le="+Inf"} 6
+argocd_app_reconcile_sum{dest_server="https://kubernetes.default.svc",namespace="argocd"} 9.452160100999999
+argocd_app_reconcile_count{dest_server="https://kubernetes.default.svc",namespace="argocd"} 6
+# TYPE argocd_app_sync_total counter
+argocd_app_sync_total{dest_server="https://kubernetes.default.svc",dry_run="false",name="guestbook",namespace="argocd",phase="Succeeded",project="default"} 1
+# TYPE argocd_cluster_api_resource_objects gauge
+argocd_cluster_api_resource_objects{server="https://kubernetes.default.svc"} 585
+# TYPE argocd_cluster_api_resources gauge
+argocd_cluster_api_resources{server="https://kubernetes.default.svc"} 96
+# TYPE argocd_cluster_cache_age_seconds gauge
+argocd_cluster_cache_age_seconds{server="https://kubernetes.default.svc"} 113
+# TYPE argocd_cluster_connection_status gauge
+argocd_cluster_connection_status{k8s_version="v1.35.5",server="https://kubernetes.default.svc"} 1
+# TYPE argocd_kubectl_exec_pending gauge
+argocd_kubectl_exec_pending{command="apply",hostname="argocd-application-controller-0"} 0
+# TYPE argocd_redis_request_total counter
+argocd_redis_request_total{command="del",failed="false",hostname="argocd-application-controller-0",initiator="argocd-application-controller"} 6
+argocd_redis_request_total{command="publish",failed="false",hostname="argocd-application-controller-0",initiator="argocd-application-controller"} 12
+argocd_redis_request_total{command="set",failed="false",hostname="argocd-application-controller-0",initiator="argocd-application-controller"} 34

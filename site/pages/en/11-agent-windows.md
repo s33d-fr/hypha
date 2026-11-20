@@ -39,7 +39,8 @@ Get-Service HyphaAgent
 ## What the agent collects by default
 
 - CPU, memory (including committed memory), page file, disks, I/O, network, processes.
-- The **System** and **Application** event logs (list set by `logs.windows_eventlog`).
+- The **System** and **Application** event logs (list set and filtered by `logs.windows_eventlog`, see [Windows](/en/docs/windows/)).
+- Performance counters and WMI queries of your choice, Active Directory domain controllers and DNS servers: see [Windows](/en/docs/windows/).
 - Services: a stopped automatic service is reported on Windows Server. Update services known to stop on their own are excluded; add yours in `checks.windows_services_exclude`.
 - Pending Windows updates, clock (`w32tm`), certificates of the computer store.
 - IIS, SQL Server, Exchange and Hyper-V when present. See [Integrations](/en/docs/integrations/) and [Virtualization](/en/docs/virtualization/).

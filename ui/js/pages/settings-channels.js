@@ -7,7 +7,7 @@ import { section, empty, panel, modal, field, select, toast, confirmDialog, erro
 import { dataTable } from '../components/table.js';
 import { isAdmin } from './ops-shared.js';
 
-export const KINDS = ['email', 'webhook', 'slack', 'teams', 'mattermost', 'discord', 'googlechat', 'telegram', 'ntfy', 'pagerduty', 'opsgenie'];
+export const KINDS = ['email', 'push', 'webhook', 'slack', 'teams', 'mattermost', 'discord', 'googlechat', 'telegram', 'ntfy', 'pagerduty', 'opsgenie'];
 const URL_KINDS = ['webhook', 'slack', 'teams', 'mattermost', 'discord', 'googlechat'];
 
 // Champs propres à chaque type (§ 18). secret : saisi masqué, jamais affiché dans la liste.
@@ -32,6 +32,7 @@ const FIELDS = {
 
 function emptyConfig(kind) {
   if (kind === 'email') return { to: [] };
+  if (kind === 'push') return { all: true };
   if (URL_KINDS.includes(kind)) return kind === 'webhook' ? { url: '', headers: {} } : { url: '' };
   const cfg = {};
   for (const f of FIELDS[kind] || []) cfg[f.key] = f.def !== undefined ? f.def : '';
@@ -43,6 +44,7 @@ export function channelTarget(c) {
   const tail = (v) => (v ? '…' + String(v).slice(-4) : '');
   switch (c.kind) {
     case 'email': return (Array.isArray(cfg.to) ? cfg.to : [cfg.to]).filter(Boolean).join(', ');
+    case 'push': return cfg.all ? t('channels.target.push_all') : t('channels.target.push_users', { n: (cfg.users || []).length });
     case 'telegram': return cfg.chat_id ? t('channels.target.telegram', { chat: cfg.chat_id }) : '-';
     case 'ntfy': { let host = ''; try { host = new URL(cfg.url || 'https://ntfy.sh').host; } catch (e) { host = cfg.url || ''; } return host + (cfg.topic ? '/' + cfg.topic : ''); }
     case 'pagerduty': return t('channels.target.pagerduty', { k: tail(cfg.routing_key) });
@@ -71,6 +73,48 @@ function testResultBox(res) {
     h('div', { class: 'small' }, h('b', t(res.ok ? 'channels.test_ok' : 'channels.test_ko')), res.detail ? h('div', { class: 'mono xsmall mt-2' }, res.detail) : null));
 }
 
+// Destinataires d'un canal push : tout l'espace, ou des membres choisis (leurs appareils abonnés reçoivent).
+let membersCache = null;
+function pushRecipients(c, onChange) {
+  const box = h('div', { class: 'col gap-2' });
+  const list = h('div', { class: 'col gap-1', style: { maxHeight: '220px', overflow: 'auto' } });
+  const radio = (value, label) => {
+    const inp = h('input', { type: 'radio', name: 'push-who', value, checked: (value === 'all') === !!c.config.all });
+    inp.addEventListener('change', () => {
+      c.config = value === 'all' ? { all: true } : { users: (c.config.users || []).slice() };
+      drawList();
+      onChange();
+    });
+    return h('label', { class: 'check' }, inp, label);
+  };
+  function drawList() {
+    clear(list);
+    list.hidden = !!c.config.all;
+    if (c.config.all) return;
+    if (!membersCache) { list.appendChild(h('div', { class: 'row small text-2' }, h('span', { class: 'spinner' }))); return; }
+    const chosen = new Set(c.config.users || []);
+    for (const m of membersCache) {
+      if (m.pending) continue;
+      const inp = h('input', { type: 'checkbox', checked: chosen.has(m.user_id) });
+      inp.addEventListener('change', () => {
+        const set = new Set(c.config.users || []);
+        if (inp.checked) set.add(m.user_id); else set.delete(m.user_id);
+        c.config = { users: [...set] };
+        onChange();
+      });
+      list.appendChild(h('label', { class: 'check' }, inp, (m.name || m.email || m.login || ('#' + m.user_id)) + (m.email && m.name ? ' · ' + m.email : '')));
+    }
+  }
+  box.appendChild(h('span', { class: 'lbl small' }, t('channels.f.push.who')));
+  box.appendChild(radio('all', t('channels.f.push.all')));
+  box.appendChild(radio('users', t('channels.f.push.users')));
+  box.appendChild(list);
+  box.appendChild(h('div', { class: 'xsmall muted' }, t('channels.h.push')));
+  drawList();
+  if (!membersCache) get('/org/members').then((r) => { membersCache = asList(r, 'members'); drawList(); }).catch(() => { membersCache = []; drawList(); });
+  return box;
+}
+
 function channelDialog(ctx, existing) {
   let saved = existing ? JSON.parse(JSON.stringify(existing)) : null;
   let changed = false;
@@ -93,6 +137,8 @@ function channelDialog(ctx, existing) {
       to.value = (c.config.to || []).join('\n');
       to.addEventListener('input', () => { c.config.to = to.value.split(/[\n,;]+/).map((x) => x.trim()).filter(Boolean); drawButtons(); });
       box.appendChild(field(t('channels.f.to'), to, t('channels.f.to_hint')));
+    } else if (c.kind === 'push') {
+      box.appendChild(pushRecipients(c, drawButtons));
     } else if (URL_KINDS.includes(c.kind)) {
       box.appendChild(field(t('channels.f.url'), secretInput(c.config.url, 'https://', (v) => { c.config.url = v; drawButtons(); }), t('channels.f.url_hint.' + c.kind)));
       if (c.kind === 'webhook') {
@@ -134,6 +180,7 @@ function channelDialog(ctx, existing) {
       if (bad) return t('channels.err.email', { v: bad });
       return null;
     }
+    if (c.kind === 'push') return c.config.all || (c.config.users || []).length ? null : t('channels.err.push_users');
     if (URL_KINDS.includes(c.kind)) return /^https:\/\//i.test(c.config.url || '') ? null : t('channels.err.https');
     for (const f of FIELDS[c.kind] || []) {
       const v = String(c.config[f.key] || '');

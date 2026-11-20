@@ -5,8 +5,8 @@ title: Alerts, Problems view and notification channels
 nav: Alerts and channels
 section: Alert and act
 order: 41
-updated: 2026-11-19
-description: The HYPHA Problems view, acknowledgement, priorities, escalations, and the eleven notification channels: email, webhook, Slack, Teams, Telegram, Discord, Google Chat, Mattermost, ntfy, PagerDuty, Opsgenie.
+updated: 2026-11-20
+description: The HYPHA Problems view, acknowledgement, priorities, escalations, and the twelve notification channels: email, push notifications, webhook, Slack, Teams, Telegram, Discord, Google Chat, Mattermost, ntfy, PagerDuty, Opsgenie.
 lead: A single list of what is wrong, sorted by priority, and notifications that reach the place where the team works.
 ---
 ## The Problems view
@@ -39,6 +39,7 @@ Filters: priority, state, acknowledged or not, held by a downtime or a dependenc
 | Channel | Settings |
 |---|---|
 | Email | one or more addresses; plain HTML message with the state, value, threshold, link to the monitor and to the explanation, and the host's latest log lines |
+| Push notifications | all members of the workspace or selected members; notification on the phones and computers they enabled, with the link to the problem and its explanation, and an **Acknowledge** button (see [Mobile app](/en/docs/mobile-app/)) |
 | Webhook | address and headers; JSON body `{monitor, group, state, value, message, url}` |
 | Slack, Microsoft Teams, Google Chat, Discord, Mattermost | incoming webhook address |
 | Telegram | bot token and chat identifier |

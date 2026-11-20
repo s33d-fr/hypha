@@ -1,0 +1,35 @@
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="12",patchlevel="16",version="3.12.16"} 1.0
+# TYPE flower_events_total counter
+flower_events_total{task="tasks.addition",type="task-received",worker="celery@1014222d3d0b"} 20.0
+flower_events_total{task="tasks.addition",type="task-started",worker="celery@1014222d3d0b"} 20.0
+flower_events_total{task="tasks.addition",type="task-succeeded",worker="celery@1014222d3d0b"} 20.0
+flower_events_total{task="tasks.echec",type="task-received",worker="celery@1014222d3d0b"} 3.0
+# TYPE flower_task_runtime_seconds histogram
+flower_task_runtime_seconds_bucket{le="0.005",task="tasks.addition",worker="celery@1014222d3d0b"} 18.0
+flower_task_runtime_seconds_bucket{le="0.01",task="tasks.addition",worker="celery@1014222d3d0b"} 18.0
+flower_task_runtime_seconds_bucket{le="0.025",task="tasks.addition",worker="celery@1014222d3d0b"} 20.0
+flower_task_runtime_seconds_bucket{le="0.05",task="tasks.addition",worker="celery@1014222d3d0b"} 20.0
+flower_task_runtime_seconds_bucket{le="0.075",task="tasks.addition",worker="celery@1014222d3d0b"} 20.0
+flower_task_runtime_seconds_bucket{le="0.1",task="tasks.addition",worker="celery@1014222d3d0b"} 20.0
+flower_task_runtime_seconds_bucket{le="0.25",task="tasks.addition",worker="celery@1014222d3d0b"} 20.0
+flower_task_runtime_seconds_bucket{le="0.5",task="tasks.addition",worker="celery@1014222d3d0b"} 20.0
+flower_task_runtime_seconds_bucket{le="0.75",task="tasks.addition",worker="celery@1014222d3d0b"} 20.0
+flower_task_runtime_seconds_bucket{le="1.0",task="tasks.addition",worker="celery@1014222d3d0b"} 20.0
+flower_task_runtime_seconds_bucket{le="2.5",task="tasks.addition",worker="celery@1014222d3d0b"} 20.0
+flower_task_runtime_seconds_bucket{le="5.0",task="tasks.addition",worker="celery@1014222d3d0b"} 20.0
+flower_task_runtime_seconds_bucket{le="7.5",task="tasks.addition",worker="celery@1014222d3d0b"} 20.0
+flower_task_runtime_seconds_bucket{le="10.0",task="tasks.addition",worker="celery@1014222d3d0b"} 20.0
+flower_task_runtime_seconds_bucket{le="+Inf",task="tasks.addition",worker="celery@1014222d3d0b"} 20.0
+flower_task_runtime_seconds_count{task="tasks.addition",worker="celery@1014222d3d0b"} 20.0
+flower_task_runtime_seconds_sum{task="tasks.addition",worker="celery@1014222d3d0b"} 0.061571629999662036
+# TYPE flower_task_prefetch_time_seconds gauge
+flower_task_prefetch_time_seconds{task="tasks.addition",worker="celery@1014222d3d0b"} 0.0
+flower_task_prefetch_time_seconds{task="tasks.echec",worker="celery@1014222d3d0b"} 0.0
+# TYPE flower_worker_prefetched_tasks gauge
+flower_worker_prefetched_tasks{task="tasks.addition",worker="celery@1014222d3d0b"} 0.0
+flower_worker_prefetched_tasks{task="tasks.echec",worker="celery@1014222d3d0b"} 0.0
+# TYPE flower_worker_online gauge
+flower_worker_online{worker="celery@1014222d3d0b"} 1.0
+# TYPE flower_worker_number_of_currently_executing_tasks gauge
+flower_worker_number_of_currently_executing_tasks{worker="celery@1014222d3d0b"} 0.0

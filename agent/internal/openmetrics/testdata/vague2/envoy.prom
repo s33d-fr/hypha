@@ -1,0 +1,121 @@
+# TYPE envoy_cluster_upstream_cx_connect_fail counter
+envoy_cluster_upstream_cx_connect_fail{envoy_cluster_name="amont"} 0
+# TYPE envoy_cluster_upstream_cx_overflow counter
+envoy_cluster_upstream_cx_overflow{envoy_cluster_name="amont"} 0
+# TYPE envoy_cluster_upstream_rq counter
+envoy_cluster_upstream_rq{envoy_response_code="200",envoy_cluster_name="amont"} 20
+envoy_cluster_upstream_rq{envoy_response_code="404",envoy_cluster_name="amont"} 20
+# TYPE envoy_cluster_upstream_rq_pending_overflow counter
+envoy_cluster_upstream_rq_pending_overflow{envoy_cluster_name="amont"} 0
+# TYPE envoy_cluster_upstream_rq_retry counter
+envoy_cluster_upstream_rq_retry{envoy_cluster_name="amont"} 0
+# TYPE envoy_cluster_upstream_rq_timeout counter
+envoy_cluster_upstream_rq_timeout{envoy_cluster_name="amont"} 0
+# TYPE envoy_cluster_upstream_rq_total counter
+envoy_cluster_upstream_rq_total{envoy_cluster_name="amont"} 40
+# TYPE envoy_cluster_upstream_rq_xx counter
+envoy_cluster_upstream_rq_xx{envoy_response_code_class="2",envoy_cluster_name="amont"} 20
+envoy_cluster_upstream_rq_xx{envoy_response_code_class="4",envoy_cluster_name="amont"} 20
+# TYPE envoy_http_downstream_rq_total counter
+envoy_http_downstream_rq_total{envoy_http_conn_manager_prefix="admin"} 1
+envoy_http_downstream_rq_total{envoy_http_conn_manager_prefix="entree"} 40
+# TYPE envoy_http_downstream_rq_xx counter
+envoy_http_downstream_rq_xx{envoy_response_code_class="1",envoy_http_conn_manager_prefix="admin"} 0
+envoy_http_downstream_rq_xx{envoy_response_code_class="2",envoy_http_conn_manager_prefix="admin"} 0
+envoy_http_downstream_rq_xx{envoy_response_code_class="3",envoy_http_conn_manager_prefix="admin"} 0
+envoy_http_downstream_rq_xx{envoy_response_code_class="4",envoy_http_conn_manager_prefix="admin"} 0
+# TYPE envoy_cluster_circuit_breakers_default_cx_open gauge
+envoy_cluster_circuit_breakers_default_cx_open{envoy_cluster_name="amont"} 0
+# TYPE envoy_cluster_membership_healthy gauge
+envoy_cluster_membership_healthy{envoy_cluster_name="amont"} 1
+# TYPE envoy_cluster_membership_total gauge
+envoy_cluster_membership_total{envoy_cluster_name="amont"} 1
+# TYPE envoy_cluster_upstream_cx_active gauge
+envoy_cluster_upstream_cx_active{envoy_cluster_name="amont"} 4
+# TYPE envoy_http_downstream_cx_active gauge
+envoy_http_downstream_cx_active{envoy_http_conn_manager_prefix="admin"} 1
+envoy_http_downstream_cx_active{envoy_http_conn_manager_prefix="entree"} 0
+# TYPE envoy_listener_downstream_cx_active gauge
+envoy_listener_downstream_cx_active{envoy_listener_address="0.0.0.0_10000"} 0
+# TYPE envoy_server_days_until_first_cert_expiring gauge
+envoy_server_days_until_first_cert_expiring{} 4294967295
+# TYPE envoy_server_live gauge
+envoy_server_live{} 1
+# TYPE envoy_server_memory_allocated gauge
+envoy_server_memory_allocated{} 5967968
+# TYPE envoy_server_memory_heap_size gauge
+envoy_server_memory_heap_size{} 10485760
+# TYPE envoy_server_state gauge
+envoy_server_state{} 0
+# TYPE envoy_server_total_connections gauge
+envoy_server_total_connections{} 0
+# TYPE envoy_server_uptime gauge
+envoy_server_uptime{} 185
+# TYPE envoy_cluster_upstream_rq_time histogram
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="0.5"} 35
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="1"} 35
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="5"} 40
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="10"} 40
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="25"} 40
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="50"} 40
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="100"} 40
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="250"} 40
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="500"} 40
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="1000"} 40
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="2500"} 40
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="5000"} 40
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="10000"} 40
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="30000"} 40
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="60000"} 40
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="300000"} 40
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="600000"} 40
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="1800000"} 40
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="3600000"} 40
+envoy_cluster_upstream_rq_time_bucket{envoy_cluster_name="amont",le="+Inf"} 40
+envoy_cluster_upstream_rq_time_sum{envoy_cluster_name="amont"} 6.25
+envoy_cluster_upstream_rq_time_count{envoy_cluster_name="amont"} 40
+# TYPE envoy_http_downstream_rq_time histogram
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="0.5"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="1"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="5"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="10"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="25"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="50"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="100"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="250"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="500"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="1000"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="2500"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="5000"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="10000"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="30000"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="60000"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="300000"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="600000"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="1800000"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="3600000"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="admin",le="+Inf"} 0
+envoy_http_downstream_rq_time_sum{envoy_http_conn_manager_prefix="admin"} 0
+envoy_http_downstream_rq_time_count{envoy_http_conn_manager_prefix="admin"} 0
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="0.5"} 25
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="1"} 25
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="5"} 40
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="10"} 40
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="25"} 40
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="50"} 40
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="100"} 40
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="250"} 40
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="500"} 40
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="1000"} 40
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="2500"} 40
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="5000"} 40
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="10000"} 40
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="30000"} 40
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="60000"} 40
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="300000"} 40
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="600000"} 40
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="1800000"} 40
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="3600000"} 40
+envoy_http_downstream_rq_time_bucket{envoy_http_conn_manager_prefix="entree",le="+Inf"} 40
+envoy_http_downstream_rq_time_sum{envoy_http_conn_manager_prefix="entree"} 16.75
+envoy_http_downstream_rq_time_count{envoy_http_conn_manager_prefix="entree"} 40

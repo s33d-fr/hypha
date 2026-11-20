@@ -1,0 +1,66 @@
+# TYPE jmx_exporter_build_info gauge
+jmx_exporter_build_info{name="jmx_prometheus_javaagent",version="1.7.0"} 1
+# TYPE jmx_scrape_duration_seconds gauge
+jmx_scrape_duration_seconds 0.0
+# TYPE jmx_scrape_error gauge
+jmx_scrape_error 0.0
+# TYPE jvm_classes_currently_loaded gauge
+jvm_classes_currently_loaded 5159.0
+# TYPE jvm_gc_collection_seconds summary
+jvm_gc_collection_seconds_count{gc="Copy"} 48
+jvm_gc_collection_seconds_sum{gc="Copy"} 0.195
+jvm_gc_collection_seconds_count{gc="MarkSweepCompact"} 1
+jvm_gc_collection_seconds_sum{gc="MarkSweepCompact"} 0.067
+# TYPE jvm_memory_committed_bytes gauge
+jvm_memory_committed_bytes{area="heap"} 3.393536E7
+jvm_memory_committed_bytes{area="nonheap"} 4.3515904E7
+# TYPE jvm_memory_max_bytes gauge
+jvm_memory_max_bytes{area="heap"} 2.5952256E8
+jvm_memory_max_bytes{area="nonheap"} -1.0
+# TYPE jvm_memory_used_bytes gauge
+jvm_memory_used_bytes{area="heap"} 2.444856E7
+jvm_memory_used_bytes{area="nonheap"} 4.0655464E7
+# TYPE jvm_threads_current gauge
+jvm_threads_current 27.0
+# TYPE jvm_threads_deadlocked gauge
+jvm_threads_deadlocked 0.0
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 14.35
+# TYPE process_max_fds gauge
+process_max_fds 524288.0
+# TYPE process_open_fds gauge
+process_open_fds 56.0
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 1.5210496E8
+# TYPE tomcat_requestprocessor_bytesreceived_total counter
+tomcat_requestprocessor_bytesreceived_total{connector="http-nio-8080"} 0.0
+# TYPE tomcat_requestprocessor_bytessent_total counter
+tomcat_requestprocessor_bytessent_total{connector="http-nio-8080"} 112170.0
+# TYPE tomcat_requestprocessor_errorcount_total counter
+tomcat_requestprocessor_errorcount_total{connector="http-nio-8080"} 0.0
+# TYPE tomcat_requestprocessor_maxtime gauge
+tomcat_requestprocessor_maxtime{connector="http-nio-8080"} 2745.0
+# TYPE tomcat_requestprocessor_processingtime_total counter
+tomcat_requestprocessor_processingtime_total{connector="http-nio-8080"} 2859.0
+# TYPE tomcat_requestprocessor_requestcount_total counter
+tomcat_requestprocessor_requestcount_total{connector="http-nio-8080"} 10.0
+# TYPE tomcat_session_activesessions gauge
+tomcat_session_activesessions{context="/",vhost="localhost"} 0.0
+# TYPE tomcat_session_expiredsessions_total counter
+tomcat_session_expiredsessions_total{context="/",vhost="localhost"} 0.0
+# TYPE tomcat_session_maxactivesessions gauge
+tomcat_session_maxactivesessions{context="/",vhost="localhost"} -1.0
+# TYPE tomcat_session_rejectedsessions_total counter
+tomcat_session_rejectedsessions_total{context="/",vhost="localhost"} 0.0
+# TYPE tomcat_session_sessioncounter_total counter
+tomcat_session_sessioncounter_total{context="/",vhost="localhost"} 0.0
+# TYPE tomcat_threadpool_connectioncount gauge
+tomcat_threadpool_connectioncount{connector="http-nio-8080"} 1.0
+# TYPE tomcat_threadpool_currentthreadcount gauge
+tomcat_threadpool_currentthreadcount{connector="http-nio-8080"} 10.0
+# TYPE tomcat_threadpool_currentthreadsbusy gauge
+tomcat_threadpool_currentthreadsbusy{connector="http-nio-8080"} 0.0
+# TYPE tomcat_threadpool_maxconnections gauge
+tomcat_threadpool_maxconnections{connector="http-nio-8080"} 8192.0
+# TYPE tomcat_threadpool_maxthreads gauge
+tomcat_threadpool_maxthreads{connector="http-nio-8080"} 200.0

@@ -19,7 +19,8 @@ import (
 )
 
 func platformIntegrations(cfg config.IntegrationsConfig) []integration {
-	return []integration{newIIS(cfg.IIS), newMSSQL(cfg.MSSQL), newExchange(cfg.Exchange), newHyperv(cfg.HyperV)}
+	return append([]integration{newIIS(cfg.IIS), newMSSQL(cfg.MSSQL), newExchange(cfg.Exchange), newHyperv(cfg.HyperV)},
+		windowsProbes(cfg)...) // vague 3 : winprobes_windows.go
 }
 
 // ── compteurs de performance (PDH), noms anglais quelle que soit la langue de Windows ────

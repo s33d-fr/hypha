@@ -5,8 +5,8 @@ title: Bases de données, caches, files et moteurs de recherche
 nav: Bases de données
 section: Intégrations
 order: 21
-updated: 2026-11-19
-description: PostgreSQL et ses requêtes les plus coûteuses (DBM), MySQL et MariaDB, Redis et Valkey, Memcached, MongoDB, RabbitMQ, OpenSearch et Elasticsearch, SQL Server : réglages, droits et mesures.
+updated: 2026-11-20
+description: PostgreSQL et ses requêtes les plus coûteuses (DBM), MySQL et MariaDB, Redis et Valkey, Memcached, MongoDB, RabbitMQ, OpenSearch et Elasticsearch, PgBouncer, ProxySQL, ClickHouse, CouchDB, Couchbase, SQL Server : réglages, droits et mesures.
 lead: Chaque intégration lit le logiciel avec un compte de supervision en lecture seule, ou par la socket locale quand c'est possible.
 ---
 ## PostgreSQL
@@ -115,6 +115,71 @@ Mesures : santé de la grappe (`opensearch.cluster_health`), nœuds, fragments a
 
 Sous Windows, par les compteurs de performance, si SQL Server est présent : `mssql.buffer_cache_hit_ratio`, `mssql.batch_requests_per_s`, `mssql.user_connections`.
 
+## PgBouncer
+
+Console d'administration (base `pgbouncer`), avec un compte listé dans `stats_users` de `pgbouncer.ini` :
+
+```yaml
+integrations:
+  pgbouncer:
+    dsn: postgres://hypha:motdepasse@127.0.0.1:6432/pgbouncer?sslmode=disable
+```
+
+Mesures : clients actifs et en attente, connexions serveur actives, inoccupées, utilisées, testées et en ouverture, attente maximale (`pgbouncer.pools.maxwait`) par base et par utilisateur ; requêtes, transactions, octets reçus et envoyés, temps moyens des requêtes et des transactions par base ; connexions et taille de pool par base. Contrôles `pgbouncer.can_connect` et `pgbouncer.database` (WARN pour une base en pause ou désactivée).
+
+## ProxySQL
+
+Interface d'administration (port 6032), avec le compte de `admin-stats_credentials` (lecture des tables `stats` seulement) :
+
+```yaml
+integrations:
+  proxysql:
+    dsn: "stats:motdepasse@tcp(127.0.0.1:6032)/"
+```
+
+Mesures : transactions actives, connexions clientes et serveur (ouvertes, créées, interrompues), requêtes et requêtes lentes, temps de traitement, mémoire des tampons, cache de requêtes (taux de succès), accès refusés ; par serveur MySQL derrière ProxySQL (étiquettes `hostgroup`, `backend`) : connexions utilisées et libres, réussies et en erreur, requêtes, octets, latence. Contrôle `proxysql.backend.status` par serveur : ONLINE en OK, OFFLINE_SOFT en WARN, SHUNNED et OFFLINE_HARD en CRIT.
+
+## ClickHouse
+
+Interface HTTP (`http://127.0.0.1:8123`), tables `system.metrics`, `system.events` et `system.asynchronous_metrics`. Un compte en lecture seule suffit (`readonly = 1`) ; sans compte, l'utilisateur `default`. L'identité passe par les en-têtes `X-ClickHouse-User` et `X-ClickHouse-Key`, jamais par l'URL.
+
+```yaml
+integrations:
+  clickhouse:
+    username: hypha
+    password: "…"
+```
+
+Mesures : requêtes en cours, comptées, échouées (SELECT et INSERT à part), durée moyenne, lignes et octets insérés et lus, insertions retardées et refusées, fusions et mutations, connexions par protocole, mémoire suivie et résidente, parts par partition (`clickhouse.part.max_per_partition`), répliques en lecture seule, retard et file des répliques, nombre de bases, tables et parts, durée de fonctionnement.
+
+## CouchDB
+
+API REST du nœud (`/_node/_local/_stats`, `/_system`, `/_active_tasks`). CouchDB 3 réserve ces pages à un administrateur du serveur : la sonde attend son compte.
+
+```yaml
+integrations:
+  couchdb:
+    url: http://127.0.0.1:5984
+    username: admin
+    password: "…"
+```
+
+Mesures : requêtes HTTP (dont groupées et lectures de vues), réponses par famille de codes, temps de réponse (moyen, p95, p99, max), lectures et écritures de documents, bases et fichiers ouverts, réplications en cours, en attente et en échec (`couchdb.couch_replicator.jobs.crashed`), tâches actives par type, mémoire et file d'exécution d'Erlang.
+
+## Couchbase
+
+API REST du cluster (port 8091), avec un compte au rôle « Read-Only Admin » :
+
+```yaml
+integrations:
+  couchbase:
+    url: http://127.0.0.1:8091
+    username: hypha
+    password: "…"
+```
+
+Mesures : RAM et disque du cluster (totaux, utilisés, quotas), nœuds actifs, équilibre ; par nœud : processeur, mémoire, opérations, éléments ; par bucket : opérations par seconde, éléments, mémoire, disque, quota RAM utilisé (`couchbase.by_bucket.quota_percent_used`). Contrôle `couchbase.node.health` par nœud : CRIT hors du cluster ou en mauvaise santé, WARN pendant son réchauffement.
+
 ## Modèles de moniteurs
 
-Familles **Bases de données**, **Files de messages** et **Recherche** du catalogue : injoignable, réplication arrêtée ou en retard, connexions presque saturées, mémoire Redis presque pleine, sauvegarde Redis en échec, file RabbitMQ qui s'accumule, nœud RabbitMQ en alarme, grappe OpenSearch dégradée, tas JVM saturé, disque au filigrane, écritures rejetées.
+Familles **Bases de données**, **Files de messages** et **Recherche** du catalogue : injoignable, réplication arrêtée ou en retard, connexions presque saturées, mémoire Redis presque pleine, sauvegarde Redis en échec, file RabbitMQ qui s'accumule, nœud RabbitMQ en alarme, grappe OpenSearch dégradée, tas JVM saturé, disque au filigrane, écritures rejetées ; clients PgBouncer en attente et attente trop longue, serveur MySQL écarté par ProxySQL, trop de parts ClickHouse, réplique ClickHouse en lecture seule, réplication CouchDB en échec, nœud Couchbase en défaut, bucket Couchbase presque plein.

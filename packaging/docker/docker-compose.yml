@@ -10,7 +10,7 @@
 name: hypha
 
 x-server: &server
-  image: registre-vm.s33d.fr/hypha/server:${HYPHA_VERSION:-0.5.0}
+  image: registre-vm.s33d.fr/hypha/server:${HYPHA_VERSION:-0.9.0}
   env_file: .env
   environment:
     HYPHA_MODE: selfhosted
@@ -59,7 +59,7 @@ services:
         condition: service_completed_successfully
 
   nginx:
-    image: registre-vm.s33d.fr/hypha/web:${HYPHA_VERSION:-0.5.0}
+    image: registre-vm.s33d.fr/hypha/web:${HYPHA_VERSION:-0.9.0}
     ports:
       - "${HYPHA_HTTPS_PORT:-443}:443"
     volumes:

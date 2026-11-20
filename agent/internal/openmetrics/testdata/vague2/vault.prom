@@ -1,0 +1,70 @@
+# TYPE go_gc_gogc_percent gauge
+go_gc_gogc_percent 100
+# TYPE vault_barrier_get summary
+vault_barrier_get{quantile="0.5"} NaN
+vault_barrier_get{quantile="0.9"} NaN
+vault_barrier_get{quantile="0.99"} NaN
+vault_barrier_get_sum 3.268942975671962
+vault_barrier_get_count 168
+# TYPE vault_barrier_put summary
+vault_barrier_put{quantile="0.5"} NaN
+vault_barrier_put{quantile="0.9"} NaN
+vault_barrier_put{quantile="0.99"} NaN
+vault_barrier_put_sum 1.050706005655229
+vault_barrier_put_count 33
+# TYPE vault_cache_hit counter
+vault_cache_hit 127
+# TYPE vault_cache_miss counter
+vault_cache_miss 41
+# TYPE vault_core_active gauge
+vault_core_active{cluster="vault-cluster-ff7a527d"} 1
+# TYPE vault_core_check_token summary
+vault_core_check_token{quantile="0.5"} NaN
+vault_core_check_token{quantile="0.9"} NaN
+vault_core_check_token{quantile="0.99"} NaN
+vault_core_check_token_sum 0.21975500136613846
+vault_core_check_token_count 2
+# TYPE vault_core_handle_login_request summary
+vault_core_handle_login_request{quantile="0.5"} NaN
+vault_core_handle_login_request{quantile="0.9"} NaN
+vault_core_handle_login_request{quantile="0.99"} NaN
+vault_core_handle_login_request_sum 0.4013029932975769
+vault_core_handle_login_request_count 1
+# TYPE vault_core_handle_request summary
+vault_core_handle_request{quantile="0.5"} NaN
+vault_core_handle_request{quantile="0.9"} NaN
+vault_core_handle_request{quantile="0.99"} NaN
+vault_core_handle_request_sum 0.3867630064487457
+vault_core_handle_request_count 1
+# TYPE vault_core_in_flight_requests gauge
+vault_core_in_flight_requests{cluster="vault-cluster-ff7a527d"} 0
+# TYPE vault_core_leadership_lost summary
+vault_core_leadership_lost{quantile="0.5"} NaN
+vault_core_leadership_lost{quantile="0.9"} NaN
+vault_core_leadership_lost{quantile="0.99"} NaN
+vault_core_leadership_lost_sum 0
+vault_core_leadership_lost_count 0
+# TYPE vault_core_leadership_setup_failed summary
+vault_core_leadership_setup_failed{quantile="0.5"} NaN
+vault_core_leadership_setup_failed{quantile="0.9"} NaN
+vault_core_leadership_setup_failed{quantile="0.99"} NaN
+vault_core_leadership_setup_failed_sum 0
+vault_core_leadership_setup_failed_count 0
+# TYPE vault_core_performance_standby gauge
+vault_core_performance_standby{cluster="vault-cluster-ff7a527d"} 0
+# TYPE vault_core_unsealed gauge
+vault_core_unsealed{cluster="vault-cluster-ff7a527d"} 1
+# TYPE vault_expire_num_irrevocable_leases gauge
+vault_expire_num_irrevocable_leases 0
+# TYPE vault_expire_num_leases gauge
+vault_expire_num_leases 0
+# TYPE vault_identity_entity_count gauge
+vault_identity_entity_count{cluster="vault-cluster-ff7a527d",namespace="root"} 0
+# TYPE vault_runtime_alloc_bytes gauge
+vault_runtime_alloc_bytes 2.149096e+07
+# TYPE vault_runtime_num_goroutines gauge
+vault_runtime_num_goroutines 239
+# TYPE vault_runtime_sys_bytes gauge
+vault_runtime_sys_bytes 4.887988e+07
+# TYPE vault_token_count_by_ttl gauge
+vault_token_count_by_ttl{cluster="vault-cluster-ff7a527d",creation_ttl="+Inf",namespace="root"} 1

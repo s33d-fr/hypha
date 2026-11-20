@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>&quot;Applications and services: PHP-FPM, Varnish, Squid, Gunicorn, PowerDNS, OpenLDAP, Keycloak, Nexus, Harbor, Ceph…&quot; · HYPHA</title>
+<meta name="description" content="Dedicated HYPHA agent probes for PHP-FPM, Gunicorn, Varnish, Squid, Lighttpd, Supervisor, Fluentd, PowerDNS (authoritative server and Recursor), OpenLDAP, Keycloak, Sonatype Nexus, Harbor, ZooKeeper and Ceph: settings, permissions, metrics and checks.">
+<link rel="canonical" href="https://hypha.s33d.fr/en/docs/applications-and-services/">
+<link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/applications-et-services/">
+<link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/applications-and-services/">
+<link rel="alternate" hreflang="x-default" href="https://hypha.s33d.fr/docs/applications-et-services/">
+<meta name="color-scheme" content="dark light">
+<meta property="og:title" content="&quot;Applications and services: PHP-FPM, Varnish, Squid, Gunicorn, PowerDNS, OpenLDAP, Keycloak, Nexus, Harbor, Ceph…&quot;">
+<meta property="og:description" content="Dedicated HYPHA agent probes for PHP-FPM, Gunicorn, Varnish, Squid, Lighttpd, Supervisor, Fluentd, PowerDNS (authoritative server and Recursor), OpenLDAP, Keycloak, Sonatype Nexus, Harbor, ZooKeeper and Ceph: settings, permissions, metrics and checks.">
+<meta property="og:url" content="https://hypha.s33d.fr/en/docs/applications-and-services/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="HYPHA">
+<link rel="icon" type="image/svg+xml" href="/assets/img/hypha.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('hypha.theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Documentation", "item": "https://hypha.s33d.fr/en/docs/"}, {"@type": "ListItem", "position": 2, "name": "\"Applications and services: PHP-FPM, Varnish, Squid, Gunicorn, PowerDNS, OpenLDAP, Keycloak, Nexus, Harbor, Ceph…\"", "item": "https://hypha.s33d.fr/en/docs/applications-and-services/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#contenu">Skip to content</a><header class="top"><div class="top-in"><a class="brand" href="/" aria-label="HYPHA"><img src="/assets/img/hypha.svg" alt="" width="28" height="28"><span>HYPHA<small>by S33D</small></span></a><nav aria-label="HYPHA"><a href="/en/docs/" aria-current="page">Documentation</a><a href="/en/pricing/">Pricing</a><a href="/en/faq/" class="hide-sm">FAQ</a><a class="lang" href="/docs/applications-et-services/" hreflang="fr" data-lang="fr" title="Français">FR</a><a class="btn" href="/">Sign in</a></nav></div></header>
+<div class="wrap"><aside class="side"><details class="nav" open><summary>Documentation contents</summary><h2>Get started</h2><ul><li><a href="/en/docs/">Overview</a></li><li><a href="/en/docs/getting-started/">Get started</a></li><li><a href="/en/docs/videos/">Videos</a></li></ul><h2>Install the agent</h2><ul><li><a href="/en/docs/agent-linux/">Linux</a></li><li><a href="/en/docs/agent-windows/">Windows</a></li><li><a href="/en/docs/agent-docker/">Docker</a></li><li><a href="/en/docs/kubernetes/">Kubernetes</a></li><li><a href="/en/docs/configuration/">Agent configuration</a></li><li><a href="/en/docs/fleet/">Fleet and updates</a></li></ul><h2>Integrations</h2><ul><li><a href="/en/docs/integrations/">System, web and mail</a></li><li><a href="/en/docs/databases/">Databases</a></li><li><a href="/en/docs/snmp/">SNMP</a></li><li><a href="/en/docs/cloud/">Clouds</a></li><li><a href="/en/docs/virtualization/">Virtualization</a></li><li><a href="/en/docs/generic-collection/">Prometheus, Nagios, syslog</a></li><li><a href="/en/docs/syslog-devices/">Devices (syslog)</a></li><li><a href="/en/docs/applications-and-services/" aria-current="page">Applications and services</a></li><li><a href="/en/docs/prometheus-software/">Prometheus software</a></li><li><a href="/en/docs/windows/">Windows</a></li><li><a href="/en/docs/ai-and-gpu/">AI and GPU</a></li></ul><h2>Observe</h2><ul><li><a href="/en/docs/metrics/">Metrics and dashboards</a></li><li><a href="/en/docs/logs/">Logs</a></li><li><a href="/en/docs/traces/">Traces and OpenTelemetry</a></li><li><a href="/en/docs/synthetics/">Synthetic tests</a></li></ul><h2>Alert and act</h2><ul><li><a href="/en/docs/monitors/">Monitors</a></li><li><a href="/en/docs/alerts-and-channels/">Alerts and channels</a></li><li><a href="/en/docs/downtimes/">Downtimes</a></li><li><a href="/en/docs/incidents/">Incidents</a></li><li><a href="/en/docs/slos/">SLOs</a></li><li><a href="/en/docs/status-pages/">Status pages</a></li><li><a href="/en/docs/explain-and-repair/">Explain and repair</a></li><li><a href="/en/docs/mobile-app/">Mobile app</a></li></ul><h2>Administer</h2><ul><li><a href="/en/docs/accounts-and-roles/">Accounts and roles</a></li><li><a href="/en/docs/plans-and-billing/">Plans and billing</a></li><li><a href="/en/docs/api/">API</a></li><li><a href="/en/docs/self-hosting/">Self-hosting</a></li><li><a href="/en/docs/security/">Security</a></li></ul></details></aside><main class="doc" id="contenu"><div class="crumbs"><a href="/en/docs/">Documentation</a> › Integrations</div><h1>&quot;Applications and services: PHP-FPM, Varnish, Squid, Gunicorn, PowerDNS, OpenLDAP, Keycloak, Nexus, Harbor, Ceph…&quot;</h1><p class="lead">Each piece of software is read through its native interface (status page, admin socket, statistics command, REST API), read-only.</p><h2 id="principle">Principle<a class="anchor" href="#principle" aria-hidden="true">#</a></h2>
+<p>These probes follow the rules of the other integrations (<a href="/en/docs/integrations/">System, web and mail</a>): in <code>auto</code> mode, a probe whose software answers at its usual address turns itself on; those that need an account, a key or an address with no default only start once given one. Once the software has been seen, its <code>&lt;name&gt;.can_connect</code> check turns critical if it stops answering. Cumulative counters become per-interval differences. Several targets of one probe are declared with <code>instances</code> (<a href="/en/docs/configuration/">Configuration</a>).</p>
+<p>Each probe has its <a href="/en/docs/monitors/">monitor templates</a> and its ready-made dashboard (<strong>Dashboards › Catalogue</strong>).</p>
+<h2 id="php-fpm">PHP-FPM<a class="anchor" href="#php-fpm" aria-hidden="true">#</a></h2>
+<p>The agent speaks FastCGI directly to the pool socket and reads its status page: no page to open in the web server. Without settings, every <code>/run/php/php*-fpm.sock</code> or <code>/run/php-fpm/*.sock</code> socket is read, one pool per socket. In each pool's configuration:</p>
+<pre><code class="language-ini">pm.status_path = /status
+ping.path = /ping</code></pre>
+<pre><code class="language-yaml">integrations:
+  phpfpm:
+    address: 127.0.0.1:9000     # or /run/php/php8.3-fpm.sock; or url: http://127.0.0.1/status</code></pre>
+<p>Metrics (<code>pool</code> tag): active, idle and total processes, busy share (<code>php_fpm.processes.usage</code>), listen queue (<code>php_fpm.listen_queue.size</code>), accepted and slow requests, <code>pm.max_children</code> cap reached (<code>php_fpm.processes.max_reached</code>). Checks <code>php_fpm.can_connect</code> and <code>php_fpm.can_ping</code>. A pool found without a status page stays &quot;inactive&quot; (<code>hypha-agent status</code> says so), without alerting.</p>
+<h2 id="gunicorn">Gunicorn<a class="anchor" href="#gunicorn" aria-hidden="true">#</a></h2>
+<p>The agent recognises Gunicorn masters in <code>/proc</code> (title <code>gunicorn: master [name]</code> when setproctitle is installed, otherwise <code>--name</code> or the WSGI module of the command line) and counts their workers, busy or idle (<code>gunicorn.worker_processes</code>, <code>app</code> and <code>state</code> tags). Check <code>gunicorn.is_running</code>: critical if an application already seen (or listed in <code>apps</code>) has no master or no worker left.</p>
+<p>Requests come from Gunicorn's native StatsD, received by the agent:</p>
+<pre><code class="language-bash">gunicorn --statsd-host 127.0.0.1:8125 app:app</code></pre>
+<p>Gunicorn's StatsD metrics: <code>gunicorn.requests</code>, <code>gunicorn.request.duration</code>, <code>gunicorn.request.status.&lt;code&gt;</code>, <code>gunicorn.workers</code>, <code>gunicorn.log.error</code>.</p>
+<pre><code class="language-yaml">integrations:
+  gunicorn:
+    apps: [shop, &quot;api.main:app&quot;]   # optional: expected applications</code></pre>
+<h2 id="varnish">Varnish<a class="anchor" href="#varnish" aria-hidden="true">#</a></h2>
+<p><code>varnishstat -j</code> (Varnish 6.5 and later forms, and earlier ones), and backend health through <code>varnishadm backend.list -j</code>. For a Varnish in a container or a named instance:</p>
+<pre><code class="language-yaml">integrations:
+  varnish:
+    command: &quot;docker exec varnish varnishstat&quot;   # or &quot;varnishstat -n name&quot;</code></pre>
+<p>Metrics: client requests, cache hits, passes and misses, hit rate (<code>varnish.cache_hit_rate</code>), objects, expiries and evictions (<code>varnish.n_lru_nuked</code>), dropped sessions, worker threads, connections, requests and failures per backend, used and free storage. One <code>varnish.backend_healthy</code> check per backend (critical when it fails its probes). Without access to the <code>varnishadm</code> secret, backend health is not read and the rest goes on.</p>
+<h2 id="squid">Squid<a class="anchor" href="#squid" aria-hidden="true">#</a></h2>
+<p>Cache manager pages served by Squid on its own port (<code>http://127.0.0.1:3128/squid-internal-mgr/counters</code> and <code>info</code>); the default configuration (<code>http_access allow localhost manager</code>) is enough from the machine itself. A <code>cachemgr_passwd</code> is given as <code>password</code>.</p>
+<p>Metrics: client requests, hits, errors, KiB exchanged with clients and servers, hit rate (<code>squid.cachemgr.client_http.hit_rate</code>), aborted requests, clients, used and maximum file descriptors, storage.</p>
+<h2 id="lighttpd">Lighttpd<a class="anchor" href="#lighttpd" aria-hidden="true">#</a></h2>
+<p><code>mod_status</code> page (<code>status.status-url = &quot;/server-status&quot;</code>), read as <code>?auto</code>. Since the host's port 80 usually belongs to Apache or nginx, the address is given:</p>
+<pre><code class="language-yaml">integrations:
+  lighttpd:
+    url: http://127.0.0.1:8080/server-status</code></pre>
+<p>Metrics: requests and bytes (totals, per second), active and idle connections, uptime.</p>
+<h2 id="supervisor">Supervisor<a class="anchor" href="#supervisor" aria-hidden="true">#</a></h2>
+<p>Supervisor's XML-RPC API, through the <code>[unix_http_server]</code> Unix socket (found on its own at <code>/run/supervisor.sock</code>, <code>/var/run/supervisor.sock</code>…) or the <code>[inet_http_server]</code> (<code>url: http://127.0.0.1:9001/RPC2</code>, <code>username</code>, <code>password</code>). A socket under <code>/tmp</code> is invisible to the agent (<code>PrivateTmp</code> of its systemd unit): put it under <code>/run</code>.</p>
+<p>One <code>supervisord.process.status</code> check per program: RUNNING OK, STARTING UNKNOWN, STOPPED warning, FATAL, EXITED and BACKOFF critical, with the reason given by Supervisor. Metrics: programs per state, uptime of each.</p>
+<h2 id="fluentd">Fluentd<a class="anchor" href="#fluentd" aria-hidden="true">#</a></h2>
+<p>Fluentd's <code>monitor_agent</code> plugin:</p>
+<pre><code>&lt;source&gt;
+  @type monitor_agent
+  bind 127.0.0.1
+  port 24220
+&lt;/source&gt;</code></pre>
+<p>Per plugin (<code>plugin_id</code>, <code>type</code>, <code>plugin_category</code> tags): queued chunks and bytes, free buffer space (<code>fluentd.buffer_available_buffer_space_ratios</code>), retries, emitted and written records, rollbacks, slow flushes. Name each plugin (<code>@id</code>): without it, its identifier changes at every Fluentd restart.</p>
+<h2 id="powerdns">PowerDNS<a class="anchor" href="#powerdns" aria-hidden="true">#</a></h2>
+<p>API of the built-in web server, with the API key (<code>webserver=yes</code>, <code>api=yes</code>, <code>api-key=…</code>). Two probes: <code>powerdns</code> (authoritative server, port 8081) and <code>powerdns_recursor</code> (port 8082).</p>
+<pre><code class="language-yaml">integrations:
+  powerdns:
+    url: http://127.0.0.1:8081
+    api_key: &quot;…&quot;
+  powerdns_recursor:
+    url: http://127.0.0.1:8082
+    api_key: &quot;…&quot;</code></pre>
+<p>Authoritative server: UDP and TCP queries, answers, latency, packet and query caches (hit rate), SERVFAIL, timeouts, corrupt packets, queue, signatures. Recursor: questions, outgoing queries, answers by latency bucket, caches and hit rate, SERVFAIL, NXDOMAIN, timeouts, concurrent queries, latency. Checks <code>powerdns.authoritative.security_status</code> and <code>powerdns.recursor.security_status</code>: warning when PowerDNS recommends an upgrade, critical when the version is vulnerable.</p>
+<h2 id="openldap">OpenLDAP<a class="anchor" href="#openldap" aria-hidden="true">#</a></h2>
+<p>slapd's <code>cn=Monitor</code> database: connections, initiated and completed operations per type, bytes and entries sent, threads (<code>openldap.threads</code>, <code>status</code> tag), read and write waiters, uptime. The <code>monitor</code> database must be declared in slapd with read access for the agent's account:</p>
+<pre><code class="language-ldif">dn: cn=module{0},cn=config
+changetype: modify
+add: olcModuleLoad
+olcModuleLoad: back_monitor
+
+dn: olcDatabase={2}monitor,cn=config
+changetype: add
+objectClass: olcDatabaseConfig
+olcDatabase: {2}monitor
+olcAccess: {0}to * by dn.exact=&quot;gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth&quot; read by * none</code></pre>
+<pre><code class="language-yaml">integrations:
+  openldap:
+    url: &quot;ldapi://%2Frun%2Fslapd%2Fldapi&quot;   # SASL EXTERNAL: root identity of the socket
+    # or: url: ldaps://ldap.example:636, bind_dn: &quot;cn=hypha,dc=example,dc=com&quot;, password: &quot;…&quot;</code></pre>
+<h2 id="keycloak">Keycloak<a class="anchor" href="#keycloak" aria-hidden="true">#</a></h2>
+<p>Health on the management port (<code>KC_HEALTH_ENABLED=true</code>, <code>/health/ready</code>, database included) and sessions through the admin API. For sessions, a confidential client of the <code>master</code> realm with &quot;Service accounts roles&quot;, whose service account holds <code>view-realm</code> and <code>view-users</code> of the <code>&lt;realm&gt;-realm</code> client of each realm read:</p>
+<pre><code class="language-yaml">integrations:
+  keycloak:
+    url: http://127.0.0.1:9000          # management port
+    admin_url: http://127.0.0.1:8080
+    client_id: hypha
+    client_secret: &quot;…&quot;
+    # realms: [customers]               # empty: all the account can see</code></pre>
+<p>Metrics: <code>keycloak.health.ready</code>, active and offline sessions per realm and per client, users per realm. Checks <code>keycloak.can_connect</code> (DOWN: critical, with the failing checks) and <code>keycloak.admin_api</code>. Keycloak's JVM and HTTP metrics are only published in the Prometheus format (<code>/metrics</code>): read them with the <a href="/en/docs/generic-collection/">OpenMetrics reader</a>.</p>
+<h2 id="sonatype-nexus">Sonatype Nexus<a class="anchor" href="#sonatype-nexus" aria-hidden="true">#</a></h2>
+<p>REST API: availability (<code>/service/rest/v1/status</code>) and writability (<code>nexus.writable</code>, critical when read-only) without an account; with an account whose role holds <code>nx-metrics-all</code> and <code>nx-blobstores-read</code>: system health checks (<code>nexus.health</code>, warning with the names of failing checks), JVM heap, threads, HTTP requests and responses per class, latency, size and free space of blob stores.</p>
+<pre><code class="language-yaml">integrations:
+  nexus:
+    url: http://127.0.0.1:8081
+    username: hypha
+    password: &quot;…&quot;</code></pre>
+<h2 id="harbor">Harbor<a class="anchor" href="#harbor" aria-hidden="true">#</a></h2>
+<p>API v2.0: health of each component (<code>harbor.component</code>, no account needed) and of the whole (<code>harbor.status</code>), version and read-only flag; with an administrator account: projects, repositories, consumed storage, registry disk (<code>harbor.disk.usage</code>).</p>
+<pre><code class="language-yaml">integrations:
+  harbor:
+    url: https://harbor.example
+    username: admin
+    password: &quot;…&quot;</code></pre>
+<h2 id="zookeeper">ZooKeeper<a class="anchor" href="#zookeeper" aria-hidden="true">#</a></h2>
+<p>Four-letter commands <code>mntr</code> and <code>ruok</code> on <code>127.0.0.1:2181</code>. Since ZooKeeper 3.5 they must be listed in <code>4lw.commands.whitelist=mntr,ruok,srvr</code> (<code>ZOO_4LW_COMMANDS_WHITELIST</code> in the official Docker image). Metrics: latencies, outstanding requests, connections, znodes, watches, ephemerals, data size, file descriptors, followers and synced followers (on the leader), packets, role (<code>zookeeper.server_state</code>). Checks <code>zookeeper.can_connect</code> and <code>zookeeper.ruok</code>.</p>
+<h2 id="ceph">Ceph<a class="anchor" href="#ceph" aria-hidden="true">#</a></h2>
+<p><code>ceph status</code> and <code>ceph df</code> as JSON, on a cluster node with the <code>ceph</code> tool and a readable keyring; in auto mode, only when <code>/etc/ceph/ceph.conf</code> exists. A read-only client is enough (<code>ceph auth get-or-create client.hypha mon &#x27;allow r&#x27; mgr &#x27;allow r&#x27;</code>):</p>
+<pre><code class="language-yaml">integrations:
+  ceph:
+    command: &quot;ceph --id hypha&quot;          # or &quot;docker exec ceph ceph&quot;, &quot;cephadm shell -- ceph&quot;</code></pre>
+<p>Metrics (<code>ceph_fsid</code> tag): monitors and quorum, OSDs up and in, placement groups per state and active+clean share, capacity and usage, throughput and operations, usage and available space of each pool. Check <code>ceph.overall_status</code>: HEALTH_WARN as warning, HEALTH_ERR as critical, with the unmuted health checks. One agent per cluster is enough.</p><p class="updated">Updated: 20 November 2026</p><nav class="pager" aria-label="pages"><a href="/en/docs/syslog-devices/"><small>Previous</small>Devices (syslog)</a><a href="/en/docs/prometheus-software/" style="text-align:right"><small>Next</small>Prometheus software</a></nav></main></div>
+<footer class="foot"><div class="foot-in"><span class="grow">HYPHA, a S33D product. Hosted in France, on S33D&#x27;s own infrastructure.</span><a href="/en/docs/" aria-current="page">Documentation</a><a href="/en/pricing/">Pricing</a><a href="/en/faq/">FAQ</a><a href="/en/legal-notice/">Legal notice</a><a href="/en/terms/">Terms of sale</a><a href="/en/privacy/">Privacy</a><a href="https://s33d.fr" rel="noopener">s33d.fr</a></div></footer>
+<script>(function(){var c="Copy",d="Copied";document.querySelectorAll('.doc pre').forEach(function(p){var b=document.createElement('button');b.type='button';b.className='copy';b.textContent=c;b.onclick=function(){var x=p.querySelector('code');navigator.clipboard&&navigator.clipboard.writeText(x?x.innerText:p.innerText).then(function(){b.textContent=d;setTimeout(function(){b.textContent=c},1500)})};p.appendChild(b)});var n=document.querySelector('.side details');if(n&&window.matchMedia('(max-width: 860px)').matches)n.removeAttribute('open');document.querySelectorAll('a[data-lang]').forEach(function(a){a.addEventListener('click',function(){try{localStorage.setItem('hypha.lang',a.getAttribute('data-lang'))}catch(e){}})});})();</script>
+</body>
+</html>

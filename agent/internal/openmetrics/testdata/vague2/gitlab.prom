@@ -1,0 +1,210 @@
+# TYPE action_cable_active_connections gauge
+action_cable_active_connections{pid="puma_master"} 0
+# TYPE gitlab_database_connection_pool_busy gauge
+gitlab_database_connection_pool_busy{class="ActiveRecord::Base",db_config_name="main",host="/var/opt/gitlab/postgresql",port="5432"} 0
+gitlab_database_connection_pool_busy{class="Ci::ApplicationRecord",db_config_name="ci",host="/var/opt/gitlab/postgresql",port="5432"} 1
+# TYPE gitlab_database_connection_pool_dead gauge
+gitlab_database_connection_pool_dead{class="ActiveRecord::Base",db_config_name="main",host="/var/opt/gitlab/postgresql",port="5432"} 0
+gitlab_database_connection_pool_dead{class="Ci::ApplicationRecord",db_config_name="ci",host="/var/opt/gitlab/postgresql",port="5432"} 0
+# TYPE gitlab_database_connection_pool_size gauge
+gitlab_database_connection_pool_size{class="ActiveRecord::Base",db_config_name="main",host="/var/opt/gitlab/postgresql",port="5432"} 19
+gitlab_database_connection_pool_size{class="Ci::ApplicationRecord",db_config_name="ci",host="/var/opt/gitlab/postgresql",port="5432"} 19
+# TYPE gitlab_database_connection_pool_waiting gauge
+gitlab_database_connection_pool_waiting{class="ActiveRecord::Base",db_config_name="main",host="/var/opt/gitlab/postgresql",port="5432"} 0
+gitlab_database_connection_pool_waiting{class="Ci::ApplicationRecord",db_config_name="ci",host="/var/opt/gitlab/postgresql",port="5432"} 0
+# TYPE gitlab_rails_queue_duration_seconds histogram
+gitlab_rails_queue_duration_seconds_bucket{action="",controller="",endpoint_id="",feature_category="",le="0.005"} 0
+gitlab_rails_queue_duration_seconds_bucket{action="",controller="",endpoint_id="",feature_category="",le="0.01"} 28
+gitlab_rails_queue_duration_seconds_bucket{action="",controller="",endpoint_id="",feature_category="",le="0.025"} 33
+gitlab_rails_queue_duration_seconds_bucket{action="",controller="",endpoint_id="",feature_category="",le="0.05"} 33
+gitlab_rails_queue_duration_seconds_bucket{action="",controller="",endpoint_id="",feature_category="",le="0.1"} 33
+gitlab_rails_queue_duration_seconds_bucket{action="",controller="",endpoint_id="",feature_category="",le="0.25"} 33
+gitlab_rails_queue_duration_seconds_bucket{action="",controller="",endpoint_id="",feature_category="",le="0.5"} 33
+gitlab_rails_queue_duration_seconds_bucket{action="",controller="",endpoint_id="",feature_category="",le="1"} 33
+gitlab_rails_queue_duration_seconds_bucket{action="",controller="",endpoint_id="",feature_category="",le="2.5"} 33
+gitlab_rails_queue_duration_seconds_bucket{action="",controller="",endpoint_id="",feature_category="",le="5"} 33
+gitlab_rails_queue_duration_seconds_bucket{action="",controller="",endpoint_id="",feature_category="",le="10"} 33
+gitlab_rails_queue_duration_seconds_bucket{action="",controller="",endpoint_id="",feature_category="",le="+Inf"} 33
+gitlab_rails_queue_duration_seconds_count{action="",controller="",endpoint_id="",feature_category=""} 33
+gitlab_rails_queue_duration_seconds_sum{action="",controller="",endpoint_id="",feature_category=""} 0.269432
+# TYPE gitlab_redis_client_exceptions_total counter
+gitlab_redis_client_exceptions_total{exception="RedisClient::NoScriptError",storage="rate_limiting",storage_shard="default"} 1
+# TYPE gitlab_redis_client_requests_duration_seconds histogram
+gitlab_redis_client_requests_duration_seconds_bucket{le="0.1",storage="cache",storage_shard="default"} 88
+gitlab_redis_client_requests_duration_seconds_bucket{le="0.5",storage="cache",storage_shard="default"} 88
+gitlab_redis_client_requests_duration_seconds_bucket{le="0.75",storage="cache",storage_shard="default"} 88
+gitlab_redis_client_requests_duration_seconds_bucket{le="1",storage="cache",storage_shard="default"} 88
+gitlab_redis_client_requests_duration_seconds_bucket{le="+Inf",storage="cache",storage_shard="default"} 88
+gitlab_redis_client_requests_duration_seconds_bucket{le="0.1",storage="feature_flag",storage_shard="default"} 69
+gitlab_redis_client_requests_duration_seconds_bucket{le="0.5",storage="feature_flag",storage_shard="default"} 69
+gitlab_redis_client_requests_duration_seconds_bucket{le="0.75",storage="feature_flag",storage_shard="default"} 69
+gitlab_redis_client_requests_duration_seconds_bucket{le="1",storage="feature_flag",storage_shard="default"} 69
+gitlab_redis_client_requests_duration_seconds_bucket{le="+Inf",storage="feature_flag",storage_shard="default"} 69
+gitlab_redis_client_requests_duration_seconds_bucket{le="0.1",storage="rate_limiting",storage_shard="default"} 2
+gitlab_redis_client_requests_duration_seconds_bucket{le="0.5",storage="rate_limiting",storage_shard="default"} 2
+gitlab_redis_client_requests_duration_seconds_bucket{le="0.75",storage="rate_limiting",storage_shard="default"} 2
+gitlab_redis_client_requests_duration_seconds_bucket{le="1",storage="rate_limiting",storage_shard="default"} 2
+gitlab_redis_client_requests_duration_seconds_bucket{le="+Inf",storage="rate_limiting",storage_shard="default"} 2
+gitlab_redis_client_requests_duration_seconds_bucket{le="0.1",storage="sessions",storage_shard="default"} 42
+gitlab_redis_client_requests_duration_seconds_bucket{le="0.5",storage="sessions",storage_shard="default"} 42
+gitlab_redis_client_requests_duration_seconds_bucket{le="0.75",storage="sessions",storage_shard="default"} 42
+gitlab_redis_client_requests_duration_seconds_bucket{le="1",storage="sessions",storage_shard="default"} 42
+gitlab_redis_client_requests_duration_seconds_bucket{le="+Inf",storage="sessions",storage_shard="default"} 42
+# TYPE gitlab_redis_client_requests_total counter
+gitlab_redis_client_requests_total{storage="cache",storage_shard="default"} 88
+gitlab_redis_client_requests_total{storage="feature_flag",storage_shard="default"} 69
+gitlab_redis_client_requests_total{storage="rate_limiting",storage_shard="default"} 2
+gitlab_redis_client_requests_total{storage="sessions",storage_shard="default"} 42
+# TYPE gitlab_sli_rails_request_apdex_success_total counter
+gitlab_sli_rails_request_apdex_success_total{endpoint_id="* /api/:version/*path",feature_category="not_owned",request_urgency="default"} 0
+gitlab_sli_rails_request_apdex_success_total{endpoint_id="DELETE /api/:version/admin/sidekiq/concurrency_limits/:worker_class",feature_category="sidekiq",request_urgency="default"} 0
+gitlab_sli_rails_request_apdex_success_total{endpoint_id="DELETE /api/:version/admin/ssh_certificates/:id",feature_category="source_code_management",request_urgency="low"} 0
+gitlab_sli_rails_request_apdex_success_total{endpoint_id="DELETE /api/:version/admin/token",feature_category="system_access",request_urgency="default"} 0
+# TYPE gitlab_sli_rails_request_apdex_total counter
+gitlab_sli_rails_request_apdex_total{endpoint_id="* /api/:version/*path",feature_category="not_owned",request_urgency="default"} 0
+gitlab_sli_rails_request_apdex_total{endpoint_id="DELETE /api/:version/admin/sidekiq/concurrency_limits/:worker_class",feature_category="sidekiq",request_urgency="default"} 0
+gitlab_sli_rails_request_apdex_total{endpoint_id="DELETE /api/:version/admin/ssh_certificates/:id",feature_category="source_code_management",request_urgency="low"} 0
+gitlab_sli_rails_request_apdex_total{endpoint_id="DELETE /api/:version/admin/token",feature_category="system_access",request_urgency="default"} 0
+# TYPE gitlab_sli_rails_request_error_total counter
+gitlab_sli_rails_request_error_total{endpoint_id="* /api/:version/*path",feature_category="not_owned",request_urgency="default"} 0
+gitlab_sli_rails_request_error_total{endpoint_id="DELETE /api/:version/admin/sidekiq/concurrency_limits/:worker_class",feature_category="sidekiq",request_urgency="default"} 0
+gitlab_sli_rails_request_error_total{endpoint_id="DELETE /api/:version/admin/ssh_certificates/:id",feature_category="source_code_management",request_urgency="low"} 0
+gitlab_sli_rails_request_error_total{endpoint_id="DELETE /api/:version/admin/token",feature_category="system_access",request_urgency="default"} 0
+# TYPE gitlab_sli_rails_request_total counter
+gitlab_sli_rails_request_total{endpoint_id="* /api/:version/*path",feature_category="not_owned",request_urgency="default"} 0
+gitlab_sli_rails_request_total{endpoint_id="DELETE /api/:version/admin/sidekiq/concurrency_limits/:worker_class",feature_category="sidekiq",request_urgency="default"} 0
+gitlab_sli_rails_request_total{endpoint_id="DELETE /api/:version/admin/ssh_certificates/:id",feature_category="source_code_management",request_urgency="low"} 0
+gitlab_sli_rails_request_total{endpoint_id="DELETE /api/:version/admin/token",feature_category="system_access",request_urgency="default"} 0
+# TYPE gitlab_sql_duration_seconds histogram
+gitlab_sql_duration_seconds_bucket{action="GET /api/geo/proxy",controller="Grape",db_config_name="main",endpoint_id="GET /api/:version/geo/proxy",feature_category="geo_replication",le="0.05"} 1
+gitlab_sql_duration_seconds_bucket{action="GET /api/geo/proxy",controller="Grape",db_config_name="main",endpoint_id="GET /api/:version/geo/proxy",feature_category="geo_replication",le="0.1"} 1
+gitlab_sql_duration_seconds_bucket{action="GET /api/geo/proxy",controller="Grape",db_config_name="main",endpoint_id="GET /api/:version/geo/proxy",feature_category="geo_replication",le="0.25"} 1
+gitlab_sql_duration_seconds_bucket{action="GET /api/geo/proxy",controller="Grape",db_config_name="main",endpoint_id="GET /api/:version/geo/proxy",feature_category="geo_replication",le="+Inf"} 1
+gitlab_sql_duration_seconds_count{action="GET /api/geo/proxy",controller="Grape",db_config_name="main",endpoint_id="GET /api/:version/geo/proxy",feature_category="geo_replication"} 1
+gitlab_sql_duration_seconds_sum{action="GET /api/geo/proxy",controller="Grape",db_config_name="main",endpoint_id="GET /api/:version/geo/proxy",feature_category="geo_replication"} 0.0004042729958891869
+gitlab_sql_duration_seconds_bucket{action="index",controller="Explore::ProjectsController",db_config_name="main",endpoint_id="Explore::ProjectsController#index",feature_category="groups_and_projects",le="0.05"} 60
+gitlab_sql_duration_seconds_bucket{action="index",controller="Explore::ProjectsController",db_config_name="main",endpoint_id="Explore::ProjectsController#index",feature_category="groups_and_projects",le="0.1"} 60
+gitlab_sql_duration_seconds_bucket{action="index",controller="Explore::ProjectsController",db_config_name="main",endpoint_id="Explore::ProjectsController#index",feature_category="groups_and_projects",le="0.25"} 60
+gitlab_sql_duration_seconds_bucket{action="index",controller="Explore::ProjectsController",db_config_name="main",endpoint_id="Explore::ProjectsController#index",feature_category="groups_and_projects",le="+Inf"} 60
+gitlab_sql_duration_seconds_count{action="index",controller="Explore::ProjectsController",db_config_name="main",endpoint_id="Explore::ProjectsController#index",feature_category="groups_and_projects"} 60
+gitlab_sql_duration_seconds_sum{action="index",controller="Explore::ProjectsController",db_config_name="main",endpoint_id="Explore::ProjectsController#index",feature_category="groups_and_projects"} 0.04458454100787639
+gitlab_sql_duration_seconds_bucket{action="index",controller="HelpController",db_config_name="main",endpoint_id="HelpController#index",feature_category="not_owned",le="0.05"} 11
+gitlab_sql_duration_seconds_bucket{action="index",controller="HelpController",db_config_name="main",endpoint_id="HelpController#index",feature_category="not_owned",le="0.1"} 11
+gitlab_sql_duration_seconds_bucket{action="index",controller="HelpController",db_config_name="main",endpoint_id="HelpController#index",feature_category="not_owned",le="0.25"} 11
+gitlab_sql_duration_seconds_bucket{action="index",controller="HelpController",db_config_name="main",endpoint_id="HelpController#index",feature_category="not_owned",le="+Inf"} 11
+gitlab_sql_duration_seconds_count{action="index",controller="HelpController",db_config_name="main",endpoint_id="HelpController#index",feature_category="not_owned"} 11
+gitlab_sql_duration_seconds_sum{action="index",controller="HelpController",db_config_name="main",endpoint_id="HelpController#index",feature_category="not_owned"} 0.009436277002096176
+gitlab_sql_duration_seconds_bucket{action="index",controller="RootController",db_config_name="main",endpoint_id="RootController#index",feature_category="navigation",le="0.05"} 9
+gitlab_sql_duration_seconds_bucket{action="index",controller="RootController",db_config_name="main",endpoint_id="RootController#index",feature_category="navigation",le="0.1"} 9
+gitlab_sql_duration_seconds_bucket{action="index",controller="RootController",db_config_name="main",endpoint_id="RootController#index",feature_category="navigation",le="0.25"} 9
+gitlab_sql_duration_seconds_bucket{action="index",controller="RootController",db_config_name="main",endpoint_id="RootController#index",feature_category="navigation",le="+Inf"} 9
+gitlab_sql_duration_seconds_count{action="index",controller="RootController",db_config_name="main",endpoint_id="RootController#index",feature_category="navigation"} 9
+gitlab_sql_duration_seconds_sum{action="index",controller="RootController",db_config_name="main",endpoint_id="RootController#index",feature_category="navigation"} 0.005152745015919209
+# TYPE gitlab_transaction_duration_seconds histogram
+gitlab_transaction_duration_seconds_bucket{action="GET /api/geo/proxy",controller="Grape",endpoint_id="GET /api/:version/geo/proxy",feature_category="geo_replication",le="0.1"} 1
+gitlab_transaction_duration_seconds_bucket{action="GET /api/geo/proxy",controller="Grape",endpoint_id="GET /api/:version/geo/proxy",feature_category="geo_replication",le="0.25"} 1
+gitlab_transaction_duration_seconds_bucket{action="GET /api/geo/proxy",controller="Grape",endpoint_id="GET /api/:version/geo/proxy",feature_category="geo_replication",le="0.5"} 1
+gitlab_transaction_duration_seconds_bucket{action="GET /api/geo/proxy",controller="Grape",endpoint_id="GET /api/:version/geo/proxy",feature_category="geo_replication",le="1.0"} 1
+gitlab_transaction_duration_seconds_bucket{action="GET /api/geo/proxy",controller="Grape",endpoint_id="GET /api/:version/geo/proxy",feature_category="geo_replication",le="2.5"} 1
+gitlab_transaction_duration_seconds_bucket{action="GET /api/geo/proxy",controller="Grape",endpoint_id="GET /api/:version/geo/proxy",feature_category="geo_replication",le="5.0"} 1
+gitlab_transaction_duration_seconds_bucket{action="GET /api/geo/proxy",controller="Grape",endpoint_id="GET /api/:version/geo/proxy",feature_category="geo_replication",le="+Inf"} 1
+gitlab_transaction_duration_seconds_count{action="GET /api/geo/proxy",controller="Grape",endpoint_id="GET /api/:version/geo/proxy",feature_category="geo_replication"} 1
+gitlab_transaction_duration_seconds_sum{action="GET /api/geo/proxy",controller="Grape",endpoint_id="GET /api/:version/geo/proxy",feature_category="geo_replication"} 0.08355209300498245
+gitlab_transaction_duration_seconds_bucket{action="GET /api/version",controller="Grape",endpoint_id="GET /api/:version/version",feature_category="not_owned",le="0.1"} 10
+gitlab_transaction_duration_seconds_bucket{action="GET /api/version",controller="Grape",endpoint_id="GET /api/:version/version",feature_category="not_owned",le="0.25"} 10
+gitlab_transaction_duration_seconds_bucket{action="GET /api/version",controller="Grape",endpoint_id="GET /api/:version/version",feature_category="not_owned",le="0.5"} 10
+gitlab_transaction_duration_seconds_bucket{action="GET /api/version",controller="Grape",endpoint_id="GET /api/:version/version",feature_category="not_owned",le="1.0"} 10
+gitlab_transaction_duration_seconds_bucket{action="GET /api/version",controller="Grape",endpoint_id="GET /api/:version/version",feature_category="not_owned",le="2.5"} 10
+gitlab_transaction_duration_seconds_bucket{action="GET /api/version",controller="Grape",endpoint_id="GET /api/:version/version",feature_category="not_owned",le="5.0"} 10
+gitlab_transaction_duration_seconds_bucket{action="GET /api/version",controller="Grape",endpoint_id="GET /api/:version/version",feature_category="not_owned",le="+Inf"} 10
+gitlab_transaction_duration_seconds_count{action="GET /api/version",controller="Grape",endpoint_id="GET /api/:version/version",feature_category="not_owned"} 10
+gitlab_transaction_duration_seconds_sum{action="GET /api/version",controller="Grape",endpoint_id="GET /api/:version/version",feature_category="not_owned"} 0.26813932100048987
+gitlab_transaction_duration_seconds_bucket{action="index",controller="Explore::ProjectsController",endpoint_id="Explore::ProjectsController#index",feature_category="groups_and_projects",le="0.1"} 10
+gitlab_transaction_duration_seconds_bucket{action="index",controller="Explore::ProjectsController",endpoint_id="Explore::ProjectsController#index",feature_category="groups_and_projects",le="0.25"} 10
+gitlab_transaction_duration_seconds_bucket{action="index",controller="Explore::ProjectsController",endpoint_id="Explore::ProjectsController#index",feature_category="groups_and_projects",le="0.5"} 10
+gitlab_transaction_duration_seconds_bucket{action="index",controller="Explore::ProjectsController",endpoint_id="Explore::ProjectsController#index",feature_category="groups_and_projects",le="1.0"} 10
+gitlab_transaction_duration_seconds_bucket{action="index",controller="Explore::ProjectsController",endpoint_id="Explore::ProjectsController#index",feature_category="groups_and_projects",le="2.5"} 10
+gitlab_transaction_duration_seconds_bucket{action="index",controller="Explore::ProjectsController",endpoint_id="Explore::ProjectsController#index",feature_category="groups_and_projects",le="5.0"} 10
+gitlab_transaction_duration_seconds_bucket{action="index",controller="Explore::ProjectsController",endpoint_id="Explore::ProjectsController#index",feature_category="groups_and_projects",le="+Inf"} 10
+gitlab_transaction_duration_seconds_count{action="index",controller="Explore::ProjectsController",endpoint_id="Explore::ProjectsController#index",feature_category="groups_and_projects"} 10
+gitlab_transaction_duration_seconds_sum{action="index",controller="Explore::ProjectsController",endpoint_id="Explore::ProjectsController#index",feature_category="groups_and_projects"} 0.7293383360010921
+gitlab_transaction_duration_seconds_bucket{action="index",controller="HelpController",endpoint_id="HelpController#index",feature_category="not_owned",le="0.1"} 0
+gitlab_transaction_duration_seconds_bucket{action="index",controller="HelpController",endpoint_id="HelpController#index",feature_category="not_owned",le="0.25"} 0
+gitlab_transaction_duration_seconds_bucket{action="index",controller="HelpController",endpoint_id="HelpController#index",feature_category="not_owned",le="0.5"} 0
+gitlab_transaction_duration_seconds_bucket{action="index",controller="HelpController",endpoint_id="HelpController#index",feature_category="not_owned",le="1.0"} 1
+gitlab_transaction_duration_seconds_bucket{action="index",controller="HelpController",endpoint_id="HelpController#index",feature_category="not_owned",le="2.5"} 1
+gitlab_transaction_duration_seconds_bucket{action="index",controller="HelpController",endpoint_id="HelpController#index",feature_category="not_owned",le="5.0"} 1
+gitlab_transaction_duration_seconds_bucket{action="index",controller="HelpController",endpoint_id="HelpController#index",feature_category="not_owned",le="+Inf"} 1
+gitlab_transaction_duration_seconds_count{action="index",controller="HelpController",endpoint_id="HelpController#index",feature_category="not_owned"} 1
+gitlab_transaction_duration_seconds_sum{action="index",controller="HelpController",endpoint_id="HelpController#index",feature_category="not_owned"} 0.6799658590025501
+# TYPE http_request_duration_seconds histogram
+http_request_duration_seconds_bucket{le="0.05",method="delete"} 0
+http_request_duration_seconds_bucket{le="0.1",method="delete"} 0
+http_request_duration_seconds_bucket{le="0.25",method="delete"} 0
+http_request_duration_seconds_bucket{le="0.5",method="delete"} 0
+http_request_duration_seconds_bucket{le="0.7",method="delete"} 0
+http_request_duration_seconds_bucket{le="1",method="delete"} 0
+http_request_duration_seconds_bucket{le="2.5",method="delete"} 0
+http_request_duration_seconds_bucket{le="5",method="delete"} 0
+http_request_duration_seconds_bucket{le="10",method="delete"} 0
+http_request_duration_seconds_bucket{le="25",method="delete"} 0
+http_request_duration_seconds_bucket{le="+Inf",method="delete"} 0
+http_request_duration_seconds_bucket{le="0.05",method="get"} 10
+http_request_duration_seconds_bucket{le="0.1",method="get"} 28
+http_request_duration_seconds_bucket{le="0.25",method="get"} 30
+http_request_duration_seconds_bucket{le="0.5",method="get"} 32
+http_request_duration_seconds_bucket{le="0.7",method="get"} 32
+http_request_duration_seconds_bucket{le="1",method="get"} 33
+http_request_duration_seconds_bucket{le="2.5",method="get"} 33
+http_request_duration_seconds_bucket{le="5",method="get"} 33
+http_request_duration_seconds_bucket{le="10",method="get"} 33
+http_request_duration_seconds_bucket{le="25",method="get"} 33
+http_request_duration_seconds_bucket{le="+Inf",method="get"} 33
+http_request_duration_seconds_bucket{le="0.05",method="head"} 0
+http_request_duration_seconds_bucket{le="0.1",method="head"} 0
+http_request_duration_seconds_bucket{le="0.25",method="head"} 0
+http_request_duration_seconds_bucket{le="0.5",method="head"} 0
+http_request_duration_seconds_bucket{le="0.7",method="head"} 0
+http_request_duration_seconds_bucket{le="1",method="head"} 0
+http_request_duration_seconds_bucket{le="2.5",method="head"} 0
+http_request_duration_seconds_bucket{le="5",method="head"} 0
+http_request_duration_seconds_bucket{le="10",method="head"} 0
+http_request_duration_seconds_bucket{le="25",method="head"} 0
+http_request_duration_seconds_bucket{le="+Inf",method="head"} 0
+http_request_duration_seconds_bucket{le="0.05",method="options"} 0
+http_request_duration_seconds_bucket{le="0.1",method="options"} 0
+http_request_duration_seconds_bucket{le="0.25",method="options"} 0
+http_request_duration_seconds_bucket{le="0.5",method="options"} 0
+http_request_duration_seconds_bucket{le="0.7",method="options"} 0
+http_request_duration_seconds_bucket{le="1",method="options"} 0
+http_request_duration_seconds_bucket{le="2.5",method="options"} 0
+http_request_duration_seconds_bucket{le="5",method="options"} 0
+http_request_duration_seconds_bucket{le="10",method="options"} 0
+http_request_duration_seconds_bucket{le="25",method="options"} 0
+http_request_duration_seconds_bucket{le="+Inf",method="options"} 0
+# TYPE http_requests_total counter
+http_requests_total{feature_category="code_review_workflow",method="delete",status="2xx"} 0
+http_requests_total{feature_category="code_review_workflow",method="delete",status="3xx"} 0
+http_requests_total{feature_category="code_review_workflow",method="delete",status="4xx"} 0
+http_requests_total{feature_category="code_review_workflow",method="delete",status="5xx"} 0
+# TYPE puma_queued_connections gauge
+puma_queued_connections{pid="puma_master"} 0
+# TYPE puma_running gauge
+puma_running{pid="puma_master"} 0
+# TYPE puma_running_workers gauge
+puma_running_workers{pid="puma_master"} 1
+# TYPE puma_workers gauge
+puma_workers{pid="puma_master"} 1
+# TYPE ruby_gc_duration_seconds histogram
+ruby_gc_duration_seconds_bucket{le="0.01"} 0
+ruby_gc_duration_seconds_bucket{le="0.05"} 14
+ruby_gc_duration_seconds_bucket{le="0.1"} 16
+ruby_gc_duration_seconds_bucket{le="0.2"} 19
+ruby_gc_duration_seconds_bucket{le="0.3"} 24
+ruby_gc_duration_seconds_bucket{le="0.5"} 24
+ruby_gc_duration_seconds_bucket{le="1"} 24
+ruby_gc_duration_seconds_bucket{le="+Inf"} 24
+ruby_gc_duration_seconds_count 24
+ruby_gc_duration_seconds_sum 2.174994902000229
+# TYPE ruby_process_resident_memory_bytes gauge
+ruby_process_resident_memory_bytes{pid="puma_master"} 1006215168

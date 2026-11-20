@@ -1,0 +1,50 @@
+# TYPE coredns_build_info gauge
+coredns_build_info{goversion="go1.25.0",revision="f323295",version="1.12.4"} 1
+# TYPE coredns_cache_entries gauge
+coredns_cache_entries{server="dns://:53",type="denial",view="",zones="."} 0
+coredns_cache_entries{server="dns://:53",type="success",view="",zones="."} 1
+# TYPE coredns_cache_hits_total counter
+coredns_cache_hits_total{server="dns://:53",type="success",view="",zones="."} 19
+# TYPE coredns_cache_misses_total counter
+coredns_cache_misses_total{server="dns://:53",view="",zones="."} 21
+# TYPE coredns_cache_requests_total counter
+coredns_cache_requests_total{server="dns://:53",view="",zones="."} 40
+# TYPE coredns_dns_request_duration_seconds histogram
+coredns_dns_request_duration_seconds_bucket{server="dns://:53",view="",zone=".",le="0.00025"} 34
+coredns_dns_request_duration_seconds_bucket{server="dns://:53",view="",zone=".",le="0.0005"} 39
+coredns_dns_request_duration_seconds_bucket{server="dns://:53",view="",zone=".",le="0.001"} 40
+coredns_dns_request_duration_seconds_bucket{server="dns://:53",view="",zone=".",le="0.002"} 40
+coredns_dns_request_duration_seconds_bucket{server="dns://:53",view="",zone=".",le="0.004"} 40
+coredns_dns_request_duration_seconds_bucket{server="dns://:53",view="",zone=".",le="0.008"} 40
+coredns_dns_request_duration_seconds_bucket{server="dns://:53",view="",zone=".",le="0.016"} 40
+coredns_dns_request_duration_seconds_bucket{server="dns://:53",view="",zone=".",le="0.032"} 40
+coredns_dns_request_duration_seconds_bucket{server="dns://:53",view="",zone=".",le="0.064"} 40
+coredns_dns_request_duration_seconds_bucket{server="dns://:53",view="",zone=".",le="0.128"} 40
+coredns_dns_request_duration_seconds_bucket{server="dns://:53",view="",zone=".",le="0.256"} 40
+coredns_dns_request_duration_seconds_bucket{server="dns://:53",view="",zone=".",le="0.512"} 40
+coredns_dns_request_duration_seconds_bucket{server="dns://:53",view="",zone=".",le="1.024"} 40
+coredns_dns_request_duration_seconds_bucket{server="dns://:53",view="",zone=".",le="2.048"} 40
+coredns_dns_request_duration_seconds_bucket{server="dns://:53",view="",zone=".",le="4.096"} 40
+coredns_dns_request_duration_seconds_bucket{server="dns://:53",view="",zone=".",le="8.192"} 40
+coredns_dns_request_duration_seconds_bucket{server="dns://:53",view="",zone=".",le="+Inf"} 40
+coredns_dns_request_duration_seconds_sum{server="dns://:53",view="",zone="."} 0.006306483999999998
+coredns_dns_request_duration_seconds_count{server="dns://:53",view="",zone="."} 40
+# TYPE coredns_dns_requests_total counter
+coredns_dns_requests_total{family="1",proto="udp",server="dns://:53",type="A",view="",zone="."} 40
+# TYPE coredns_dns_responses_total counter
+coredns_dns_responses_total{plugin="",rcode="SERVFAIL",server="dns://:53",view="",zone="."} 20
+coredns_dns_responses_total{plugin="cache",rcode="NOERROR",server="dns://:53",view="",zone="."} 20
+# TYPE coredns_forward_healthcheck_broken_total counter
+coredns_forward_healthcheck_broken_total 0
+# TYPE coredns_forward_max_concurrent_rejects_total counter
+coredns_forward_max_concurrent_rejects_total 0
+# TYPE coredns_hosts_entries gauge
+coredns_hosts_entries{hostsfile="/etc/hosts"} 20
+# TYPE coredns_panics_total counter
+coredns_panics_total 0
+# TYPE coredns_reload_failed_total counter
+coredns_reload_failed_total 0
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 0.16
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 5.1761152e+07

@@ -5,8 +5,8 @@ title: Databases, caches, queues and search engines
 nav: Databases
 section: Integrations
 order: 21
-updated: 2026-11-19
-description: PostgreSQL and its most expensive queries (DBM), MySQL and MariaDB, Redis and Valkey, Memcached, MongoDB, RabbitMQ, OpenSearch and Elasticsearch, SQL Server: settings, permissions and metrics.
+updated: 2026-11-20
+description: PostgreSQL and its most expensive queries (DBM), MySQL and MariaDB, Redis and Valkey, Memcached, MongoDB, RabbitMQ, OpenSearch and Elasticsearch, PgBouncer, ProxySQL, ClickHouse, CouchDB, Couchbase, SQL Server: settings, permissions and metrics.
 lead: Each integration reads the software with a read-only monitoring account, or through the local socket when possible.
 ---
 ## PostgreSQL
@@ -115,6 +115,71 @@ Metrics: cluster health (`opensearch.cluster_health`), nodes, active, initialisi
 
 On Windows, through performance counters, when SQL Server is present: `mssql.buffer_cache_hit_ratio`, `mssql.batch_requests_per_s`, `mssql.user_connections`.
 
+## PgBouncer
+
+Admin console (`pgbouncer` database), with an account listed in `stats_users` of `pgbouncer.ini`:
+
+```yaml
+integrations:
+  pgbouncer:
+    dsn: postgres://hypha:password@127.0.0.1:6432/pgbouncer?sslmode=disable
+```
+
+Metrics: active and waiting clients, active, idle, used, tested and logging-in server connections, longest wait (`pgbouncer.pools.maxwait`) per database and user; queries, transactions, bytes received and sent, average query and transaction times per database; connections and pool size per database. Checks `pgbouncer.can_connect` and `pgbouncer.database` (warning for a paused or disabled database).
+
+## ProxySQL
+
+Admin interface (port 6032), with the `admin-stats_credentials` account (reads the `stats` tables only):
+
+```yaml
+integrations:
+  proxysql:
+    dsn: "stats:password@tcp(127.0.0.1:6032)/"
+```
+
+Metrics: active transactions, client and server connections (open, created, aborted), queries and slow queries, processing time, buffer memory, query cache (hit rate), denied accesses; per MySQL server behind ProxySQL (`hostgroup`, `backend` tags): used and free connections, successful and failed connections, queries, bytes, latency. One `proxysql.backend.status` check per server: ONLINE OK, OFFLINE_SOFT warning, SHUNNED and OFFLINE_HARD critical.
+
+## ClickHouse
+
+HTTP interface (`http://127.0.0.1:8123`), tables `system.metrics`, `system.events` and `system.asynchronous_metrics`. A read-only account is enough (`readonly = 1`); without an account, the `default` user. The identity travels in the `X-ClickHouse-User` and `X-ClickHouse-Key` headers, never in the URL.
+
+```yaml
+integrations:
+  clickhouse:
+    username: hypha
+    password: "…"
+```
+
+Metrics: running, counted and failed queries (SELECT and INSERT apart), average duration, rows and bytes inserted and read, delayed and rejected inserts, merges and mutations, connections per protocol, tracked and resident memory, parts per partition (`clickhouse.part.max_per_partition`), read-only replicas, replica delay and queue, number of databases, tables and parts, uptime.
+
+## CouchDB
+
+Node REST API (`/_node/_local/_stats`, `/_system`, `/_active_tasks`). CouchDB 3 restricts these pages to a server administrator: the probe waits for that account.
+
+```yaml
+integrations:
+  couchdb:
+    url: http://127.0.0.1:5984
+    username: admin
+    password: "…"
+```
+
+Metrics: HTTP requests (including bulk requests and view reads), responses per status class, response time (mean, p95, p99, max), document reads and writes, open databases and files, running, pending and crashed replications (`couchdb.couch_replicator.jobs.crashed`), active tasks per type, Erlang memory and run queue.
+
+## Couchbase
+
+Cluster REST API (port 8091), with a "Read-Only Admin" account:
+
+```yaml
+integrations:
+  couchbase:
+    url: http://127.0.0.1:8091
+    username: hypha
+    password: "…"
+```
+
+Metrics: cluster RAM and disk (totals, used, quotas), active nodes, balance; per node: CPU, memory, operations, items; per bucket: operations per second, items, memory, disk, RAM quota used (`couchbase.by_bucket.quota_percent_used`). One `couchbase.node.health` check per node: critical out of the cluster or unhealthy, warning while warming up.
+
 ## Monitor templates
 
-The **Databases**, **Message queues** and **Search** families of the catalogue: unreachable, replication stopped or lagging, connections almost saturated, Redis memory almost full, Redis persistence failing, growing RabbitMQ queue, RabbitMQ node alarm, degraded OpenSearch cluster, saturated JVM heap, disk at watermark, rejected writes.
+The **Databases**, **Message queues** and **Search** families of the catalogue: unreachable, replication stopped or lagging, connections almost saturated, Redis memory almost full, Redis persistence failing, growing RabbitMQ queue, RabbitMQ node alarm, degraded OpenSearch cluster, saturated JVM heap, disk at watermark, rejected writes; waiting PgBouncer clients and wait too long, MySQL server shunned by ProxySQL, too many ClickHouse parts, read-only ClickHouse replica, failing CouchDB replication, Couchbase node down, Couchbase bucket almost full.

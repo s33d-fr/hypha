@@ -687,10 +687,12 @@ func (a *Agent) startLogs(ctx context.Context, once bool) <-chan struct{} {
 		start(f.Run, func(c context.Context) error { f.Once(c); return nil }, f.FlushState)
 	}
 	if runtime.GOOS == "windows" {
-		if len(lc.WindowsEventlog) == 0 || !logs.EventlogAvailable() {
+		// Vague 3 : canaux des rôles présents (Directory Service, DNS Server…) ajoutés à la conf.
+		channels := logs.EventlogChannels(lc.WindowsEventlog, a.cfg.Integrations, a.log)
+		if len(channels) == 0 || !logs.EventlogAvailable() {
 			a.status.Set("eventlog", "disabled")
 		} else {
-			e := logs.NewEventlog(lc.WindowsEventlog, pipe, a.store, a.log, setter("eventlog"))
+			e := logs.NewEventlog(channels, pipe, a.store, a.log, setter("eventlog"))
 			start(e.Run, e.Once, e.FlushState)
 		}
 	}

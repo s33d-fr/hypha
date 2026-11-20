@@ -1,0 +1,72 @@
+# TYPE pulsar_scalable_topic_consumer_count gauge
+pulsar_scalable_topic_consumer_count{cluster="standalone",consumer_state="active"} 0.0
+pulsar_scalable_topic_consumer_count{cluster="standalone",consumer_state="idle"} 0.0
+pulsar_scalable_topic_consumer_count{cluster="standalone",consumer_state="disconnected"} 0.0
+# TYPE jvm_gc_collection_seconds summary
+jvm_gc_collection_seconds_count{cluster="standalone",gc="Copy"} 10.0
+jvm_gc_collection_seconds_sum{cluster="standalone",gc="Copy"} 0.336
+jvm_gc_collection_seconds_count{cluster="standalone",gc="MarkSweepCompact"} 3.0
+jvm_gc_collection_seconds_sum{cluster="standalone",gc="MarkSweepCompact"} 0.238
+# TYPE pulsar_broker_lookup_failures counter
+pulsar_broker_lookup_failures_total{cluster="standalone"} 0.0
+pulsar_broker_lookup_failures_created{cluster="standalone"} 1.79514531359E9
+# TYPE process_cpu_seconds counter
+process_cpu_seconds_total{cluster="standalone"} 38.89
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes{cluster="standalone"} 6.18995712E8
+# TYPE pulsar_broker_publish_latency summary
+pulsar_broker_publish_latency{cluster="standalone",quantile="0.0"} 2.694
+pulsar_broker_publish_latency{cluster="standalone",quantile="0.5"} 4.19
+pulsar_broker_publish_latency{cluster="standalone",quantile="0.95"} 12.434
+pulsar_broker_publish_latency{cluster="standalone",quantile="0.99"} 20.941
+pulsar_broker_publish_latency{cluster="standalone",quantile="0.999"} 20.941
+pulsar_broker_publish_latency{cluster="standalone",quantile="0.9999"} 20.941
+pulsar_broker_publish_latency{cluster="standalone",quantile="1.0"} 20.941
+pulsar_broker_publish_latency_count{cluster="standalone"} 70.0
+pulsar_broker_publish_latency_sum{cluster="standalone"} 349.33699999999993
+# TYPE jvm_memory_bytes_used gauge
+jvm_memory_bytes_used{cluster="standalone",area="heap"} 7.1451784E7
+jvm_memory_bytes_used{cluster="standalone",area="nonheap"} 1.30676344E8
+# TYPE jvm_memory_bytes_max gauge
+jvm_memory_bytes_max{cluster="standalone",area="heap"} 2.5952256E8
+jvm_memory_bytes_max{cluster="standalone",area="nonheap"} -1.0
+# TYPE pulsar_broker_storage_read_rate gauge
+pulsar_broker_storage_read_rate{cluster="standalone"} 0.0
+# TYPE pulsar_broker_rate_in gauge
+pulsar_broker_rate_in{cluster="standalone"} 0.0
+# TYPE pulsar_broker_throughput_out gauge
+pulsar_broker_throughput_out{cluster="standalone"} 0.0
+# TYPE pulsar_broker_producers_count gauge
+pulsar_broker_producers_count{cluster="standalone"} 0
+# TYPE pulsar_broker_storage_size gauge
+pulsar_broker_storage_size{cluster="standalone"} 4200
+# TYPE pulsar_rate_in gauge
+pulsar_rate_in{cluster="standalone",namespace="public/default",topic="persistent://public/default/essai"} 0.0
+pulsar_rate_in{cluster="standalone",namespace="public/default",topic="persistent://public/default/__change_events"} 0.0
+# TYPE pulsar_broker_consumers_count gauge
+pulsar_broker_consumers_count{cluster="standalone"} 1
+# TYPE pulsar_rate_out gauge
+pulsar_rate_out{cluster="standalone",namespace="public/default",topic="persistent://public/default/essai"} 0.0
+pulsar_rate_out{cluster="standalone",namespace="public/default",topic="persistent://public/default/__change_events"} 0.0
+# TYPE pulsar_storage_size gauge
+pulsar_storage_size{cluster="standalone",namespace="public/default",topic="persistent://public/default/essai"} 4200
+pulsar_storage_size{cluster="standalone",namespace="public/default",topic="persistent://public/default/__change_events"} 0
+# TYPE pulsar_topics_count gauge
+pulsar_topics_count{cluster="standalone",namespace="public/default"} 2
+# TYPE pulsar_broker_storage_write_rate gauge
+pulsar_broker_storage_write_rate{cluster="standalone"} 0.666
+# TYPE pulsar_broker_subscriptions_count gauge
+pulsar_broker_subscriptions_count{cluster="standalone"} 3
+# TYPE pulsar_broker_topics_count gauge
+pulsar_broker_topics_count{cluster="standalone"} 2
+# TYPE pulsar_broker_rate_out gauge
+pulsar_broker_rate_out{cluster="standalone"} 0.0
+# TYPE pulsar_broker_msg_backlog gauge
+pulsar_broker_msg_backlog{cluster="standalone"} 70
+# TYPE pulsar_msg_backlog gauge
+pulsar_msg_backlog{cluster="standalone",namespace="public/default",topic="persistent://public/default/essai"} 70
+pulsar_msg_backlog{cluster="standalone",namespace="public/default",topic="persistent://public/default/__change_events"} 0
+# TYPE pulsar_broker_throughput_in gauge
+pulsar_broker_throughput_in{cluster="standalone"} 0.0
+# TYPE pulsar_active_connections gauge
+pulsar_active_connections{cluster="standalone", broker="localhost", metric="broker_connection"} 1

@@ -1,0 +1,27 @@
+# TYPE sonarqube_elasticsearch_read_only_indices_total gauge
+sonarqube_elasticsearch_read_only_indices_total 0.0
+# TYPE sonarqube_number_of_connected_sonarlint_clients gauge
+sonarqube_number_of_connected_sonarlint_clients 0.0
+# TYPE sonarqube_license_number_of_lines_analyzed_total gauge
+sonarqube_license_number_of_lines_analyzed_total 0.0
+# TYPE sonarqube_db_latency_seconds gauge
+sonarqube_db_latency_seconds NaN
+# TYPE sonarqube_health_web_status gauge
+sonarqube_health_web_status 1.0
+# TYPE sonarqube_compute_engine_system_tasks_running_duration_seconds summary
+sonarqube_compute_engine_system_tasks_running_duration_seconds_count{task_type="HISTORY_PURGE",} 1.0
+sonarqube_compute_engine_system_tasks_running_duration_seconds_sum{task_type="HISTORY_PURGE",} 127.0
+# TYPE sonarqube_license_days_before_expiration_total gauge
+sonarqube_license_days_before_expiration_total 0.0
+# TYPE sonarqube_elasticsearch_disk_space_free_bytes gauge
+sonarqube_elasticsearch_disk_space_free_bytes{node_name="sonarqube",} 5.7931198464E10
+# TYPE sonarqube_health_elasticsearch_status gauge
+sonarqube_health_elasticsearch_status 1.0
+# TYPE sonarqube_web_uptime_minutes gauge
+sonarqube_web_uptime_minutes 2.0
+# TYPE sonarqube_compute_engine_pending_tasks_total gauge
+sonarqube_compute_engine_pending_tasks_total 0.0
+# TYPE sonarqube_health_compute_engine_status gauge
+sonarqube_health_compute_engine_status 1.0
+# TYPE sonarqube_elasticsearch_disk_usage_percent gauge
+sonarqube_elasticsearch_disk_usage_percent 43.7099327019836

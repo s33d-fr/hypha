@@ -1,0 +1,72 @@
+# TYPE activemq_broker_currentconnectionscount gauge
+activemq_broker_currentconnectionscount{broker="localhost"} 0.0
+# TYPE activemq_broker_memorypercentusage gauge
+activemq_broker_memorypercentusage{broker="localhost"} 0.0
+# TYPE activemq_broker_storepercentusage gauge
+activemq_broker_storepercentusage{broker="localhost"} 0.0
+# TYPE activemq_broker_temppercentusage gauge
+activemq_broker_temppercentusage{broker="localhost"} 0.0
+# TYPE activemq_broker_totalconsumercount gauge
+activemq_broker_totalconsumercount{broker="localhost"} 0.0
+# TYPE activemq_broker_totaldequeuecount_total counter
+activemq_broker_totaldequeuecount_total{broker="localhost"} 0.0
+# TYPE activemq_broker_totalenqueuecount_total counter
+activemq_broker_totalenqueuecount_total{broker="localhost"} 36.0
+# TYPE activemq_broker_totalmessagecount gauge
+activemq_broker_totalmessagecount{broker="localhost"} 90.0
+# TYPE activemq_broker_totalproducercount gauge
+activemq_broker_totalproducercount{broker="localhost"} 0.0
+# TYPE activemq_destination_averageenqueuetime gauge
+activemq_destination_averageenqueuetime{broker="localhost",destination="essai",destination_type="Queue"} 0.0
+# TYPE activemq_destination_consumercount gauge
+activemq_destination_consumercount{broker="localhost",destination="essai",destination_type="Queue"} 0.0
+# TYPE activemq_destination_dequeuecount_total counter
+activemq_destination_dequeuecount_total{broker="localhost",destination="essai",destination_type="Queue"} 0.0
+# TYPE activemq_destination_dispatchcount_total counter
+activemq_destination_dispatchcount_total{broker="localhost",destination="essai",destination_type="Queue"} 0.0
+# TYPE activemq_destination_enqueuecount_total counter
+activemq_destination_enqueuecount_total{broker="localhost",destination="essai",destination_type="Queue"} 30.0
+# TYPE activemq_destination_expiredcount_total counter
+activemq_destination_expiredcount_total{broker="localhost",destination="essai",destination_type="Queue"} 0.0
+# TYPE activemq_destination_inflightcount gauge
+activemq_destination_inflightcount{broker="localhost",destination="essai",destination_type="Queue"} 0.0
+# TYPE activemq_destination_memorypercentusage gauge
+activemq_destination_memorypercentusage{broker="localhost",destination="essai",destination_type="Queue"} 0.0
+# TYPE activemq_destination_producercount gauge
+activemq_destination_producercount{broker="localhost",destination="essai",destination_type="Queue"} 0.0
+# TYPE activemq_destination_queuesize gauge
+activemq_destination_queuesize{broker="localhost",destination="essai",destination_type="Queue"} 90.0
+# TYPE jmx_exporter_build_info gauge
+jmx_exporter_build_info{name="jmx_prometheus_javaagent",version="1.7.0"} 1
+# TYPE jmx_scrape_duration_seconds gauge
+jmx_scrape_duration_seconds 0.0
+# TYPE jmx_scrape_error gauge
+jmx_scrape_error 0.0
+# TYPE jvm_classes_currently_loaded gauge
+jvm_classes_currently_loaded 7974.0
+# TYPE jvm_gc_collection_seconds summary
+jvm_gc_collection_seconds_count{gc="G1 Old Generation"} 0
+jvm_gc_collection_seconds_sum{gc="G1 Old Generation"} 0.0
+jvm_gc_collection_seconds_count{gc="G1 Young Generation"} 15
+jvm_gc_collection_seconds_sum{gc="G1 Young Generation"} 0.13
+# TYPE jvm_memory_committed_bytes gauge
+jvm_memory_committed_bytes{area="heap"} 7.2351744E7
+jvm_memory_committed_bytes{area="nonheap"} 6.0751872E7
+# TYPE jvm_memory_max_bytes gauge
+jvm_memory_max_bytes{area="heap"} 2.68435456E8
+jvm_memory_max_bytes{area="nonheap"} -1.0
+# TYPE jvm_memory_used_bytes gauge
+jvm_memory_used_bytes{area="heap"} 3.7465504E7
+jvm_memory_used_bytes{area="nonheap"} 5.5606952E7
+# TYPE jvm_threads_current gauge
+jvm_threads_current 44.0
+# TYPE jvm_threads_deadlocked gauge
+jvm_threads_deadlocked 0.0
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 17.31
+# TYPE process_max_fds gauge
+process_max_fds 524288.0
+# TYPE process_open_fds gauge
+process_open_fds 159.0
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 2.36724224E8

@@ -1,0 +1,81 @@
+# TYPE consul_agent_tls_cert_expiry gauge
+consul_agent_tls_cert_expiry{datacenter="dc1",node="e0fae709efce",partition="default",role="server"} 0
+# TYPE consul_api_http summary
+consul_api_http{quantile="0.5"} NaN
+consul_api_http{quantile="0.9"} NaN
+consul_api_http{quantile="0.99"} NaN
+consul_api_http_sum 0
+consul_api_http_count 0
+consul_api_http{method="PUT",path="v1_kv_",quantile="0.5"} 0.5464800000190735
+consul_api_http{method="PUT",path="v1_kv_",quantile="0.9"} 0.8029279708862305
+consul_api_http{method="PUT",path="v1_kv_",quantile="0.99"} 0.8029279708862305
+consul_api_http_sum{method="PUT",path="v1_kv_"} 14.566365987062454
+consul_api_http_count{method="PUT",path="v1_kv_"} 20
+# TYPE consul_autopilot_failure_tolerance gauge
+consul_autopilot_failure_tolerance 0
+# TYPE consul_autopilot_healthy gauge
+consul_autopilot_healthy 1
+# TYPE consul_cache_entries_count gauge
+consul_cache_entries_count 1
+# TYPE consul_catalog_register summary
+consul_catalog_register{quantile="0.5"} NaN
+consul_catalog_register{quantile="0.9"} NaN
+consul_catalog_register{quantile="0.99"} NaN
+consul_catalog_register_sum 0.38731101155281067
+consul_catalog_register_count 1
+# TYPE consul_kvs_apply summary
+consul_kvs_apply{quantile="0.5"} 0.3105970025062561
+consul_kvs_apply{quantile="0.9"} 0.3603360056877136
+consul_kvs_apply{quantile="0.99"} 0.3603360056877136
+consul_kvs_apply_sum 7.3889710158109665
+consul_kvs_apply_count 20
+# TYPE consul_members_clients gauge
+consul_members_clients 0
+consul_members_clients{datacenter="dc1"} 0
+# TYPE consul_members_servers gauge
+consul_members_servers 0
+consul_members_servers{datacenter="dc1"} 1
+# TYPE consul_mesh_active_root_ca_expiry gauge
+consul_mesh_active_root_ca_expiry NaN
+# TYPE consul_raft_apply counter
+consul_raft_apply 44
+# TYPE consul_raft_commitTime summary
+consul_raft_commitTime{quantile="0.5"} 0.024821000173687935
+consul_raft_commitTime{quantile="0.9"} 0.06832300126552582
+consul_raft_commitTime{quantile="0.99"} 0.06832300126552582
+consul_raft_commitTime_sum 2.96605401718989
+consul_raft_commitTime_count 49
+# TYPE consul_raft_leader_lastContact summary
+consul_raft_leader_lastContact{quantile="0.5"} NaN
+consul_raft_leader_lastContact{quantile="0.9"} NaN
+consul_raft_leader_lastContact{quantile="0.99"} NaN
+consul_raft_leader_lastContact_sum 0
+consul_raft_leader_lastContact_count 0
+# TYPE consul_raft_state_candidate counter
+consul_raft_state_candidate 1
+# TYPE consul_raft_state_leader counter
+consul_raft_state_leader 1
+# TYPE consul_rpc_queries_blocking gauge
+consul_rpc_queries_blocking 2
+# TYPE consul_rpc_request counter
+consul_rpc_request 104
+# TYPE consul_rpc_request_error counter
+consul_rpc_request_error 0
+# TYPE consul_runtime_alloc_bytes gauge
+consul_runtime_alloc_bytes 1.9369352e+07
+# TYPE consul_runtime_num_goroutines gauge
+consul_runtime_num_goroutines 200
+# TYPE consul_server_isLeader gauge
+consul_server_isLeader 1
+# TYPE consul_state_kv_entries gauge
+consul_state_kv_entries 0
+consul_state_kv_entries{datacenter="dc1"} 20
+# TYPE consul_state_nodes gauge
+consul_state_nodes 0
+consul_state_nodes{datacenter="dc1"} 1
+# TYPE consul_state_service_instances gauge
+consul_state_service_instances 0
+consul_state_service_instances{datacenter="dc1"} 1
+# TYPE consul_state_services gauge
+consul_state_services 0
+consul_state_services{datacenter="dc1"} 1

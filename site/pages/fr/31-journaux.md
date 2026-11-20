@@ -12,7 +12,7 @@ lead: Tous les journaux du parc au même endroit, cherchés en une ligne, décou
 ## D'où viennent les journaux
 
 - **Linux** : le journal systemd et les fichiers déclarés dans `logs.files`.
-- **Windows** : les journaux d'événements (System et Application d'office).
+- **Windows** : les journaux d'événements (System et Application d'office, autres canaux et filtres : voir [Windows](/docs/windows/)).
 - **Applications** : OpenTelemetry (`/v1/logs`), directement ou par le relais de l'agent.
 - Une ligne JSON est décodée par l'agent : `message` ou `msg`, `level` ou `severity`, le reste en attributs.
 

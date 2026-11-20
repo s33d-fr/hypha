@@ -58,6 +58,8 @@ Un profil apporte le port, le chemin, les métriques retenues, leurs noms et les
 | `node_exporter` | 9100 | `node.load.1`, `node.cpu.seconds` par mode, `node.memory.*`, `node.filesystem.*` par point de montage, `node.network.*` et `node.disk.*` par périphérique, `node.procs.*`, `node.filefd.*`, `node.hwmon.temperature`, `node.time.offset` |
 | `prometheus` | 9090 | `prometheus.tsdb.head_series`, `.tsdb.samples_appended`, `.http.requests` par code, `.http.request_duration.p95`, `.target.interval_length.p99`, `.rule.evaluation_failures`, `.notifications.dropped`, `.config.last_reload_successful`, `.process.resident_memory` |
 
+Vingt-neuf autres profils (Consul, Vault, etcd, Traefik, Kafka par l'exportateur JMX, GitLab, Argo CD…) sont décrits dans [Logiciels exposant Prometheus](/docs/logiciels-prometheus/).
+
 ### Contrôle et mesures de l'agent
 
 - `openmetrics.can_connect` : critique quand la cible ne répond pas, répond en erreur ou rend une exposition illisible (le format protobuf n'est pas lu).
@@ -121,6 +123,8 @@ syslog:
 - Mesures : `syslog.messages` par `syslog_host` (0 pour un émetteur vu dans les 24 heures qui se tait), `syslog.dropped` par motif (`débit`, `file pleine`, `source refusée`, `connexions`, `trame trop longue`), `syslog.connections` ; contrôle `syslog.can_receive`.
 
 Les journaux reçus se cherchent comme les autres : `source:syslog @syslog.hostname:fw01`, `source:syslog status:error`.
+
+Modèles des pare-feux et routeurs (Fortinet, Stormshield, pfSense, OPNsense, Palo Alto, Cisco ASA, SonicWall, WatchGuard, Check Point, MikroTik, Ubiquiti) : voir [Équipements réseau et sécurité (syslog)](/docs/equipements-syslog/).
 
 ## Modèles de moniteurs et tableaux
 

@@ -6,7 +6,7 @@ nav: System, web and mail
 section: Integrations
 order: 20
 updated: 2026-11-20
-description: HYPHA agent integrations: nginx, Apache, HAProxy, IIS, BIND, Postfix, Dovecot, rspamd, Exchange, OpenVPN, fail2ban, certificates, SMART, sensors, clock, updates, systemd timers, VirtualBox.
+description: HYPHA agent integrations: nginx, Apache, HAProxy, IIS, BIND, Postfix, Dovecot, rspamd, Exchange, OpenVPN, fail2ban, SSH, Wazuh, Suricata, certificates, SMART, sensors, clock, updates, systemd timers, VirtualBox, Btrfs, NFS.
 lead: The agent recognises installed software and collects its metrics, with Datadog-compatible names. Most integrations turn themselves on.
 ---
 ## How it works
@@ -42,6 +42,8 @@ integrations:
 
 nginx, Apache and HAProxy access logs are parsed on arrival: method, path, HTTP code, duration, client address. See [Logs](/en/docs/logs/#parsing-on-arrival).
 
+PHP-FPM, Varnish, Squid, Lighttpd, Gunicorn and Supervisor, as well as PowerDNS, OpenLDAP, Keycloak, Nexus, Harbor, ZooKeeper and Ceph, have their dedicated probes: see [Applications and services](/en/docs/applications-and-services/).
+
 ## DNS
 
 `bind` reads the JSON statistics channel (`statistics-channels { inet 127.0.0.1 port 8053; };`), otherwise `rndc status`. Metrics: `bind.queries` by type, `bind.responses.nxdomain`, `bind.responses.servfail`, `bind.zone.serial` per zone, `bind.recursive_clients`.
@@ -62,6 +64,18 @@ To check mail end to end (SMTP banner, IMAP, send then fetch, SPF, DKIM, DMARC, 
 - `openvpn`: status files (server: connected clients; client: tunnel throughput): `openvpn.clients.connected`, `openvpn.client.bytes_in`, `.bytes_out`. A file frozen for 10 minutes turns `openvpn.can_connect` critical.
 - `fail2ban`: `fail2ban-client status`, read every 5 minutes: `fail2ban.banned`, `fail2ban.failed` per jail.
 - Authentication logs: `sshd`, `sudo`, `su` and `fail2ban` lines are analysed on arrival (`evt.name`, `evt.outcome`, `usr.name`, `network.client.ip`). The "SSH brute-force attack" template relies on them.
+- `ssh`: availability and banner of SSH servers, without authentication (the agent reads the banner, sends its own and closes; the server logs a connection closed before authentication). One `ssh.can_connect` check per target: critical if the port does not answer or does not speak SSH, warning if the banner does not match `expect_banner` or announces protocol 1; metric `ssh.response_time`. Inactive until targets are given:
+
+```yaml
+integrations:
+  ssh:
+    targets:
+      - {name: bastion, address: "bastion.example:22", expect_banner: "^SSH-2.0-OpenSSH_9"}
+      - {address: 192.0.2.10}          # port 22 by default
+```
+
+- `wazuh`: REST API of the Wazuh manager (port 55000), with an API account holding the `readonly` role (`url`, `username`, `password`, `insecure: true` for its self-signed certificate). Manager daemons (`wazuh.manager.daemons`: critical if analysisd, remoted, wazuh-db, modulesd… is stopped), agents by connection status (`wazuh.agents`, `status` tag), events received, processed and dropped, alerts written, analysisd and remoted queue usage, remoted sessions and bytes.
+- `suricata`: the `eve.json` file (default `/var/log/suricata/eve.json`), followed as it grows: latest `stats` record (captured and dropped packets, drop share `suricata.capture.drop_rate`, decoding, flows, TCP, detection, flows per application protocol, memory) and alerts counted by severity and action (`suricata.alerts`). `suricata.can_read` check: critical if the latest `stats` record is older than `stale_after` (5 min; Suricata stopped, or `stats` missing from the `eve-log` types). On the first pass, only the last 4 MiB of the file are read.
 
 ## Certificates
 
@@ -83,6 +97,10 @@ The **Certificates** page of the interface gathers every certificate collected b
 | `updates` | package manager cache (no `apt update`), read every hour | `system.updates.pending`, `.security`, `system.reboot_required`; Windows: `windows.updates.pending` check |
 | `systemd_timers` | `systemctl` | `systemd.timer` check: critical if the last run failed, warning if an active timer has not run for two periods |
 | `virtualbox` | accounts' `VirtualBox.xml` and processes | `virtualbox.vms.running`, `.total`, `virtualbox.vm.running` check for autostart VMs |
+| `btrfs` | `/sys/fs/btrfs` (error counters: kernel 5.14 and later, otherwise `btrfs device stats`) | per mounted filesystem: `btrfs.allocated`, `.used`, `.usage` per type (`usage_type`) and profile (`replication_type`), `btrfs.unallocated` and `.unallocated.pct`, `btrfs.device.errors`; `btrfs.health` check: critical if a device is missing, warning if error counters are not zero |
+| `nfs` | client: `/proc/1/mountstats`; server: `/proc/net/rpc/nfsd` | client, per mount: operations, bytes read and written, average round-trip and execution times, retransmissions, timeouts, usage; `nfs.mount` check (critical if `statfs` does not answer within `timeout`, 5 s: hung mount). Server: nfsd threads, RPC calls and bad calls, bytes, operations per version, exports; `nfs.server` check |
+
+An NFS server in a container keeps its statistics in its own network namespace: `integrations.nfs.server_stats: /proc/<container pid>/net/rpc/nfsd`. `nfs.mounts` restricts the followed mounts (patterns).
 
 ## Processes, ports and pages
 

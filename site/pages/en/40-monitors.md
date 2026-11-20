@@ -69,19 +69,24 @@ Variables: `{{name}}`, `{{group}}`, `{{host}}`, `{{value}}`, `{{last_value}}`, `
 
 ## The template catalogue
 
-**Monitors › New monitor › From a template**: more than 90 templates by family, each with its variables (targeted tags, thresholds, service). Template names and descriptions, and the monitors they create, are written in French for now; any monitor can be renamed.
+**Monitors › New monitor › From a template**: more than 180 templates by family, each with its variables (targeted tags, thresholds, service). Template names and descriptions, and the monitors they create, are written in French for now; any monitor can be renamed.
 
 | Family | Examples |
 |---|---|
 | System | CPU or memory saturated, disk I/O wait, disk almost full, disk full within 48 h, inodes, swap, abnormal load, host not reporting, reboot required |
-| Services | systemd unit failed, Windows service stopped |
-| Security | certificate close to expiry, pending security updates, SSH brute-force attack |
+| Services | systemd unit failed, Windows service stopped, Supervisor program failed |
+| Security | certificate close to expiry, pending security updates, SSH brute-force attack, SSH unreachable, Wazuh daemon stopped, Wazuh agents disconnected, Suricata silent, packets dropped by Suricata, Suricata severity-1 alerts |
 | Applications | HTTP 5xx errors, p95 latency, new application error |
-| Databases, Message queues, Search | PostgreSQL, MySQL, Redis, Memcached, MongoDB, RabbitMQ, OpenSearch |
+| Databases, Message queues, Search | PostgreSQL, MySQL, Redis, Memcached, MongoDB, RabbitMQ, OpenSearch, PgBouncer, ProxySQL, ClickHouse, CouchDB, Couchbase |
+| Web | PHP-FPM (listen queue, process cap reached), Varnish (sick backend, dropped sessions), Squid, Lighttpd, Gunicorn |
+| Storage | ZooKeeper, Ceph cluster health, Ceph pool almost full, Btrfs degraded or out of unallocated space, hung NFS mount, NFS server stopped, NFS retransmissions |
+| Directory and identity, DNS | OpenLDAP, Keycloak, PowerDNS and its Recursor (vulnerable version, SERVFAIL) |
+| Repositories and registries, Logs | Nexus (read-only, health), Harbor (component down, disk), Fluentd (buffer full, output stuck) |
 | Network | interface down, device unreachable |
 | Mail | Postfix queue |
 | Synthetics | synthetic test failing |
 | Kubernetes, Cloud, Virtualization | clusters, nodes, AWS, Azure, Google Cloud, OVHcloud, Scaleway, vSphere, Proxmox, Hyper-V, KVM |
 | Generic collection | OpenMetrics target unreachable, series cap reached, Nagios plugin alerting, syslog reception failing, silent syslog device, dropped syslog lines, severe errors received by syslog |
+| AI and GPU | Ollama, vLLM, LiteLLM, TGI, llama.cpp: unreachable, queue, latency; NVIDIA GPU too hot, saturated, memory full, faulty |
 
 A new workspace receives six catalogue monitors, linked to an email channel to the account's address: host not reporting, disk almost full, memory saturated, systemd unit failed, Windows service stopped, certificate close to expiry.

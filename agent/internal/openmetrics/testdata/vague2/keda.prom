@@ -1,0 +1,26 @@
+# TYPE controller_runtime_active_workers gauge
+controller_runtime_active_workers{controller="cert-rotator"} 0
+controller_runtime_active_workers{controller="cloudeventsource"} 0
+controller_runtime_active_workers{controller="clustercloudeventsource"} 0
+controller_runtime_active_workers{controller="clustertriggerauthentication"} 0
+# TYPE keda_internal_scale_loop_latency_seconds gauge
+keda_internal_scale_loop_latency_seconds{namespace="essai",resource="charge-cron",type="scaledobject"} 0.000240979
+# TYPE keda_resource_registered_total gauge
+keda_resource_registered_total{namespace="essai",type="scaled_object"} 1
+# TYPE keda_scaled_object_errors_total counter
+keda_scaled_object_errors_total{namespace="essai",scaledObject="charge-cron"} 41
+# TYPE keda_scaled_object_paused gauge
+keda_scaled_object_paused{namespace="essai",scaledObject="charge-cron"} 0
+# TYPE keda_scaler_active gauge
+keda_scaler_active{metric="s0-cron-Europe-Paris-08xxx-020xxx",namespace="essai",scaledObject="charge-cron",scaler="cronScaler",triggerIndex="0",type="scaledobject"} 1
+# TYPE keda_scaler_detail_errors_total counter
+keda_scaler_detail_errors_total{metric="s0-cron-Europe-Paris-08xxx-020xxx",namespace="essai",scaledObject="charge-cron",scaler="cronScaler",triggerIndex="0",type="scaledobject"} 0
+keda_scaler_detail_errors_total{metric="s1-prometheus",namespace="essai",scaledObject="charge-cron",scaler="prometheusScaler",triggerIndex="1",type="scaledobject"} 27
+# TYPE keda_scaler_metrics_latency_seconds gauge
+keda_scaler_metrics_latency_seconds{metric="s0-cron-Europe-Paris-08xxx-020xxx",namespace="essai",scaledObject="charge-cron",scaler="cronScaler",triggerIndex="0",type="scaledobject"} 8.1543e-05
+keda_scaler_metrics_latency_seconds{metric="s1-prometheus",namespace="essai",scaledObject="charge-cron",scaler="prometheusScaler",triggerIndex="1",type="scaledobject"} 0.00641514
+# TYPE keda_scaler_metrics_value gauge
+keda_scaler_metrics_value{metric="s0-cron-Europe-Paris-08xxx-020xxx",namespace="essai",scaledObject="charge-cron",scaler="cronScaler",triggerIndex="0",type="scaledobject"} 2
+# TYPE keda_trigger_registered_total gauge
+keda_trigger_registered_total{type="cron"} 1
+keda_trigger_registered_total{type="prometheus"} 1

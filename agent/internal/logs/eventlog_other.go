@@ -6,6 +6,7 @@ import (
 	"context"
 	"log/slog"
 
+	"s33d.fr/hypha/agent/internal/config"
 	"s33d.fr/hypha/agent/internal/state"
 )
 
@@ -16,7 +17,7 @@ type Eventlog struct{}
 func EventlogAvailable() bool { return false }
 
 // NewEventlog rend un lecteur inerte.
-func NewEventlog([]string, *Pipeline, *state.Store, *slog.Logger, func(string)) *Eventlog {
+func NewEventlog([]config.EventlogChannel, *Pipeline, *state.Store, *slog.Logger, func(string)) *Eventlog {
 	return &Eventlog{}
 }
 
@@ -28,3 +29,8 @@ func (*Eventlog) Once(context.Context) error { return nil }
 
 // FlushState ne fait rien.
 func (*Eventlog) FlushState() {}
+
+// EventlogChannels rend les canaux de la conf tels quels (aucun rôle Windows hors Windows).
+func EventlogChannels(list []config.EventlogChannel, _ config.IntegrationsConfig, _ *slog.Logger) []config.EventlogChannel {
+	return list
+}

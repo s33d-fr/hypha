@@ -1,0 +1,25 @@
+# TYPE certmanager_certificate_expiration_timestamp_seconds gauge
+certmanager_certificate_expiration_timestamp_seconds{issuer_group="",issuer_kind="ClusterIssuer",issuer_name="emetteur-absent",name="essai-sans-emetteur",namespace="essai"} 0
+certmanager_certificate_expiration_timestamp_seconds{issuer_group="",issuer_kind="ClusterIssuer",issuer_name="essai-autosigne",name="essai-emis",namespace="essai"} 1.802955481e+09
+# TYPE certmanager_certificate_not_after_timestamp_seconds gauge
+certmanager_certificate_not_after_timestamp_seconds{issuer_group="",issuer_kind="ClusterIssuer",issuer_name="emetteur-absent",name="essai-sans-emetteur",namespace="essai"} 0
+certmanager_certificate_not_after_timestamp_seconds{issuer_group="",issuer_kind="ClusterIssuer",issuer_name="essai-autosigne",name="essai-emis",namespace="essai"} 1.802955481e+09
+# TYPE certmanager_certificate_ready_status gauge
+certmanager_certificate_ready_status{condition="False",issuer_group="",issuer_kind="ClusterIssuer",issuer_name="emetteur-absent",name="essai-sans-emetteur",namespace="essai"} 1
+certmanager_certificate_ready_status{condition="False",issuer_group="",issuer_kind="ClusterIssuer",issuer_name="essai-autosigne",name="essai-emis",namespace="essai"} 0
+certmanager_certificate_ready_status{condition="True",issuer_group="",issuer_kind="ClusterIssuer",issuer_name="emetteur-absent",name="essai-sans-emetteur",namespace="essai"} 0
+certmanager_certificate_ready_status{condition="True",issuer_group="",issuer_kind="ClusterIssuer",issuer_name="essai-autosigne",name="essai-emis",namespace="essai"} 1
+# TYPE certmanager_certificate_renewal_timestamp_seconds gauge
+certmanager_certificate_renewal_timestamp_seconds{issuer_group="",issuer_kind="ClusterIssuer",issuer_name="emetteur-absent",name="essai-sans-emetteur",namespace="essai"} 0
+certmanager_certificate_renewal_timestamp_seconds{issuer_group="",issuer_kind="ClusterIssuer",issuer_name="essai-autosigne",name="essai-emis",namespace="essai"} 1.801659481e+09
+# TYPE certmanager_clock_time_seconds_gauge gauge
+certmanager_clock_time_seconds_gauge 1.7951799e+09
+# TYPE certmanager_clusterissuer_ready_status gauge
+certmanager_clusterissuer_ready_status{condition="False",name="essai-autosigne"} 0
+certmanager_clusterissuer_ready_status{condition="True",name="essai-autosigne"} 1
+certmanager_clusterissuer_ready_status{condition="Unknown",name="essai-autosigne"} 0
+# TYPE certmanager_controller_sync_call_count counter
+certmanager_controller_sync_call_count{controller="certificaterequests-approver"} 6
+certmanager_controller_sync_call_count{controller="certificaterequests-issuer-acme"} 7
+certmanager_controller_sync_call_count{controller="certificaterequests-issuer-ca"} 6
+certmanager_controller_sync_call_count{controller="certificaterequests-issuer-selfsigned"} 7

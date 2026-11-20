@@ -5,7 +5,7 @@ title: HYPHA documentation
 nav: Overview
 section: Get started
 order: 1
-updated: 2026-11-19
+updated: 2026-11-20
 description: Documentation for HYPHA, the monitoring platform by S33D: install the agent, connect integrations, follow metrics, logs and traces, alert and repair.
 lead: HYPHA monitors servers, applications, networks and clouds. It tells you the cause of an outage in your language, then proposes the repair, which you approve in one click.
 ---
@@ -28,7 +28,7 @@ lead: HYPHA monitors servers, applications, networks and clouds. It tells you th
 - **Logs**: collection, full-text search, facets, patterns, exclusion filters, masking of sensitive data.
 - **Traces**: OpenTelemetry, service map, error tracking, real user monitoring (RUM).
 - **Network and clouds**: SNMP devices, AWS, Azure, Google Cloud, OVHcloud, Scaleway, vSphere, Proxmox, Hyper-V, KVM.
-- **Alerts**: monitors, Problems view, eleven channel types, downtimes, escalations, incidents, SLOs, status pages.
+- **Alerts**: monitors, Problems view, twelve channel types including push notifications to your phone, downtimes, escalations, incidents, SLOs, status pages.
 - **Explain and repair**: S33D's AI describes the probable cause with its evidence; a named action is approved in one click and the agent runs it.
 
 ## Two ways to use it

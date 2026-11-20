@@ -17,6 +17,7 @@ import (
 
 	"golang.org/x/sys/windows"
 
+	"s33d.fr/hypha/agent/internal/config"
 	"s33d.fr/hypha/agent/internal/state"
 )
 
@@ -45,18 +46,19 @@ const (
 	evtFormatMessageXML      = 9
 	errNoMoreItems           = syscall.Errno(259)
 	errInsufficientBuffer    = syscall.Errno(122)
+	errEvtInvalidQuery       = syscall.Errno(15001)
 )
 
 // Eventlog lit les journaux d'événements Windows par l'API wevtapi.dll (EvtQuery, EvtNext,
 // EvtRender), canal par canal, en reprenant après le dernier numéro d'enregistrement
 // (EventRecordID) mis en sécurité. Si l'API manque, repli sur `wevtutil qe`.
 type Eventlog struct {
-	channels []string
-	pipe     *Pipeline
-	store    *state.Store
-	saver    *state.Saver
-	log      *slog.Logger
-	setStat  func(string)
+	filters []*evtFilter // un par canal, dans l'ordre de la conf (filtres de la vague 3)
+	pipe    *Pipeline
+	store   *state.Store
+	saver   *state.Saver
+	log     *slog.Logger
+	setStat func(string)
 
 	mu        sync.Mutex
 	durable   map[string]uint64 // canal → dernier EventRecordID en sécurité
@@ -66,8 +68,12 @@ type Eventlog struct {
 }
 
 // NewEventlog prépare la lecture des canaux.
-func NewEventlog(channels []string, pipe *Pipeline, store *state.Store, log *slog.Logger, setStat func(string)) *Eventlog {
-	e := &Eventlog{channels: channels, pipe: pipe, store: store, log: log, setStat: setStat,
+func NewEventlog(channels []config.EventlogChannel, pipe *Pipeline, store *state.Store, log *slog.Logger, setStat func(string)) *Eventlog {
+	var filters []*evtFilter
+	for _, c := range channels {
+		filters = append(filters, newEvtFilter(c))
+	}
+	e := &Eventlog{filters: filters, pipe: pipe, store: store, log: log, setStat: setStat,
 		durable: map[string]uint64{}, next: map[string]uint64{}, publisher: map[string]windows.Handle{},
 		useAPI: procEvtQuery.Find() == nil && procEvtNext.Find() == nil && procEvtRender.Find() == nil}
 	e.saver = state.NewSaver(store, eventlogStateName, func() any {
@@ -103,7 +109,8 @@ func (e *Eventlog) Run(ctx context.Context) {
 	lastCheck := map[string]time.Time{}
 	for {
 		var errs []string
-		for _, ch := range e.channels {
+		for _, f := range e.filters {
+			ch := f.channel
 			if ctx.Err() != nil {
 				return
 			}
@@ -124,7 +131,7 @@ func (e *Eventlog) Run(ctx context.Context) {
 				e.saver.MarkDirty()
 				continue
 			}
-			n, err := e.readAfter(ctx, ch, last)
+			n, err := e.readAfter(ctx, f, last)
 			if err != nil {
 				errs = append(errs, ch+" : "+err.Error())
 				continue
@@ -158,7 +165,8 @@ func (e *Eventlog) Run(ctx context.Context) {
 // Once envoie les 20 derniers événements de chaque canal (aperçu de --once).
 func (e *Eventlog) Once(ctx context.Context) error {
 	var errs []error
-	for _, ch := range e.channels {
+	for _, f := range e.filters {
+		ch := f.channel
 		newest, err := e.newest(ch)
 		if err != nil {
 			errs = append(errs, fmt.Errorf("%s : %w", ch, err))
@@ -168,22 +176,23 @@ func (e *Eventlog) Once(ctx context.Context) error {
 		if newest > 20 {
 			after = newest - 20
 		}
-		if _, err := e.readAfter(ctx, ch, after); err != nil {
+		if _, err := e.readAfter(ctx, f, after); err != nil {
 			errs = append(errs, fmt.Errorf("%s : %w", ch, err))
 		}
 	}
 	return errors.Join(errs...)
 }
 
-// readAfter envoie les événements de numéro > after ; rend leur nombre.
-func (e *Eventlog) readAfter(ctx context.Context, ch string, after uint64) (int, error) {
-	query := fmt.Sprintf("*[System[EventRecordID>%d]]", after)
-	var xmls []string
-	var err error
-	if e.useAPI {
-		xmls, err = e.queryAPI(ch, query, evtQueryForwardDirection, eventlogMaxCycle)
-	} else {
-		xmls, err = queryWevtutil(ctx, ch, query, false, eventlogMaxCycle)
+// readAfter envoie les événements de numéro > after qui passent les filtres du canal ; rend
+// le nombre d'événements lus (écartés compris : leur signet avance aussi).
+func (e *Eventlog) readAfter(ctx context.Context, f *evtFilter, after uint64) (int, error) {
+	ch := f.channel
+	xmls, err := e.query(ctx, ch, f.query(after))
+	if errors.Is(err, errEvtInvalidQuery) && f.xpath {
+		// Requête XPath refusée par cette version de Windows : filtres appliqués ici seulement.
+		e.log.Warn("filtre XPath refusé par Windows, filtrage par l'agent", "canal", ch, "err", err)
+		f.xpath = false
+		xmls, err = e.query(ctx, ch, f.query(after))
 	}
 	if err != nil {
 		return 0, err
@@ -191,29 +200,44 @@ func (e *Eventlog) readAfter(ctx context.Context, ch string, after uint64) (int,
 	now := time.Now()
 	count := 0
 	for _, x := range xmls {
-		l, id, err := parseEventXML(x, now)
-		if err != nil || id == 0 {
+		ev, err := decodeEvent(x)
+		if err != nil || ev.System.EventRecordID == 0 {
 			continue
 		}
+		id := ev.System.EventRecordID
 		e.mu.Lock()
 		if id > e.next[ch] {
 			e.next[ch] = id
 		}
 		e.mu.Unlock()
+		entry := Entry{Skip: true}
+		if f.match(ev) {
+			entry = Entry{Log: eventToLog(ev, now)}
+			f.apply(&entry.Log)
+		}
 		channel, rid := ch, id
-		if !e.pipe.Submit(ctx, Entry{Log: l, Commit: func() {
+		entry.Commit = func() {
 			// Les lots partent dans l'ordre : le dernier confirmé est le plus récent, y compris
 			// après un journal vidé où les numéros repartent de 1.
 			e.mu.Lock()
 			e.durable[channel] = rid
 			e.mu.Unlock()
 			e.saver.MarkDirty()
-		}}) {
+		}
+		if !e.pipe.Submit(ctx, entry) {
 			break
 		}
 		count++
 	}
 	return count, nil
+}
+
+// query exécute une requête XPath sur un canal (API, ou wevtutil à défaut).
+func (e *Eventlog) query(ctx context.Context, ch, query string) ([]string, error) {
+	if e.useAPI {
+		return e.queryAPI(ch, query, evtQueryForwardDirection, eventlogMaxCycle)
+	}
+	return queryWevtutil(ctx, ch, query, false, eventlogMaxCycle)
 }
 
 // newest rend le numéro du dernier événement du canal (0 si le canal est vide).

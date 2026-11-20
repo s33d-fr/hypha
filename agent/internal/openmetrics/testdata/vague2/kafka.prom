@@ -1,0 +1,101 @@
+# TYPE jmx_exporter_build_info gauge
+jmx_exporter_build_info{name="jmx_prometheus_javaagent",version="1.7.0"} 1
+# TYPE jmx_scrape_duration_seconds gauge
+jmx_scrape_duration_seconds 0.0
+# TYPE jmx_scrape_error gauge
+jmx_scrape_error 0.0
+# TYPE jvm_classes_currently_loaded gauge
+jvm_classes_currently_loaded 9238.0
+# TYPE jvm_gc_collection_seconds summary
+jvm_gc_collection_seconds_count{gc="Copy"} 2
+jvm_gc_collection_seconds_sum{gc="Copy"} 0.186
+jvm_gc_collection_seconds_count{gc="MarkSweepCompact"} 0
+jvm_gc_collection_seconds_sum{gc="MarkSweepCompact"} 0.0
+# TYPE jvm_memory_committed_bytes gauge
+jvm_memory_committed_bytes{area="heap"} 3.8928384E8
+jvm_memory_committed_bytes{area="nonheap"} 3.0212096E7
+# TYPE jvm_memory_max_bytes gauge
+jvm_memory_max_bytes{area="heap"} 3.8928384E8
+jvm_memory_max_bytes{area="nonheap"} -1.0
+# TYPE jvm_memory_used_bytes gauge
+jvm_memory_used_bytes{area="heap"} 2.10307944E8
+jvm_memory_used_bytes{area="nonheap"} 2.8271744E7
+# TYPE jvm_threads_current gauge
+jvm_threads_current 99.0
+# TYPE jvm_threads_deadlocked gauge
+jvm_threads_deadlocked 0.0
+# TYPE kafka_controller_activebrokercount gauge
+kafka_controller_activebrokercount 1.0
+# TYPE kafka_controller_activecontrollercount gauge
+kafka_controller_activecontrollercount 1.0
+# TYPE kafka_controller_fencedbrokercount gauge
+kafka_controller_fencedbrokercount 0.0
+# TYPE kafka_controller_globalpartitioncount gauge
+kafka_controller_globalpartitioncount 51.0
+# TYPE kafka_controller_globaltopiccount gauge
+kafka_controller_globaltopiccount 2.0
+# TYPE kafka_controller_offlinepartitionscount gauge
+kafka_controller_offlinepartitionscount 0.0
+# TYPE kafka_controller_preferredreplicaimbalancecount gauge
+kafka_controller_preferredreplicaimbalancecount 0.0
+# TYPE kafka_controller_stats_uncleanleaderelectionspersec_total counter
+kafka_controller_stats_uncleanleaderelectionspersec_total 0.0
+# TYPE kafka_log_flush_time_ms_p99 gauge
+kafka_log_flush_time_ms_p99 22.685865439999958
+# TYPE kafka_log_flushes_total counter
+kafka_log_flushes_total 241.0
+# TYPE kafka_network_processor_avg_idle_percent gauge
+kafka_network_processor_avg_idle_percent 1.0
+# TYPE kafka_network_request_totaltimems_99thpercentile gauge
+kafka_network_request_totaltimems_99thpercentile{request="FetchConsumer"} 0.0
+kafka_network_request_totaltimems_99thpercentile{request="FetchFollower"} 0.0
+kafka_network_request_totaltimems_99thpercentile{request="Metadata"} 14.0
+kafka_network_request_totaltimems_99thpercentile{request="OffsetCommit"} 0.0
+# TYPE kafka_network_request_totaltimems_mean gauge
+kafka_network_request_totaltimems_mean{request="FetchConsumer"} 0.0
+kafka_network_request_totaltimems_mean{request="FetchFollower"} 0.0
+kafka_network_request_totaltimems_mean{request="Metadata"} 14.0
+kafka_network_request_totaltimems_mean{request="OffsetCommit"} 0.0
+# TYPE kafka_network_requests_total counter
+kafka_network_requests_total{request="Metadata",version="13"} 1.0
+kafka_network_requests_total{request="Produce",version="13"} 6.0
+# TYPE kafka_server_brokertopicmetrics_bytesinpersec_total counter
+kafka_server_brokertopicmetrics_bytesinpersec_total 55118.0
+# TYPE kafka_server_brokertopicmetrics_bytesoutpersec_total counter
+kafka_server_brokertopicmetrics_bytesoutpersec_total 0.0
+# TYPE kafka_server_brokertopicmetrics_bytesrejectedpersec_total counter
+kafka_server_brokertopicmetrics_bytesrejectedpersec_total 0.0
+# TYPE kafka_server_brokertopicmetrics_failedfetchrequestspersec_total counter
+kafka_server_brokertopicmetrics_failedfetchrequestspersec_total 0.0
+# TYPE kafka_server_brokertopicmetrics_failedproducerequestspersec_total counter
+kafka_server_brokertopicmetrics_failedproducerequestspersec_total 0.0
+# TYPE kafka_server_brokertopicmetrics_messagesinpersec_total counter
+kafka_server_brokertopicmetrics_messagesinpersec_total 500.0
+# TYPE kafka_server_brokertopicmetrics_totalfetchrequestspersec_total counter
+kafka_server_brokertopicmetrics_totalfetchrequestspersec_total 0.0
+# TYPE kafka_server_brokertopicmetrics_totalproducerequestspersec_total counter
+kafka_server_brokertopicmetrics_totalproducerequestspersec_total 6.0
+# TYPE kafka_server_replicamanager_isrexpandspersec_total counter
+kafka_server_replicamanager_isrexpandspersec_total 0.0
+# TYPE kafka_server_replicamanager_isrshrinkspersec_total counter
+kafka_server_replicamanager_isrshrinkspersec_total 0.0
+# TYPE kafka_server_replicamanager_leadercount gauge
+kafka_server_replicamanager_leadercount 51.0
+# TYPE kafka_server_replicamanager_offlinereplicacount gauge
+kafka_server_replicamanager_offlinereplicacount 0.0
+# TYPE kafka_server_replicamanager_partitioncount gauge
+kafka_server_replicamanager_partitioncount 51.0
+# TYPE kafka_server_replicamanager_underminisrpartitioncount gauge
+kafka_server_replicamanager_underminisrpartitioncount 0.0
+# TYPE kafka_server_replicamanager_underreplicatedpartitions gauge
+kafka_server_replicamanager_underreplicatedpartitions 0.0
+# TYPE kafka_server_requesthandler_avg_idle_percent gauge
+kafka_server_requesthandler_avg_idle_percent 0.9878686335433091
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 19.07
+# TYPE process_max_fds gauge
+process_max_fds 524288.0
+# TYPE process_open_fds gauge
+process_open_fds 222.0
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 4.2504192E8

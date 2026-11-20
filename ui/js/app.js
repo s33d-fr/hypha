@@ -8,6 +8,7 @@ import { fmtDateTime, toLocalInput, fromLocalInput } from './format.js';
 import { dropdown, menuItem, errorState, loading, toast } from './components/ui.js';
 import { destroyAllCharts } from './components/chart.js';
 import { problemBadge, startProblemCounter } from './components/problem-count.js';
+import { unsubscribeDevice } from './pwa.js';
 
 const page = (loader) => loader;
 
@@ -273,6 +274,8 @@ export function startApp(root, me, hooks) {
   function docsUrl() { return getLang() === 'en' ? '/en/docs/' : '/docs/'; }
 
   async function logout() {
+    // Appareil partagé : plus aucune notification push pour ce compte après une déconnexion explicite.
+    try { await unsubscribeDevice(); } catch (e) { /* au mieux */ }
     try { await post('/api/auth/deconnexion', {}, { quiet401: true }); } catch (e) { /* session déjà close */ }
     teardown();
     if (hooks && hooks.onLogout) hooks.onLogout();

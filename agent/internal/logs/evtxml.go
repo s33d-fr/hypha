@@ -44,7 +44,11 @@ type evtEvent struct {
 		Inner string `xml:",innerxml"`
 	} `xml:"UserData"`
 	RenderingInfo struct {
-		Message string `xml:"Message"`
+		Message  string   `xml:"Message"`
+		Level    string   `xml:"Level"`
+		Task     string   `xml:"Task"`
+		Opcode   string   `xml:"Opcode"`
+		Keywords []string `xml:"Keywords>Keyword"`
 	} `xml:"RenderingInfo"`
 }
 
@@ -73,11 +77,20 @@ func evtLevelStatus(level, keywords string) string {
 // parseEventXML convertit un événement en ligne de journal ; rend aussi son numéro
 // d'enregistrement (le signet).
 func parseEventXML(data string, now time.Time) (model.Log, uint64, error) {
-	var ev evtEvent
-	if err := xml.Unmarshal([]byte(data), &ev); err != nil {
+	ev, err := decodeEvent(data)
+	if err != nil {
 		return model.Log{}, 0, err
 	}
-	return eventToLog(&ev, now), ev.System.EventRecordID, nil
+	return eventToLog(ev, now), ev.System.EventRecordID, nil
+}
+
+// decodeEvent lit le XML d'un événement.
+func decodeEvent(data string) (*evtEvent, error) {
+	var ev evtEvent
+	if err := xml.Unmarshal([]byte(data), &ev); err != nil {
+		return nil, err
+	}
+	return &ev, nil
 }
 
 func eventToLog(ev *evtEvent, now time.Time) model.Log {
@@ -122,10 +135,26 @@ func eventToLog(ev *evtEvent, now time.Time) model.Log {
 		"provider":  sys.Provider.Name,
 		"computer":  sys.Computer,
 	}
+	ri := &ev.RenderingInfo
 	for k, v := range map[string]string{"task": sys.Task, "opcode": sys.Opcode, "keywords": sys.Keywords,
-		"user_sid": sys.Security.UserID, "pid": sys.Execution.ProcessID} {
+		"user_sid": sys.Security.UserID, "pid": sys.Execution.ProcessID, "level": sys.Level,
+		// Libellés rendus par Windows, dans sa langue (« Erreur », « Ouverture de session »…).
+		"level_text": strings.TrimSpace(ri.Level), "task_text": strings.TrimSpace(ri.Task),
+		"opcode_text": strings.TrimSpace(ri.Opcode), "keywords_text": strings.TrimSpace(strings.Join(ri.Keywords, ", "))} {
 		if v != "" {
 			attrs[k] = v
+		}
+	}
+	// Niveau au sens des filtres (critical … verbose, audit_success, audit_failure) : facette stable
+	// quelle que soit la langue de Windows.
+	names := evtLevelNames(sys.Level, sys.Keywords)
+	attrs["level_name"] = names[len(names)-1]
+	for _, n := range names {
+		switch n {
+		case "audit_success":
+			attrs["audit"] = "success"
+		case "audit_failure":
+			attrs["audit"] = "failure"
 		}
 	}
 	if len(data) > 0 {

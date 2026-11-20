@@ -5,7 +5,7 @@ title: Documentation de HYPHA
 nav: Vue d'ensemble
 section: Démarrer
 order: 1
-updated: 2026-11-19
+updated: 2026-11-20
 description: Documentation de HYPHA, la supervision de S33D : installer l'agent, brancher ses intégrations, suivre métriques, journaux et traces, alerter et réparer.
 lead: HYPHA supervise serveurs, applications, réseau et clouds. Il dit la cause d'une panne dans votre langue, puis propose la réparation, que vous validez d'un clic.
 ---
@@ -28,7 +28,7 @@ lead: HYPHA supervise serveurs, applications, réseau et clouds. Il dit la cause
 - **Journaux** : collecte, recherche plein texte, facettes, motifs, filtres d'exclusion, masquage des données sensibles.
 - **Traces** : OpenTelemetry, carte des services, suivi des erreurs, mesure de l'expérience réelle des visiteurs (RUM).
 - **Réseau et clouds** : équipements SNMP, AWS, Azure, Google Cloud, OVHcloud, Scaleway, vSphere, Proxmox, Hyper-V, KVM.
-- **Alertes** : moniteurs, vue Problèmes, onze types de canaux, maintenances, escalades, incidents, SLO, pages de statut.
+- **Alertes** : moniteurs, vue Problèmes, douze types de canaux dont les notifications push sur le téléphone, maintenances, escalades, incidents, SLO, pages de statut.
 - **Explication et réparation** : l'IA de S33D décrit la cause probable avec ses preuves ; un geste nommé se valide d'un clic et l'agent l'exécute.
 
 ## Deux façons de l'utiliser

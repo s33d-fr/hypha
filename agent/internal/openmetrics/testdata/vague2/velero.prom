@@ -1,0 +1,26 @@
+# TYPE go_gc_gogc_percent gauge
+go_gc_gogc_percent 100
+# TYPE velero_backup_attempt_total counter
+velero_backup_attempt_total{schedule=""} 0
+# TYPE velero_backup_failure_total counter
+velero_backup_failure_total{schedule=""} 0
+# TYPE velero_backup_items_errors gauge
+velero_backup_items_errors{schedule=""} 0
+# TYPE velero_backup_last_status gauge
+velero_backup_last_status{schedule=""} 0
+# TYPE velero_backup_location_status_gauge gauge
+velero_backup_location_status_gauge{backup_location_name="default"} 0
+# TYPE velero_backup_partial_failure_total counter
+velero_backup_partial_failure_total{schedule=""} 0
+# TYPE velero_backup_success_total counter
+velero_backup_success_total{schedule=""} 0
+# TYPE velero_backup_total gauge
+velero_backup_total 1
+# TYPE velero_backup_validation_failure_total counter
+velero_backup_validation_failure_total{schedule=""} 1
+# TYPE velero_restore_failed_total counter
+velero_restore_failed_total{schedule=""} 0
+# TYPE velero_restore_partial_failure_total counter
+velero_restore_partial_failure_total{schedule=""} 0
+# TYPE velero_restore_success_total counter
+velero_restore_success_total{schedule=""} 0

@@ -300,6 +300,12 @@ async def ack_groups(monitor_id: int, request: Request, data: dict = Body(...), 
     comment = data.get("comment") or ""
     if not isinstance(comment, str) or len(comment) > 2000:
         raise bad_request("comment : chaîne de 2 000 caractères au plus")
+    rows = await apply_ack(p, monitor_id, groups, comment, request)
+    return ok({"acked": [{"group": r["group_key"], "state": r["state"], "acked_at": r["acked_at"]} for r in rows]})
+
+
+async def apply_ack(p: Principal, monitor_id: int, groups: list[str], comment: str, request: Request) -> list[dict]:
+    """Acquittement dans l'espace de `p` (route ci-dessus, et bouton « Acquitter » d'une notification push)."""
     async with rt().db.writer() as conn:
         mon = await _load(conn, p.org_id, monitor_id)
         rows = await fetch_all(conn, """
@@ -325,7 +331,7 @@ async def ack_groups(monitor_id: int, request: Request, data: dict = Body(...), 
         await audit.record(conn, org_id=p.org_id, principal=p, action="ack", object_type="monitor",
                            object_id=monitor_id, summary=f"{len(rows)} groupe(s) de « {mon['name']} » acquitté(s)",
                            after={"groups": [r["group_key"] for r in rows], "comment": comment}, request=request)
-    return ok({"acked": [{"group": r["group_key"], "state": r["state"], "acked_at": r["acked_at"]} for r in rows]})
+    return rows
 
 
 @router.delete("/monitors/{monitor_id}/groups/ack")

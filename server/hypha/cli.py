@@ -144,6 +144,14 @@ def _facturation(args) -> None:
     asyncio.run(run())
 
 
+def _vapid(args) -> None:
+    """Nouvelle clé VAPID (notifications push) : la ligne à poser dans le .env, sur la sortie standard."""
+    from .push.webpush import generate_vapid
+    private, public = generate_vapid()
+    print(f"HYPHA_VAPID_PRIVATE_KEY={private}")
+    print(f"# clé publique (déduite de la privée, pour information) : {public}", file=sys.stderr)
+
+
 def main(argv=None) -> None:
     parser = argparse.ArgumentParser(prog="python -m hypha", description="Serveur HYPHA")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -173,6 +181,8 @@ def main(argv=None) -> None:
     p.add_argument("--email")
     p.add_argument("--name")
     p.set_defaults(fn=_create_user)
+    p = sub.add_parser("vapid-key", help="génère la clé des notifications push (ligne HYPHA_VAPID_PRIVATE_KEY du .env)")
+    p.set_defaults(fn=_vapid)
     args = parser.parse_args(argv)
     setup_logging(get_settings().log_level)
     args.fn(args)

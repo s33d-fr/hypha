@@ -1,0 +1,55 @@
+# TYPE solr_metrics_jetty_response_total counter
+solr_metrics_jetty_response_total{status="1xx"} 0.0
+solr_metrics_jetty_response_total{status="2xx"} 1.0
+solr_metrics_jetty_response_total{status="3xx"} 0.0
+solr_metrics_jetty_response_total{status="4xx"} 0.0
+# TYPE solr_metrics_jvm_buffers gauge
+solr_metrics_jvm_buffers{item="Count",pool="direct"} 4.0
+solr_metrics_jvm_buffers{item="Count",pool="mapped"} 0.0
+solr_metrics_jvm_buffers{item="Count",pool="mapped - 'non-volatile memory'"} 0.0
+# TYPE solr_metrics_node_cores gauge
+solr_metrics_node_cores{category="CONTAINER",item="lazy"} 0.0
+solr_metrics_node_cores{category="CONTAINER",item="loaded"} 1.0
+solr_metrics_node_cores{category="CONTAINER",item="unloaded"} 0.0
+# TYPE solr_metrics_core_index_size_bytes gauge
+solr_metrics_core_index_size_bytes{core="essai"} 69.0
+# TYPE solr_metrics_core_request_time_ms summary
+solr_metrics_core_request_time_ms{category="ADMIN",core="essai",handler="/admin/file",quantile="0.5"} 0.0
+solr_metrics_core_request_time_ms{category="ADMIN",core="essai",handler="/admin/file",quantile="0.75"} 0.0
+solr_metrics_core_request_time_ms{category="ADMIN",core="essai",handler="/admin/file",quantile="0.99"} 0.0
+solr_metrics_core_request_time_ms{category="ADMIN",core="essai",handler="/admin/file",quantile="0.999"} 0.0
+solr_metrics_core_request_time_ms_count{category="ADMIN",core="essai",handler="/admin/file"} 0
+solr_metrics_core_request_time_ms_sum{category="ADMIN",core="essai",handler="/admin/file"} 0.0
+solr_metrics_core_request_time_ms{category="ADMIN",core="essai",handler="/admin/luke",quantile="0.5"} 0.0
+solr_metrics_core_request_time_ms{category="ADMIN",core="essai",handler="/admin/luke",quantile="0.75"} 0.0
+solr_metrics_core_request_time_ms{category="ADMIN",core="essai",handler="/admin/luke",quantile="0.99"} 0.0
+solr_metrics_core_request_time_ms{category="ADMIN",core="essai",handler="/admin/luke",quantile="0.999"} 0.0
+solr_metrics_core_request_time_ms_count{category="ADMIN",core="essai",handler="/admin/luke"} 0
+solr_metrics_core_request_time_ms_sum{category="ADMIN",core="essai",handler="/admin/luke"} 0.0
+solr_metrics_core_request_time_ms{category="ADMIN",core="essai",handler="/admin/mbeans",quantile="0.5"} 0.0
+solr_metrics_core_request_time_ms{category="ADMIN",core="essai",handler="/admin/mbeans",quantile="0.75"} 0.0
+solr_metrics_core_request_time_ms{category="ADMIN",core="essai",handler="/admin/mbeans",quantile="0.99"} 0.0
+solr_metrics_core_request_time_ms{category="ADMIN",core="essai",handler="/admin/mbeans",quantile="0.999"} 0.0
+solr_metrics_core_request_time_ms_count{category="ADMIN",core="essai",handler="/admin/mbeans"} 0
+solr_metrics_core_request_time_ms_sum{category="ADMIN",core="essai",handler="/admin/mbeans"} 0.0
+solr_metrics_core_request_time_ms{category="ADMIN",core="essai",handler="/admin/ping",quantile="0.5"} 0.0
+solr_metrics_core_request_time_ms{category="ADMIN",core="essai",handler="/admin/ping",quantile="0.75"} 0.0
+solr_metrics_core_request_time_ms{category="ADMIN",core="essai",handler="/admin/ping",quantile="0.99"} 0.0
+solr_metrics_core_request_time_ms{category="ADMIN",core="essai",handler="/admin/ping",quantile="0.999"} 0.0
+solr_metrics_core_request_time_ms_count{category="ADMIN",core="essai",handler="/admin/ping"} 0
+solr_metrics_core_request_time_ms_sum{category="ADMIN",core="essai",handler="/admin/ping"} 0.0
+# TYPE solr_metrics_core_requests_total counter
+solr_metrics_core_requests_total{category="ADMIN",core="essai",handler="/admin/file",type="clientErrors"} 0.0
+solr_metrics_core_requests_total{category="ADMIN",core="essai",handler="/admin/file",type="errors"} 0.0
+solr_metrics_core_requests_total{category="ADMIN",core="essai",handler="/admin/file",type="requests"} 0.0
+solr_metrics_core_requests_total{category="ADMIN",core="essai",handler="/admin/file",type="serverErrors"} 0.0
+# TYPE solr_metrics_core_searcher_documents gauge
+solr_metrics_core_searcher_documents{core="essai",type="deletedDocs"} 0.0
+solr_metrics_core_searcher_documents{core="essai",type="fullSortCount"} 0.0
+solr_metrics_core_searcher_documents{core="essai",type="indexCommitSize"} 69.0
+solr_metrics_core_searcher_documents{core="essai",type="indexVersion"} 2.0
+# TYPE solr_metrics_core_update_handler gauge
+solr_metrics_core_update_handler{category="REPLICATION",core="essai",handler="/replication",type="generation"} 1.0
+solr_metrics_core_update_handler{category="UPDATE",core="essai",handler="updateHandler",type="adds"} 0.0
+solr_metrics_core_update_handler{category="UPDATE",core="essai",handler="updateHandler",type="autoCommits"} 0.0
+solr_metrics_core_update_handler{category="UPDATE",core="essai",handler="updateHandler",type="deletesById"} 0.0

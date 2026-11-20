@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logiciels exposant Prometheus : Consul, Vault, Traefik, Kafka, GitLab, Argo CD… · HYPHA</title>
+<meta name="description" content="Superviser avec HYPHA les logiciels qui publient leurs mesures au format Prometheus (Consul, Vault, etcd, CoreDNS, Traefik, Envoy, Kong, CockroachDB, ScyllaDB, Pulsar, Celery, n8n, Temporal, GitLab, SonarQube, Solr, WildFly, cert-manager, Velero, Argo CD, Linkerd, KEDA) et les logiciels Java par l&#x27;exportateur JMX Prometheus (Tomcat, Kafka, ActiveMQ, Cassandra).">
+<link rel="canonical" href="https://hypha.s33d.fr/docs/logiciels-prometheus/">
+<link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/logiciels-prometheus/">
+<link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/prometheus-software/">
+<link rel="alternate" hreflang="x-default" href="https://hypha.s33d.fr/docs/logiciels-prometheus/">
+<meta name="color-scheme" content="dark light">
+<meta property="og:title" content="Logiciels exposant Prometheus : Consul, Vault, Traefik, Kafka, GitLab, Argo CD…">
+<meta property="og:description" content="Superviser avec HYPHA les logiciels qui publient leurs mesures au format Prometheus (Consul, Vault, etcd, CoreDNS, Traefik, Envoy, Kong, CockroachDB, ScyllaDB, Pulsar, Celery, n8n, Temporal, GitLab, SonarQube, Solr, WildFly, cert-manager, Velero, Argo CD, Linkerd, KEDA) et les logiciels Java par l&#x27;exportateur JMX Prometheus (Tomcat, Kafka, ActiveMQ, Cassandra).">
+<meta property="og:url" content="https://hypha.s33d.fr/docs/logiciels-prometheus/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="HYPHA">
+<link rel="icon" type="image/svg+xml" href="/assets/img/hypha.svg">
+<link rel="stylesheet" href="/assets/css/site.css">
+<script>try{var t=localStorage.getItem('hypha.theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Documentation", "item": "https://hypha.s33d.fr/docs/"}, {"@type": "ListItem", "position": 2, "name": "Logiciels exposant Prometheus : Consul, Vault, Traefik, Kafka, GitLab, Argo CD…", "item": "https://hypha.s33d.fr/docs/logiciels-prometheus/"}]}</script>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a><header class="top"><div class="top-in"><a class="brand" href="/" aria-label="HYPHA"><img src="/assets/img/hypha.svg" alt="" width="28" height="28"><span>HYPHA<small>par S33D</small></span></a><nav aria-label="HYPHA"><a href="/docs/" aria-current="page">Documentation</a><a href="/tarifs/">Tarifs</a><a href="/faq/" class="hide-sm">FAQ</a><a class="lang" href="/en/docs/prometheus-software/" hreflang="en" data-lang="en" title="English">EN</a><a class="btn" href="/">Se connecter</a></nav></div></header>
+<div class="wrap"><aside class="side"><details class="nav" open><summary>Sommaire de la documentation</summary><h2>Démarrer</h2><ul><li><a href="/docs/">Vue d&#x27;ensemble</a></li><li><a href="/docs/demarrage/">Démarrer</a></li><li><a href="/docs/videos/">Vidéos</a></li></ul><h2>Installer l&#x27;agent</h2><ul><li><a href="/docs/agent-linux/">Linux</a></li><li><a href="/docs/agent-windows/">Windows</a></li><li><a href="/docs/agent-docker/">Docker</a></li><li><a href="/docs/kubernetes/">Kubernetes</a></li><li><a href="/docs/configuration/">Configuration de l&#x27;agent</a></li><li><a href="/docs/flotte/">Flotte et mises à jour</a></li></ul><h2>Intégrations</h2><ul><li><a href="/docs/integrations/">Système, web et messagerie</a></li><li><a href="/docs/bases-de-donnees/">Bases de données</a></li><li><a href="/docs/snmp/">SNMP</a></li><li><a href="/docs/cloud/">Clouds</a></li><li><a href="/docs/virtualisation/">Virtualisation</a></li><li><a href="/docs/collecte-generique/">Prometheus, Nagios, syslog</a></li><li><a href="/docs/equipements-syslog/">Équipements (syslog)</a></li><li><a href="/docs/applications-et-services/">Applications et services</a></li><li><a href="/docs/logiciels-prometheus/" aria-current="page">Logiciels Prometheus</a></li><li><a href="/docs/windows/">Windows</a></li><li><a href="/docs/ia-et-gpu/">IA et GPU</a></li></ul><h2>Observer</h2><ul><li><a href="/docs/metriques/">Métriques et tableaux</a></li><li><a href="/docs/journaux/">Journaux</a></li><li><a href="/docs/traces/">Traces et OpenTelemetry</a></li><li><a href="/docs/synthetiques/">Tests synthétiques</a></li></ul><h2>Alerter et agir</h2><ul><li><a href="/docs/moniteurs/">Moniteurs</a></li><li><a href="/docs/alertes-et-canaux/">Alertes et canaux</a></li><li><a href="/docs/maintenances/">Maintenances</a></li><li><a href="/docs/incidents/">Incidents</a></li><li><a href="/docs/slo/">SLO</a></li><li><a href="/docs/pages-de-statut/">Pages de statut</a></li><li><a href="/docs/explication-et-reparation/">Explication et réparation</a></li><li><a href="/docs/application-mobile/">Application mobile</a></li></ul><h2>Administrer</h2><ul><li><a href="/docs/comptes-et-roles/">Comptes et rôles</a></li><li><a href="/docs/formules-et-facturation/">Formules et facturation</a></li><li><a href="/docs/api/">API</a></li><li><a href="/docs/auto-hebergement/">Auto-hébergement</a></li><li><a href="/docs/securite/">Sécurité</a></li></ul></details></aside><main class="doc" id="contenu"><div class="crumbs"><a href="/docs/">Documentation</a> › Intégrations</div><h1>Logiciels exposant Prometheus : Consul, Vault, Traefik, Kafka, GitLab, Argo CD…</h1><p class="lead">Vingt-neuf profils prêts pour le lecteur OpenMetrics de l'agent : une ligne de conf par logiciel, des noms de mesures propres, des modèles de moniteurs et un tableau au catalogue pour chacun.</p><h2 id="en-un-coup-d-oeil">En un coup d'œil<a class="anchor" href="#en-un-coup-d-oeil" aria-hidden="true">#</a></h2>
+<p>Chaque logiciel est lu par le <a href="/docs/collecte-generique/">lecteur OpenMetrics</a> de l'agent, avec un <strong>profil</strong> qui donne le port, le chemin, les familles retenues, leurs noms HYPHA et les étiquettes gardées. Les profils ont été écrits sur les expositions des vrais logiciels, lancés en conteneur dans un environnement d'essai de S33D (versions dans la dernière colonne).</p>
+<div class="table"><table><thead><tr><th>Logiciel</th><th>Profil</th><th>Adresse par défaut</th><th>Espace de noms</th><th>Éprouvé sur</th></tr></thead><tbody><tr><td>HashiCorp Consul</td><td><code>consul</code></td><td><code>http://127.0.0.1:8500/v1/agent/metrics?format=prometheus</code></td><td><code>consul.*</code></td><td>Consul 2.1.0</td></tr><tr><td>HashiCorp Vault</td><td><code>vault</code></td><td><code>https://127.0.0.1:8200/v1/sys/metrics?format=prometheus</code></td><td><code>vault.*</code></td><td>Vault 2.2.2</td></tr><tr><td>etcd</td><td><code>etcd</code></td><td><code>http://127.0.0.1:2379/metrics</code></td><td><code>etcd.*</code></td><td>etcd 3.6.5</td></tr><tr><td>CoreDNS</td><td><code>coredns</code></td><td><code>http://127.0.0.1:9153/metrics</code></td><td><code>coredns.*</code></td><td>CoreDNS 1.12.4</td></tr><tr><td>Traefik Proxy</td><td><code>traefik</code></td><td><code>http://127.0.0.1:8080/metrics</code></td><td><code>traefik.*</code></td><td>Traefik 3.7.19</td></tr><tr><td>Envoy Proxy</td><td><code>envoy</code></td><td><code>http://127.0.0.1:9901/stats/prometheus</code></td><td><code>envoy.*</code></td><td>Envoy 1.36.13</td></tr><tr><td>Kong Gateway</td><td><code>kong</code></td><td><code>http://127.0.0.1:8100/metrics</code></td><td><code>kong.*</code></td><td>Kong 3.9.4</td></tr><tr><td>CockroachDB</td><td><code>cockroachdb</code></td><td><code>https://127.0.0.1:8080/_status/vars</code></td><td><code>cockroachdb.*</code></td><td>CockroachDB 26.4.1</td></tr><tr><td>ScyllaDB</td><td><code>scylla</code></td><td><code>http://127.0.0.1:9180/metrics</code></td><td><code>scylla.*</code></td><td>ScyllaDB 2026.3.6</td></tr><tr><td>Apache Pulsar</td><td><code>pulsar</code></td><td><code>http://127.0.0.1:8080/metrics/</code></td><td><code>pulsar.*</code></td><td>Pulsar 5.0.1 (standalone)</td></tr><tr><td>Celery (par Flower)</td><td><code>celery</code></td><td><code>http://127.0.0.1:5555/metrics</code></td><td><code>celery.*</code></td><td>Celery 5.7.0, Flower 2.2.0</td></tr><tr><td>n8n</td><td><code>n8n</code></td><td><code>http://127.0.0.1:5678/metrics</code></td><td><code>n8n.*</code></td><td>n8n 2.48.6</td></tr><tr><td>Temporal</td><td><code>temporal</code></td><td><code>http://127.0.0.1:9090/metrics</code></td><td><code>temporal.*</code></td><td>Temporal 1.32.2</td></tr><tr><td>GitLab (Rails, Puma)</td><td><code>gitlab</code></td><td><code>http://127.0.0.1:8080/-/metrics</code></td><td><code>gitlab.*</code></td><td>GitLab CE 19.6.1</td></tr><tr><td>GitLab (Sidekiq)</td><td><code>gitlab_sidekiq</code></td><td><code>http://127.0.0.1:8082/metrics</code></td><td><code>gitlab_sidekiq.*</code></td><td>GitLab CE 19.6.1</td></tr><tr><td>GitLab (Gitaly)</td><td><code>gitaly</code></td><td><code>http://127.0.0.1:9236/metrics</code></td><td><code>gitaly.*</code></td><td>GitLab CE 19.6.1</td></tr><tr><td>SonarQube</td><td><code>sonarqube</code></td><td><code>http://127.0.0.1:9000/api/monitoring/metrics</code></td><td><code>sonarqube.*</code></td><td>Community Build 26.11</td></tr><tr><td>Apache Solr</td><td><code>solr</code></td><td><code>http://127.0.0.1:8983/solr/admin/metrics?wt=prometheus</code></td><td><code>solr.*</code></td><td>Solr 10.1.0 et 9.11.0</td></tr><tr><td>WildFly</td><td><code>wildfly</code></td><td><code>http://127.0.0.1:9990/metrics</code></td><td><code>wildfly.*</code></td><td>WildFly 42.0.0</td></tr><tr><td>Apache Tomcat</td><td><code>tomcat</code></td><td><code>http://127.0.0.1:9404/metrics</code> (exportateur JMX)</td><td><code>tomcat.*</code></td><td>Tomcat 11.0.29</td></tr><tr><td>Apache Kafka</td><td><code>kafka</code></td><td><code>http://127.0.0.1:9405/metrics</code> (exportateur JMX)</td><td><code>kafka.*</code></td><td>Kafka 4.3.1 (KRaft)</td></tr><tr><td>Apache ActiveMQ Classic</td><td><code>activemq</code></td><td><code>http://127.0.0.1:9406/metrics</code> (exportateur JMX)</td><td><code>activemq.*</code></td><td>ActiveMQ 6.2.0</td></tr><tr><td>Apache Cassandra</td><td><code>cassandra</code></td><td><code>http://127.0.0.1:9407/metrics</code> (exportateur JMX)</td><td><code>cassandra.*</code></td><td>Cassandra 5.0.9</td></tr><tr><td>cert-manager</td><td><code>cert_manager</code></td><td><code>http://127.0.0.1:9402/metrics</code></td><td><code>cert_manager.*</code></td><td>cert-manager 1.21.3 (k3s 1.35)</td></tr><tr><td>Velero</td><td><code>velero</code></td><td><code>http://127.0.0.1:8085/metrics</code></td><td><code>velero.*</code></td><td>Velero 1.18.2 (k3s 1.35)</td></tr><tr><td>Argo CD (contrôleur)</td><td><code>argocd</code></td><td><code>http://127.0.0.1:8082/metrics</code></td><td><code>argocd.*</code></td><td>Argo CD 3.6.2 (k3s 1.35)</td></tr><tr><td>Argo CD (dépôts)</td><td><code>argocd_repo_server</code></td><td><code>http://127.0.0.1:8084/metrics</code></td><td><code>argocd_repo_server.*</code></td><td>Argo CD 3.6.2 (k3s 1.35)</td></tr><tr><td>Linkerd (mandataire)</td><td><code>linkerd</code></td><td><code>http://127.0.0.1:4191/metrics</code></td><td><code>linkerd.*</code></td><td>Linkerd edge-26.11.2 (k3s 1.35)</td></tr><tr><td>KEDA</td><td><code>keda</code></td><td><code>http://127.0.0.1:8080/metrics</code></td><td><code>keda.*</code></td><td>KEDA 2.21.1 (k3s 1.35)</td></tr></tbody></table></div>
+<p>« Éprouvé » veut dire : le logiciel a tourné en conteneur, l'agent l'a lu et a produit les noms décrits ici. Quelques familles documentées par l'éditeur mais absentes pendant l'essai (elles n'apparaissent qu'après l'événement) sont retenues et signalées plus bas.</p>
+<h2 id="declarer-un-logiciel">Déclarer un logiciel<a class="anchor" href="#declarer-un-logiciel" aria-hidden="true">#</a></h2>
+<p>Une entrée par logiciel dans <code>integrations.openmetrics</code> :</p>
+<pre><code class="language-yaml">integrations:
+  openmetrics:
+    - profile: consul                       # adresse par défaut du tableau ci-dessus
+    - profile: traefik
+      url: http://127.0.0.1:8082            # sans chemin : celui du profil est ajouté
+    - profile: vault
+      url: https://vault.lan:8200           # ?format=prometheus est ajouté aussi
+      ca_file: /etc/hypha/vault-ca.pem
+      bearer_token_file: /etc/hypha/vault-metrics.token
+    - profile: kafka
+      name: kafka-1                         # deux courtiers sur la même machine : un name chacun
+    - profile: kafka
+      name: kafka-2
+      url: http://127.0.0.1:9415</code></pre>
+<ul><li><code>instance_name</code> vaut le nom du profil, ou <code>name</code> ; chaque série porte aussi <code>endpoint</code>.</li><li>Le contrôle <code>openmetrics.can_connect</code> passe en critique quand la cible ne répond plus ; le modèle <strong>Logiciel injoignable (profil OpenMetrics)</strong> le surveille pour un <code>instance_name</code> donné.</li><li>Les compteurs deviennent des débits par seconde, les histogrammes et résumés donnent <code>.count</code>, <code>.sum</code>, <code>.avg</code> et leurs centiles (<code>.p50</code>, <code>.p95</code>, <code>.p99</code>…).</li><li><code>metrics</code>, <code>rename</code>, <code>labels</code> et <code>tags</code> de l'entrée complètent le profil ; <code>max_series</code> (2 000) borne le nombre de séries d'une cible.</li></ul>
+<h2 id="infrastructure">Infrastructure<a class="anchor" href="#infrastructure" aria-hidden="true">#</a></h2>
+<h3 id="hashicorp-consul">HashiCorp Consul<a class="anchor" href="#hashicorp-consul" aria-hidden="true">#</a></h3>
+<p>Dans la conf de l'agent Consul : <code>telemetry { prometheus_retention_time = &quot;60s&quot; disable_hostname = true }</code> (sans durée de rétention, la réponse est vide). Avec les ACL, un jeton <code>agent:read</code> (<code>bearer_token_file</code>).</p>
+<ul><li><code>consul.server.is_leader</code>, <code>consul.autopilot.healthy</code>, <code>consul.autopilot.failure_tolerance</code>, <code>consul.members.servers</code>, <code>consul.members.clients</code>.</li><li>Catalogue : <code>consul.catalog.nodes</code>, <code>.catalog.services</code>, <code>.catalog.service_instances</code>, <code>consul.kv.entries</code>.</li><li>Raft : <code>consul.raft.apply</code> (par s), <code>consul.raft.commit_time</code> et <code>consul.raft.leader.last_contact</code> (résumés en ms : <code>.p50</code>, <code>.p90</code>, <code>.p99</code>), <code>consul.raft.state.candidate</code> et <code>.state.leader</code> (élections).</li><li><code>consul.rpc.request</code>, <code>consul.rpc.request_error</code>, <code>consul.http.request</code> (ms, étiquettes <code>method</code> et <code>path</code>), <code>consul.kvs.apply</code>, <code>consul.runtime.alloc</code>, <code>consul.runtime.goroutines</code>, <code>consul.agent.tls_cert_expiry</code>.</li></ul>
+<p>L'état des contrôles de santé de Consul n'est pas publié au format Prometheus.</p>
+<h3 id="hashicorp-vault">HashiCorp Vault<a class="anchor" href="#hashicorp-vault" aria-hidden="true">#</a></h3>
+<p>Dans la conf de Vault : <code>telemetry { prometheus_retention_time = &quot;60s&quot; disable_hostname = true }</code>. Lecture sans jeton si le listener porte <code>telemetry { unauthenticated_metrics_access = true }</code>, sinon un jeton dont la politique lit <code>sys/metrics</code> (<code>bearer_token_file</code>). Le profil vise HTTPS, comme un Vault de production.</p>
+<ul><li><code>vault.core.unsealed</code> (0 = scellé), <code>vault.core.active</code>, <code>vault.core.performance_standby</code>, <code>vault.core.in_flight_requests</code>.</li><li>Durées en ms (<code>.count</code>, <code>.p50</code>, <code>.p90</code>, <code>.p99</code>) : <code>vault.core.handle_request</code>, <code>.core.handle_login_request</code>, <code>.core.check_token</code>, <code>vault.barrier.get</code>, <code>vault.barrier.put</code>.</li><li><code>vault.expire.num_leases</code>, <code>vault.expire.num_irrevocable_leases</code>, <code>vault.token.count_by_ttl</code>, <code>vault.identity.entity_count</code>, <code>vault.runtime.alloc</code>, <code>vault.runtime.goroutines</code>.</li><li>Retenues sans avoir été vues pendant l'essai (mode dev) : <code>vault.audit.log_request_failure</code>, <code>vault.audit.log_response_failure</code> (avec un périphérique d'audit), <code>vault.raft.leader.last_contact</code> (stockage intégré).</li></ul>
+<h3 id="etcd">etcd<a class="anchor" href="#etcd" aria-hidden="true">#</a></h3>
+<p>Port client 2379, ou l'adresse de <code>--listen-metrics-urls</code> (<code>http://127.0.0.1:2381</code> chez kubeadm).</p>
+<ul><li><code>etcd.server.has_leader</code>, <code>etcd.server.is_leader</code>, <code>etcd.server.leader_changes</code>, <code>etcd.server.proposals.failed</code>, <code>.proposals.pending</code>, <code>.proposals.committed</code>, <code>.proposals.applied</code>, <code>etcd.server.slow_apply</code>, <code>etcd.server.heartbeat_failures</code>.</li><li>Base : <code>etcd.db.size</code>, <code>etcd.db.size_in_use</code>, <code>etcd.server.quota_backend</code>, <code>etcd.mvcc.keys</code>, <code>etcd.mvcc.put</code>, <code>.range</code>, <code>.txn</code>, <code>.delete</code>.</li><li>Disque (histogrammes, s) : <code>etcd.disk.wal_fsync.p99</code>, <code>etcd.disk.backend_commit.p99</code>. Réseau : <code>etcd.network.peer_round_trip</code>, <code>etcd.network.peer_sent_failures</code> (étiquette <code>to</code>, grappe à plusieurs membres), <code>etcd.grpc.handled</code> par <code>grpc_code</code>.</li></ul>
+<h2 id="reseau">Réseau<a class="anchor" href="#reseau" aria-hidden="true">#</a></h2>
+<h3 id="coredns">CoreDNS<a class="anchor" href="#coredns" aria-hidden="true">#</a></h3>
+<p>Greffon <code>prometheus :9153</code> dans le Corefile.</p>
+<ul><li><code>coredns.requests</code> (étiquettes <code>server</code>, <code>zone</code>, <code>type</code>), <code>coredns.responses</code> (<code>rcode</code>), <code>coredns.request_duration</code> (s, <code>.p95</code>).</li><li>Cache : <code>coredns.cache.entries</code>, <code>.cache.hits</code>, <code>.cache.misses</code>. Relais : <code>coredns.proxy.request_duration</code> (CoreDNS ≥ 1.11) ou <code>coredns.forward.*</code> (versions antérieures).</li><li><code>coredns.panics</code>, <code>coredns.reload.failed</code>, <code>coredns.process.resident_memory</code>.</li></ul>
+<h3 id="traefik-proxy">Traefik Proxy<a class="anchor" href="#traefik-proxy" aria-hidden="true">#</a></h3>
+<p><code>--metrics.prometheus=true</code> ; le point d'entrée <code>traefik</code> (8080) sert les mesures, ou celui de <code>--metrics.prometheus.entryPoint</code>. Étiquettes des routeurs et des services avec <code>addRoutersLabels</code> et <code>addServicesLabels</code>.</p>
+<ul><li><code>traefik.entrypoint.requests</code> (<code>code</code>, <code>entrypoint</code>), <code>traefik.entrypoint.request_duration</code> (s), <code>.requests_bytes</code>, <code>.responses_bytes</code>, <code>traefik.open_connections</code>.</li><li><code>traefik.service.requests</code>, <code>traefik.service.request_duration</code>, <code>traefik.service.server_up</code> (<code>service</code>, <code>url</code> ; 0 = contrôle de santé en échec), <code>traefik.router.requests</code>.</li><li><code>traefik.config.reloads</code>, <code>traefik.config.last_reload_success</code>, <code>traefik.tls.certs_not_after</code> (horodatage, étiquette <code>cn</code>).</li></ul>
+<h3 id="envoy-proxy">Envoy Proxy<a class="anchor" href="#envoy-proxy" aria-hidden="true">#</a></h3>
+<p>Interface d'administration (<code>admin</code>, 9901), chemin <code>/stats/prometheus</code>. Durées en millisecondes.</p>
+<ul><li><code>envoy.server.live</code>, <code>envoy.server.state</code>, <code>envoy.server.uptime</code>, <code>envoy.server.memory.allocated</code>, <code>envoy.server.total_connections</code>, <code>envoy.server.days_until_first_cert_expiring</code>.</li><li>Amont (<code>envoy_cluster_name</code>) : <code>envoy.cluster.upstream.rq_total</code>, <code>.rq_xx</code> (<code>envoy_response_code_class</code> : 2, 4, 5…), <code>.rq_time.p99</code>, <code>.cx_active</code>, <code>.cx_connect_fail</code>, <code>.rq_timeout</code>, <code>.rq_retry</code>, <code>envoy.cluster.membership.healthy</code> et <code>.total</code>.</li><li>Aval (<code>envoy_http_conn_manager_prefix</code>) : <code>envoy.http.downstream.rq_total</code>, <code>.rq_xx</code>, <code>.rq_time</code>, <code>.cx_active</code> ; <code>envoy.listener.downstream.cx_active</code>.</li></ul>
+<h3 id="kong-gateway">Kong Gateway<a class="anchor" href="#kong-gateway" aria-hidden="true">#</a></h3>
+<p>Greffon <code>prometheus</code> activé (global ou par service ; <code>status_code_metrics</code>, <code>latency_metrics</code>, <code>bandwidth_metrics</code>, <code>upstream_health_metrics</code> à <code>true</code>), lu sur le status listener (<code>status_listen = 0.0.0.0:8100</code>) ou l'API d'administration. Latences en millisecondes.</p>
+<ul><li><code>kong.http.requests</code> (<code>service</code>, <code>route</code>, <code>code</code>), <code>kong.request_latency</code>, <code>kong.upstream_latency</code>, <code>kong.kong_latency</code> (<code>.p95</code>), <code>kong.bandwidth</code> (<code>direction</code>).</li><li><code>kong.datastore.reachable</code>, <code>kong.upstream.target_health</code> (<code>upstream</code>, <code>target</code>, <code>state</code>), <code>kong.nginx.connections</code> (<code>state</code>), <code>kong.memory.shared_dict.used</code> et <code>.total</code>.</li></ul>
+<h2 id="bases-de-donnees">Bases de données<a class="anchor" href="#bases-de-donnees" aria-hidden="true">#</a></h2>
+<h3 id="cockroachdb">CockroachDB<a class="anchor" href="#cockroachdb" aria-hidden="true">#</a></h3>
+<p><code>/_status/vars</code> sur le port HTTP (8080), en HTTPS hors <code>--insecure</code> (<code>ca_file</code> vers la CA de la grappe), sans authentification. L'exposition est grosse (≈ 1,8 Mo) : <code>interval: 30s</code> suffit. Latences en nanosecondes.</p>
+<ul><li><code>cockroachdb.liveness.live_nodes</code>, <code>cockroachdb.ranges.unavailable</code>, <code>.ranges.underreplicated</code>, <code>.ranges.overreplicated</code>, <code>cockroachdb.replicas.*</code>, <code>cockroachdb.capacity.total</code>, <code>.available</code>, <code>.used</code>.</li><li>SQL : <code>cockroachdb.sql.conns</code>, <code>.select</code>, <code>.insert</code>, <code>.update</code>, <code>.delete</code>, <code>.failure</code>, <code>.txn.commit</code>, <code>.txn.abort</code>, <code>cockroachdb.sql.service_latency.p99</code>, <code>.exec_latency</code>, <code>.txn_latency</code>.</li><li><code>cockroachdb.sys.cpu.combined_normalized</code>, <code>cockroachdb.sys.rss</code>, <code>cockroachdb.clock_offset.mean_nanos</code>, <code>cockroachdb.requests.slow.*</code>, <code>cockroachdb.storage.l0_sublevels</code>, <code>cockroachdb.admission.io_overload</code>. Étiquettes <code>node_id</code> et <code>store</code>.</li></ul>
+<h3 id="scylladb">ScyllaDB<a class="anchor" href="#scylladb" aria-hidden="true">#</a></h3>
+<p><code>/metrics</code> sur le port 9180. Les séries sont additionnées sur tous les cœurs (étiquette <code>shard</code> écartée) ; latences du coordinateur en microsecondes.</p>
+<ul><li><code>scylla.reactor.utilization</code> (%), <code>scylla.node.operation_mode</code> (3 = normal), <code>scylla.gossip.live</code>.</li><li><code>scylla.coordinator.read_latency</code> et <code>.write_latency</code> (<code>.p99</code>), <code>scylla.cql.requests_served</code>, <code>.connections</code>, <code>.reads</code>, <code>.inserts</code>, <code>.errors</code> (<code>type</code>).</li><li><code>scylla.database.reads</code>, <code>.writes</code>, <code>.reads_failed</code>, <code>.writes_failed</code>, <code>.writes_timedout</code>, <code>scylla.cache.row_hits</code>, <code>.row_misses</code>, <code>scylla.compaction.running</code>, <code>.pending</code>, <code>scylla.memory.allocated</code>, <code>.free</code>.</li></ul>
+<h2 id="files-de-messages">Files de messages<a class="anchor" href="#files-de-messages" aria-hidden="true">#</a></h2>
+<h3 id="apache-pulsar">Apache Pulsar<a class="anchor" href="#apache-pulsar" aria-hidden="true">#</a></h3>
+<p><code>/metrics/</code> du courtier (port HTTP 8080). Agrégats du courtier et par espace de noms Pulsar : l'étiquette <code>topic</code> est écartée, un sujet de plus ne fait pas une série de plus.</p>
+<ul><li><code>pulsar.broker.topics</code>, <code>.subscriptions</code>, <code>.producers</code>, <code>.consumers</code>, <code>.rate_in</code>, <code>.rate_out</code> (messages/s), <code>.throughput_in</code>, <code>.throughput_out</code> (octets/s), <code>.msg_backlog</code>, <code>.storage_size</code>, <code>.publish_latency</code> (ms, <code>.p99</code>).</li><li>Par espace de noms (<code>namespace</code>) : <code>pulsar.namespace.topics</code>, <code>.msg_backlog</code>, <code>.rate_in</code>, <code>.rate_out</code>, <code>.storage_size</code>. JVM : <code>pulsar.jvm.memory.used</code> (<code>area</code>), <code>pulsar.jvm.gc.collection</code>.</li></ul>
+<h3 id="celery-par-flower">Celery (par Flower)<a class="anchor" href="#celery-par-flower" aria-hidden="true">#</a></h3>
+<p>Flower publie les mesures des ouvriers sur <code>/metrics</code> (5555). Les ouvriers doivent émettre leurs événements (<code>celery worker -E</code>, ou <code>worker_send_task_events = True</code>).</p>
+<ul><li><code>celery.worker.online</code> (<code>worker</code>), <code>celery.worker.executing_tasks</code>, <code>celery.worker.prefetched_tasks</code>.</li><li><code>celery.events</code> par <code>type</code> (<code>task-received</code>, <code>task-started</code>, <code>task-succeeded</code>, <code>task-failed</code>…) et <code>task</code>, <code>celery.task.runtime</code> (s, <code>.p95</code>), <code>celery.task.prefetch_time</code>.</li></ul>
+<h2 id="applications">Applications<a class="anchor" href="#applications" aria-hidden="true">#</a></h2>
+<h3 id="n8n">n8n<a class="anchor" href="#n8n" aria-hidden="true">#</a></h3>
+<p><code>N8N_METRICS=true</code>. Exécutions des flux avec <code>N8N_METRICS_INCLUDE_MESSAGE_EVENT_BUS_METRICS=true</code>, flux par flux avec <code>N8N_METRICS_INCLUDE_WORKFLOW_ID_LABEL=true</code>.</p>
+<ul><li><code>n8n.workflows.active</code>, <code>n8n.workflow.started</code>, <code>.success</code>, <code>.failed</code> (par s), <code>n8n.workflow.execution_duration</code> (<code>status</code>, <code>.p95</code>).</li><li>Mode file d'attente (<code>EXECUTIONS_MODE=queue</code>) : <code>n8n.queue.jobs.waiting</code>, <code>.active</code>, <code>.completed</code>, <code>.failed</code> (retenues, non éprouvées : l'essai tournait en mode normal).</li><li><code>n8n.nodejs.eventloop_lag_p99</code>, <code>n8n.nodejs.heap_used</code>, <code>n8n.process.resident_memory</code>, <code>n8n.process.cpu_seconds</code>.</li></ul>
+<h3 id="temporal">Temporal<a class="anchor" href="#temporal" aria-hidden="true">#</a></h3>
+<p><code>global.metrics.prometheus.listenAddress</code> du serveur (9090 dans la charte Helm, 8000 dans les exemples Docker : <code>url</code> à adapter). Durées en secondes.</p>
+<ul><li><code>temporal.service.requests</code> et <code>.errors</code> (<code>service_name</code>, <code>namespace</code>, <code>error_type</code>), <code>temporal.service.latency</code> (<code>.p95</code>), <code>temporal.service.pending_requests</code>.</li><li><code>temporal.persistence.requests</code>, <code>.errors</code>, <code>.latency</code>.</li><li>Files de tâches (<code>namespace</code>, <code>taskqueue</code>, <code>task_type</code>) : <code>temporal.task_queue.backlog</code>, <code>.backlog_age</code> (s), <code>.poll_timeouts</code>.</li><li>Issue des flux (<code>workflowtype</code>) : <code>temporal.workflow.success</code>, <code>.failed</code>, <code>.timeout</code>, <code>.terminate</code>, <code>.cancel</code>, <code>.continued_as_new</code>, <code>.schedule_to_close_latency</code>. Seul <code>terminate</code> a été vu pendant l'essai, les autres apparaissent avec leur événement.</li></ul>
+<h3 id="gitlab">GitLab<a class="anchor" href="#gitlab" aria-hidden="true">#</a></h3>
+<p>Trois profils pour une installation Omnibus, lus par l'agent de la machine GitLab :</p>
+<ul><li><code>gitlab</code> : Rails et Puma, <code>/-/metrics</code> sur Puma (<code>127.0.0.1:8080</code>) ou derrière nginx ; l'adresse de l'agent doit figurer dans <code>gitlab_rails[&#x27;monitoring_whitelist&#x27;]</code> (127.0.0.0/8 par défaut).</li><li><code>gitlab_sidekiq</code> : <code>sidekiq[&#x27;metrics_enabled&#x27;] = true</code> (<code>127.0.0.1:8082</code>).</li><li><code>gitaly</code> : <code>gitaly[&#x27;configuration&#x27;][:prometheus_listen_addr]</code> (<code>127.0.0.1:9236</code>).</li></ul>
+<p>Mesures :</p>
+<ul><li><code>gitlab.http.requests</code> (<code>method</code>, <code>status</code> : 2xx… 5xx), <code>gitlab.http.request_duration</code>, <code>gitlab.transaction.duration</code>, <code>gitlab.sql.duration</code>, <code>gitlab.rails.queue_duration</code> (s).</li><li><code>gitlab.db.pool.busy</code>, <code>.waiting</code>, <code>.size</code>, <code>.dead</code> (<code>db_config_name</code>), <code>gitlab.redis.requests</code>, <code>.exceptions</code> (<code>storage</code>), <code>gitlab.sli.rails.requests</code>, <code>.errors</code>, <code>.apdex_total</code>, <code>.apdex_success</code>.</li><li><code>gitlab.puma.running</code>, <code>.queued_connections</code>, <code>.workers</code>, <code>gitlab.ruby.resident_memory</code>.</li><li><code>gitlab_sidekiq.jobs.completion</code> (<code>job_status</code> : <code>done</code>, <code>fail</code>), <code>gitlab_sidekiq.jobs.queue_duration</code>, <code>.jobs.running</code>, <code>.concurrency</code>.</li><li><code>gitaly.grpc.handled</code> (<code>grpc_code</code>), <code>gitaly.pack_objects.in_progress</code>, <code>.queued</code>, <code>gitaly.concurrency_limiting.queued</code>, <code>gitaly.commands.running</code>.</li></ul>
+<p>L'essai a tourné en réglages réduits (Puma en mode simple, Sidekiq à 5 fils, Prometheus intégré coupé), le profil vaut aussi pour la conf par défaut.</p>
+<h3 id="sonarqube">SonarQube<a class="anchor" href="#sonarqube" aria-hidden="true">#</a></h3>
+<p><code>/api/monitoring/metrics</code> (SonarQube 9.3 et suivants), lu avec l'en-tête du code d'accès système (<code>sonar.web.systemPasscode</code>) ou le jeton d'un administrateur :</p>
+<pre><code class="language-yaml">    - profile: sonarqube
+      headers:
+        X-Sonar-Passcode: &quot;le code d&#x27;accès&quot;   # fichier de conf en 600</code></pre>
+<ul><li><code>sonarqube.health.web</code>, <code>.health.compute_engine</code>, <code>.health.elasticsearch</code> (1 = en marche).</li><li><code>sonarqube.compute_engine.pending_tasks</code>, <code>.compute_engine.task_duration</code>, <code>sonarqube.elasticsearch.disk_usage</code> (%), <code>.disk_free</code>, <code>.read_only_indices</code>, <code>sonarqube.db.latency</code> (s), <code>sonarqube.web.api_v1.request_duration</code>, <code>.api_v2.request_duration</code>, <code>sonarqube.web.uptime_minutes</code>.</li></ul>
+<h2 id="java">Java<a class="anchor" href="#java" aria-hidden="true">#</a></h2>
+<h3 id="l-exportateur-jmx-prometheus">L'exportateur JMX Prometheus<a class="anchor" href="#l-exportateur-jmx-prometheus" aria-hidden="true">#</a></h3>
+<p>Tomcat, Kafka, ActiveMQ et Cassandra ne publient pas de mesures Prometheus : leurs MBeans JMX sont lus par l'<strong>exportateur JMX Prometheus</strong> officiel, chargé comme javaagent dans la JVM. Téléchargez <code>jmx_prometheus_javaagent-1.7.0.jar</code> depuis les publications du projet <code>prometheus/jmx_exporter</code> sur GitHub (la somme SHA-256 est publiée à côté ; Maven Central s'arrête à la 1.0.1), posez à côté le fichier de règles du logiciel (ci-dessous), puis ajoutez à la JVM :</p>
+<pre><code class="language-text">-javaagent:/opt/jmx/jmx_prometheus_javaagent-1.7.0.jar=127.0.0.1:9404:/opt/jmx/tomcat.yml</code></pre>
+<p><code>127.0.0.1:</code> devant le port garde l'exportateur sur la boucle locale. Chaque profil reprend aussi les mesures de la JVM publiées par l'exportateur : <code>&lt;espace&gt;.jvm.memory.used</code>, <code>.memory.committed</code>, <code>.memory.max</code> (<code>area</code> : <code>heap</code>, <code>nonheap</code>), <code>&lt;espace&gt;.jvm.gc.collection</code> (<code>.count</code>, <code>.sum</code>), <code>.jvm.threads.current</code>, <code>.jvm.threads.deadlocked</code>, <code>.jvm.classes.loaded</code>, <code>&lt;espace&gt;.process.cpu_seconds</code>, <code>.process.open_fds</code>, <code>&lt;espace&gt;.jmx.scrape_error</code> (1 = MBeans illisibles), <code>.jmx.scrape_duration</code>.</p>
+<p>Les règles restreignent les MBeans lus (<code>includeObjectNames</code>) : un relevé complet d'un Kafka ou d'un Cassandra coûte cher à la JVM et produit des milliers de séries.</p>
+<h3 id="apache-tomcat">Apache Tomcat<a class="anchor" href="#apache-tomcat" aria-hidden="true">#</a></h3>
+<p>Dans <code>bin/setenv.sh</code> : <code>CATALINA_OPTS=&quot;$CATALINA_OPTS -javaagent:/opt/jmx/jmx_prometheus_javaagent-1.7.0.jar=127.0.0.1:9404:/opt/jmx/tomcat.yml&quot;</code>.</p>
+<pre><code class="language-yaml"># Règles HYPHA pour Apache Tomcat (exportateur JMX Prometheus, javaagent 1.x).
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+includeObjectNames:
+  - &quot;Catalina:type=GlobalRequestProcessor,*&quot;
+  - &quot;Catalina:type=ThreadPool,*&quot;
+  - &quot;Catalina:type=Manager,*&quot;
+rules:
+  - pattern: &#x27;Catalina&lt;type=GlobalRequestProcessor, name=&quot;?([^&quot;,&gt;]+)&quot;?&gt;&lt;&gt;(requestCount|errorCount|bytesReceived|bytesSent|processingTime):&#x27;
+    name: tomcat_requestprocessor_$2_total
+    labels:
+      connector: &quot;$1&quot;
+    type: COUNTER
+  - pattern: &#x27;Catalina&lt;type=GlobalRequestProcessor, name=&quot;?([^&quot;,&gt;]+)&quot;?&gt;&lt;&gt;maxTime:&#x27;
+    name: tomcat_requestprocessor_maxtime
+    labels:
+      connector: &quot;$1&quot;
+    type: GAUGE
+  - pattern: &#x27;Catalina&lt;type=ThreadPool, name=&quot;?([^&quot;,&gt;]+)&quot;?&gt;&lt;&gt;(currentThreadCount|currentThreadsBusy|maxThreads|connectionCount|maxConnections):&#x27;
+    name: tomcat_threadpool_$2
+    labels:
+      connector: &quot;$1&quot;
+    type: GAUGE
+  - pattern: &#x27;Catalina&lt;type=Manager, host=([^,&gt;]+), context=([^,&gt;]+)&gt;&lt;&gt;(activeSessions|maxActiveSessions):&#x27;
+    name: tomcat_session_$3
+    labels:
+      vhost: &quot;$1&quot;
+      context: &quot;$2&quot;
+    type: GAUGE
+  - pattern: &#x27;Catalina&lt;type=Manager, host=([^,&gt;]+), context=([^,&gt;]+)&gt;&lt;&gt;(rejectedSessions|expiredSessions|sessionCounter):&#x27;
+    name: tomcat_session_$3_total
+    labels:
+      vhost: &quot;$1&quot;
+      context: &quot;$2&quot;
+    type: COUNTER</code></pre>
+<ul><li>Par connecteur (<code>connector</code>) : <code>tomcat.requests</code>, <code>tomcat.errors</code>, <code>tomcat.bytes_received</code>, <code>.bytes_sent</code>, <code>tomcat.processing_time</code> (ms par s), <code>tomcat.max_time</code>, <code>tomcat.threads.current</code>, <code>.busy</code>, <code>.max</code>, <code>tomcat.connections.current</code>, <code>.max</code>.</li><li>Par application (<code>context</code>) : <code>tomcat.sessions.active</code>, <code>.max_active</code>, <code>.created</code>, <code>.expired</code>, <code>.rejected</code>.</li></ul>
+<h3 id="apache-kafka">Apache Kafka<a class="anchor" href="#apache-kafka" aria-hidden="true">#</a></h3>
+<p><code>KAFKA_OPTS=&quot;-javaagent:/opt/jmx/jmx_prometheus_javaagent-1.7.0.jar=127.0.0.1:9405:/opt/jmx/kafka.yml&quot;</code> avant le lancement du courtier. Les outils de Kafka (<code>kafka-*.sh</code>) lisent aussi <code>KAFKA_OPTS</code> : lancez-les avec <code>KAFKA_OPTS=</code> vide, sinon ils prennent le port de l'exportateur.</p>
+<pre><code class="language-yaml"># Règles HYPHA pour Apache Kafka 3.x/4.x (KRaft ou ZooKeeper), exportateur JMX Prometheus 1.x.
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+includeObjectNames:
+  - &quot;kafka.server:type=BrokerTopicMetrics,*&quot;
+  - &quot;kafka.server:type=ReplicaManager,*&quot;
+  - &quot;kafka.server:type=KafkaRequestHandlerPool,*&quot;
+  - &quot;kafka.controller:type=KafkaController,*&quot;
+  - &quot;kafka.controller:type=ControllerStats,*&quot;
+  - &quot;kafka.network:type=RequestMetrics,name=TotalTimeMs,*&quot;
+  - &quot;kafka.network:type=RequestMetrics,name=RequestsPerSec,*&quot;
+  - &quot;kafka.network:type=SocketServer,*&quot;
+  - &quot;kafka.log:type=LogFlushStats,*&quot;
+rules:
+  - pattern: &#x27;kafka.server&lt;type=BrokerTopicMetrics, name=(MessagesInPerSec|BytesInPerSec|BytesOutPerSec|BytesRejectedPerSec|FailedProduceRequestsPerSec|FailedFetchRequestsPerSec|TotalProduceRequestsPerSec|TotalFetchRequestsPerSec)&gt;&lt;&gt;Count:&#x27;
+    name: kafka_server_brokertopicmetrics_$1_total
+    type: COUNTER
+  - pattern: &#x27;kafka.server&lt;type=ReplicaManager, name=(UnderReplicatedPartitions|UnderMinIsrPartitionCount|AtMinIsrPartitionCount|OfflineReplicaCount|PartitionCount|LeaderCount)&gt;&lt;&gt;Value:&#x27;
+    name: kafka_server_replicamanager_$1
+    type: GAUGE
+  - pattern: &#x27;kafka.server&lt;type=ReplicaManager, name=(IsrShrinksPerSec|IsrExpandsPerSec)&gt;&lt;&gt;Count:&#x27;
+    name: kafka_server_replicamanager_$1_total
+    type: COUNTER
+  - pattern: &#x27;kafka.server&lt;type=KafkaRequestHandlerPool, name=RequestHandlerAvgIdlePercent&gt;&lt;&gt;OneMinuteRate:&#x27;
+    name: kafka_server_requesthandler_avg_idle_percent
+    type: GAUGE
+  - pattern: &#x27;kafka.controller&lt;type=KafkaController, name=(ActiveControllerCount|OfflinePartitionsCount|GlobalTopicCount|GlobalPartitionCount|PreferredReplicaImbalanceCount|ActiveBrokerCount|FencedBrokerCount)&gt;&lt;&gt;Value:&#x27;
+    name: kafka_controller_$1
+    type: GAUGE
+  - pattern: &#x27;kafka.controller&lt;type=ControllerStats, name=(UncleanLeaderElectionsPerSec|LeaderElectionRateAndTimeMs)&gt;&lt;&gt;Count:&#x27;
+    name: kafka_controller_stats_$1_total
+    type: COUNTER
+  - pattern: &#x27;kafka.network&lt;type=RequestMetrics, name=TotalTimeMs, request=(Produce|FetchConsumer|FetchFollower|Metadata|OffsetCommit)&gt;&lt;&gt;(Mean|99thPercentile):&#x27;
+    name: kafka_network_request_totaltimems_$2
+    labels:
+      request: &quot;$1&quot;
+    type: GAUGE
+  - pattern: &#x27;kafka.network&lt;type=RequestMetrics, name=RequestsPerSec, request=(Produce|FetchConsumer|FetchFollower|Metadata|OffsetCommit), version=(\d+)&gt;&lt;&gt;Count:&#x27;
+    name: kafka_network_requests_total
+    labels:
+      request: &quot;$1&quot;
+      version: &quot;$2&quot;
+    type: COUNTER
+  - pattern: &#x27;kafka.network&lt;type=SocketServer, name=NetworkProcessorAvgIdlePercent&gt;&lt;&gt;Value:&#x27;
+    name: kafka_network_processor_avg_idle_percent
+    type: GAUGE
+  - pattern: &#x27;kafka.log&lt;type=LogFlushStats, name=LogFlushRateAndTimeMs&gt;&lt;&gt;Count:&#x27;
+    name: kafka_log_flushes_total
+    type: COUNTER
+  - pattern: &#x27;kafka.log&lt;type=LogFlushStats, name=LogFlushRateAndTimeMs&gt;&lt;&gt;99thPercentile:&#x27;
+    name: kafka_log_flush_time_ms_p99
+    type: GAUGE</code></pre>
+<ul><li>Courtier (tous sujets) : <code>kafka.broker.messages_in</code>, <code>.bytes_in</code>, <code>.bytes_out</code>, <code>.bytes_rejected</code>, <code>.produce.requests</code>, <code>.produce.failed</code>, <code>.fetch.requests</code>, <code>.fetch.failed</code>.</li><li>Réplication : <code>kafka.replication.under_replicated_partitions</code>, <code>.under_min_isr_partitions</code>, <code>.offline_replicas</code>, <code>.partitions</code>, <code>.leaders</code>, <code>.isr_shrinks</code>, <code>.isr_expands</code>.</li><li>Contrôleur : <code>kafka.controller.active</code> (1 sur le contrôleur actif), <code>.offline_partitions</code>, <code>.topics</code>, <code>.partitions</code>, <code>.active_brokers</code>, <code>.fenced_brokers</code>, <code>.unclean_leader_elections</code>.</li><li>Requêtes (<code>request</code> : Produce, FetchConsumer, FetchFollower, Metadata, OffsetCommit) : <code>kafka.request.count</code>, <code>kafka.request.total_time.mean</code> et <code>.p99</code> (ms). Inactivité : <code>kafka.network.processor_avg_idle</code>, <code>kafka.request_handler.avg_idle</code> (fraction, 1 = inactif). <code>kafka.log.flushes</code>, <code>kafka.log.flush_time.p99</code>.</li></ul>
+<p>Le retard des consommateurs se lit chez les consommateurs, pas dans le courtier.</p>
+<h3 id="apache-activemq-classic">Apache ActiveMQ Classic<a class="anchor" href="#apache-activemq-classic" aria-hidden="true">#</a></h3>
+<p><code>ACTIVEMQ_OPTS</code> (dans <code>bin/setenv</code> ou l'environnement) : la valeur remplace celle du script, gardez donc la mémoire et la conf de connexion, par exemple <code>-Xms64M -Xmx1G -Djava.util.logging.config.file=logging.properties -Djava.security.auth.login.config=$ACTIVEMQ_CONF/login.config -javaagent:/opt/jmx/jmx_prometheus_javaagent-1.7.0.jar=127.0.0.1:9406:/opt/jmx/activemq.yml</code>. Les commandes <code>activemq producer</code>, <code>consumer</code>… lisent aussi <code>ACTIVEMQ_OPTS</code> : donnez-leur une valeur sans javaagent.</p>
+<pre><code class="language-yaml"># Règles HYPHA pour Apache ActiveMQ Classic 5.x/6.x (exportateur JMX Prometheus 1.x). Les
+# destinations d&#x27;avis internes (ActiveMQ.Advisory.*) sont écartées.
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+includeObjectNames:
+  - &quot;org.apache.activemq:type=Broker,brokerName=*&quot;
+  - &quot;org.apache.activemq:type=Broker,brokerName=*,destinationType=*,destinationName=*&quot;
+rules:
+  - pattern: &#x27;org.apache.activemq&lt;type=Broker, brokerName=([^,&gt;]+), destinationType=(Queue|Topic), destinationName=((?!ActiveMQ\.Advisory)[^,&gt;]+)&gt;&lt;&gt;(QueueSize|ConsumerCount|ProducerCount|InFlightCount|MemoryPercentUsage|AverageEnqueueTime):&#x27;
+    name: activemq_destination_$4
+    labels:
+      broker: &quot;$1&quot;
+      destination_type: &quot;$2&quot;
+      destination: &quot;$3&quot;
+    type: GAUGE
+  - pattern: &#x27;org.apache.activemq&lt;type=Broker, brokerName=([^,&gt;]+), destinationType=(Queue|Topic), destinationName=((?!ActiveMQ\.Advisory)[^,&gt;]+)&gt;&lt;&gt;(EnqueueCount|DequeueCount|ExpiredCount|DispatchCount):&#x27;
+    name: activemq_destination_$4_total
+    labels:
+      broker: &quot;$1&quot;
+      destination_type: &quot;$2&quot;
+      destination: &quot;$3&quot;
+    type: COUNTER
+  - pattern: &#x27;org.apache.activemq&lt;type=Broker, brokerName=([^,&gt;]+)&gt;&lt;&gt;(MemoryPercentUsage|StorePercentUsage|TempPercentUsage|CurrentConnectionsCount|TotalConsumerCount|TotalProducerCount|TotalMessageCount):&#x27;
+    name: activemq_broker_$2
+    labels:
+      broker: &quot;$1&quot;
+    type: GAUGE
+  - pattern: &#x27;org.apache.activemq&lt;type=Broker, brokerName=([^,&gt;]+)&gt;&lt;&gt;(TotalEnqueueCount|TotalDequeueCount):&#x27;
+    name: activemq_broker_$2_total
+    labels:
+      broker: &quot;$1&quot;
+    type: COUNTER</code></pre>
+<ul><li>Courtier (<code>broker</code>) : <code>activemq.broker.memory_usage</code>, <code>.store_usage</code>, <code>.temp_usage</code> (% des limites ; à 100 %, les producteurs sont bloqués), <code>.connections</code>, <code>.consumers</code>, <code>.producers</code>, <code>.messages</code>, <code>.enqueued</code>, <code>.dequeued</code>.</li><li>Files et sujets (<code>destination</code>, <code>destination_type</code>), sans les destinations d'avis <code>ActiveMQ.Advisory.*</code> : <code>activemq.destination.size</code>, <code>.consumers</code>, <code>.producers</code>, <code>.in_flight</code>, <code>.memory_usage</code>, <code>.average_enqueue_time</code>, <code>.enqueued</code>, <code>.dequeued</code>, <code>.dispatched</code>, <code>.expired</code>.</li></ul>
+<h3 id="apache-cassandra">Apache Cassandra<a class="anchor" href="#apache-cassandra" aria-hidden="true">#</a></h3>
+<p><code>JVM_EXTRA_OPTS=&quot;-javaagent:/opt/jmx/jmx_prometheus_javaagent-1.7.0.jar=127.0.0.1:9407:/opt/jmx/cassandra.yml&quot;</code> (lu par <code>cassandra-env.sh</code>). Latences des requêtes clientes en microsecondes.</p>
+<pre><code class="language-yaml"># Règles HYPHA pour Apache Cassandra 4.x/5.x (exportateur JMX Prometheus 1.x). Latences des
+# requêtes clientes en microsecondes (minuteries de Cassandra).
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+includeObjectNames:
+  - &quot;org.apache.cassandra.metrics:type=ClientRequest,*&quot;
+  - &quot;org.apache.cassandra.metrics:type=Storage,*&quot;
+  - &quot;org.apache.cassandra.metrics:type=Compaction,*&quot;
+  - &quot;org.apache.cassandra.metrics:type=ThreadPools,*&quot;
+  - &quot;org.apache.cassandra.metrics:type=DroppedMessage,*&quot;
+  - &quot;org.apache.cassandra.metrics:type=Client,*&quot;
+  - &quot;org.apache.cassandra.metrics:type=Cache,*&quot;
+  - &quot;org.apache.cassandra.metrics:type=CommitLog,*&quot;
+rules:
+  - pattern: &#x27;org.apache.cassandra.metrics&lt;type=ClientRequest, scope=(Read|Write|CASRead|CASWrite|RangeSlice), name=Latency&gt;&lt;&gt;Count:&#x27;
+    name: cassandra_clientrequest_requests_total
+    labels:
+      scope: &quot;$1&quot;
+    type: COUNTER
+  - pattern: &#x27;org.apache.cassandra.metrics&lt;type=ClientRequest, scope=(Read|Write|CASRead|CASWrite|RangeSlice), name=Latency&gt;&lt;&gt;(Mean|99thPercentile):&#x27;
+    name: cassandra_clientrequest_latency_$2
+    labels:
+      scope: &quot;$1&quot;
+    type: GAUGE
+  - pattern: &#x27;org.apache.cassandra.metrics&lt;type=ClientRequest, scope=(Read|Write|CASRead|CASWrite|RangeSlice), name=(Timeouts|Unavailables|Failures)&gt;&lt;&gt;Count:&#x27;
+    name: cassandra_clientrequest_$2_total
+    labels:
+      scope: &quot;$1&quot;
+    type: COUNTER
+  - pattern: &#x27;org.apache.cassandra.metrics&lt;type=Storage, name=(Load|TotalHintsInProgress)&gt;&lt;&gt;Count:&#x27;
+    name: cassandra_storage_$1
+    type: GAUGE
+  - pattern: &#x27;org.apache.cassandra.metrics&lt;type=Storage, name=(Exceptions|TotalHints)&gt;&lt;&gt;Count:&#x27;
+    name: cassandra_storage_$1_total
+    type: COUNTER
+  - pattern: &#x27;org.apache.cassandra.metrics&lt;type=Compaction, name=(PendingTasks)&gt;&lt;&gt;Value:&#x27;
+    name: cassandra_compaction_$1
+    type: GAUGE
+  - pattern: &#x27;org.apache.cassandra.metrics&lt;type=Compaction, name=(CompletedTasks)&gt;&lt;&gt;Value:&#x27;
+    name: cassandra_compaction_$1_total
+    type: COUNTER
+  - pattern: &#x27;org.apache.cassandra.metrics&lt;type=Compaction, name=(BytesCompacted)&gt;&lt;&gt;Count:&#x27;
+    name: cassandra_compaction_$1_total
+    type: COUNTER
+  - pattern: &#x27;org.apache.cassandra.metrics&lt;type=ThreadPools, path=(\w+), scope=(\w+), name=(ActiveTasks|PendingTasks)&gt;&lt;&gt;Value:&#x27;
+    name: cassandra_threadpools_$3
+    labels:
+      path: &quot;$1&quot;
+      pool: &quot;$2&quot;
+    type: GAUGE
+  - pattern: &#x27;org.apache.cassandra.metrics&lt;type=ThreadPools, path=(\w+), scope=(\w+), name=(TotalBlockedTasks)&gt;&lt;&gt;Count:&#x27;
+    name: cassandra_threadpools_$3_total
+    labels:
+      path: &quot;$1&quot;
+      pool: &quot;$2&quot;
+    type: COUNTER
+  - pattern: &#x27;org.apache.cassandra.metrics&lt;type=DroppedMessage, scope=(\w+), name=Dropped&gt;&lt;&gt;Count:&#x27;
+    name: cassandra_droppedmessage_dropped_total
+    labels:
+      message_type: &quot;$1&quot;
+    type: COUNTER
+  - pattern: &#x27;org.apache.cassandra.metrics&lt;type=Client, name=(connectedNativeClients)&gt;&lt;&gt;Value:&#x27;
+    name: cassandra_client_$1
+    type: GAUGE
+  - pattern: &#x27;org.apache.cassandra.metrics&lt;type=Cache, scope=(KeyCache|RowCache|CounterCache), name=(HitRate|Size|Capacity)&gt;&lt;&gt;Value:&#x27;
+    name: cassandra_cache_$2
+    labels:
+      cache: &quot;$1&quot;
+    type: GAUGE
+  - pattern: &#x27;org.apache.cassandra.metrics&lt;type=CommitLog, name=(PendingTasks|TotalCommitLogSize)&gt;&lt;&gt;Value:&#x27;
+    name: cassandra_commitlog_$1
+    type: GAUGE</code></pre>
+<ul><li>Requêtes clientes (<code>scope</code> : Read, Write, CASRead, CASWrite, RangeSlice) : <code>cassandra.client_request.count</code>, <code>.latency.mean</code>, <code>.latency.p99</code>, <code>.timeouts</code>, <code>.unavailables</code>, <code>.failures</code>.</li><li><code>cassandra.storage.load</code>, <code>.exceptions</code>, <code>.hints</code>, <code>cassandra.compaction.pending_tasks</code>, <code>.completed_tasks</code>, <code>.bytes_compacted</code>, <code>cassandra.thread_pools.pending_tasks</code>, <code>.active_tasks</code>, <code>.blocked_tasks</code> (<code>pool</code>), <code>cassandra.dropped_messages</code>, <code>cassandra.client.connected_native_clients</code>, <code>cassandra.cache.hit_rate</code> (<code>cache</code>), <code>cassandra.commitlog.pending_tasks</code>.</li></ul>
+<h3 id="apache-solr-mesures-natives">Apache Solr (mesures natives)<a class="anchor" href="#apache-solr-mesures-natives" aria-hidden="true">#</a></h3>
+<p>Solr 9 et 10 publient leurs mesures au format Prometheus sur <code>/solr/admin/metrics?wt=prometheus</code>, sans exportateur (Solr 10 n'a plus de MBeans JMX à lire). Solr 10 donne des noms OpenTelemetry, Solr 9 des noms <code>solr_metrics_*</code> : les deux jeux sont retenus.</p>
+<ul><li>Solr 10 (<code>core</code>, <code>category</code>) : <code>solr.core.requests</code>, <code>solr.core.request_errors</code>, <code>solr.core.request_time</code> (ms, <code>.p95</code>), <code>solr.core.num_docs</code>, <code>solr.core.index_size_mb</code>, <code>solr.core.segments</code>, <code>solr.core.cache.lookups</code> (<code>result</code> : hit, miss), <code>solr.core.update.docs_pending</code>, <code>solr.cores</code>, <code>solr.disk_space_mb</code>, <code>solr.jvm.memory.used</code> (<code>jvm_memory_type</code>), <code>solr.jvm.gc.duration</code>, <code>solr.jvm.threads</code>.</li><li>Solr 9 : <code>solr.metrics.core.requests</code> (<code>type</code> : requests, errors, timeouts…), <code>solr.metrics.core.request_time</code> (ms, résumé), <code>solr.metrics.core.index_size</code>, <code>solr.metrics.core.searcher_documents</code>, <code>solr.metrics.jetty.responses</code> (<code>status</code>), <code>solr.metrics.node.cores</code>.</li></ul>
+<h3 id="wildfly-mesures-natives">WildFly (mesures natives)<a class="anchor" href="#wildfly-mesures-natives" aria-hidden="true">#</a></h3>
+<p>WildFly publie ses mesures sur <code>/metrics</code> de l'interface d'administration (9990, sous-système <code>metrics</code>), sans exportateur. Statistiques d'Undertow, des sources de données et des transactions avec <code>-Dwildfly.statistics-enabled=true</code> (ou <code>statistics-enabled</code> par sous-système). L'exportateur JMX en javaagent ne démarre pas sur WildFly 42 (conflit avec le LogManager de JBoss) : le point natif est la voie à suivre.</p>
+<ul><li>Undertow (<code>http_listener</code>, <code>https_listener</code>) : <code>wildfly.undertow.requests</code>, <code>.errors</code>, <code>.max_processing_time</code> (s).</li><li>Sources de données (<code>data_source</code>) : <code>wildfly.datasource.pool.active</code>, <code>.available</code>, <code>.in_use</code>, <code>.idle</code>, <code>.max_used</code>, <code>.wait_count</code>, <code>.timed_out</code>, <code>.average_get_time</code> (ms).</li><li>Transactions : <code>wildfly.transactions.started</code>, <code>.committed</code>, <code>.aborted</code>, <code>.timed_out</code>, <code>.application_rollbacks</code>, <code>.resource_rollbacks</code>, <code>.inflight</code>.</li><li><code>wildfly.jvm.memory.heap_used</code>, <code>.heap_max</code>, <code>.nonheap_used</code>, <code>wildfly.jvm.threads</code>, <code>wildfly.jvm.gc.collections</code>, <code>wildfly.process.cpu_load</code>, <code>wildfly.ee.hung_threads</code>.</li></ul>
+<h2 id="kubernetes">Kubernetes<a class="anchor" href="#kubernetes" aria-hidden="true">#</a></h2>
+<p>Ces logiciels tournent dans la grappe : déclarez-les dans l'agent qui lit déjà la grappe (voir <a href="/docs/kubernetes/">Kubernetes</a>), avec l'adresse de leur service, par exemple :</p>
+<pre><code class="language-yaml">integrations:
+  openmetrics:
+    - profile: cert_manager
+      url: http://cert-manager.cert-manager.svc:9402
+    - profile: velero
+      url: http://velero.velero.svc:8085
+    - profile: argocd
+      url: http://argocd-metrics.argocd.svc:8082
+    - profile: argocd_repo_server
+      url: http://argocd-repo-server.argocd.svc:8084
+    - profile: keda
+      url: http://keda-operator.keda.svc:8080</code></pre>
+<p>Ils ont été éprouvés dans une grappe k3s 1.35 jetable (k3d), lue par redirection de ports.</p>
+<h3 id="cert-manager">cert-manager<a class="anchor" href="#cert-manager" aria-hidden="true">#</a></h3>
+<p>Charte Helm avec <code>prometheus.enabled=true</code> (service sur 9402).</p>
+<ul><li><code>cert_manager.certificate.ready</code> (<code>condition</code> : True, False, Unknown ; <code>namespace</code>, <code>name</code>, <code>issuer_name</code>), <code>cert_manager.clusterissuer.ready</code>, <code>cert_manager.issuer.ready</code>.</li><li><code>cert_manager.certificate.expiration_timestamp</code> et <code>.renewal_timestamp</code> : horodatages Unix (secondes), <code>cert_manager.clock_time</code> (l'heure de cert-manager), <code>cert_manager.controller.sync_calls</code> (<code>controller</code>).</li></ul>
+<p>L'échéance est publiée en horodatage : HYPHA la montre telle quelle, le modèle <strong>Certificat cert-manager non prêt</strong> alerte sur l'échec d'émission ou de renouvellement.</p>
+<h3 id="velero">Velero<a class="anchor" href="#velero" aria-hidden="true">#</a></h3>
+<p>Serveur Velero, <code>/metrics</code> sur 8085 (<code>metrics.enabled</code> de la charte).</p>
+<ul><li><code>velero.backup.attempts</code>, <code>.success</code>, <code>.failure</code>, <code>.partial_failure</code>, <code>.validation_failure</code> (par s), <code>velero.backup.last_status</code> (<code>schedule</code> ; 1 = réussie, 0 = en échec), <code>velero.backups</code>, <code>velero.backup.items_errors</code>.</li><li><code>velero.backup_location.available</code> (<code>backup_location_name</code> ; 0 = stockage injoignable), <code>velero.restore.success</code>, <code>.failed</code>, <code>.partial_failure</code>.</li><li><code>velero.backup.last_successful_timestamp</code> (horodatage de la dernière sauvegarde réussie) : retenue, non vue pendant l'essai, dont la sauvegarde a échoué faute de stockage.</li></ul>
+<h3 id="argo-cd">Argo CD<a class="anchor" href="#argo-cd" aria-hidden="true">#</a></h3>
+<ul><li><code>argocd</code> : contrôleur d'applications, 8082 (service <code>argocd-metrics</code>). <code>argocd.app.info</code> vaut 1 par application, ses étiquettes portent l'état : <code>name</code>, <code>health_status</code> (Healthy, Progressing, Degraded, Missing…), <code>sync_status</code> (Synced, OutOfSync, Unknown). <code>argocd.app.syncs</code> (<code>phase</code>), <code>argocd.app.reconcile</code> (s), <code>argocd.app.orphaned_resources</code>, <code>argocd.cluster.connection_status</code>, <code>.api_resource_objects</code>, <code>.cache_age</code>.</li><li><code>argocd_repo_server</code> : serveur de dépôts, 8084. <code>argocd_repo_server.git.requests</code> (<code>request_type</code> : fetch, ls-remote), <code>.git.request_duration</code>, <code>.pending_requests</code>.</li></ul>
+<h3 id="linkerd">Linkerd<a class="anchor" href="#linkerd" aria-hidden="true">#</a></h3>
+<p>Chaque mandataire d'un pod maillé publie ses mesures sur <code>:4191/metrics</code>. Pour toute la maille, visez plutôt le Prometheus de <code>linkerd-viz</code> (<code>/federate?match[]={job=&quot;linkerd-proxy&quot;}</code>), qui rend les mêmes noms avec les étiquettes <code>namespace</code> et <code>deployment</code> (non éprouvé : l'essai lisait un mandataire).</p>
+<ul><li><code>linkerd.requests</code> (<code>direction</code> : inbound, outbound), <code>linkerd.responses</code> (<code>classification</code> : success, failure ; <code>status_code</code>), <code>linkerd.response_latency</code> (ms, <code>.p95</code>).</li><li><code>linkerd.tcp.open_connections</code>, <code>.opens</code>, <code>.closes</code>, <code>linkerd.inbound.authz_allowed</code> et <code>.authz_denied</code>, <code>linkerd.identity.cert_expiration_timestamp</code>, <code>linkerd.identity.cert_refreshes</code> (<code>result</code>).</li></ul>
+<h3 id="keda">KEDA<a class="anchor" href="#keda" aria-hidden="true">#</a></h3>
+<p>Opérateur KEDA, <code>/metrics</code> sur 8080 (<code>prometheus.operator.enabled=true</code> de la charte).</p>
+<ul><li><code>keda.scaler.errors</code> (<code>namespace</code>, <code>scaledobject</code>, <code>scaler</code>), <code>keda.scaled_object.errors</code>, <code>keda.scaler.active</code>, <code>keda.scaler.metrics_value</code>, <code>keda.scaler.metrics_latency</code> (s), <code>keda.scale_loop_latency</code> (s), <code>keda.scaled_object.paused</code>, <code>keda.resources.registered</code>, <code>keda.triggers.registered</code>.</li></ul>
+<h2 id="modeles-de-moniteurs">Modèles de moniteurs<a class="anchor" href="#modeles-de-moniteurs" aria-hidden="true">#</a></h2>
+<p>Dans <strong>Moniteurs › Nouveau › Depuis un modèle</strong> :</p>
+<ul><li><strong>Collecte générique</strong> : logiciel injoignable (par <code>instance_name</code>), relevé JMX en échec.</li><li><strong>Infrastructure</strong> : grappe Consul en mauvaise santé, Vault scellé, etcd sans meneur, disque d'etcd trop lent.</li><li><strong>Réseau</strong> : réponses SERVFAIL de CoreDNS, serveur amont Traefik en panne, erreurs 5xx des amonts d'Envoy, Kong ne joint plus sa base, cible amont Kong en mauvaise santé.</li><li><strong>Bases de données</strong> : plages CockroachDB indisponibles ou sous-répliquées, délais dépassés et répliques insuffisantes dans Cassandra, compactions Cassandra en retard, ScyllaDB saturé, écritures ScyllaDB en échec.</li><li><strong>Files de messages</strong> : partitions Kafka sous-répliquées ou hors ligne, mémoire ou stockage du courtier ActiveMQ saturés, file ActiveMQ qui s'accumule, arriéré Pulsar, ouvrier Celery hors ligne, tâches Celery en échec.</li><li><strong>Applications</strong> : file de tâches Temporal qui vieillit, erreurs de persistance Temporal, flux n8n en échec, erreurs 5xx de GitLab, requêtes en attente dans Puma, tâches Sidekiq en échec, composant SonarQube arrêté, disque d'Elasticsearch de SonarQube.</li><li><strong>Web</strong> : erreurs Tomcat, erreurs et transactions expirées de WildFly ; <strong>Recherche</strong> : erreurs des requêtes Solr.</li><li><strong>Kubernetes</strong> : certificat cert-manager non prêt, dernière sauvegarde Velero en échec, stockage Velero injoignable, application Argo CD dégradée ou désynchronisée, réponses en échec dans la maille Linkerd, déclencheurs KEDA en erreur.</li></ul>
+<h2 id="tableaux-prets">Tableaux prêts<a class="anchor" href="#tableaux-prets" aria-hidden="true">#</a></h2>
+<p><strong>Tableaux de bord › Catalogue</strong> : un tableau par logiciel (Consul, Vault, etcd, CoreDNS, Traefik, Envoy, Kong, CockroachDB, n8n, Temporal, Celery, Tomcat, Kafka, ActiveMQ, Cassandra, Solr, WildFly, Pulsar, ScyllaDB, SonarQube, GitLab, cert-manager, Velero, Argo CD, Linkerd, KEDA), installé d'un clic puis modifiable comme un tableau ordinaire.</p><p class="updated">Mise à jour : 20 novembre 2026</p><nav class="pager" aria-label="pages"><a href="/docs/applications-et-services/"><small>Précédent</small>Applications et services</a><a href="/docs/windows/" style="text-align:right"><small>Suivant</small>Windows</a></nav></main></div>
+<footer class="foot"><div class="foot-in"><span class="grow">HYPHA, un produit de S33D. Service hébergé en France, sur l&#x27;infrastructure en propre de S33D.</span><a href="/docs/" aria-current="page">Documentation</a><a href="/tarifs/">Tarifs</a><a href="/faq/">FAQ</a><a href="/mentions-legales/">Mentions légales</a><a href="/cgv/">Conditions de vente</a><a href="/confidentialite/">Confidentialité</a><a href="https://s33d.fr" rel="noopener">s33d.fr</a></div></footer>
+<script>(function(){var c="Copier",d="Copi\u00e9";document.querySelectorAll('.doc pre').forEach(function(p){var b=document.createElement('button');b.type='button';b.className='copy';b.textContent=c;b.onclick=function(){var x=p.querySelector('code');navigator.clipboard&&navigator.clipboard.writeText(x?x.innerText:p.innerText).then(function(){b.textContent=d;setTimeout(function(){b.textContent=c},1500)})};p.appendChild(b)});var n=document.querySelector('.side details');if(n&&window.matchMedia('(max-width: 860px)').matches)n.removeAttribute('open');document.querySelectorAll('a[data-lang]').forEach(function(a){a.addEventListener('click',function(){try{localStorage.setItem('hypha.lang',a.getAttribute('data-lang'))}catch(e){}})});})();</script>
+</body>
+</html>

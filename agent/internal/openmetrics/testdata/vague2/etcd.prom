@@ -1,0 +1,89 @@
+# TYPE etcd_cluster_version gauge
+etcd_cluster_version{cluster_version="3.6"} 1
+# TYPE etcd_debugging_mvcc_keys_total gauge
+etcd_debugging_mvcc_keys_total 20
+# TYPE etcd_disk_backend_commit_duration_seconds histogram
+etcd_disk_backend_commit_duration_seconds_bucket{le="0.001"} 1
+etcd_disk_backend_commit_duration_seconds_bucket{le="0.002"} 19
+etcd_disk_backend_commit_duration_seconds_bucket{le="0.004"} 26
+etcd_disk_backend_commit_duration_seconds_bucket{le="0.008"} 26
+etcd_disk_backend_commit_duration_seconds_bucket{le="0.016"} 26
+etcd_disk_backend_commit_duration_seconds_bucket{le="0.032"} 26
+etcd_disk_backend_commit_duration_seconds_bucket{le="0.064"} 26
+etcd_disk_backend_commit_duration_seconds_bucket{le="0.128"} 26
+etcd_disk_backend_commit_duration_seconds_bucket{le="0.256"} 26
+etcd_disk_backend_commit_duration_seconds_bucket{le="0.512"} 26
+etcd_disk_backend_commit_duration_seconds_bucket{le="1.024"} 26
+etcd_disk_backend_commit_duration_seconds_bucket{le="2.048"} 26
+etcd_disk_backend_commit_duration_seconds_bucket{le="4.096"} 26
+etcd_disk_backend_commit_duration_seconds_bucket{le="8.192"} 26
+etcd_disk_backend_commit_duration_seconds_bucket{le="+Inf"} 26
+etcd_disk_backend_commit_duration_seconds_sum 0.046353215999999996
+etcd_disk_backend_commit_duration_seconds_count 26
+# TYPE etcd_disk_wal_fsync_duration_seconds histogram
+etcd_disk_wal_fsync_duration_seconds_bucket{le="0.001"} 20
+etcd_disk_wal_fsync_duration_seconds_bucket{le="0.002"} 26
+etcd_disk_wal_fsync_duration_seconds_bucket{le="0.004"} 27
+etcd_disk_wal_fsync_duration_seconds_bucket{le="0.008"} 27
+etcd_disk_wal_fsync_duration_seconds_bucket{le="0.016"} 27
+etcd_disk_wal_fsync_duration_seconds_bucket{le="0.032"} 27
+etcd_disk_wal_fsync_duration_seconds_bucket{le="0.064"} 27
+etcd_disk_wal_fsync_duration_seconds_bucket{le="0.128"} 27
+etcd_disk_wal_fsync_duration_seconds_bucket{le="0.256"} 27
+etcd_disk_wal_fsync_duration_seconds_bucket{le="0.512"} 27
+etcd_disk_wal_fsync_duration_seconds_bucket{le="1.024"} 27
+etcd_disk_wal_fsync_duration_seconds_bucket{le="2.048"} 27
+etcd_disk_wal_fsync_duration_seconds_bucket{le="4.096"} 27
+etcd_disk_wal_fsync_duration_seconds_bucket{le="8.192"} 27
+etcd_disk_wal_fsync_duration_seconds_bucket{le="+Inf"} 27
+etcd_disk_wal_fsync_duration_seconds_sum 0.025942548999999995
+etcd_disk_wal_fsync_duration_seconds_count 27
+# TYPE etcd_mvcc_db_total_size_in_bytes gauge
+etcd_mvcc_db_total_size_in_bytes 20480
+# TYPE etcd_mvcc_db_total_size_in_use_in_bytes gauge
+etcd_mvcc_db_total_size_in_use_in_bytes 16384
+# TYPE etcd_mvcc_delete_total counter
+etcd_mvcc_delete_total 0
+# TYPE etcd_mvcc_put_total counter
+etcd_mvcc_put_total 20
+# TYPE etcd_mvcc_range_total counter
+etcd_mvcc_range_total 78
+# TYPE etcd_mvcc_txn_total counter
+etcd_mvcc_txn_total 0
+# TYPE etcd_network_client_grpc_received_bytes_total counter
+etcd_network_client_grpc_received_bytes_total 151
+# TYPE etcd_network_client_grpc_sent_bytes_total counter
+etcd_network_client_grpc_sent_bytes_total 560
+# TYPE etcd_server_has_leader gauge
+etcd_server_has_leader 1
+# TYPE etcd_server_heartbeat_send_failures_total counter
+etcd_server_heartbeat_send_failures_total 0
+# TYPE etcd_server_is_leader gauge
+etcd_server_is_leader 1
+# TYPE etcd_server_leader_changes_seen_total counter
+etcd_server_leader_changes_seen_total 1
+# TYPE etcd_server_proposals_applied_total gauge
+etcd_server_proposals_applied_total 24
+# TYPE etcd_server_proposals_committed_total gauge
+etcd_server_proposals_committed_total 24
+# TYPE etcd_server_proposals_failed_total counter
+etcd_server_proposals_failed_total 0
+# TYPE etcd_server_proposals_pending gauge
+etcd_server_proposals_pending 0
+# TYPE etcd_server_quota_backend_bytes gauge
+etcd_server_quota_backend_bytes 2.147483648e+09
+# TYPE etcd_server_slow_apply_total counter
+etcd_server_slow_apply_total 0
+# TYPE etcd_server_slow_read_indexes_total counter
+etcd_server_slow_read_indexes_total 0
+# TYPE grpc_server_handled_total counter
+grpc_server_handled_total{grpc_code="Aborted",grpc_method="Alarm",grpc_service="etcdserverpb.Maintenance",grpc_type="unary"} 0
+grpc_server_handled_total{grpc_code="Aborted",grpc_method="AuthDisable",grpc_service="etcdserverpb.Auth",grpc_type="unary"} 0
+grpc_server_handled_total{grpc_code="Aborted",grpc_method="AuthEnable",grpc_service="etcdserverpb.Auth",grpc_type="unary"} 0
+grpc_server_handled_total{grpc_code="Aborted",grpc_method="AuthStatus",grpc_service="etcdserverpb.Auth",grpc_type="unary"} 0
+# TYPE os_fd_limit gauge
+os_fd_limit 524287
+# TYPE os_fd_used gauge
+os_fd_used 12
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 3.0216192e+07

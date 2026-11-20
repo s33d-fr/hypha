@@ -13,6 +13,7 @@ from ..auth.principal import Principal, admin, viewer
 from ..db import fetch_all, fetch_one
 from ..errors import bad_request, forbidden, not_found
 from ..monitors import notify
+from ..push import service as push
 from ..runtime import rt
 from ..synthetics.netguard import TargetRefused
 from ..util import jdump
@@ -24,7 +25,8 @@ router = APIRouter()
 KEY_FIELDS = "id, name, kind, prefix, created_at, last_used_at, revoked_at, created_by"
 CHANNEL_FIELDS = "id, kind, name, config, enabled, created_at"
 CHANNEL_KINDS = ("email", "webhook", "slack", "teams", "telegram", "discord", "googlechat", "mattermost", "ntfy",
-                 "pagerduty", "opsgenie")
+                 "pagerduty", "opsgenie", "push")
+PUSH_MAX_USERS = 50
 SECRET_FIELDS = ("headers", "bot_token", "routing_key", "api_key", "token")
 _EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 _TELEGRAM_TOKEN_RE = re.compile(r"^\d{3,15}:[A-Za-z0-9_-]{20,100}$")
@@ -131,6 +133,15 @@ def validate_channel(kind: str, config) -> dict:
     if kind == "pagerduty":
         return {"routing_key": _match(config.get("routing_key"), _PAGERDUTY_KEY_RE,
                                       "config.routing_key : clé d'intégration Events API v2 (32 caractères)")}
+    if kind == "push":
+        # Destinataires : tout l'espace, ou des membres nommés (ids) ; leurs appareils abonnés reçoivent.
+        if config.get("all") is True:
+            return {"all": True}
+        users = config.get("users")
+        if not isinstance(users, list) or not users or len(users) > PUSH_MAX_USERS or not all(
+                isinstance(u, int) and not isinstance(u, bool) and u > 0 for u in users):
+            raise ValueError(f"config.users : liste d'identifiants de membres (1 à {PUSH_MAX_USERS}), ou config.all = true")
+        return {"users": sorted(set(users))}
     if kind == "opsgenie":
         region = config.get("region", "eu")
         if region not in ("eu", "us"):
@@ -169,6 +180,17 @@ async def list_channels(p: Principal = Depends(viewer)):
     return ok([_redact(r, p) for r in rows])
 
 
+async def _check_push_members(conn, org_id: int, kind: str, config: dict) -> None:
+    """Un canal push ne nomme que des membres de l'espace."""
+    if kind != "push" or not config.get("users"):
+        return
+    rows = await fetch_all(conn, "SELECT user_id FROM memberships WHERE org_id = %s AND user_id = ANY(%s::bigint[])",
+                           (org_id, config["users"]))
+    missing = sorted(set(config["users"]) - {r["user_id"] for r in rows})
+    if missing:
+        raise bad_request(f"config.users : pas membres de l'espace : {', '.join(map(str, missing))}", "invalid_channel")
+
+
 @router.post("/channels")
 async def create_channel(body: ChannelIn, request: Request, p: Principal = Depends(admin)):
     try:
@@ -176,6 +198,7 @@ async def create_channel(body: ChannelIn, request: Request, p: Principal = Depen
     except ValueError as e:
         raise bad_request(str(e), "invalid_channel")
     async with rt().db.writer() as conn:
+        await _check_push_members(conn, p.org_id, body.kind, config)
         row = await fetch_one(conn, f"""
             INSERT INTO notification_channels (org_id, kind, name, config, enabled)
             VALUES (%s, %s, %s, %s::jsonb, %s) RETURNING {CHANNEL_FIELDS}
@@ -202,6 +225,7 @@ async def _update_channel(channel_id: int, data: dict, p: Principal, request: Re
             config = validate_channel(kind, data.get("config", cur["config"]))
         except ValueError as e:
             raise bad_request(str(e), "invalid_channel")
+        await _check_push_members(conn, p.org_id, kind, config)
         row = await fetch_one(conn, f"""
             UPDATE notification_channels SET kind = %s, name = %s, config = %s::jsonb, enabled = %s
              WHERE org_id = %s AND id = %s RETURNING {CHANNEL_FIELDS}
@@ -270,10 +294,12 @@ async def test_channel(channel_id: int, request: Request, p: Principal = Depends
                            dedup_key=f"test:{channel_id}")
     try:
         async with notify.make_client() as client:
-            await notify.send(settings, client, notice)
-        result = {"ok": True, "detail": "message d'essai envoyé"}
+            detail = await notify.send(settings, client, notice)
+        result = {"ok": True, "detail": detail or "message d'essai envoyé"}
     except TargetRefused as e:
         result = {"ok": False, "detail": f"adresse refusée : {e}"}
+    except push.PushRefused as e:
+        result = {"ok": False, "detail": str(e)}
     except Exception as e:
         result = {"ok": False, "detail": str(e) or type(e).__name__}
     async with runtime.db.writer() as conn:

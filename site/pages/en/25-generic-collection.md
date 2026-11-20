@@ -58,6 +58,8 @@ A profile brings the port, path, selected metrics, their names and the useful la
 | `node_exporter` | 9100 | `node.load.1`, `node.cpu.seconds` by mode, `node.memory.*`, `node.filesystem.*` by mount point, `node.network.*` and `node.disk.*` by device, `node.procs.*`, `node.filefd.*`, `node.hwmon.temperature`, `node.time.offset` |
 | `prometheus` | 9090 | `prometheus.tsdb.head_series`, `.tsdb.samples_appended`, `.http.requests` by code, `.http.request_duration.p95`, `.target.interval_length.p99`, `.rule.evaluation_failures`, `.notifications.dropped`, `.config.last_reload_successful`, `.process.resident_memory` |
 
+Twenty-nine more profiles (Consul, Vault, etcd, Traefik, Kafka through the JMX exporter, GitLab, Argo CD…) are described in [Software exposing Prometheus](/en/docs/prometheus-software/).
+
 ### Agent check and metrics
 
 - `openmetrics.can_connect`: critical when the target does not answer, answers with an error or returns an unreadable exposition (the protobuf format is not read).
@@ -121,6 +123,8 @@ syslog:
 - Metrics: `syslog.messages` by `syslog_host` (0 for a sender seen in the last 24 hours that went quiet), `syslog.dropped` by reason, `syslog.connections`; check `syslog.can_receive`.
 
 Received logs are searched like the others: `source:syslog @syslog.hostname:fw01`, `source:syslog status:error`.
+
+Models for firewalls and routers (Fortinet, Stormshield, pfSense, OPNsense, Palo Alto, Cisco ASA, SonicWall, WatchGuard, Check Point, MikroTik, Ubiquiti): see [Network and security devices (syslog)](/en/docs/syslog-devices/).
 
 ## Monitor templates and dashboards
 

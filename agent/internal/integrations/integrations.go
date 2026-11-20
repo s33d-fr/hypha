@@ -95,6 +95,8 @@ func New(cfg config.IntegrationsConfig, d Deps) *Runner {
 	}
 	list = append(list, instanceIntegrations(cfg, d)...)
 	list = append(list, platformIntegrations(cfg)...)
+	list = append(list, vague5Integrations(cfg, d)...)
+	list = append(list, dedicatedIntegrations(cfg, d)...) // vague 3 : sondes dédiées
 	return &Runner{list: list, setStatus: d.SetStatus, next: map[string]time.Time{}, state: map[string]string{}}
 }
 

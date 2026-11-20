@@ -2,6 +2,7 @@
 *
 !ui/**
 !packaging/docker/nginx.conf
+!deploy/estampiller-sw.sh
 !agent/install/install.sh
 !agent/install/install.ps1
 !agent/dist/hypha-agent-*

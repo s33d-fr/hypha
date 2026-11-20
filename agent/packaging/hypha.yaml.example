@@ -305,3 +305,104 @@ syslog:
   rate_limit: 2000             # lignes par seconde, au-delà jetées et comptées
   parsers: []
   #  - {match: 192.0.2.0/24, parser: kv}
+
+# --- Vague 5 : IA et GPU ------------------------------------------------------------------
+
+# Ollama (dans « integrations: ») : version, modèles installés et chargés, temps de réponse ;
+# trois lectures par minute, jamais de génération. Auto sur 127.0.0.1:11434.
+# GPU NVIDIA par nvidia-smi : coupée par défaut (auto = active si nvidia-smi est présent).
+# vLLM, LiteLLM, TGI, llama.cpp et l'exportateur DCGM : profils du lecteur OpenMetrics
+# (vllm, litellm, tgi, llamacpp, dcgm).
+# integrations:
+#   ollama:
+#     url: http://127.0.0.1:11434
+#     instances:
+#       - {name: gpu-2, url: "http://192.0.2.12:11434"}
+#   nvidia_gpu:
+#     enabled: auto
+#     processes: true          # processus de calcul et mémoire par programme
+#   openmetrics:
+#     - profile: vllm          # http://127.0.0.1:8000/metrics
+#     - profile: litellm       # callbacks: ["prometheus"] dans la conf de LiteLLM
+#       bearer_token_file: /etc/hypha/litellm.key
+#     - profile: llamacpp      # llama-server --metrics
+#     - profile: dcgm          # dcgm-exporter, http://127.0.0.1:9400/metrics
+
+# --- Vague 3 : Windows ---------------------------------------------------------------------
+
+# Journaux d'événements : un canal en texte, ou en objet avec ses filtres (logs: ci-dessus).
+#   windows_eventlog:
+#     - System
+#     - {channel: Application, exclude_providers: [Microsoft-Windows-Security-SPP]}
+#     - channel: Security
+#       event_ids: [4625, 4740, "4720-4726"]   # ou plages ; levels: [audit_failure]…
+#       service: securite-windows
+# Active Directory (contrôleur de domaine) et DNS Microsoft : auto, journaux Directory Service,
+# DFS Replication et DNS Server ajoutés d'office (logs: false pour les laisser).
+# integrations:
+#   active_directory: {enabled: auto}
+#   windows_dns: {enabled: auto, exclude_zones: ["*.in-addr.arpa"]}
+#   perf_counters:                  # noms anglais des compteurs, quelle que soit la langue
+#     - name: sql-locks
+#       namespace: sqlserver
+#       counters:
+#         - {path: '\SQLServer:Locks(_Total)\Lock Waits/sec', metric: locks.waits}
+#         - {path: '\PhysicalDisk(*)\Avg. Disk sec/Read', instance_tag: disk, exclude_instances: [_Total]}
+#   wmi:
+#     - name: os
+#       class: Win32_OperatingSystem
+#       properties: [FreePhysicalMemory, NumberOfProcesses]
+
+# --- Vague 3 : sondes dédiées (Linux) ------------------------------------------------------
+
+# Chaque logiciel lu par son interface native ; auto = actif si le logiciel répond à son adresse
+# habituelle, ou dès que son compte, sa clé ou son adresse sont posés. Instances (§ 50) permises
+# pour les sondes de service. Détail : https://hypha.s33d.fr/docs/applications-et-services/
+# integrations:
+#   phpfpm: {address: 127.0.0.1:9000}            # sinon les sockets /run/php/php*-fpm.sock
+#   varnish: {command: "varnishstat"}             # « docker exec varnish varnishstat »…
+#   squid: {url: "http://127.0.0.1:3128"}
+#   lighttpd: {url: "http://127.0.0.1:8080/server-status"}
+#   gunicorn: {apps: []}                          # requêtes : --statsd-host 127.0.0.1:8125
+#   supervisord: {socket: /run/supervisor.sock}   # ou url: http://127.0.0.1:9001/RPC2
+#   pgbouncer: {dsn: "postgres://hypha:…@127.0.0.1:6432/pgbouncer"}
+#   proxysql: {dsn: "stats:…@tcp(127.0.0.1:6032)/"}
+#   clickhouse: {url: "http://127.0.0.1:8123", username: hypha, password: "…"}
+#   couchdb: {url: "http://127.0.0.1:5984", username: admin, password: "…"}
+#   couchbase: {url: "http://127.0.0.1:8091", username: hypha, password: "…"}
+#   zookeeper: {address: "127.0.0.1:2181"}        # 4lw.commands.whitelist=mntr,ruok,srvr
+#   ceph: {command: "ceph --id hypha"}            # auto : si /etc/ceph/ceph.conf existe
+#   openldap: {url: "ldapi://%2Frun%2Fslapd%2Fldapi"}   # ou ldaps://…, bind_dn, password
+#   powerdns: {url: "http://127.0.0.1:8081", api_key: "…"}
+#   powerdns_recursor: {url: "http://127.0.0.1:8082", api_key: "…"}
+#   keycloak: {url: "http://127.0.0.1:9000", admin_url: "http://127.0.0.1:8080", client_id: hypha, client_secret: "…"}
+#   nexus: {url: "http://127.0.0.1:8081", username: hypha, password: "…"}
+#   harbor: {url: "https://harbor.exemple", username: admin, password: "…"}
+#   fluentd: {url: "http://127.0.0.1:24220"}      # <source> @type monitor_agent
+#   wazuh: {url: "https://127.0.0.1:55000", username: hypha, password: "…", insecure: true}
+#   suricata: {eve_file: /var/log/suricata/eve.json, stale_after: 5m}
+#   btrfs: {enabled: auto}
+#   nfs: {enabled: auto, timeout: 5s, mounts: []}  # server_stats : /proc/<pid>/net/rpc/nfsd
+#   ssh:
+#     targets:
+#       - {name: bastion, address: "bastion.exemple:22", expect_banner: "^SSH-2.0-OpenSSH_"}
+
+# --- Vague 2 : logiciels exposant Prometheus (profils du lecteur OpenMetrics) --------------
+
+# Un profil par logiciel ; sans url, l'adresse par défaut du profil (127.0.0.1). Profils :
+# consul, vault, etcd, coredns, traefik, envoy, kong, cockroachdb, scylla, pulsar, celery (Flower),
+# n8n, temporal, gitlab, gitlab_sidekiq, gitaly, sonarqube, solr, wildfly, tomcat, kafka,
+# activemq, cassandra (ces quatre par l'exportateur JMX Prometheus en javaagent), cert_manager,
+# velero, argocd, argocd_repo_server, linkerd, keda. Réglages côté logiciel et règles JMX :
+# https://hypha.s33d.fr/docs/logiciels-prometheus/
+# integrations:
+#   openmetrics:
+#     - profile: consul        # telemetry { prometheus_retention_time = "60s" } côté Consul
+#     - profile: vault         # https://127.0.0.1:8200, unauthenticated_metrics_access ou jeton
+#       bearer_token_file: /etc/hypha/vault-metrics.token
+#     - profile: traefik       # --metrics.prometheus=true
+#     - profile: kafka         # -javaagent:jmx_prometheus_javaagent-1.7.0.jar=127.0.0.1:9405:kafka.yml
+#     - profile: sonarqube
+#       headers: {X-Sonar-Passcode: "…"}
+#     - profile: cert_manager
+#       url: http://cert-manager.cert-manager.svc:9402

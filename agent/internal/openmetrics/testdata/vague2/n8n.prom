@@ -1,0 +1,65 @@
+# TYPE n8n_expression_code_cache_size gauge
+n8n_expression_code_cache_size 0
+# TYPE n8n_last_activity gauge
+n8n_last_activity 1795143101
+# TYPE n8n_instance_role_leader gauge
+n8n_instance_role_leader 1
+# TYPE n8n_active_workflow_count gauge
+n8n_active_workflow_count 1
+# TYPE n8n_workflow_execution_duration_seconds histogram
+n8n_workflow_execution_duration_seconds_bucket{le="0.005",status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 0
+n8n_workflow_execution_duration_seconds_bucket{le="0.01",status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 0
+n8n_workflow_execution_duration_seconds_bucket{le="0.025",status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 2
+n8n_workflow_execution_duration_seconds_bucket{le="0.05",status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 4
+n8n_workflow_execution_duration_seconds_bucket{le="0.1",status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 4
+n8n_workflow_execution_duration_seconds_bucket{le="0.25",status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 5
+n8n_workflow_execution_duration_seconds_bucket{le="0.5",status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 5
+n8n_workflow_execution_duration_seconds_bucket{le="1",status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 5
+n8n_workflow_execution_duration_seconds_bucket{le="2.5",status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 5
+n8n_workflow_execution_duration_seconds_bucket{le="5",status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 5
+n8n_workflow_execution_duration_seconds_bucket{le="10",status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 5
+n8n_workflow_execution_duration_seconds_bucket{le="30",status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 5
+n8n_workflow_execution_duration_seconds_bucket{le="60",status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 5
+n8n_workflow_execution_duration_seconds_bucket{le="120",status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 5
+n8n_workflow_execution_duration_seconds_bucket{le="300",status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 5
+n8n_workflow_execution_duration_seconds_bucket{le="600",status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 5
+n8n_workflow_execution_duration_seconds_bucket{le="+Inf",status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 5
+n8n_workflow_execution_duration_seconds_sum{status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 0.241
+n8n_workflow_execution_duration_seconds_count{status="success",mode="trigger",workflow_id="essaiv2wf0000001"} 5
+n8n_workflow_execution_duration_seconds_bucket{le="0.005",status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 0
+n8n_workflow_execution_duration_seconds_bucket{le="0.01",status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 0
+n8n_workflow_execution_duration_seconds_bucket{le="0.025",status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 2
+n8n_workflow_execution_duration_seconds_bucket{le="0.05",status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 2
+n8n_workflow_execution_duration_seconds_bucket{le="0.1",status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 3
+n8n_workflow_execution_duration_seconds_bucket{le="0.25",status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 3
+n8n_workflow_execution_duration_seconds_bucket{le="0.5",status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 3
+n8n_workflow_execution_duration_seconds_bucket{le="1",status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 3
+n8n_workflow_execution_duration_seconds_bucket{le="2.5",status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 3
+n8n_workflow_execution_duration_seconds_bucket{le="5",status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 3
+n8n_workflow_execution_duration_seconds_bucket{le="10",status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 3
+n8n_workflow_execution_duration_seconds_bucket{le="30",status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 3
+n8n_workflow_execution_duration_seconds_bucket{le="60",status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 3
+n8n_workflow_execution_duration_seconds_bucket{le="120",status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 3
+n8n_workflow_execution_duration_seconds_bucket{le="300",status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 3
+n8n_workflow_execution_duration_seconds_bucket{le="600",status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 3
+n8n_workflow_execution_duration_seconds_bucket{le="+Inf",status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 3
+n8n_workflow_execution_duration_seconds_sum{status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 0.129
+n8n_workflow_execution_duration_seconds_count{status="failed",mode="trigger",workflow_id="essaiv2wf0000001"} 3
+# TYPE n8n_process_cpu_seconds_total counter
+n8n_process_cpu_seconds_total 9.663528
+# TYPE n8n_process_resident_memory_bytes gauge
+n8n_process_resident_memory_bytes 365916160
+# TYPE n8n_process_open_fds gauge
+n8n_process_open_fds 37
+# TYPE n8n_nodejs_eventloop_lag_p99_seconds gauge
+n8n_nodejs_eventloop_lag_p99_seconds 0.012214271
+# TYPE n8n_nodejs_heap_size_total_bytes gauge
+n8n_nodejs_heap_size_total_bytes 230445056
+# TYPE n8n_nodejs_heap_size_used_bytes gauge
+n8n_nodejs_heap_size_used_bytes 221412176
+# TYPE n8n_workflow_started_total counter
+n8n_workflow_started_total{workflow_id="essaiv2wf0000001"} 8
+# TYPE n8n_workflow_success_total counter
+n8n_workflow_success_total{workflow_id="essaiv2wf0000001"} 5
+# TYPE n8n_workflow_failed_total counter
+n8n_workflow_failed_total{workflow_id="essaiv2wf0000001"} 3

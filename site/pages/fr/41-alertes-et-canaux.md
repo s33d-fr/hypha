@@ -5,8 +5,8 @@ title: Alertes, vue Problèmes et canaux de notification
 nav: Alertes et canaux
 section: Alerter et agir
 order: 41
-updated: 2026-11-19
-description: La vue Problèmes de HYPHA, l'acquittement, les priorités, les escalades, et les onze canaux de notification : e-mail, webhook, Slack, Teams, Telegram, Discord, Google Chat, Mattermost, ntfy, PagerDuty, Opsgenie.
+updated: 2026-11-20
+description: La vue Problèmes de HYPHA, l'acquittement, les priorités, les escalades, et les douze canaux de notification : e-mail, notifications push, webhook, Slack, Teams, Telegram, Discord, Google Chat, Mattermost, ntfy, PagerDuty, Opsgenie.
 lead: Une seule liste de ce qui ne va pas, triée par priorité, et des notifications qui arrivent là où l'équipe travaille.
 ---
 ## La vue Problèmes
@@ -39,6 +39,7 @@ Filtres : priorité, état, acquittés ou non, mis en attente par une maintenanc
 | Canal | Réglage |
 |---|---|
 | E-mail | une ou plusieurs adresses ; message en HTML sobre avec l'état, la valeur, le seuil, le lien vers le moniteur et vers l'explication, et les dernières lignes de journal de l'hôte |
+| Notifications push | tous les membres de l'espace ou des membres choisis ; notification sur les téléphones et ordinateurs qu'ils ont activés, avec le lien vers le problème et son explication, et un bouton **Acquitter** (voir [Application mobile](/docs/application-mobile/)) |
 | Webhook | adresse et en-têtes ; corps JSON `{monitor, group, state, value, message, url}` |
 | Slack, Microsoft Teams, Google Chat, Discord, Mattermost | adresse du webhook entrant |
 | Telegram | jeton du robot et identifiant de la conversation |

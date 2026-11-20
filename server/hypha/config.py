@@ -97,6 +97,9 @@ class Settings:
     stripe_secret_key: str = field(default="", repr=False)      # SaaS seulement ; jamais journalisée
     stripe_webhook_secret: str = field(default="", repr=False)  # signature du webhook HYPHA (whsec_…)
     billing_open: bool = False      # HYPHA_FACTURATION=ouverte : les abonnements payants s'ouvrent
+    # Notifications push (Web Push) : clé privée VAPID P-256 en base64url ; vide = canal push coupé.
+    vapid_private_key: str = field(default="", repr=False)
+    vapid_subject: str = ""         # contact VAPID (mailto: ou https:) ; défaut : HYPHA_PUBLIC_URL
 
     @property
     def billing_enabled(self) -> bool:
@@ -181,6 +184,8 @@ def get_settings() -> Settings:
         stripe_secret_key=_env("HYPHA_STRIPE_SECRET_KEY") if mode == "saas" else "",
         stripe_webhook_secret=_env("HYPHA_STRIPE_WEBHOOK_SECRET") if mode == "saas" else "",
         billing_open=mode == "saas" and _env("HYPHA_FACTURATION", "fermee").lower() in ("ouverte", "open"),
+        vapid_private_key=_env("HYPHA_VAPID_PRIVATE_KEY"),
+        vapid_subject=_env("HYPHA_VAPID_SUBJECT"),
     )
 
 

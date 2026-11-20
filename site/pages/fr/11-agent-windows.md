@@ -39,7 +39,8 @@ Get-Service HyphaAgent
 ## Ce que l'agent collecte d'office
 
 - Processeur, mémoire (dont la mémoire engagée), fichier d'échange, disques, entrées-sorties, réseau, processus.
-- Journaux d'événements **System** et **Application** (liste réglable : `logs.windows_eventlog`).
+- Journaux d'événements **System** et **Application** (liste réglable et filtrable : `logs.windows_eventlog`, voir [Windows](/docs/windows/)).
+- Compteurs de performance et requêtes WMI au choix, contrôleurs de domaine Active Directory et serveurs DNS : voir [Windows](/docs/windows/).
 - Services : un service à démarrage automatique arrêté est signalé sur Windows Server. Les services de mise à jour connus pour s'arrêter d'eux-mêmes sont écartés ; ajoutez les vôtres dans `checks.windows_services_exclude`.
 - Mises à jour Windows en attente, horloge (`w32tm`), certificats du magasin de l'ordinateur.
 - IIS, SQL Server, Exchange et Hyper-V quand ils sont présents. Voir [Intégrations](/docs/integrations/) et [Virtualisation](/docs/virtualisation/).

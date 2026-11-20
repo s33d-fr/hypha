@@ -1,0 +1,56 @@
+# TYPE go_gc_gogc_percent gauge
+go_gc_gogc_percent 100
+# TYPE traefik_config_last_reload_success gauge
+traefik_config_last_reload_success 1.795142543e+09
+# TYPE traefik_config_reloads_total counter
+traefik_config_reloads_total 2
+# TYPE traefik_entrypoint_request_duration_seconds histogram
+traefik_entrypoint_request_duration_seconds_bucket{code="200",entrypoint="web",method="GET",protocol="http",le="0.1"} 20
+traefik_entrypoint_request_duration_seconds_bucket{code="200",entrypoint="web",method="GET",protocol="http",le="0.3"} 20
+traefik_entrypoint_request_duration_seconds_bucket{code="200",entrypoint="web",method="GET",protocol="http",le="1.2"} 20
+traefik_entrypoint_request_duration_seconds_bucket{code="200",entrypoint="web",method="GET",protocol="http",le="5"} 20
+traefik_entrypoint_request_duration_seconds_bucket{code="200",entrypoint="web",method="GET",protocol="http",le="+Inf"} 20
+traefik_entrypoint_request_duration_seconds_sum{code="200",entrypoint="web",method="GET",protocol="http"} 0.024811455000000003
+traefik_entrypoint_request_duration_seconds_count{code="200",entrypoint="web",method="GET",protocol="http"} 20
+traefik_entrypoint_request_duration_seconds_bucket{code="404",entrypoint="web",method="GET",protocol="http",le="0.1"} 20
+traefik_entrypoint_request_duration_seconds_bucket{code="404",entrypoint="web",method="GET",protocol="http",le="0.3"} 20
+traefik_entrypoint_request_duration_seconds_bucket{code="404",entrypoint="web",method="GET",protocol="http",le="1.2"} 20
+traefik_entrypoint_request_duration_seconds_bucket{code="404",entrypoint="web",method="GET",protocol="http",le="5"} 20
+traefik_entrypoint_request_duration_seconds_bucket{code="404",entrypoint="web",method="GET",protocol="http",le="+Inf"} 20
+traefik_entrypoint_request_duration_seconds_sum{code="404",entrypoint="web",method="GET",protocol="http"} 0.016301231
+traefik_entrypoint_request_duration_seconds_count{code="404",entrypoint="web",method="GET",protocol="http"} 20
+# TYPE traefik_entrypoint_requests_bytes_total counter
+traefik_entrypoint_requests_bytes_total{code="200",entrypoint="web",method="GET",protocol="http"} 0
+traefik_entrypoint_requests_bytes_total{code="404",entrypoint="web",method="GET",protocol="http"} 0
+# TYPE traefik_entrypoint_requests_total counter
+traefik_entrypoint_requests_total{code="200",entrypoint="web",method="GET",protocol="http"} 20
+traefik_entrypoint_requests_total{code="404",entrypoint="web",method="GET",protocol="http"} 20
+# TYPE traefik_entrypoint_responses_bytes_total counter
+traefik_entrypoint_responses_bytes_total{code="200",entrypoint="web",method="GET",protocol="http"} 580
+traefik_entrypoint_responses_bytes_total{code="404",entrypoint="web",method="GET",protocol="http"} 380
+# TYPE traefik_open_connections gauge
+traefik_open_connections{entrypoint="metrics",protocol="TCP"} 1
+traefik_open_connections{entrypoint="web",protocol="TCP"} 0
+# TYPE traefik_router_requests_total counter
+traefik_router_requests_total{code="200",method="GET",protocol="http",router="essai@file",service="amont@file"} 20
+traefik_router_requests_total{code="404",method="GET",protocol="http",router="essai@file",service="amont@file"} 20
+# TYPE traefik_service_request_duration_seconds histogram
+traefik_service_request_duration_seconds_bucket{code="200",method="GET",protocol="http",service="amont@file",le="0.1"} 20
+traefik_service_request_duration_seconds_bucket{code="200",method="GET",protocol="http",service="amont@file",le="0.3"} 20
+traefik_service_request_duration_seconds_bucket{code="200",method="GET",protocol="http",service="amont@file",le="1.2"} 20
+traefik_service_request_duration_seconds_bucket{code="200",method="GET",protocol="http",service="amont@file",le="5"} 20
+traefik_service_request_duration_seconds_bucket{code="200",method="GET",protocol="http",service="amont@file",le="+Inf"} 20
+traefik_service_request_duration_seconds_sum{code="200",method="GET",protocol="http",service="amont@file"} 0.022394967
+traefik_service_request_duration_seconds_count{code="200",method="GET",protocol="http",service="amont@file"} 20
+traefik_service_request_duration_seconds_bucket{code="404",method="GET",protocol="http",service="amont@file",le="0.1"} 20
+traefik_service_request_duration_seconds_bucket{code="404",method="GET",protocol="http",service="amont@file",le="0.3"} 20
+traefik_service_request_duration_seconds_bucket{code="404",method="GET",protocol="http",service="amont@file",le="1.2"} 20
+traefik_service_request_duration_seconds_bucket{code="404",method="GET",protocol="http",service="amont@file",le="5"} 20
+traefik_service_request_duration_seconds_bucket{code="404",method="GET",protocol="http",service="amont@file",le="+Inf"} 20
+traefik_service_request_duration_seconds_sum{code="404",method="GET",protocol="http",service="amont@file"} 0.014677187
+traefik_service_request_duration_seconds_count{code="404",method="GET",protocol="http",service="amont@file"} 20
+# TYPE traefik_service_requests_total counter
+traefik_service_requests_total{code="200",method="GET",protocol="http",service="amont@file"} 20
+traefik_service_requests_total{code="404",method="GET",protocol="http",service="amont@file"} 20
+# TYPE traefik_service_server_up gauge
+traefik_service_server_up{service="amont@file",url="http://v2-etcd:2379"} 1

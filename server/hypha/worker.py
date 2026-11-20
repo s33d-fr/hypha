@@ -192,7 +192,7 @@ async def acquire_lock(settings: Settings) -> psycopg.AsyncConnection:
 async def run_active(settings: Settings, lock_conn: psycopg.AsyncConnection) -> None:
     db = Database(settings, "hypha-worker", statement_timeout="300s")
     await db.open()
-    notifier = Notifier(settings)
+    notifier = Notifier(settings, db=db)
     usage = Usage()
     synthetics = Synthetics(db, settings, usage=usage)
     tasks = [

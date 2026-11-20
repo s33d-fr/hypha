@@ -144,7 +144,8 @@ func mergeMapping(dst, src *yaml.Node, prefix, file string, origins map[string]s
 }
 
 // concatLists : listes qui s'additionnent d'un fichier à l'autre au lieu de se remplacer.
-var concatLists = map[string]bool{"integrations.openmetrics": true, "integrations.nagios": true}
+var concatLists = map[string]bool{"integrations.openmetrics": true, "integrations.nagios": true,
+	"integrations.perf_counters": true, "integrations.wmi": true}
 
 // declaresNagios dit si un document pose integrations.nagios.
 func declaresNagios(root *yaml.Node) bool {

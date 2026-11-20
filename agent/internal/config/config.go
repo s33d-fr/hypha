@@ -81,7 +81,8 @@ type BufferConfig struct {
 type LogsConfig struct {
 	Enabled         bool         `yaml:"enabled"`
 	Journald        bool         `yaml:"journald"`
-	WindowsEventlog []string     `yaml:"windows_eventlog"`
+	// WindowsEventlog : canaux des journaux d'événements, nom seul ou objet avec filtres (windows.go).
+	WindowsEventlog []EventlogChannel `yaml:"windows_eventlog"`
 	Files           []FileSource `yaml:"files"`
 	ExcludePatterns []string     `yaml:"exclude_patterns"`
 }
@@ -190,8 +191,19 @@ type IntegrationsConfig struct {
 	OpenMetrics []OpenMetricsInstance `yaml:"openmetrics"`
 	Nagios      []NagiosCheck         `yaml:"nagios"`
 
+	// Vague 3 (Windows, windows.go) : compteurs de performance, WMI, Active Directory, DNS Microsoft.
+	PerfCounters    []PerfCounterSet      `yaml:"perf_counters"`
+	WMI             []WMIQuery            `yaml:"wmi"`
+	ActiveDirectory ActiveDirectoryConfig `yaml:"active_directory"`
+	WindowsDNS      WindowsDNSConfig      `yaml:"windows_dns"`
+
 	// Extra : entrées « instances » décodées (§ 50), remplies par normalize.
 	Extra InstanceLists `yaml:"-"`
+
+	// Vague 5 (IA et GPU) : vague5.go.
+	IntegrationsV5 `yaml:",inline"`
+	// Vague 3 : sondes dédiées (dedicated.go).
+	DedicatedIntegrations `yaml:",inline"`
 }
 
 // PostgresConfig : serveur PostgreSQL local. Sans dsn, connexion par la socket Unix en
@@ -284,6 +296,9 @@ func Default() *Config {
 	c := defaultsV03()
 	defaultsV04(c)
 	defaultsV05(c)
+	defaultsV5(c)
+	defaultsWindows(c)
+	defaultsDedicated(c)
 	return c
 }
 
@@ -295,7 +310,7 @@ func defaultsV03() *Config {
 		Logs: LogsConfig{
 			Enabled:         true,
 			Journald:        true,
-			WindowsEventlog: []string{"System", "Application"},
+			WindowsEventlog: []EventlogChannel{{Channel: "System"}, {Channel: "Application"}},
 		},
 		Processes:  ProcessesConfig{Enabled: true},
 		Network:    NetworkConfig{Enabled: true, ExcludeInterfaces: DefaultExcludeInterfaces},
@@ -409,7 +424,10 @@ func (c *Config) normalize() {
 	}
 	c.normalizeV04()
 	c.normalizeV05()
+	c.normalizeWindows()
 	c.normalizeInstances()
+	c.normalizeV5()
+	c.normalizeDedicated()
 }
 
 var (
@@ -544,7 +562,10 @@ func (c *Config) Validate(requireKey bool) []string {
 	}
 	c.validateV04(add, warn)
 	c.validateV05(add, warn)
+	c.validateWindows(add, warn)
 	c.validateInstances(add, warn)
+	c.validateV5(add, warn)
+	c.validateDedicated(add, warn)
 	// Avec plusieurs fichiers, chaque erreur nomme celui qui a posé la clé fautive.
 	if len(c.Files) > 1 {
 		for i, e := range errs {

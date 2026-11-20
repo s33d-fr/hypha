@@ -47,11 +47,12 @@ def _agent_names() -> set[str]:
         if p.name == "platform_windows.go":
             for metric in re.findall(r'\{"[A-Za-z ]+ Messages", "([a-z]+)"\}', text):
                 names.add("exchange.queue." + metric)
-        if p.name == "omprofiles.go":
-            # Profils OpenMetrics : espace de noms + nom renommé, et suffixes des histogrammes et résumés.
+        if p.parent.name == "omprofiles":
+            # Profils OpenMetrics (omprofiles.go et un fichier par vague) : espace de noms + nom renommé,
+            # et suffixes des histogrammes et résumés ; les noms Prometheus peuvent porter « : » (vllm:…).
             for block in re.split(r"register\(Profile\{", text)[1:]:
-                ns = re.search(r'Namespace:\s*"([a-z_]+)"', block).group(1)
-                for base in re.findall(r'"[A-Za-z0-9_]+":\s*"([a-z0-9_.]+)"', block):
+                ns = re.search(r'Namespace:\s*"([a-z0-9_]+)"', block).group(1)
+                for base in re.findall(r'"[A-Za-z0-9_:]+":\s*"([a-z0-9_.]+)"', block):
                     names.add(f"{ns}.{base}")
                     for suffix in ("count", "sum", "avg", "p50", "p95", "p99", "p90"):
                         names.add(f"{ns}.{base}.{suffix}")

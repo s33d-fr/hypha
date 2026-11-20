@@ -21,6 +21,12 @@ import billingEn from '../assets/i18n/billing.en.js';
 
 Object.assign(fr, billingFr);
 Object.assign(en, billingEn);
+// Application installable et notifications push : même principe.
+import pushFr from '../assets/i18n/push.fr.js';
+import pushEn from '../assets/i18n/push.en.js';
+
+Object.assign(fr, pushFr);
+Object.assign(en, pushEn);
 
 const DICTS = { fr, en };
 const LOCALES = { fr: 'fr-FR', en: 'en-GB' };

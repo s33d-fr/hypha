@@ -233,7 +233,14 @@ func normalizeOM(o *OpenMetricsInstance) {
 			o.URL = fmt.Sprintf("%s://127.0.0.1:%d%s", p.Scheme, p.Port, p.Path)
 		default:
 			if u, err := url.Parse(o.URL); err == nil && u.Host != "" && (u.Path == "" || u.Path == "/") {
-				u.Path = p.Path
+				// Le chemin d'un profil peut porter des paramètres (Consul, Vault :
+				// ?format=prometheus) : chemin et paramètres posés séparément.
+				if ref, err := url.Parse(p.Path); err == nil {
+					u.Path = ref.Path
+					if u.RawQuery == "" {
+						u.RawQuery = ref.RawQuery
+					}
+				}
 				o.URL = u.String()
 			}
 		}

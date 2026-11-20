@@ -69,19 +69,24 @@ Variables : `{{name}}`, `{{group}}`, `{{host}}`, `{{value}}`, `{{last_value}}`, 
 
 ## Le catalogue de modèles
 
-**Moniteurs › Nouveau moniteur › Depuis un modèle** : plus de 90 modèles par famille, chacun avec ses variables (étiquettes visées, seuils, service).
+**Moniteurs › Nouveau moniteur › Depuis un modèle** : plus de 180 modèles par famille, chacun avec ses variables (étiquettes visées, seuils, service).
 
 | Famille | Exemples |
 |---|---|
 | Système | processeur ou mémoire saturés, attente disque, disque presque plein, disque plein dans 48 h, inodes, échange, charge anormale, hôte sans nouvelles, redémarrage requis |
-| Services | unité systemd en échec, service Windows arrêté |
-| Sécurité | certificat proche de la fin, mises à jour de sécurité en attente, attaque SSH par force brute |
+| Services | unité systemd en échec, service Windows arrêté, programme Supervisor en échec |
+| Sécurité | certificat proche de la fin, mises à jour de sécurité en attente, attaque SSH par force brute, SSH injoignable, démon Wazuh arrêté, agents Wazuh déconnectés, Suricata silencieux, paquets perdus par Suricata, alertes Suricata de gravité 1 |
 | Applications | erreurs HTTP 5xx, latence p95, nouvelle erreur applicative |
-| Bases de données, Files de messages, Recherche | PostgreSQL, MySQL, Redis, Memcached, MongoDB, RabbitMQ, OpenSearch |
+| Bases de données, Files de messages, Recherche | PostgreSQL, MySQL, Redis, Memcached, MongoDB, RabbitMQ, OpenSearch, PgBouncer, ProxySQL, ClickHouse, CouchDB, Couchbase |
+| Web | PHP-FPM (file d'attente, plafond de processus), Varnish (serveur d'origine malade, connexions abandonnées), Squid, Lighttpd, Gunicorn |
+| Stockage | ZooKeeper, santé de la grappe Ceph, pool Ceph presque plein, Btrfs dégradé ou sans espace non alloué, montage NFS figé, serveur NFS arrêté, retransmissions NFS |
+| Annuaire et identité, DNS | OpenLDAP, Keycloak, PowerDNS et son Recursor (version vulnérable, SERVFAIL) |
+| Dépôts et registres, Journaux | Nexus (lecture seule, santé), Harbor (composant en défaut, disque), Fluentd (tampon plein, sortie bloquée) |
 | Réseau | interface en panne, équipement injoignable |
 | Messagerie | file d'attente Postfix |
 | Synthétiques | synthétique en échec |
 | Kubernetes, Cloud, Virtualisation | grappes, nœuds, AWS, Azure, Google Cloud, OVHcloud, Scaleway, vSphere, Proxmox, Hyper-V, KVM |
 | Collecte générique | cible OpenMetrics injoignable, plafond de séries atteint, plugin Nagios en alerte, réception syslog en échec, équipement syslog muet, lignes syslog jetées, erreurs graves reçues par syslog |
+| IA et GPU | Ollama, vLLM, LiteLLM, TGI, llama.cpp : injoignable, file d'attente, latence ; GPU NVIDIA trop chaud, saturé, mémoire pleine, en défaut |
 
 Un espace neuf reçoit six moniteurs du catalogue, reliés à un canal e-mail vers l'adresse du compte : hôte sans nouvelles, disque presque plein, mémoire saturée, unité systemd en échec, service Windows arrêté, certificat proche de la fin.

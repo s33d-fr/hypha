@@ -84,6 +84,7 @@ type converter struct {
 	exclude   []matcher
 	labels    map[string]bool
 	allLabels bool
+	present   map[string]bool // familles de la lecture en cours
 
 	prev     map[string]prevValue
 	hist     map[string]histState
@@ -106,21 +107,25 @@ func newConverter(cfg config.OpenMetricsInstance) *converter {
 }
 
 // candidates : noms sous lesquels une famille peut être désignée dans la conf (un compteur
-// avec ou sans son suffixe _total).
-func candidates(f *Family) []string {
+// avec ou sans son suffixe _total), sauf quand l'autre nom est lui-même une famille de
+// l'exposition : Envoy publie envoy_cluster_upstream_rq (par code) ET
+// envoy_cluster_upstream_rq_total, qui ne doivent ni se confondre ni porter le même nom.
+func (c *converter) candidates(f *Family) []string {
 	out := []string{f.Name}
 	if f.Type == "counter" {
+		alt := f.Name + "_total"
 		if base, ok := strings.CutSuffix(f.Name, "_total"); ok {
-			out = append(out, base)
-		} else {
-			out = append(out, f.Name+"_total")
+			alt = base
+		}
+		if !c.present[alt] {
+			out = append(out, alt)
 		}
 	}
 	return out
 }
 
 func (c *converter) selected(f *Family) bool {
-	names := candidates(f)
+	names := c.candidates(f)
 	if len(c.include) > 0 && !anyMatch(c.include, names) {
 		return false
 	}
@@ -132,7 +137,7 @@ var metricCharRe = regexp.MustCompile(`[^A-Za-z0-9_.\-/]`)
 // outName : espace de noms + nom renommé, ou nom Prometheus (sans _total pour un compteur).
 func (c *converter) outName(f *Family) string {
 	base := ""
-	for _, n := range candidates(f) {
+	for _, n := range c.candidates(f) {
 		if r, ok := c.cfg.Rename[n]; ok {
 			base = r
 			break
@@ -219,6 +224,10 @@ func seriesKey(name string, kv []string) string {
 // Convert traduit une lecture ; now date les débits. Les points sont triés (nom, étiquettes).
 func (c *converter) Convert(fams []*Family, now time.Time) []point {
 	c.nextPrev, c.nextHist, c.nextSumm = map[string]prevValue{}, map[string]histState{}, map[string]summaryState{}
+	c.present = make(map[string]bool, len(fams))
+	for _, f := range fams {
+		c.present[f.Name] = true
+	}
 	var out []point
 	for _, f := range fams {
 		if !c.selected(f) {
