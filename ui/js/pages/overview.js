@@ -60,7 +60,11 @@ export async function render(root, ctx) {
         h('ol', { class: 'start-steps' },
           step(1, t('start.s1'), t('start.s1_text'), h('a', { class: 'btn primary', href: href('/settings/install') }, t('start.s1_action'))),
           step(2, t('start.s2'), t('start.s2_text')),
-          step(3, t('start.s3'), t('start.s3_text'), h('a', { class: 'btn', href: href('/monitors') }, t('start.s3_action')))))));
+          ctx.me && ctx.me.mode === 'selfhosted'
+            ? step(3, t('start.s3'), t('start.s3_text_self'), h('div', { class: 'row gap-2' },
+              h('a', { class: 'btn primary', href: href('/settings/channels') }, t('start.s3_channels')),
+              h('a', { class: 'btn', href: href('/monitors') }, t('start.s3_action'))))
+            : step(3, t('start.s3'), t('start.s3_text'), h('a', { class: 'btn', href: href('/monitors') }, t('start.s3_action')))))));
   }
 
   function renderTiles() {

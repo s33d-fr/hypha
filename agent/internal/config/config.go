@@ -30,6 +30,7 @@ type Config struct {
 	RawTags       map[string]any     `yaml:"tags"`
 	Interval      Duration           `yaml:"interval"`
 	TLSSkipVerify bool               `yaml:"tls_skip_verify"`
+	TLSPin        string             `yaml:"tls_pin"`
 	Proxy         string             `yaml:"proxy"`
 	Buffer        BufferConfig       `yaml:"buffer"`
 	Logs          LogsConfig         `yaml:"logs"`
@@ -402,11 +403,16 @@ func (c *Config) applyEnv() {
 		c.URL = v
 		c.FromEnv = append(c.FromEnv, "url (HYPHA_URL)")
 	}
+	if v := strings.TrimSpace(os.Getenv("HYPHA_TLS_PIN")); v != "" {
+		c.TLSPin = v
+		c.FromEnv = append(c.FromEnv, "tls_pin (HYPHA_TLS_PIN)")
+	}
 }
 
 func (c *Config) normalize() {
 	c.URL = strings.TrimRight(strings.TrimSpace(c.URL), "/")
 	c.APIKey = strings.TrimSpace(c.APIKey)
+	c.TLSPin = strings.TrimSpace(c.TLSPin)
 	c.Tags = map[string]string{}
 	for k, v := range c.RawTags {
 		if v == nil {
@@ -445,6 +451,7 @@ func (c *Config) normalize() {
 var (
 	tagKeyRe = regexp.MustCompile(`^[a-z0-9_.\-/]+$`)
 	apiKeyRe = regexp.MustCompile(`^hph_[0-9A-Za-z]{40}$`)
+	tlsPinRe = regexp.MustCompile(`^sha256//[A-Za-z0-9+/]{43}=$`)
 )
 
 // Validate rend les erreurs bloquantes ; les remarques vont dans c.Warnings.
@@ -471,8 +478,24 @@ func (c *Config) Validate(requireKey bool) []string {
 			add("proxy invalide : %q (exemple : http://proxy:3128)", c.Proxy)
 		}
 	}
-	if c.TLSSkipVerify {
-		warn("tls_skip_verify actif : le certificat du serveur n'est pas vérifié")
+	if c.TLSPin != "" {
+		pins := 0
+		for _, p := range strings.Split(c.TLSPin, ";") {
+			if p = strings.TrimSpace(p); p == "" {
+				continue
+			} else if !tlsPinRe.MatchString(p) {
+				add("tls_pin invalide : %q (attendu sha256//<empreinte base64>, plusieurs séparées par ;)", p)
+			}
+			pins++
+		}
+		if pins == 0 {
+			add("tls_pin vide : %q", c.TLSPin)
+		}
+		if c.TLSSkipVerify {
+			warn("tls_skip_verify inutile avec tls_pin : la clé du serveur reste vérifiée")
+		}
+	} else if c.TLSSkipVerify {
+		warn("tls_skip_verify actif : le certificat du serveur n'est pas vérifié (préférer tls_pin)")
 	}
 	if c.Interval.D() < time.Second {
 		add("interval trop court : %s (1s au moins, 15s conseillé)", c.Interval.D())

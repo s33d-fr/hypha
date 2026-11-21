@@ -151,7 +151,7 @@ func New(cfg *config.Config, opt Options) (*Agent, error) {
 	}
 	info := model.AgentInfo{ID: id, Version: opt.Version, Hostname: hostname, OS: runtime.GOOS, Arch: runtime.GOARCH}
 	a.sender, err = sender.New(sender.Options{
-		URL: cfg.URL, APIKey: cfg.APIKey, Agent: info, Proxy: cfg.Proxy, TLSSkipVerify: cfg.TLSSkipVerify,
+		URL: cfg.URL, APIKey: cfg.APIKey, Agent: info, Proxy: cfg.Proxy, TLSSkipVerify: cfg.TLSSkipVerify, TLSPin: cfg.TLSPin,
 		BufferDir: cfg.Buffer.Dir, BufferMaxBytes: int64(cfg.Buffer.MaxMB) << 20,
 		DryRun: opt.DryRun, Out: opt.Out, Logger: opt.Logger,
 	})
@@ -419,7 +419,7 @@ func (a *Agent) startListeners(ctx context.Context) {
 		a.status.Set("statsd", "disabled")
 	}
 	if a.cfg.OTLP.Enabled {
-		tr, err := sender.NewTransport(a.cfg.Proxy, a.cfg.TLSSkipVerify)
+		tr, err := sender.NewTransport(a.cfg.Proxy, a.cfg.TLSSkipVerify, a.cfg.TLSPin)
 		if err == nil {
 			r := otlp.New(a.cfg.OTLP.Listen, a.cfg.URL, a.cfg.APIKey, a.opt.Version, tr, a.opt.DryRun, a.log)
 			err = r.Start(ctx)

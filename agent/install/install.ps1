@@ -14,6 +14,10 @@
 #   HYPHA_TAGS        étiquettes, « env:prod,role:web » ou JSON {"env":"prod"}
 #   HYPHA_HOSTNAME    nom de l'hôte dans HYPHA (défaut : nom système)
 #   HYPHA_FORCE_CONF  1 = réécrire api_key et url d'une conf existante (rien d'autre)
+#   HYPHA_TLS_PIN     serveur auto-hébergé à certificat autosigné ou d'autorité interne :
+#                     empreinte « sha256//… » de sa clé publique (Réglages › Installer l'agent).
+#                     Les téléchargements la vérifient (curl.exe --pinnedpubkey), la conf la
+#                     garde (tls_pin). Windows Server 2019, Windows 10 1803 et suivants.
 # HYPHA_TAGS et HYPHA_HOSTNAME ne sont écrits qu'à la création de la conf.
 param([switch]$Uninstall)
 
@@ -43,6 +47,31 @@ if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administra
 # PowerShell 5.1 sur un Windows ancien ne propose pas TLS 1.2 d'office.
 [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
 
+# Serveur à certificat autosigné ou d'autorité interne : la clé épinglée se vérifie par curl.exe
+# (--pinnedpubkey, Windows Server 2019, Windows 10 1803 et suivants). Le rappel de validation de
+# .NET ne convient pas : il s'exécute hors du fil de PowerShell (WinRM, Ansible) et y échoue.
+$Pin = Get-EnvValue 'HYPHA_TLS_PIN'
+if (-not [string]::IsNullOrWhiteSpace($Pin)) {
+    $Pin = $Pin.Trim()
+    if ($Pin -cnotmatch '^sha256//[A-Za-z0-9+/]{43}=(;sha256//[A-Za-z0-9+/]{43}=)*$') {
+        Stop-Install "HYPHA_TLS_PIN invalide : « $Pin » (attendu sha256//<empreinte base64>)"
+    }
+    if (-not (Get-Command curl.exe -ErrorAction SilentlyContinue)) {
+        Stop-Install 'HYPHA_TLS_PIN demande curl.exe (Windows Server 2019, Windows 10 1803 ou plus récent)'
+    }
+} else {
+    $Pin = ''
+}
+
+function Get-File([string]$Uri, [string]$OutFile) {
+    if ($Pin) {
+        & curl.exe -fsSLk --pinnedpubkey $Pin --retry 3 --connect-timeout 15 -o $OutFile $Uri
+        if ($LASTEXITCODE -ne 0) { throw "curl.exe, code $LASTEXITCODE (90 : la clé du serveur n'est pas celle de HYPHA_TLS_PIN)" }
+    } else {
+        Invoke-WebRequest -UseBasicParsing -Uri $Uri -OutFile $OutFile
+    }
+}
+
 # Lance hypha-agent.exe et rend son code de sortie (sa sortie standard est rendue au besoin).
 function Invoke-Agent([string]$Path, [string[]]$Arguments, [switch]$Quiet) {
     if ($Quiet) { & $Path @Arguments | Out-Null } else { & $Path @Arguments }
@@ -71,8 +100,8 @@ try {
     $file = Join-Path $tmp $name
     $sumFile = Join-Path $tmp 'SHA256SUMS'
     try {
-        Invoke-WebRequest -UseBasicParsing -Uri "$Url/install/$name" -OutFile $file
-        Invoke-WebRequest -UseBasicParsing -Uri "$Url/install/SHA256SUMS" -OutFile $sumFile
+        Get-File "$Url/install/$name" $file
+        Get-File "$Url/install/SHA256SUMS" $sumFile
     } catch {
         Stop-Install "téléchargement impossible depuis $Url/install/ : $($_.Exception.Message)"
     }
@@ -133,7 +162,7 @@ try {
     # Vérifie une conf telle que le service la lira : sans HYPHA_API_KEY ni HYPHA_URL.
     function Test-Conf([string]$Binary, [string]$Path) {
         $saved = @{}
-        foreach ($v in 'HYPHA_API_KEY', 'HYPHA_URL') {
+        foreach ($v in 'HYPHA_API_KEY', 'HYPHA_URL', 'HYPHA_TLS_PIN') {
             $saved[$v] = Get-EnvValue $v
             [Environment]::SetEnvironmentVariable($v, $null)
         }
@@ -162,6 +191,7 @@ try {
 # Configuration de hypha-agent, écrite par install.ps1. Vérifier : hypha-agent check-config
 api_key: $(ConvertTo-YamlString $key.Trim())
 url: $(ConvertTo-YamlString $Url)
+$(if ($Pin) { "tls_pin: $(ConvertTo-YamlString $Pin)" })
 hostname: $(ConvertTo-YamlString $hostname)
 tags: $(Get-TagsYaml)
 interval: 15s
@@ -194,6 +224,7 @@ otlp: {enabled: false, listen: "127.0.0.1:4318"}
         $sets = @{}
         if (-not [string]::IsNullOrWhiteSpace($key)) { $sets['api_key'] = $key.Trim() }
         if ($UrlGiven) { $sets['url'] = $Url }
+        if ($Pin) { $sets['tls_pin'] = $Pin }
         foreach ($k in $sets.Keys) {
             $line = "${k}: $(ConvertTo-YamlString $sets[$k])"
             $re = "(?m)^$k\s*:.*$"
@@ -208,6 +239,14 @@ otlp: {enabled: false, listen: "127.0.0.1:4318"}
             $confChanged = $true
             Write-Info "api_key et url réécrites (HYPHA_FORCE_CONF=1) : $Conf"
         }
+    } elseif ($Pin -and -not ([IO.File]::ReadAllText($Conf) -match '(?m)^tls_pin\s*:')) {
+        # Sans l'empreinte, l'agent refuserait le certificat que l'installation vient d'accepter.
+        $text = [IO.File]::ReadAllText($Conf).TrimEnd() + "`ntls_pin: $(ConvertTo-YamlString $Pin)`n"
+        [IO.File]::WriteAllText($newConf, $text, $Utf8NoBom)
+        Test-Conf $file $newConf
+        Copy-Item -Force -Path $newConf -Destination $Conf
+        $confChanged = $true
+        Write-Info "configuration existante gardée, tls_pin ajouté : $Conf"
     } else {
         Write-Info "configuration existante gardée telle quelle : $Conf"
     }

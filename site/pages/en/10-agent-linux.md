@@ -32,6 +32,7 @@ Accepted variables:
 | `HYPHA_TAGS` | tags added to everything the agent sends: `env:prod,role:web` or `{"env":"prod"}` |
 | `HYPHA_HOSTNAME` | host name in HYPHA (system name by default) |
 | `HYPHA_FORCE_CONF` | `1` rewrites `api_key` and `url` in an existing configuration |
+| `HYPHA_TLS_PIN` | self-hosted server with a self-signed or internal-authority certificate: `sha256//…` fingerprint of its public key, shown in **Settings › Install the agent**; downloads check it and the configuration keeps it (`tls_pin`) |
 
 `HYPHA_TAGS` and `HYPHA_HOSTNAME` only apply when the file is created: an existing configuration is never rewritten, except `api_key` and `url` with `HYPHA_FORCE_CONF=1`.
 

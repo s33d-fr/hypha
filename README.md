@@ -69,6 +69,10 @@ docker compose up -d
 The same files are in [`packaging/docker/`](packaging/docker/). Full guide (accounts, local AI
 model, updates, backups): <https://hypha.s33d.fr/en/docs/self-hosting/>.
 
+Trying it on a local network, without a DNS name? A self-signed certificate is enough: the
+**Settings › Install the agent** page then pins your server key in the commands it shows
+([trial on a local network](https://hypha.s33d.fr/en/docs/self-hosting/#trial-on-a-local-network)).
+
 ## Hosted service
 
 S33D runs HYPHA for you at <https://hypha.s33d.fr>, hosted in France: free **Découverte** plan up to
@@ -189,6 +193,10 @@ docker compose up -d
 
 Les mêmes fichiers sont dans [`packaging/docker/`](packaging/docker/). Notice complète (comptes,
 modèle d'IA local, mises à jour, sauvegardes) : <https://hypha.s33d.fr/docs/auto-hebergement/>.
+
+Un essai en réseau local, sans nom DNS ? Un certificat autosigné suffit : la page **Réglages ›
+Installer l'agent** épingle alors la clé de votre serveur dans les commandes qu'elle affiche
+([essai en réseau local](https://hypha.s33d.fr/docs/auto-hebergement/#essai-en-reseau-local)).
 
 ## Service hébergé
 

@@ -26,8 +26,11 @@ tags: {}
 # Cadence des métriques et des contrôles.
 interval: 15s
 
-# Vérification du certificat du serveur : ne la couper que pour un serveur auto-hébergé
-# à certificat interne, en connaissance de cause.
+# Serveur auto-hébergé à certificat autosigné ou d'autorité interne : épingler la clé publique
+# de son certificat (valeur affichée dans Réglages › Installer l'agent, variable HYPHA_TLS_PIN à
+# l'installation). La clé reste vérifiée à chaque connexion ; plusieurs valeurs séparées par « ; ».
+# tls_pin: "sha256//…"
+# Couper toute vérification du certificat : à éviter, tls_pin fait la même chose sans le risque.
 tls_skip_verify: false
 
 # Mandataire HTTP pour joindre le serveur (vide = variables HTTPS_PROXY / NO_PROXY).

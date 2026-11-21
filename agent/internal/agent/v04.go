@@ -61,7 +61,7 @@ func fileExists(p string) bool {
 func (a *Agent) setupV04() error {
 	cfg := a.cfg
 	a.updateOff = updateOffReason(a.opt)
-	tr, err := sender.NewTransport(cfg.Proxy, cfg.TLSSkipVerify)
+	tr, err := sender.NewTransport(cfg.Proxy, cfg.TLSSkipVerify, cfg.TLSPin)
 	if err != nil {
 		return err
 	}

@@ -29,7 +29,7 @@
 <pre><code class="language-powershell">[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor 3072; $env:HYPHA_API_KEY=&#x27;hph_votre_cle&#x27;; iwr -useb https://hypha.s33d.fr/install/install.ps1 | iex</code></pre>
 <p>Le début de la ligne active TLS 1.2, absent d'office de PowerShell 5.1 sur Windows Server 2016 et 2019. La page <strong>Réglages › Installer l'agent</strong> donne cette commande toute prête.</p>
 <p>Le script télécharge <code>hypha-agent.exe</code> dans <code>C:\Program Files\Hypha</code>, vérifie sa somme SHA-256, écrit <code>C:\ProgramData\Hypha\hypha.yaml</code>, puis installe et démarre le service <strong>Hypha Agent</strong> (nom court <code>HyphaAgent</code>), en démarrage automatique, compte LocalSystem, relancé sur échec.</p>
-<p>Les variables <code>HYPHA_URL</code>, <code>HYPHA_TAGS</code>, <code>HYPHA_HOSTNAME</code> et <code>HYPHA_FORCE_CONF</code> jouent le même rôle que sous <a href="/docs/agent-linux/#installer-en-une-commande">Linux</a>.</p>
+<p>Les variables <code>HYPHA_URL</code>, <code>HYPHA_TAGS</code>, <code>HYPHA_HOSTNAME</code>, <code>HYPHA_FORCE_CONF</code> et <code>HYPHA_TLS_PIN</code> (par <code>curl.exe</code>, Windows Server 2019 et suivants) jouent le même rôle que sous <a href="/docs/agent-linux/#installer-en-une-commande">Linux</a>.</p>
 <h2 id="verifier">Vérifier<a class="anchor" href="#verifier" aria-hidden="true">#</a></h2>
 <pre><code class="language-powershell">&amp; &quot;C:\Program Files\Hypha\hypha-agent.exe&quot; status
 &amp; &quot;C:\Program Files\Hypha\hypha-agent.exe&quot; check-config

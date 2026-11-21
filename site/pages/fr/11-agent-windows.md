@@ -26,7 +26,7 @@ Le début de la ligne active TLS 1.2, absent d'office de PowerShell 5.1 sur Wind
 
 Le script télécharge `hypha-agent.exe` dans `C:\Program Files\Hypha`, vérifie sa somme SHA-256, écrit `C:\ProgramData\Hypha\hypha.yaml`, puis installe et démarre le service **Hypha Agent** (nom court `HyphaAgent`), en démarrage automatique, compte LocalSystem, relancé sur échec.
 
-Les variables `HYPHA_URL`, `HYPHA_TAGS`, `HYPHA_HOSTNAME` et `HYPHA_FORCE_CONF` jouent le même rôle que sous [Linux](/docs/agent-linux/#installer-en-une-commande).
+Les variables `HYPHA_URL`, `HYPHA_TAGS`, `HYPHA_HOSTNAME`, `HYPHA_FORCE_CONF` et `HYPHA_TLS_PIN` (par `curl.exe`, Windows Server 2019 et suivants) jouent le même rôle que sous [Linux](/docs/agent-linux/#installer-en-une-commande).
 
 ## Vérifier
 

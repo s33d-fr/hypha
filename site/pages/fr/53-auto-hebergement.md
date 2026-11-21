@@ -5,7 +5,7 @@ title: Auto-hébergement
 nav: Auto-hébergement
 section: Administrer
 order: 53
-updated: 2026-11-20
+updated: 2026-11-21
 description: Installer HYPHA sur votre serveur avec Docker Compose (formule Libre) : prérequis, installation, comptes, IA locale, mise à jour, sauvegarde. Vos données restent chez vous.
 lead: Le même logiciel que hypha.s33d.fr, sur votre machine, gratuit et sans limite. Vos mesures, journaux et traces restent dans votre base PostgreSQL.
 ---
@@ -13,7 +13,7 @@ lead: Le même logiciel que hypha.s33d.fr, sur votre machine, gratuit et sans li
 
 - Un serveur Linux 64 bits (amd64 ou arm64) avec Docker et Docker Compose.
 - De la mémoire et du disque selon le nombre d'hôtes suivis et la durée de conservation des journaux.
-- Un nom DNS et son certificat TLS (`fullchain.pem`, `privkey.pem`). Seul le port HTTPS est publié.
+- Un nom DNS et son certificat TLS (`fullchain.pem`, `privkey.pem`), ou, pour un essai, un certificat autosigné (voir [Essai en réseau local](#essai-en-reseau-local)). Seul le port HTTPS est publié.
 
 ## Installer
 
@@ -44,6 +44,21 @@ Au premier démarrage, HYPHA crée la base, l'organisation (`HYPHA_ORG_NAME`), l
 
 Installez ensuite les agents depuis **Réglages › Installer l'agent** : la commande télécharge l'agent depuis votre serveur et le relie à lui (`HYPHA_URL`).
 
+## Essai en réseau local
+
+Sans nom DNS ni autorité de certification, un certificat autosigné pour l'adresse du serveur suffit (ici `192.0.2.20`, à remplacer par la vôtre) :
+
+```bash
+mkdir -p certs
+openssl req -x509 -newkey rsa:2048 -nodes -days 825 -subj "/CN=192.0.2.20" \
+  -addext "subjectAltName=IP:192.0.2.20" \
+  -keyout certs/privkey.pem -out certs/fullchain.pem
+```
+
+`HYPHA_PUBLIC_URL` vaut alors `https://192.0.2.20`. Votre navigateur signale ce certificat à la première visite. La page **Réglages › Installer l'agent** le reconnaît : ses commandes épinglent la clé publique de votre serveur (`HYPHA_TLS_PIN`), que l'installation puis l'agent vérifient à chaque connexion. Sous Windows, la commande télécharge par `curl.exe`, présent depuis Windows Server 2019 et Windows 10 1803.
+
+Pour renouveler ce certificat sans toucher aux agents, gardez la même clé : `-key certs/privkey.pem` à la place de `-newkey rsa:2048 -nodes -keyout certs/privkey.pem`, puis `docker compose restart nginx`.
+
 ## Ce que contient le kit
 
 | Service | Rôle |
@@ -63,7 +78,8 @@ Images publiques : `registre-vm.s33d.fr/hypha/server` et `registre-vm.s33d.fr/hy
 | `HYPHA_SMTP_HOST`, `_PORT`, `_USER`, `_PASSWORD`, `_FROM`, `_SECURITY` | envoi des alertes par e-mail |
 | `HYPHA_OIDC_ISSUER`, `_CLIENT_ID`, `_CLIENT_SECRET` | connexion OpenID Connect, en plus des comptes locaux ; seuls les comptes invités entrent |
 | `HYPHA_VAPID_PRIVATE_KEY`, `HYPHA_VAPID_SUBJECT` | notifications push vers les téléphones et ordinateurs : clé générée par `docker compose exec api python -m hypha vapid-key` (voir [Application mobile](/docs/application-mobile/)) ; vide, le canal est coupé |
-| `HYPHA_LLM_URL`, `HYPHA_LLM_MODEL` | votre serveur de modèle de type Ollama, pour l'explication des pannes et le post-mortem ; vide, la fonction est coupée |
+| `HYPHA_LLM_URL`, `HYPHA_LLM_MODEL` | votre serveur de modèle de type Ollama, joignable depuis le conteneur `api`, et le nom du modèle chez lui, pour l'explication des pannes et le post-mortem ; vide, la fonction est coupée |
+| `HYPHA_LLM_TIMEOUT_S` | attente maximale d'une réponse du modèle, en secondes (90 par défaut) ; sans GPU, un petit modèle lit le contexte d'une panne en plusieurs minutes : 600 (900 au plus derrière le nginx du kit) |
 | `HYPHA_ALLOW_PRIVATE_TARGETS` | autoriser les tests synthétiques et les webhooks vers des adresses internes |
 | `HYPHA_LOG_LEVEL` | niveau du journal du serveur |
 | `HYPHA_OTEL_ENDPOINT`, `HYPHA_OTEL_SAMPLE` | traces du serveur lui-même, par le relais OTLP d'un agent |

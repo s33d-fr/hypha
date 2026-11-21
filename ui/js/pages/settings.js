@@ -130,13 +130,36 @@ async function renderInstall(root, ctx) {
     return String(cmd).replace(/<HYPHA_API_KEY>|hph_(?:\u2026|\.\.\.|x+|X+|<[^>]*>|VOTRE_CLE|YOUR_KEY)/g, generatedKey);
   }
 
+  // Serveur auto-hébergé à certificat non reconnu (autosigné, autorité interne) : nginx du kit
+  // publie l'empreinte de la clé dans /install/tls.json ; les commandes l'épinglent (tls_pin).
+  let tlsInfo = null;
+  const PIN_RE = /^sha256\/\/[A-Za-z0-9+/]{43}=$/;
+  function pinned(cmd) {
+    if (!cmd || !tlsInfo || tlsInfo.public !== false || !PIN_RE.test(tlsInfo.pin || '')) return cmd;
+    const pin = tlsInfo.pin;
+    if (os === 'linux') return cmd.replace('curl -fsSL ', `curl -fsSLk --pinnedpubkey '${pin}' `).replace('| sudo ', `| sudo HYPHA_TLS_PIN='${pin}' `);
+    if (os === 'windows') {
+      // install.ps1 téléchargé par curl.exe --pinnedpubkey (Windows Server 2019, Windows 10 1803
+      // et suivants), puis lancé : le rappel de validation de .NET échoue hors du fil de
+      // PowerShell (WinRM, Ansible). install.ps1 télécharge ensuite l'agent de la même façon.
+      const i = cmd.indexOf('iwr -useb ');
+      if (i < 0) return cmd;
+      const script = cmd.slice(i + 'iwr -useb '.length).split(' ')[0];
+      const tmp = '$env:TEMP/hypha-install.ps1';
+      return cmd.slice(0, i) + `$env:HYPHA_TLS_PIN='${pin}'; curl.exe -fsSLk --pinnedpubkey '${pin}' -o ${tmp} ${script}; powershell -NoProfile -ExecutionPolicy Bypass -File ${tmp}`;
+    }
+    if (os === 'docker') return cmd.replace(/ (\S+\/agent-docker:)/, ` -e HYPHA_TLS_PIN='${pin}' $1`);
+    return cmd;
+  }
+  const isPinned = () => !!(tlsInfo && tlsInfo.public === false && PIN_RE.test(tlsInfo.pin || ''));
+
   function drawCommands() {
     clear(cmdEl);
     if (!data) return;
     cmdEl.appendChild(h('div', { class: 'row mb-3' }, h('span', { class: 'small muted' }, t('install.version', { v: data.version || '-' })), h('span', { class: 'spacer' }),
       data.url ? h('span', { class: 'small muted mono' }, data.url) : null));
     cmdEl.appendChild(tabs(['linux', 'windows', 'docker'].map((k) => ({ key: k, label: t('install.os.' + k) })), os, (k) => { os = k; ctx.setParams({ os: k }, { silent: true }); drawCommands(); }));
-    const cmd = withKey(data[os]);
+    const cmd = pinned(withKey(data[os]));
     const box = h('div', { class: 'col gap-3 mt-3' });
     box.appendChild(h('div', { class: 'small text-2' }, t('install.hint.' + os)));
     box.appendChild(cmd ? codeBlock(cmd) : h('div', { class: 'muted small' }, t('install.no_cmd')));
@@ -159,11 +182,24 @@ async function renderInstall(root, ctx) {
     } else {
       box.appendChild(h('div', { class: 'small muted' }, t('install.key_included')));
     }
+    if (isPinned()) {
+      box.appendChild(h('div', { class: 'callout' }, icon('key', 16), h('div', { class: 'small' },
+        h('div', { class: 'mb-2' }, h('b', t('install.pin_title'))),
+        h('div', t('install.pin_text', { pin: tlsInfo.pin })),
+        os === 'windows' ? h('div', { class: 'mt-2' }, t('install.pin_windows')) : null)));
+    }
     if (os === 'linux') box.appendChild(h('div', { class: 'small muted' }, t('install.linux_root')));
     cmdEl.appendChild(box);
   }
 
-  await section(cmdEl, () => get('/install', null, { signal }), (d) => { data = d && typeof d === 'object' ? d : {}; drawCommands(); return null; });
+  const loadTls = async () => {
+    try {
+      const r = await fetch('/install/tls.json', { signal, cache: 'no-store' });
+      tlsInfo = r.ok ? await r.json() : null;
+    } catch { tlsInfo = null; } // service hébergé : pas de fichier, certificat public
+  };
+  await section(cmdEl, async () => { const [d] = await Promise.all([get('/install', null, { signal }), loadTls()]); return d; },
+    (d) => { data = d && typeof d === 'object' ? d : {}; drawCommands(); return null; });
 
   const drawAgents = (list) => dataTable({
     columns: [

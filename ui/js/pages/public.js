@@ -89,36 +89,49 @@ export function renderPublic(root, info) {
     mount(card, kids);
   }
 
-  const langSwitch = h('div', { class: 'pill-group' }, languages().map((l) => h('button', {
-    type: 'button', class: l.code === getLang() ? 'on' : null,
-    onclick: () => { setLang(l.code); renderPublic(root, Object.assign({}, info, { mode })); },
-  }, l.code.toUpperCase())));
+  // Auto-hébergé : la page est celle du serveur du client. Ni tarifs, ni pages légales et
+  // commerciales du service hébergé de S33D ; la documentation et le code source restent.
+  function draw() {
+    const self = mode === 'selfhosted';
+    const langSwitch = h('div', { class: 'pill-group' }, languages().map((l) => h('button', {
+      type: 'button', class: l.code === getLang() ? 'on' : null,
+      onclick: () => { setLang(l.code); renderPublic(root, Object.assign({}, info, { mode })); },
+    }, l.code.toUpperCase())));
 
-  const page = h('div', { class: 'public' },
-    h('header', { class: 'public-top' },
-      h('span', { class: 'brand' }, h('img', { src: 'assets/img/hypha.svg', alt: '' }), h('span', { class: 'brand-name' }, 'HYPHA', h('small', t('brand.by')))),
-      h('span', { class: 'spacer' }),
-      h('a', { class: 'btn ghost sm', href: sitePage('docs') }, t('public.foot.docs')),
-      h('a', { class: 'btn ghost sm', href: sitePage('pricing') }, t('public.foot.pricing')),
-      langSwitch),
-    h('main', { class: 'public-main' },
-      h('section', { class: 'hero' },
-        h('h1', t('public.headline')),
-        h('p', { class: 'lead' }, t('public.lead')),
-        h('div', { class: 'public-cover' },
-          ['public.c.hosted', 'public.c.self', 'public.c.free', 'public.c.lang'].map((k) => h('span', { class: 'badge info' }, t(k)))),
-        h('div', { class: 'points' }, POINTS.map(([ic, ti, de]) => h('div', { class: 'point' }, icon(ic, 18), h('div', h('b', t(ti)), h('span', t(de))))))),
-      h('aside', card)),
-    h('footer', { class: 'public-foot' },
-      h('span', t('public.foot.product')),
-      h('span', t('public.foot.where')),
-      ['docs', 'pricing', 'faq', 'legal', 'terms', 'privacy'].map((k) => h('a', { href: sitePage(k) }, t('public.foot.' + k))),
-      h('a', { href: 'https://s33d.fr', rel: 'noopener' }, 's33d.fr')));
+    const page = h('div', { class: 'public' },
+      h('header', { class: 'public-top' },
+        h('span', { class: 'brand' }, h('img', { src: 'assets/img/hypha.svg', alt: '' }), h('span', { class: 'brand-name' }, 'HYPHA', h('small', t('brand.by')))),
+        h('span', { class: 'spacer' }),
+        h('a', { class: 'btn ghost sm', href: sitePage('docs') }, t('public.foot.docs')),
+        self ? null : h('a', { class: 'btn ghost sm', href: sitePage('pricing') }, t('public.foot.pricing')),
+        langSwitch),
+      h('main', { class: 'public-main' },
+        h('section', { class: 'hero' },
+          h('h1', t('public.headline')),
+          h('p', { class: 'lead' }, t(self ? 'public.lead_self' : 'public.lead')),
+          self ? null : h('div', { class: 'public-cover' },
+            ['public.c.hosted', 'public.c.self', 'public.c.free', 'public.c.lang'].map((k) => h('span', { class: 'badge info' }, t(k)))),
+          h('div', { class: 'points' }, POINTS.map(([ic, ti, de]) => h('div', { class: 'point' }, icon(ic, 18), h('div', h('b', t(ti)), h('span', t(de))))))),
+        h('aside', card)),
+      self
+        ? h('footer', { class: 'public-foot' },
+          h('span', t('public.foot.product')),
+          h('span', t('public.foot.self_where')),
+          h('a', { href: sitePage('docs') }, t('public.foot.docs')),
+          h('a', { href: 'https://github.com/s33d-fr/hypha', rel: 'noopener' }, t('public.foot.source')))
+        : h('footer', { class: 'public-foot' },
+          h('span', t('public.foot.product')),
+          h('span', t('public.foot.where')),
+          ['docs', 'pricing', 'faq', 'legal', 'terms', 'privacy'].map((k) => h('a', { href: sitePage(k) }, t('public.foot.' + k))),
+          h('a', { href: 'https://s33d.fr', rel: 'noopener' }, 's33d.fr')));
 
-  mount(root, page);
+    mount(root, page);
+    renderCard();
+  }
+
   document.title = 'HYPHA · ' + t('public.title_suffix');
-  renderCard();
+  draw();
   if (mode === null) {
-    probeMode().then((m) => { mode = m; if (card.isConnected) renderCard(); });
+    probeMode().then((m) => { mode = m; if (card.isConnected) draw(); });
   }
 }

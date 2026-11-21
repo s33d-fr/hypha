@@ -11,7 +11,10 @@ import (
 	"bytes"
 	"compress/gzip"
 	"context"
+	"crypto/sha256"
+	"crypto/subtle"
 	"crypto/tls"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -20,6 +23,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -65,6 +69,7 @@ type Options struct {
 	Agent          model.AgentInfo
 	Proxy          string
 	TLSSkipVerify  bool
+	TLSPin         string // tls_pin : empreintes sha256// de la clé publique du serveur
 	BufferDir      string
 	BufferMaxBytes int64
 	DryRun         bool
@@ -107,7 +112,7 @@ func New(o Options) (*Sender, error) {
 	if o.DryRun {
 		return s, nil
 	}
-	tr, err := NewTransport(o.Proxy, o.TLSSkipVerify)
+	tr, err := NewTransport(o.Proxy, o.TLSSkipVerify, o.TLSPin)
 	if err != nil {
 		return nil, err
 	}
@@ -124,9 +129,12 @@ func New(o Options) (*Sender, error) {
 	return s, nil
 }
 
-// NewTransport crée le transport HTTP commun (envoi et relais OTLP) : mandataire de la
-// conf, sinon celui de l'environnement (HTTPS_PROXY), et vérification TLS réglable.
-func NewTransport(proxy string, skipVerify bool) (*http.Transport, error) {
+// NewTransport crée le transport HTTP commun (envoi, relais OTLP, mise à jour) : mandataire
+// de la conf, sinon celui de l'environnement (HTTPS_PROXY), et vérification TLS réglable.
+// pin (tls_pin) : la clé publique du certificat présenté par le serveur doit avoir l'une de
+// ces empreintes ; la chaîne de certification n'est alors plus exigée (certificat autosigné
+// ou autorité interne d'un serveur auto-hébergé), mais la clé l'est, sur chaque connexion.
+func NewTransport(proxy string, skipVerify bool, pin string) (*http.Transport, error) {
 	proxyFn := http.ProxyFromEnvironment
 	if proxy != "" {
 		u, err := url.Parse(proxy)
@@ -135,10 +143,19 @@ func NewTransport(proxy string, skipVerify bool) (*http.Transport, error) {
 		}
 		proxyFn = http.ProxyURL(u)
 	}
+	tc := &tls.Config{InsecureSkipVerify: skipVerify, MinVersion: tls.VersionTLS12} //nolint:gosec // choix explicite de la conf
+	if strings.TrimSpace(pin) != "" {
+		pins, err := ParsePins(pin)
+		if err != nil {
+			return nil, err
+		}
+		tc.InsecureSkipVerify = true //nolint:gosec // remplacé par la comparaison d'empreinte ci-dessous
+		tc.VerifyConnection = func(cs tls.ConnectionState) error { return checkPin(cs, pins) }
+	}
 	return &http.Transport{
 		Proxy:                 proxyFn,
 		DialContext:           (&net.Dialer{Timeout: 10 * time.Second, KeepAlive: 30 * time.Second}).DialContext,
-		TLSClientConfig:       &tls.Config{InsecureSkipVerify: skipVerify, MinVersion: tls.VersionTLS12},
+		TLSClientConfig:       tc,
 		TLSHandshakeTimeout:   10 * time.Second,
 		ResponseHeaderTimeout: requestTimeout,
 		MaxIdleConns:          4,
@@ -146,6 +163,50 @@ func NewTransport(proxy string, skipVerify bool) (*http.Transport, error) {
 		IdleConnTimeout:       90 * time.Second,
 		ForceAttemptHTTP2:     true,
 	}, nil
+}
+
+// ParsePins lit tls_pin : « sha256//<base64> », plusieurs séparées par « ; » (même écriture
+// que --pinnedpubkey de curl, pour qu'une seule valeur serve à l'installation et à l'agent).
+func ParsePins(v string) ([][]byte, error) {
+	var out [][]byte
+	for _, p := range strings.Split(v, ";") {
+		p = strings.TrimSpace(p)
+		if p == "" {
+			continue
+		}
+		b64, ok := strings.CutPrefix(p, "sha256//")
+		if !ok {
+			return nil, fmt.Errorf("tls_pin : %q ne commence pas par sha256//", p)
+		}
+		sum, err := base64.StdEncoding.DecodeString(b64)
+		if err != nil || len(sum) != sha256.Size {
+			return nil, fmt.Errorf("tls_pin : %q n'est pas une empreinte SHA-256 en base64", p)
+		}
+		out = append(out, sum)
+	}
+	if len(out) == 0 {
+		return nil, fmt.Errorf("tls_pin vide")
+	}
+	return out, nil
+}
+
+// PinOf rend l'empreinte tls_pin d'un certificat DER (clé publique du sujet).
+func PinOf(spkiDER []byte) string {
+	sum := sha256.Sum256(spkiDER)
+	return "sha256//" + base64.StdEncoding.EncodeToString(sum[:])
+}
+
+func checkPin(cs tls.ConnectionState, pins [][]byte) error {
+	if len(cs.PeerCertificates) == 0 {
+		return fmt.Errorf("tls_pin : le serveur ne présente aucun certificat")
+	}
+	sum := sha256.Sum256(cs.PeerCertificates[0].RawSubjectPublicKeyInfo)
+	for _, p := range pins {
+		if subtle.ConstantTimeCompare(sum[:], p) == 1 {
+			return nil
+		}
+	}
+	return fmt.Errorf("tls_pin : la clé du serveur (%s) n'est pas celle attendue", PinOf(cs.PeerCertificates[0].RawSubjectPublicKeyInfo))
 }
 
 // Start lance l'ouvrier d'envoi et, si drain, celui qui vide le tampon disque.

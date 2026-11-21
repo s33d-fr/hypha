@@ -14,12 +14,17 @@
 #   HYPHA_TAGS        étiquettes, « env:prod,role:web » ou JSON {"env":"prod"}
 #   HYPHA_HOSTNAME    nom de l'hôte dans HYPHA (défaut : nom système)
 #   HYPHA_FORCE_CONF  1 = réécrire api_key et url d'une conf existante (rien d'autre)
+#   HYPHA_TLS_PIN     serveur auto-hébergé à certificat autosigné ou d'autorité interne :
+#                     empreinte « sha256//… » de sa clé publique (Réglages › Installer l'agent).
+#                     Les téléchargements la vérifient (curl --pinnedpubkey), la conf la garde
+#                     (tls_pin) : la clé du serveur est vérifiée à chaque connexion de l'agent.
 # HYPHA_TAGS et HYPHA_HOSTNAME ne sont écrits qu'à la création de la conf : une conf
 # existante n'est jamais réécrite, sauf api_key et url avec HYPHA_FORCE_CONF=1.
 set -euo pipefail
 
 URL="${HYPHA_URL:-https://hypha.s33d.fr}"
 URL="${URL%/}"
+PIN="${HYPHA_TLS_PIN:-}"
 BIN=/usr/bin/hypha-agent
 CONF_DIR=/etc/hypha
 CONF="$CONF_DIR/hypha.yaml"
@@ -64,8 +69,18 @@ case "$(uname -m)" in
     *) die "architecture non prise en charge : $(uname -m) (amd64 et arm64 seulement)" ;;
 esac
 
+if [ -n "$PIN" ]; then
+    [[ "$PIN" =~ ^sha256//[A-Za-z0-9+/]{43}=(\;sha256//[A-Za-z0-9+/]{43}=)*$ ]] ||
+        die "HYPHA_TLS_PIN invalide : « $PIN » (attendu sha256//<empreinte base64>)"
+    command -v curl >/dev/null 2>&1 || die "HYPHA_TLS_PIN demande curl (wget ne vérifie pas une empreinte)"
+fi
+
 fetch() { # url destination
-    if command -v curl >/dev/null 2>&1; then
+    if [ -n "$PIN" ]; then
+        # Chaîne non reconnue acceptée (-k), clé du serveur exigée : curl coupe avant tout échange
+        # si elle diffère de l'empreinte.
+        curl -fsSL -k --pinnedpubkey "$PIN" --retry 3 --connect-timeout 15 -o "$2" "$1"
+    elif command -v curl >/dev/null 2>&1; then
         curl -fsSL --retry 3 --connect-timeout 15 -o "$2" "$1"
     elif command -v wget >/dev/null 2>&1; then
         wget -q -T 15 -t 3 -O "$2" "$1"
@@ -148,6 +163,7 @@ write_new_conf() { # destination
 # https://hypha.s33d.fr (Réglages → Installation). Vérifier : hypha-agent check-config
 api_key: $(yaml_quote "$HYPHA_API_KEY")
 url: $(yaml_quote "$URL")
+$( [ -z "$PIN" ] || printf 'tls_pin: %s' "$(yaml_quote "$PIN")" )
 hostname: $(yaml_quote "${HYPHA_HOSTNAME:-}")
 tags: $TAGS_YAML
 interval: 15s
@@ -184,7 +200,7 @@ set_key() { # fichier clé valeur
 # La conf est vérifiée telle que le service la lira : sans HYPHA_API_KEY ni HYPHA_URL,
 # qui ne sont pas transmises à systemd.
 check_conf() { # binaire fichier
-    env -u HYPHA_API_KEY -u HYPHA_URL "$1" check-config --config "$2" >/dev/null ||
+    env -u HYPHA_API_KEY -u HYPHA_URL -u HYPHA_TLS_PIN "$1" check-config --config "$2" >/dev/null ||
         die "configuration refusée par check-config (détail ci-dessus) : $2"
 }
 
@@ -201,6 +217,7 @@ elif [ "${HYPHA_FORCE_CONF:-0}" = "1" ]; then
     cp -p "$CONF" "$TMP/hypha.yaml"
     [ -z "${HYPHA_API_KEY:-}" ] || set_key "$TMP/hypha.yaml" api_key "$HYPHA_API_KEY"
     [ -z "${HYPHA_URL:-}" ] || set_key "$TMP/hypha.yaml" url "$URL"
+    [ -z "$PIN" ] || set_key "$TMP/hypha.yaml" tls_pin "$PIN"
     if cmp -s "$TMP/hypha.yaml" "$CONF"; then
         info "configuration inchangée : $CONF"
     else
@@ -209,6 +226,14 @@ elif [ "${HYPHA_FORCE_CONF:-0}" = "1" ]; then
         conf_changed=1
         info "api_key et url réécrites (HYPHA_FORCE_CONF=1) : $CONF"
     fi
+elif [ -n "$PIN" ] && ! grep -q '^tls_pin:' "$CONF"; then
+    # Sans l'empreinte, l'agent refuserait le certificat que l'installation vient d'accepter.
+    cp -p "$CONF" "$TMP/hypha.yaml"
+    set_key "$TMP/hypha.yaml" tls_pin "$PIN"
+    check_conf "$TMP/$NAME" "$TMP/hypha.yaml"
+    install -m 0600 "$TMP/hypha.yaml" "$CONF"
+    conf_changed=1
+    info "configuration existante gardée, tls_pin ajouté : $CONF"
 else
     chmod 0600 "$CONF"
     info "configuration existante gardée telle quelle : $CONF"

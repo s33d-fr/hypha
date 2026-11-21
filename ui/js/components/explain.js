@@ -6,7 +6,13 @@ import { fmtDuration, isNum } from '../format.js';
 import { drawer, copyButton, errorMessage } from './ui.js';
 import { confirmAndRun, actionLabel } from './remote-action.js';
 
-const CLIENT_TIMEOUT_MS = 150000; // au-delà du délai serveur (90 s par défaut)
+// Attente du navigateur : délai du serveur (HYPHA_LLM_TIMEOUT_S, rendu par /me) plus une minute,
+// jamais moins de 150 s. Un modèle sur processeur d'un serveur auto-hébergé met plusieurs minutes.
+const MIN_CLIENT_TIMEOUT_MS = 150000;
+function clientTimeoutMs(me) {
+  const s = Number(me && me.features && me.features.explain_timeout_s);
+  return Math.max(MIN_CLIENT_TIMEOUT_MS, Number.isFinite(s) && s > 0 ? (s + 60) * 1000 : 0);
+}
 
 export function explainEnabled(me) {
   return !!(me && me.features && me.features.explain === true);
@@ -21,7 +27,7 @@ export function idValue(v) {
 // Bouton « Expliquer ». payload : corps sans « lang » (kind, monitor_id, host_id…). Rien si la fonction est coupée.
 export function explainButton(me, payload, opts = {}) {
   if (!explainEnabled(me)) return null;
-  const btn = h('button', { class: ['btn', 'sm', 'explain-btn', opts.iconOnly ? 'icon' : null], type: 'button', title: t('explain.button_title') },
+  const btn = h('button', { class: ['btn', 'sm', 'explain-btn', opts.iconOnly ? 'icon' : null], type: 'button', title: t(me && me.mode === 'selfhosted' ? 'explain.button_title_self' : 'explain.button_title') },
     icon('spark', 13), opts.iconOnly ? null : h('span', t('explain.button')));
   btn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -43,8 +49,8 @@ function contextSummary(ctx) {
   return parts.length ? parts.join(', ') : t('explain.ctx.none');
 }
 
-function errorText(e) {
-  if (e && e.code === 'client_timeout') return t('explain.err.timeout');
+function errorText(e, me) {
+  if (e && e.code === 'client_timeout') return t('explain.err.timeout', { m: Math.round(clientTimeoutMs(me) / 60000) });
   if (e && e.status === 429) return t('explain.err.429');
   if (e && e.status === 503) return t('explain.err.503');
   if (e && e.status === 404) return t('explain.err.404');
@@ -89,7 +95,7 @@ export function openExplain(payload, opts = {}) {
       elapsed.textContent = t('explain.elapsed', { s: Math.round((Date.now() - started) / 1000) });
     }, 1000);
     let timedOut = false;
-    deadline = setTimeout(() => { timedOut = true; myCtrl.abort(); }, CLIENT_TIMEOUT_MS);
+    deadline = setTimeout(() => { timedOut = true; myCtrl.abort(); }, clientTimeoutMs(opts.me));
     try {
       const r = await post('/explain', Object.assign({}, payload, { lang: getLang() }), { signal: myCtrl.signal });
       if (myCtrl !== ctrl || !body.isConnected) return;
@@ -124,7 +130,7 @@ export function openExplain(payload, opts = {}) {
   function showError(e) {
     clear(content);
     clear(foot);
-    content.appendChild(h('div', { class: 'callout crit' }, icon('warn', 16), h('div', h('div', errorText(e)),
+    content.appendChild(h('div', { class: 'callout crit' }, icon('warn', 16), h('div', h('div', errorText(e, opts.me)),
       e && e.code && e.code !== 'client_timeout' && ![404, 429, 503].includes(e.status) ? h('div', { class: 'xsmall muted mt-2 mono' }, e.code) : null)));
     // Rien à relancer sur 400, 404 ou 429 (limite horaire de l'organisation).
     const canRetry = !(e && [400, 404, 429].includes(e.status));

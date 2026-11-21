@@ -2,6 +2,8 @@
 # d'installation de l'agent, pour que les agents du client s'installent depuis SON serveur.
 # Contexte de construction : racine du dépôt (filtré par Dockerfile.web.dockerignore).
 FROM nginx:stable-alpine
+# openssl : empreinte du certificat du client au démarrage (40-hypha-tls.sh, /install/tls.json).
+RUN apk add --no-cache openssl
 COPY packaging/docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY ui /usr/share/nginx/html
 # Version du service worker = empreinte de l'interface de l'image (aucun cache périmé après une mise à jour).
@@ -10,3 +12,4 @@ RUN sh /tmp/estampiller-sw.sh /usr/share/nginx/html && rm /tmp/estampiller-sw.sh
 COPY agent/install/install.sh agent/install/install.ps1 /srv/hypha-install/
 COPY agent/dist/ /srv/hypha-install/
 EXPOSE 443
+COPY --chmod=0755 packaging/docker/40-hypha-tls.sh /docker-entrypoint.d/40-hypha-tls.sh

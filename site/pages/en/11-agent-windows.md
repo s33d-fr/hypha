@@ -26,7 +26,7 @@ The start of the line enables TLS 1.2, which PowerShell 5.1 lacks by default on 
 
 The script downloads `hypha-agent.exe` to `C:\Program Files\Hypha`, checks its SHA-256 sum, writes `C:\ProgramData\Hypha\hypha.yaml`, then installs and starts the **Hypha Agent** service (short name `HyphaAgent`), automatic start, LocalSystem account, restarted on failure.
 
-The variables `HYPHA_URL`, `HYPHA_TAGS`, `HYPHA_HOSTNAME` and `HYPHA_FORCE_CONF` work as on [Linux](/en/docs/agent-linux/#install-in-one-command).
+The variables `HYPHA_URL`, `HYPHA_TAGS`, `HYPHA_HOSTNAME`, `HYPHA_FORCE_CONF` and `HYPHA_TLS_PIN` (through `curl.exe`, Windows Server 2019 and later) work as on [Linux](/en/docs/agent-linux/#install-in-one-command).
 
 ## Check
 

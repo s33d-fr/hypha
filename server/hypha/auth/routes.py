@@ -175,7 +175,8 @@ async def me_payload(conn, p: Principal) -> dict:
         from ..plans import get_plan
         plan = (await get_plan(p.org_id, conn)).code
     return {"user": user, "org": org, "orgs": orgs, "role": p.role, "mode": s.mode, "plan": plan,
-            "features": {"explain": s.explain_enabled, "billing": s.billing_enabled, "billing_open": s.billing_open}}
+            "features": {"explain": s.explain_enabled, "explain_timeout_s": s.llm_timeout_s,
+                         "billing": s.billing_enabled, "billing_open": s.billing_open}}
 
 
 @router.get("/api/v1/me")

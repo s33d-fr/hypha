@@ -2,6 +2,7 @@
 *
 !ui/**
 !packaging/docker/nginx.conf
+!packaging/docker/40-hypha-tls.sh
 !deploy/estampiller-sw.sh
 !agent/install/install.sh
 !agent/install/install.ps1

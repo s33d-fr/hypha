@@ -16,8 +16,12 @@ RUN pip install -r requirements.txt
 
 COPY server/hypha ./hypha
 COPY schema /opt/hypha/schema
+# Version de l'agent publiée avec ce kit (servie par l'image web) : la page d'installation, la
+# commande Docker et la mise à jour de la flotte la lisent ici, jamais une valeur par défaut figée.
+COPY agent/dist/version.txt /opt/hypha/install/version.txt
 
 ENV HYPHA_SCHEMA_DIR=/opt/hypha/schema \
+    HYPHA_INSTALL_DIR=/opt/hypha/install \
     HYPHA_LISTEN=0.0.0.0:8231 \
     HYPHA_MODE=selfhosted
 

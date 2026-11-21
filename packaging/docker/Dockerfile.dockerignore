@@ -3,5 +3,6 @@
 !server/requirements.txt
 !server/hypha/**
 !schema/*.sql
+!agent/dist/version.txt
 **/__pycache__
 **/*.pyc
