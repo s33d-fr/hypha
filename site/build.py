@@ -239,7 +239,10 @@ def read_pages():
             meta = {}
             for line in m.group(1).split("\n"):
                 k, _, v = line.partition(":")
-                meta[k.strip()] = v.strip()
+                v = v.strip()
+                if len(v) >= 2 and v[0] == v[-1] == '"':
+                    v = v[1:-1]  # valeur entre guillemets (titre qui porte « : »)
+                meta[k.strip()] = v
             for k in ("id", "path", "title", "description"):
                 if not meta.get(k):
                     raise SystemExit(f"{lang}/{name} : {k} manquant")
@@ -422,10 +425,13 @@ def main():
             raise SystemExit(f"{p['path']} : un chemin de page finit par /")
     for p in pages:
         write(p["path"], page_html(p, pages, by_id))
-    # Plan du site : chaque page avec sa version dans l'autre langue.
+    # Plan du site : chaque page avec sa version dans l'autre langue. Les deux entrées de
+    # l'accueil (ui/index.html et ui/en/index.html, écrites à la main) viennent en tête.
+    accueil = "".join(f'<xhtml:link rel="alternate" hreflang="{lg}" href="{SITE}{u}"/>'
+                      for lg, u in (("fr", "/"), ("en", "/en/"), ("x-default", "/")))
     sm = ['<?xml version="1.0" encoding="UTF-8"?>',
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
-          f"<url><loc>{SITE}/</loc></url>"]
+          f"<url><loc>{SITE}/</loc>{accueil}</url>", f"<url><loc>{SITE}/en/</loc>{accueil}</url>"]
     for p in sorted(pages, key=lambda x: x["path"]):
         sm.append(f"<url><loc>{SITE}{p['path']}</loc>")
         if p.get("updated"):

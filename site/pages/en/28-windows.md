@@ -5,7 +5,7 @@ title: "Windows: event logs, counters, WMI, Active Directory and DNS"
 nav: Windows
 section: Integrations
 order: 28
-updated: 2026-11-20
+updated: 2026-11-21
 description: Monitor Windows and Windows Server with HYPHA - event logs filtered by channel, level, source and event ID, performance counters and WMI queries of your choice, Active Directory domain controllers and Microsoft DNS servers.
 lead: The event logs you choose, the counters and WMI classes of your software, and two Windows Server roles watched out of the box - Active Directory and DNS.
 ---
@@ -124,6 +124,26 @@ integrations:
 - **DNS Server** log added to collection. Record changes are in the `Microsoft-Windows-DNSServer/Audit` channel; add it to `logs.windows_eventlog` if you want to keep them (large with many dynamic updates).
 
 Monitor templates (**DNS Microsoft** family): silent DNS server, failing zone, recursion failures. Ready dashboard: "DNS Microsoft".
+
+## WSUS
+
+The probe is **off by default**: it only starts on an explicit decision, on the WSUS server itself (`integrations.wsus.enabled: true`). It reads the WSUS administration API (PowerShell, `Microsoft.UpdateServices.Administration` assembly, installed with the role console), read-only: nothing is approved, declined, synchronised or cleaned up.
+
+```yaml
+integrations:
+  wsus:
+    enabled: true
+    stale_days: 30          # computers with no report for this many days
+    sync_max_age: 48h       # last successful synchronisation older than this: warning
+```
+
+- **Every 60 s**: role services (`WsusService`, IIS `W3SVC`, internal database `MSSQL$MICROSOFT##WID`), `wsus.service` check per service.
+- **Every 5 min**, every minute while a fault is seen: computers (`wsus.computers`, `.needing_updates`, `.with_errors`, `.stale`), updates (`wsus.updates.total`, `.approved`, `.declined`, `.expired`, `.not_approved`, `.critical_not_approved`, `.needing_files`, `.with_client_errors`, `.with_server_errors`), synchronisation (`wsus.sync.age` since the last successful one, `wsus.sync.duration`, `wsus.sync.failed`), SUSDB size (internal database) and free space of the content folder (`wsus.database.size`, `wsus.content.free`).
+- Checks: `wsus.can_connect` (service stopped or API failing: CRIT), `wsus.sync` (last synchronisation failed: CRIT, with the WSUS message; none successful, older than `sync_max_age`, or cancelled: WARN; running: OK), `wsus.app_pool` (IIS `WsusPool` pool stopped: CRIT).
+
+Monitor templates: **WSUS injoignable**, **Synchronisation WSUS en échec**, **Service du rôle WSUS arrêté**, **Pool d'applications WsusPool arrêté**, **Ordinateurs en défaut dans WSUS**, **Place libre du contenu WSUS**. Ready-made dashboard: **WSUS**.
+
+Tested on a test WSUS server (Windows Server 2025 in French, WID internal database), seen in HYPHA: never synchronised (WARN), first synchronisation with Microsoft Update running (OK), WsusService and the WsusPool pool stopped (CRIT, then OK on return), synchronisation failure caused by a non-existent proxy (CRIT, with the WSUS message). Not yet seen on a real server: a successful synchronisation (the first category synchronisation took more than an hour on the test machine) and client computers reporting.
 
 ## Compatibility
 

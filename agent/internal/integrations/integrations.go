@@ -97,6 +97,9 @@ func New(cfg config.IntegrationsConfig, d Deps) *Runner {
 	list = append(list, platformIntegrations(cfg)...)
 	list = append(list, vague5Integrations(cfg, d)...)
 	list = append(list, dedicatedIntegrations(cfg, d)...) // vague 3 : sondes dédiées
+	list = append(list, vague6Integrations(cfg, d)...)    // vague 6 : Jenkins, GitHub, Odoo, WSUS
+	list = append(list, vague7Integrations(cfg, d)...)   // vague 7 : applications auto-hébergées
+	list = append(list, vague8Integrations(cfg, d)...)    // vague 8 : réseau, stockage, sauvegardes
 	return &Runner{list: list, setStatus: d.SetStatus, next: map[string]time.Time{}, state: map[string]string{}}
 }
 

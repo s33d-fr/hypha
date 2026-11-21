@@ -1,0 +1,248 @@
+# HELP process_cpu_user_seconds_total Total user CPU time spent in seconds.
+# TYPE process_cpu_user_seconds_total counter
+process_cpu_user_seconds_total 1.715174
+
+# HELP process_cpu_system_seconds_total Total system CPU time spent in seconds.
+# TYPE process_cpu_system_seconds_total counter
+process_cpu_system_seconds_total 0.504853
+
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 2.220027
+
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1795228514
+
+# HELP process_resident_memory_bytes Resident memory size in bytes.
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 120877056
+
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 1803296768
+
+# HELP process_heap_bytes Process heap size in bytes.
+# TYPE process_heap_bytes gauge
+process_heap_bytes 689094656
+
+# HELP process_open_fds Number of open file descriptors.
+# TYPE process_open_fds gauge
+process_open_fds 24
+
+# HELP process_max_fds Maximum number of open file descriptors.
+# TYPE process_max_fds gauge
+process_max_fds 524288
+
+# HELP nodejs_eventloop_lag_seconds Lag of event loop in seconds.
+# TYPE nodejs_eventloop_lag_seconds gauge
+nodejs_eventloop_lag_seconds 0.018277843
+
+# HELP nodejs_eventloop_lag_min_seconds The minimum recorded event loop delay.
+# TYPE nodejs_eventloop_lag_min_seconds gauge
+nodejs_eventloop_lag_min_seconds 0.000092672
+
+# HELP nodejs_eventloop_lag_max_seconds The maximum recorded event loop delay.
+# TYPE nodejs_eventloop_lag_max_seconds gauge
+nodejs_eventloop_lag_max_seconds 0.204341247
+
+# HELP nodejs_eventloop_lag_mean_seconds The mean of the recorded event loop delays.
+# TYPE nodejs_eventloop_lag_mean_seconds gauge
+nodejs_eventloop_lag_mean_seconds 0.012484704113676732
+
+# HELP nodejs_eventloop_lag_stddev_seconds The standard deviation of the recorded event loop delays.
+# TYPE nodejs_eventloop_lag_stddev_seconds gauge
+nodejs_eventloop_lag_stddev_seconds 0.004921297096366266
+
+# HELP nodejs_eventloop_lag_p50_seconds The 50th percentile of the recorded event loop delays.
+# TYPE nodejs_eventloop_lag_p50_seconds gauge
+nodejs_eventloop_lag_p50_seconds 0.011067391
+
+# HELP nodejs_eventloop_lag_p90_seconds The 90th percentile of the recorded event loop delays.
+# TYPE nodejs_eventloop_lag_p90_seconds gauge
+nodejs_eventloop_lag_p90_seconds 0.016605183
+
+# HELP nodejs_eventloop_lag_p99_seconds The 99th percentile of the recorded event loop delays.
+# TYPE nodejs_eventloop_lag_p99_seconds gauge
+nodejs_eventloop_lag_p99_seconds 0.029589503
+
+# HELP nodejs_active_resources Number of active resources that are currently keeping the event loop alive, grouped by async resource type.
+# TYPE nodejs_active_resources gauge
+nodejs_active_resources{type="PipeWrap"} 2
+nodejs_active_resources{type="TCPSocketWrap"} 5
+nodejs_active_resources{type="TCPServerWrap"} 1
+nodejs_active_resources{type="Timeout"} 5
+nodejs_active_resources{type="Immediate"} 1
+
+# HELP nodejs_active_resources_total Total number of active resources.
+# TYPE nodejs_active_resources_total gauge
+nodejs_active_resources_total 14
+
+# HELP nodejs_active_handles Number of active libuv handles grouped by handle type. Every handle type is C++ class name.
+# TYPE nodejs_active_handles gauge
+nodejs_active_handles{type="Socket"} 7
+nodejs_active_handles{type="Server"} 1
+
+# HELP nodejs_active_handles_total Total number of active handles.
+# TYPE nodejs_active_handles_total gauge
+nodejs_active_handles_total 8
+
+# HELP nodejs_active_requests Number of active libuv requests grouped by request type. Every request type is C++ class name.
+# TYPE nodejs_active_requests gauge
+
+# HELP nodejs_active_requests_total Total number of active requests.
+# TYPE nodejs_active_requests_total gauge
+nodejs_active_requests_total 0
+
+# HELP nodejs_heap_size_total_bytes Process heap size from Node.js in bytes.
+# TYPE nodejs_heap_size_total_bytes gauge
+nodejs_heap_size_total_bytes 54730752
+
+# HELP nodejs_heap_size_used_bytes Process heap size used from Node.js in bytes.
+# TYPE nodejs_heap_size_used_bytes gauge
+nodejs_heap_size_used_bytes 51419912
+
+# HELP nodejs_external_memory_bytes Node.js external memory size in bytes.
+# TYPE nodejs_external_memory_bytes gauge
+nodejs_external_memory_bytes 5341097
+
+# HELP nodejs_heap_space_size_total_bytes Process heap space size total from Node.js in bytes.
+# TYPE nodejs_heap_space_size_total_bytes gauge
+nodejs_heap_space_size_total_bytes{space="read_only"} 0
+nodejs_heap_space_size_total_bytes{space="new"} 2097152
+nodejs_heap_space_size_total_bytes{space="old"} 40812544
+nodejs_heap_space_size_total_bytes{space="code"} 1835008
+nodejs_heap_space_size_total_bytes{space="shared"} 0
+nodejs_heap_space_size_total_bytes{space="trusted"} 4849664
+nodejs_heap_space_size_total_bytes{space="shared_trusted"} 0
+nodejs_heap_space_size_total_bytes{space="new_large_object"} 0
+nodejs_heap_space_size_total_bytes{space="large_object"} 4972544
+nodejs_heap_space_size_total_bytes{space="code_large_object"} 163840
+nodejs_heap_space_size_total_bytes{space="shared_large_object"} 0
+nodejs_heap_space_size_total_bytes{space="shared_trusted_large_object"} 0
+nodejs_heap_space_size_total_bytes{space="trusted_large_object"} 0
+
+# HELP nodejs_heap_space_size_used_bytes Process heap space size used from Node.js in bytes.
+# TYPE nodejs_heap_space_size_used_bytes gauge
+nodejs_heap_space_size_used_bytes{space="read_only"} 0
+nodejs_heap_space_size_used_bytes{space="new"} 543472
+nodejs_heap_space_size_used_bytes{space="old"} 39753048
+nodejs_heap_space_size_used_bytes{space="code"} 1683648
+nodejs_heap_space_size_used_bytes{space="shared"} 0
+nodejs_heap_space_size_used_bytes{space="trusted"} 4334392
+nodejs_heap_space_size_used_bytes{space="shared_trusted"} 0
+nodejs_heap_space_size_used_bytes{space="new_large_object"} 0
+nodejs_heap_space_size_used_bytes{space="large_object"} 4948592
+nodejs_heap_space_size_used_bytes{space="code_large_object"} 163584
+nodejs_heap_space_size_used_bytes{space="shared_large_object"} 0
+nodejs_heap_space_size_used_bytes{space="shared_trusted_large_object"} 0
+nodejs_heap_space_size_used_bytes{space="trusted_large_object"} 0
+
+# HELP nodejs_heap_space_size_available_bytes Process heap space size available from Node.js in bytes.
+# TYPE nodejs_heap_space_size_available_bytes gauge
+nodejs_heap_space_size_available_bytes{space="read_only"} 0
+nodejs_heap_space_size_available_bytes{space="new"} 505040
+nodejs_heap_space_size_available_bytes{space="old"} 991984
+nodejs_heap_space_size_available_bytes{space="code"} 151136
+nodejs_heap_space_size_available_bytes{space="shared"} 0
+nodejs_heap_space_size_available_bytes{space="trusted"} 514120
+nodejs_heap_space_size_available_bytes{space="shared_trusted"} 0
+nodejs_heap_space_size_available_bytes{space="new_large_object"} 1048576
+nodejs_heap_space_size_available_bytes{space="large_object"} 0
+nodejs_heap_space_size_available_bytes{space="code_large_object"} 0
+nodejs_heap_space_size_available_bytes{space="shared_large_object"} 0
+nodejs_heap_space_size_available_bytes{space="shared_trusted_large_object"} 0
+nodejs_heap_space_size_available_bytes{space="trusted_large_object"} 0
+
+# HELP nodejs_version_info Node.js version info.
+# TYPE nodejs_version_info gauge
+nodejs_version_info{version="v24.22.3",major="24",minor="22",patch="3"} 1
+
+# HELP nodejs_gc_duration_seconds Garbage collection duration by kind, one of major, minor, incremental or weakcb.
+# TYPE nodejs_gc_duration_seconds histogram
+nodejs_gc_duration_seconds_bucket{le="0.001",kind="minor"} 0
+nodejs_gc_duration_seconds_bucket{le="0.01",kind="minor"} 6
+nodejs_gc_duration_seconds_bucket{le="0.1",kind="minor"} 6
+nodejs_gc_duration_seconds_bucket{le="1",kind="minor"} 6
+nodejs_gc_duration_seconds_bucket{le="2",kind="minor"} 6
+nodejs_gc_duration_seconds_bucket{le="5",kind="minor"} 6
+nodejs_gc_duration_seconds_bucket{le="+Inf",kind="minor"} 6
+nodejs_gc_duration_seconds_sum{kind="minor"} 0.010034070000052452
+nodejs_gc_duration_seconds_count{kind="minor"} 6
+nodejs_gc_duration_seconds_bucket{le="0.001",kind="incremental"} 0
+nodejs_gc_duration_seconds_bucket{le="0.01",kind="incremental"} 1
+nodejs_gc_duration_seconds_bucket{le="0.1",kind="incremental"} 1
+nodejs_gc_duration_seconds_bucket{le="1",kind="incremental"} 1
+nodejs_gc_duration_seconds_bucket{le="2",kind="incremental"} 1
+nodejs_gc_duration_seconds_bucket{le="5",kind="incremental"} 1
+nodejs_gc_duration_seconds_bucket{le="+Inf",kind="incremental"} 1
+nodejs_gc_duration_seconds_sum{kind="incremental"} 0.001255470999982208
+nodejs_gc_duration_seconds_count{kind="incremental"} 1
+nodejs_gc_duration_seconds_bucket{le="0.001",kind="major"} 0
+nodejs_gc_duration_seconds_bucket{le="0.01",kind="major"} 0
+nodejs_gc_duration_seconds_bucket{le="0.1",kind="major"} 1
+nodejs_gc_duration_seconds_bucket{le="1",kind="major"} 1
+nodejs_gc_duration_seconds_bucket{le="2",kind="major"} 1
+nodejs_gc_duration_seconds_bucket{le="5",kind="major"} 1
+nodejs_gc_duration_seconds_bucket{le="+Inf",kind="major"} 1
+nodejs_gc_duration_seconds_sum{kind="major"} 0.02920610500010662
+nodejs_gc_duration_seconds_count{kind="major"} 1
+
+# HELP pg_pool_total_connections The total number of clients existing within the pool
+# TYPE pg_pool_total_connections gauge
+pg_pool_total_connections 0
+
+# HELP pg_pool_idle_connections The number of clients which are not checked out but are currently idle in the pool
+# TYPE pg_pool_idle_connections gauge
+pg_pool_idle_connections 0
+
+# HELP pg_pool_waiting_queries The number of queued requests waiting on a client when all clients are checked out
+# TYPE pg_pool_waiting_queries gauge
+pg_pool_waiting_queries 0
+
+# HELP connected_clients The number of clients connected to the streaming server
+# TYPE connected_clients gauge
+connected_clients{type="websocket"} 0
+connected_clients{type="eventsource"} 2
+
+# HELP connected_channels The number of channels the streaming server is streaming to
+# TYPE connected_channels gauge
+connected_channels{type="websocket",channel="system"} 0
+connected_channels{type="eventsource",channel="system"} 4
+connected_channels{type="websocket",channel="user"} 0
+connected_channels{type="eventsource",channel="user"} 1
+connected_channels{type="websocket",channel="user:notification"} 0
+connected_channels{type="eventsource",channel="user:notification"} 0
+connected_channels{type="websocket",channel="list"} 0
+connected_channels{type="eventsource",channel="list"} 0
+connected_channels{type="websocket",channel="direct"} 0
+connected_channels{type="eventsource",channel="direct"} 0
+connected_channels{type="websocket",channel="public"} 0
+connected_channels{type="eventsource",channel="public"} 1
+connected_channels{type="websocket",channel="public:media"} 0
+connected_channels{type="eventsource",channel="public:media"} 0
+connected_channels{type="websocket",channel="public:local"} 0
+connected_channels{type="eventsource",channel="public:local"} 0
+connected_channels{type="websocket",channel="public:local:media"} 0
+connected_channels{type="eventsource",channel="public:local:media"} 0
+connected_channels{type="websocket",channel="public:remote"} 0
+connected_channels{type="eventsource",channel="public:remote"} 0
+connected_channels{type="websocket",channel="public:remote:media"} 0
+connected_channels{type="eventsource",channel="public:remote:media"} 0
+connected_channels{type="websocket",channel="hashtag"} 0
+connected_channels{type="eventsource",channel="hashtag"} 0
+connected_channels{type="websocket",channel="hashtag:local"} 0
+connected_channels{type="eventsource",channel="hashtag:local"} 0
+
+# HELP redis_subscriptions The number of Redis channels the streaming server is subscribed to
+# TYPE redis_subscriptions gauge
+redis_subscriptions 5
+
+# HELP redis_messages_received_total The total number of messages the streaming server has received from redis subscriptions
+# TYPE redis_messages_received_total counter
+redis_messages_received_total 8
+
+# HELP messages_sent_total The total number of messages the streaming server sent to clients per connection type
+# TYPE messages_sent_total counter
+messages_sent_total{type="websocket"} 0
+messages_sent_total{type="eventsource"} 8

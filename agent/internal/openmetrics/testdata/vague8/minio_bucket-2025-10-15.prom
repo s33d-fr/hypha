@@ -1,0 +1,173 @@
+# HELP minio_bucket_objects_size_distribution Distribution of object sizes in the bucket, includes label for the bucket name
+# TYPE minio_bucket_objects_size_distribution gauge
+minio_bucket_objects_size_distribution{bucket="journaux",range="BETWEEN_1024B_AND_1_MB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="journaux",range="BETWEEN_1024_B_AND_64_KB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="journaux",range="BETWEEN_10_MB_AND_64_MB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="journaux",range="BETWEEN_128_MB_AND_512_MB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="journaux",range="BETWEEN_1_MB_AND_10_MB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="journaux",range="BETWEEN_256_KB_AND_512_KB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="journaux",range="BETWEEN_512_KB_AND_1_MB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="journaux",range="BETWEEN_64_KB_AND_256_KB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="journaux",range="BETWEEN_64_MB_AND_128_MB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="journaux",range="GREATER_THAN_512_MB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="journaux",range="LESS_THAN_1024_B",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="sauvegardes",range="BETWEEN_1024B_AND_1_MB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="sauvegardes",range="BETWEEN_1024_B_AND_64_KB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="sauvegardes",range="BETWEEN_10_MB_AND_64_MB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="sauvegardes",range="BETWEEN_128_MB_AND_512_MB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="sauvegardes",range="BETWEEN_1_MB_AND_10_MB",server="127.0.0.1:9000"} 3
+minio_bucket_objects_size_distribution{bucket="sauvegardes",range="BETWEEN_256_KB_AND_512_KB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="sauvegardes",range="BETWEEN_512_KB_AND_1_MB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="sauvegardes",range="BETWEEN_64_KB_AND_256_KB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="sauvegardes",range="BETWEEN_64_MB_AND_128_MB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="sauvegardes",range="GREATER_THAN_512_MB",server="127.0.0.1:9000"} 0
+minio_bucket_objects_size_distribution{bucket="sauvegardes",range="LESS_THAN_1024_B",server="127.0.0.1:9000"} 0
+# HELP minio_bucket_objects_version_distribution Distribution of object sizes in the bucket, includes label for the bucket name
+# TYPE minio_bucket_objects_version_distribution gauge
+minio_bucket_objects_version_distribution{bucket="journaux",range="BETWEEN_1000_AND_10000",server="127.0.0.1:9000"} 0
+minio_bucket_objects_version_distribution{bucket="journaux",range="BETWEEN_100_AND_1000",server="127.0.0.1:9000"} 0
+minio_bucket_objects_version_distribution{bucket="journaux",range="BETWEEN_10_AND_100",server="127.0.0.1:9000"} 0
+minio_bucket_objects_version_distribution{bucket="journaux",range="BETWEEN_2_AND_10",server="127.0.0.1:9000"} 0
+minio_bucket_objects_version_distribution{bucket="journaux",range="GREATER_THAN_10000",server="127.0.0.1:9000"} 0
+minio_bucket_objects_version_distribution{bucket="journaux",range="SINGLE_VERSION",server="127.0.0.1:9000"} 0
+minio_bucket_objects_version_distribution{bucket="journaux",range="UNVERSIONED",server="127.0.0.1:9000"} 0
+minio_bucket_objects_version_distribution{bucket="sauvegardes",range="BETWEEN_1000_AND_10000",server="127.0.0.1:9000"} 0
+minio_bucket_objects_version_distribution{bucket="sauvegardes",range="BETWEEN_100_AND_1000",server="127.0.0.1:9000"} 0
+minio_bucket_objects_version_distribution{bucket="sauvegardes",range="BETWEEN_10_AND_100",server="127.0.0.1:9000"} 0
+minio_bucket_objects_version_distribution{bucket="sauvegardes",range="BETWEEN_2_AND_10",server="127.0.0.1:9000"} 0
+minio_bucket_objects_version_distribution{bucket="sauvegardes",range="GREATER_THAN_10000",server="127.0.0.1:9000"} 0
+minio_bucket_objects_version_distribution{bucket="sauvegardes",range="SINGLE_VERSION",server="127.0.0.1:9000"} 0
+minio_bucket_objects_version_distribution{bucket="sauvegardes",range="UNVERSIONED",server="127.0.0.1:9000"} 3
+# HELP minio_bucket_replication_proxied_delete_tagging_requests_failures Number of  failures in DELETE tagging proxy requests to replication target
+# TYPE minio_bucket_replication_proxied_delete_tagging_requests_failures counter
+minio_bucket_replication_proxied_delete_tagging_requests_failures{server="127.0.0.1:9000"} 0
+# HELP minio_bucket_replication_proxied_delete_tagging_requests_total Number of DELETE tagging requests proxied to replication target
+# TYPE minio_bucket_replication_proxied_delete_tagging_requests_total counter
+minio_bucket_replication_proxied_delete_tagging_requests_total{bucket="journaux",server="127.0.0.1:9000"} 0
+minio_bucket_replication_proxied_delete_tagging_requests_total{bucket="sauvegardes",server="127.0.0.1:9000"} 0
+# HELP minio_bucket_replication_proxied_get_requests_failures Number of failures in GET requests proxied to replication target
+# TYPE minio_bucket_replication_proxied_get_requests_failures counter
+minio_bucket_replication_proxied_get_requests_failures{server="127.0.0.1:9000"} 0
+# HELP minio_bucket_replication_proxied_get_requests_total Number of GET requests proxied to replication target
+# TYPE minio_bucket_replication_proxied_get_requests_total counter
+minio_bucket_replication_proxied_get_requests_total{bucket="journaux",server="127.0.0.1:9000"} 0
+minio_bucket_replication_proxied_get_requests_total{bucket="sauvegardes",server="127.0.0.1:9000"} 0
+# HELP minio_bucket_replication_proxied_get_tagging_requests_failures Number of failures in GET tagging proxy requests to replication target
+# TYPE minio_bucket_replication_proxied_get_tagging_requests_failures counter
+minio_bucket_replication_proxied_get_tagging_requests_failures{server="127.0.0.1:9000"} 0
+# HELP minio_bucket_replication_proxied_get_tagging_requests_total Number of GET tagging requests proxied to replication target
+# TYPE minio_bucket_replication_proxied_get_tagging_requests_total counter
+minio_bucket_replication_proxied_get_tagging_requests_total{bucket="journaux",server="127.0.0.1:9000"} 0
+minio_bucket_replication_proxied_get_tagging_requests_total{bucket="sauvegardes",server="127.0.0.1:9000"} 0
+# HELP minio_bucket_replication_proxied_head_requests_failures Number of failures in HEAD requests proxied to replication target
+# TYPE minio_bucket_replication_proxied_head_requests_failures counter
+minio_bucket_replication_proxied_head_requests_failures{server="127.0.0.1:9000"} 0
+# HELP minio_bucket_replication_proxied_head_requests_total Number of HEAD requests proxied to replication target
+# TYPE minio_bucket_replication_proxied_head_requests_total counter
+minio_bucket_replication_proxied_head_requests_total{bucket="journaux",server="127.0.0.1:9000"} 0
+minio_bucket_replication_proxied_head_requests_total{bucket="sauvegardes",server="127.0.0.1:9000"} 0
+# HELP minio_bucket_replication_proxied_put_tagging_requests_failures Number of failures in PUT tagging proxy requests to replication target
+# TYPE minio_bucket_replication_proxied_put_tagging_requests_failures counter
+minio_bucket_replication_proxied_put_tagging_requests_failures{server="127.0.0.1:9000"} 0
+# HELP minio_bucket_replication_proxied_put_tagging_requests_total Number of PUT tagging requests proxied to replication target
+# TYPE minio_bucket_replication_proxied_put_tagging_requests_total counter
+minio_bucket_replication_proxied_put_tagging_requests_total{bucket="journaux",server="127.0.0.1:9000"} 0
+minio_bucket_replication_proxied_put_tagging_requests_total{bucket="sauvegardes",server="127.0.0.1:9000"} 0
+# HELP minio_bucket_replication_received_bytes Total number of bytes replicated to this bucket from another source bucket
+# TYPE minio_bucket_replication_received_bytes counter
+minio_bucket_replication_received_bytes{bucket="journaux",server="127.0.0.1:9000"} 0
+minio_bucket_replication_received_bytes{bucket="sauvegardes",server="127.0.0.1:9000"} 0
+# HELP minio_bucket_replication_received_count Total number of objects received by this bucket from another source bucket
+# TYPE minio_bucket_replication_received_count gauge
+minio_bucket_replication_received_count{bucket="journaux",server="127.0.0.1:9000"} 0
+minio_bucket_replication_received_count{bucket="sauvegardes",server="127.0.0.1:9000"} 0
+# HELP minio_bucket_requests_4xx_errors_total Total number of S3 requests with (4xx) errors on a bucket
+# TYPE minio_bucket_requests_4xx_errors_total counter
+minio_bucket_requests_4xx_errors_total{api="getbucketobjectlockconfig",bucket="sauvegardes",server="127.0.0.1:9000"} 3
+minio_bucket_requests_4xx_errors_total{api="headobject",bucket="sauvegardes",server="127.0.0.1:9000"} 3
+# HELP minio_bucket_requests_inflight_total Total number of S3 requests currently in flight on a bucket
+# TYPE minio_bucket_requests_inflight_total gauge
+minio_bucket_requests_inflight_total{api="getbucketlocation",bucket="sauvegardes",server="127.0.0.1:9000"} 0
+minio_bucket_requests_inflight_total{api="getbucketobjectlockconfig",bucket="sauvegardes",server="127.0.0.1:9000"} 0
+minio_bucket_requests_inflight_total{api="headobject",bucket="sauvegardes",server="127.0.0.1:9000"} 0
+minio_bucket_requests_inflight_total{api="listobjectsv2",bucket="sauvegardes",server="127.0.0.1:9000"} 0
+minio_bucket_requests_inflight_total{api="putobject",bucket="sauvegardes",server="127.0.0.1:9000"} 0
+# HELP minio_bucket_requests_total Total number of S3 requests on a bucket
+# TYPE minio_bucket_requests_total counter
+minio_bucket_requests_total{api="getbucketlocation",bucket="sauvegardes",server="127.0.0.1:9000"} 3
+minio_bucket_requests_total{api="getbucketobjectlockconfig",bucket="sauvegardes",server="127.0.0.1:9000"} 3
+minio_bucket_requests_total{api="headobject",bucket="sauvegardes",server="127.0.0.1:9000"} 3
+minio_bucket_requests_total{api="listobjectsv2",bucket="sauvegardes",server="127.0.0.1:9000"} 3
+minio_bucket_requests_total{api="putobject",bucket="sauvegardes",server="127.0.0.1:9000"} 3
+# HELP minio_bucket_requests_ttfb_seconds_distribution Distribution of time to first byte across API calls per bucket
+# TYPE minio_bucket_requests_ttfb_seconds_distribution gauge
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketlocation",bucket="sauvegardes",le="+Inf",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketlocation",bucket="sauvegardes",le="0.050",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketlocation",bucket="sauvegardes",le="0.100",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketlocation",bucket="sauvegardes",le="0.250",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketlocation",bucket="sauvegardes",le="0.500",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketlocation",bucket="sauvegardes",le="1.000",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketlocation",bucket="sauvegardes",le="10.000",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketlocation",bucket="sauvegardes",le="2.500",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketlocation",bucket="sauvegardes",le="5.000",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketobjectlockconfig",bucket="sauvegardes",le="+Inf",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketobjectlockconfig",bucket="sauvegardes",le="0.050",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketobjectlockconfig",bucket="sauvegardes",le="0.100",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketobjectlockconfig",bucket="sauvegardes",le="0.250",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketobjectlockconfig",bucket="sauvegardes",le="0.500",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketobjectlockconfig",bucket="sauvegardes",le="1.000",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketobjectlockconfig",bucket="sauvegardes",le="10.000",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketobjectlockconfig",bucket="sauvegardes",le="2.500",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="getbucketobjectlockconfig",bucket="sauvegardes",le="5.000",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="headobject",bucket="sauvegardes",le="+Inf",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="headobject",bucket="sauvegardes",le="0.050",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="headobject",bucket="sauvegardes",le="0.100",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="headobject",bucket="sauvegardes",le="0.250",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="headobject",bucket="sauvegardes",le="0.500",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="headobject",bucket="sauvegardes",le="1.000",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="headobject",bucket="sauvegardes",le="10.000",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="headobject",bucket="sauvegardes",le="2.500",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="headobject",bucket="sauvegardes",le="5.000",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="listobjectsv2",bucket="sauvegardes",le="+Inf",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="listobjectsv2",bucket="sauvegardes",le="0.050",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="listobjectsv2",bucket="sauvegardes",le="0.100",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="listobjectsv2",bucket="sauvegardes",le="0.250",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="listobjectsv2",bucket="sauvegardes",le="0.500",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="listobjectsv2",bucket="sauvegardes",le="1.000",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="listobjectsv2",bucket="sauvegardes",le="10.000",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="listobjectsv2",bucket="sauvegardes",le="2.500",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="listobjectsv2",bucket="sauvegardes",le="5.000",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="putobject",bucket="sauvegardes",le="+Inf",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="putobject",bucket="sauvegardes",le="0.050",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="putobject",bucket="sauvegardes",le="0.100",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="putobject",bucket="sauvegardes",le="0.250",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="putobject",bucket="sauvegardes",le="0.500",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="putobject",bucket="sauvegardes",le="1.000",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="putobject",bucket="sauvegardes",le="10.000",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="putobject",bucket="sauvegardes",le="2.500",server="127.0.0.1:9000"} 3
+minio_bucket_requests_ttfb_seconds_distribution{api="putobject",bucket="sauvegardes",le="5.000",server="127.0.0.1:9000"} 3
+# HELP minio_bucket_traffic_received_bytes Total number of S3 bytes received for this bucket
+# TYPE minio_bucket_traffic_received_bytes gauge
+minio_bucket_traffic_received_bytes{bucket="sauvegardes",server="127.0.0.1:9000"} 9.012675e+06
+# HELP minio_bucket_traffic_sent_bytes Total number of S3 bytes sent for this bucket
+# TYPE minio_bucket_traffic_sent_bytes gauge
+minio_bucket_traffic_sent_bytes{bucket="sauvegardes",server="127.0.0.1:9000"} 2400
+# HELP minio_bucket_usage_deletemarker_total Total number of delete markers
+# TYPE minio_bucket_usage_deletemarker_total gauge
+minio_bucket_usage_deletemarker_total{bucket="journaux",server="127.0.0.1:9000"} 0
+minio_bucket_usage_deletemarker_total{bucket="sauvegardes",server="127.0.0.1:9000"} 0
+# HELP minio_bucket_usage_last_activity_nano_seconds Time elapsed (in nano seconds) since last scan activity
+# TYPE minio_bucket_usage_last_activity_nano_seconds gauge
+minio_bucket_usage_last_activity_nano_seconds{server="127.0.0.1:9000"} 3.6639862708e+10
+# HELP minio_bucket_usage_object_total Total number of objects
+# TYPE minio_bucket_usage_object_total gauge
+minio_bucket_usage_object_total{bucket="journaux",server="127.0.0.1:9000"} 0
+minio_bucket_usage_object_total{bucket="sauvegardes",server="127.0.0.1:9000"} 3
+# HELP minio_bucket_usage_total_bytes Total bucket size in bytes
+# TYPE minio_bucket_usage_total_bytes gauge
+minio_bucket_usage_total_bytes{bucket="journaux",server="127.0.0.1:9000"} 0
+minio_bucket_usage_total_bytes{bucket="sauvegardes",server="127.0.0.1:9000"} 9e+06
+# HELP minio_bucket_usage_version_total Total number of versions (includes delete marker)
+# TYPE minio_bucket_usage_version_total gauge
+minio_bucket_usage_version_total{bucket="journaux",server="127.0.0.1:9000"} 0
+minio_bucket_usage_version_total{bucket="sauvegardes",server="127.0.0.1:9000"} 0

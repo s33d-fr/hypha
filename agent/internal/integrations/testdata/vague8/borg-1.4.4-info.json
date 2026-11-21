@@ -1,0 +1,22 @@
+{
+    "cache": {
+        "path": "/var/lib/hypha/borg/.cache/borg/1fda5b68786c871f88524cc4ecdc602db0d61cf814748686db705774dbf6c972",
+        "stats": {
+            "total_chunks": 2017,
+            "total_csize": 1164923,
+            "total_size": 2551435,
+            "total_unique_chunks": 1983,
+            "unique_csize": 169211985,
+            "unique_size": 346943999
+        }
+    },
+    "encryption": {
+        "mode": "repokey"
+    },
+    "repository": {
+        "id": "1fda5b68786c871f88524cc4ecdc602db0d61cf814748686db705774dbf6c972",
+        "last_modified": "2026-11-21T02:29:28.000000",
+        "location": "ssh://borg@192.0.2.20/srv/borg/essai"
+    },
+    "security_dir": "/var/lib/hypha/borg/.config/borg/security/1fda5b68786c871f88524cc4ecdc602db0d61cf814748686db705774dbf6c972"
+}

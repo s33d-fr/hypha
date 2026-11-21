@@ -44,9 +44,13 @@ Les journaux d'accès de nginx, d'Apache et de HAProxy sont découpés à l'arri
 
 PHP-FPM, Varnish, Squid, Lighttpd, Gunicorn et Supervisor, ainsi que PowerDNS, OpenLDAP, Keycloak, Nexus, Harbor, ZooKeeper et Ceph, ont leurs sondes dédiées : voir [Applications et services](/docs/applications-et-services/).
 
+Jenkins, GitHub (et GitHub Enterprise Cloud), le registre Zot et Odoo : voir [CI, forges et gestion](/docs/ci-forges-et-gestion/).
+
 ## DNS
 
 `bind` lit le canal de statistiques JSON (`statistics-channels { inet 127.0.0.1 port 8053; };`), sinon `rndc status`. Mesures : `bind.queries` par type, `bind.responses.nxdomain`, `bind.responses.servfail`, `bind.zone.serial` par zone, `bind.recursive_clients`.
+
+Pi-hole, AdGuard Home et Unbound, ainsi que Caddy, MinIO, Mosquitto, Proxmox Backup Server, Borg et restic, ont leur page : [Réseau, stockage et sauvegardes](/docs/reseau-stockage-sauvegardes/).
 
 ## Messagerie
 

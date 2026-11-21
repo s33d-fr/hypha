@@ -406,3 +406,70 @@ syslog:
 #       headers: {X-Sonar-Passcode: "…"}
 #     - profile: cert_manager
 #       url: http://cert-manager.cert-manager.svc:9402
+
+# --- Vague 6 : CI, forges, registres et gestion ------------------------------------------------
+
+# Jenkins (API JSON : compte Overall/Read, Job/Read, Agent/ExtendedRead et son jeton d'API),
+# GitHub (connecteur en lecture seule ; sans jeton : dépôts publics, 60 requêtes par heure),
+# Odoo 17+ (/web/health, version, processus), Zot par le profil zot du lecteur OpenMetrics.
+# WSUS (Windows) est COUPÉ par défaut. Détail : https://hypha.s33d.fr/docs/ci-forges-et-gestion/
+# integrations:
+#   jenkins: {url: "http://127.0.0.1:8080", username: hypha, password: "jeton d'API", jobs: []}
+#   github:
+#     repositories: [mon-organisation/mon-depot]
+#     token: "github_pat_…"          # jeton fin en lecture seule (Actions, Metadata, alertes)
+#     # endpoint: https://api.<sous-domaine>.ghe.com
+#   odoo: {url: "http://127.0.0.1:8069"}
+#   openmetrics:
+#     - profile: zot                 # extensions.metrics.enable: true dans config.json de Zot
+#       url: http://127.0.0.1:5000/metrics
+#   wsus: {enabled: false, stale_days: 30, sync_max_age: 48h}
+# --- Vague 7 : applications auto-hébergées ---------------------------------------------------
+
+# Sondes par l'API REST de chaque application (auto : Jellyfin et Syncthing à leur port habituel ;
+# Nextcloud et Immich dès que leur url est posée), clés de préférence dans un fichier (api_key_file,
+# relu à chaque relevé). Gitea/Forgejo, Synapse, Home Assistant et Mastodon par leurs profils
+# OpenMetrics. Détail : https://hypha.s33d.fr/docs/applications-auto-hebergees/
+# integrations:
+#   nextcloud: {url: "https://cloud.exemple", token_file: /etc/hypha/nextcloud.token}  # jeton serverinfo
+#   jellyfin: {url: "http://127.0.0.1:8096", api_key_file: /etc/hypha/jellyfin.key}
+#   syncthing: {url: "http://127.0.0.1:8384", api_key_file: /etc/hypha/syncthing.key}
+#   immich: {url: "http://127.0.0.1:2283", api_key_file: /etc/hypha/immich.key}   # server.storage, server.statistics, job.read
+#   openmetrics:
+#     - profile: gitea          # ou forgejo ; [metrics] ENABLED = true, TOKEN facultatif
+#       bearer_token_file: /etc/hypha/gitea-metrics.token
+#     - profile: synapse        # écouteur « type: metrics » sur 9000, enable_metrics: true
+#     - profile: homeassistant  # prometheus: dans configuration.yaml, jeton longue durée
+#       bearer_token_file: /etc/hypha/homeassistant.token
+#       max_series: 5000
+#     - {profile: mastodon, name: mastodon-web, url: "http://127.0.0.1:9394/metrics"}
+#     - {profile: mastodon, name: mastodon-sidekiq, url: "http://127.0.0.1:9395/metrics"}
+#     - profile: mastodon_streaming
+
+# --- Vague 8 : réseau, stockage et sauvegardes auto-hébergés --------------------------------
+
+# Pi-hole, AdGuard Home, Unbound, Caddy (API d'administration), Mosquitto, Proxmox Backup Server,
+# Borg et restic ; Caddy et MinIO publient aussi leurs mesures Prometheus (profils caddy, minio,
+# minio_bucket). Rien n'est jamais écrit dans ces logiciels ; Borg et restic tournent sans verrou.
+# Détail : https://hypha.s33d.fr/docs/reseau-stockage-sauvegardes/
+# integrations:
+#   pihole: {url: "http://127.0.0.1", password: "…"}          # mot de passe d'application de Pi-hole 6
+#   adguard: {url: "http://127.0.0.1:3000", username: admin, password: "…"}
+#   unbound: {command: "unbound-control"}                      # remote-control : control-enable: yes
+#   caddy: {url: "http://127.0.0.1:2019"}
+#   mosquitto: {url: "mqtt://127.0.0.1:1883", username: hypha, password: "…"}   # ACL : topic read $SYS/#
+#   proxmox_backup:
+#     url: https://127.0.0.1:8007
+#     token_id: "hypha@pbs!lecture"                            # rôle Audit sur /, utilisateur et jeton
+#     token_secret: "…"
+#     fingerprint: "…"                                         # proxmox-backup-manager cert info
+#   borg:
+#     repositories:
+#       - {name: serveur, repository: "ssh://borg@sauvegarde.exemple/./depot", passphrase_file: /etc/hypha/borg.pass}
+#   restic:
+#     repositories:
+#       - {name: nas, repository_file: /etc/hypha/restic.repo, password_file: /etc/hypha/restic.pass}
+#   openmetrics:
+#     - profile: caddy                                         # option globale metrics du Caddyfile
+#     - profile: minio                                         # mc admin prometheus generate <alias>
+#       bearer_token_file: /etc/hypha/minio.token

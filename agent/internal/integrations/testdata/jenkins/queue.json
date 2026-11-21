@@ -1,0 +1,1 @@
+{"_class":"hudson.model.Queue","items":[{"_class":"hudson.model.Queue$BuildableItem","blocked":false,"buildable":true,"id":4,"inQueueSince":1795227541791,"stuck":true,"task":{"_class":"hudson.model.FreeStyleProject","fullName":"essai-bloque","name":"essai-bloque"},"why":"There are no nodes with the label ‘etiquette-absente’"}]}

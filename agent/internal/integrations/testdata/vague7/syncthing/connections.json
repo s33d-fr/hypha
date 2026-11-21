@@ -1,0 +1,54 @@
+{
+  "connections": {
+    "FA7KCNA-EPKI7ZB-II4PQID-P3MPLX6-RS3BPRC-VIPLKXS-BXMBW3B-YXSN3QT": {
+      "at": "2026-11-21T02:15:25Z",
+      "inBytesTotal": 1567,
+      "outBytesTotal": 1001049,
+      "startedAt": "2026-11-21T02:14:30Z",
+      "connected": true,
+      "paused": false,
+      "clientVersion": "v2.1.7",
+      "address": "172.19.0.5:22000",
+      "type": "tcp-server",
+      "isLocal": true,
+      "crypto": "TLS1.3-TLS_AES_128_GCM_SHA256",
+      "primary": {
+        "at": "2026-11-21T02:15:25Z",
+        "inBytesTotal": 1535,
+        "outBytesTotal": 1001017,
+        "startedAt": "2026-11-21T02:14:30Z",
+        "address": "172.19.0.5:22000",
+        "type": "tcp-server",
+        "isLocal": true,
+        "crypto": "TLS1.3-TLS_AES_128_GCM_SHA256"
+      },
+      "secondary": [
+        {
+          "at": "2026-11-21T02:15:25Z",
+          "inBytesTotal": 16,
+          "outBytesTotal": 16,
+          "startedAt": "2026-11-21T02:14:35Z",
+          "address": "172.19.0.5:22000",
+          "type": "tcp-client",
+          "isLocal": true,
+          "crypto": "TLS1.3-TLS_AES_128_GCM_SHA256"
+        },
+        {
+          "at": "2026-11-21T02:15:25Z",
+          "inBytesTotal": 16,
+          "outBytesTotal": 16,
+          "startedAt": "2026-11-21T02:14:35Z",
+          "address": "172.19.0.5:37262",
+          "type": "tcp-server",
+          "isLocal": true,
+          "crypto": "TLS1.3-TLS_AES_128_GCM_SHA256"
+        }
+      ]
+    }
+  },
+  "total": {
+    "at": "2026-11-21T02:15:25Z",
+    "inBytesTotal": 1567,
+    "outBytesTotal": 1001049
+  }
+}

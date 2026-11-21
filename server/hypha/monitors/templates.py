@@ -1059,6 +1059,18 @@ TEMPLATES = [
 from .templates_sondes import sondes  # noqa: E402
 
 TEMPLATES += sondes(_v, _metric, _check, two, SCOPE)
+# Vague 6 : Jenkins, GitHub, Zot, Odoo, WSUS (templates_vague6.py), en fin de catalogue.
+from .templates_vague6 import vague6  # noqa: E402
+
+TEMPLATES += vague6(_v, _metric, _check, two, SCOPE)
+# Vague 7 : applications auto-hébergées (templates_vague7.py), en fin de catalogue.
+from .templates_vague7 import vague7  # noqa: E402
+
+TEMPLATES += vague7(_v, _metric, _check, two, SCOPE)
+# Vague 8 : réseau, stockage et sauvegardes auto-hébergés (templates_vague8.py), en fin de catalogue.
+from .templates_vague8 import vague8  # noqa: E402
+
+TEMPLATES += vague8(_v, _metric, _check, two, SCOPE)
 BY_ID = {t["id"]: t for t in TEMPLATES}
 
 

@@ -5,7 +5,7 @@ title: Windows : journaux d'événements, compteurs, WMI, Active Directory et DN
 nav: Windows
 section: Intégrations
 order: 28
-updated: 2026-11-20
+updated: 2026-11-21
 description: Superviser Windows et Windows Server avec HYPHA : journaux d'événements filtrés par canal, niveau, source et identifiant, compteurs de performance et requêtes WMI au choix, contrôleurs de domaine Active Directory et serveurs DNS Microsoft.
 lead: Les journaux d'événements que vous choisissez, les compteurs et les classes WMI de vos logiciels, et deux rôles de Windows Server suivis d'office : Active Directory et DNS.
 ---
@@ -124,6 +124,26 @@ integrations:
 - Journal **DNS Server** ajouté à la collecte. Les changements d'enregistrements sont dans le canal `Microsoft-Windows-DNSServer/Audit`, à ajouter à `logs.windows_eventlog` si vous voulez les garder (volumineux avec beaucoup de mises à jour dynamiques).
 
 Modèles de moniteurs : **Serveur DNS Microsoft muet**, **Zone DNS en défaut**, **Échecs de récursion DNS**. Tableau prêt : **DNS Microsoft**.
+
+## WSUS
+
+Sonde **coupée par défaut** : elle ne s'active que par décision explicite, sur le serveur WSUS lui-même (`integrations.wsus.enabled: true`). Elle lit l'API d'administration de WSUS (PowerShell, assemblage `Microsoft.UpdateServices.Administration`, installé avec la console du rôle), en lecture seule : rien n'est approuvé, refusé, synchronisé ni nettoyé.
+
+```yaml
+integrations:
+  wsus:
+    enabled: true
+    stale_days: 30          # ordinateurs sans rapport depuis ce nombre de jours
+    sync_max_age: 48h       # dernière synchronisation réussie plus ancienne : avertissement
+```
+
+- **Toutes les 60 s** : services du rôle (`WsusService`, IIS `W3SVC`, base interne `MSSQL$MICROSOFT##WID`), contrôle `wsus.service` par service.
+- **Toutes les 5 min**, chaque minute tant qu'un défaut est vu : ordinateurs (`wsus.computers`, `.needing_updates`, `.with_errors`, `.stale`), mises à jour (`wsus.updates.total`, `.approved`, `.declined`, `.expired`, `.not_approved`, `.critical_not_approved`, `.needing_files`, `.with_client_errors`, `.with_server_errors`), synchronisation (`wsus.sync.age` depuis la dernière réussie, `wsus.sync.duration`, `wsus.sync.failed`), taille de la base SUSDB (base interne) et place libre du dossier de contenu (`wsus.database.size`, `wsus.content.free`).
+- Contrôles : `wsus.can_connect` (service arrêté ou API en échec : CRIT), `wsus.sync` (dernière synchronisation en échec : CRIT, avec le message de WSUS ; aucune réussie, ou plus ancienne que `sync_max_age`, ou annulée : WARN ; en cours : OK), `wsus.app_pool` (pool IIS `WsusPool` arrêté : CRIT).
+
+Modèles de moniteurs : **WSUS injoignable**, **Synchronisation WSUS en échec**, **Service du rôle WSUS arrêté**, **Pool d'applications WsusPool arrêté**, **Ordinateurs en défaut dans WSUS**, **Place libre du contenu WSUS**. Tableau prêt : **WSUS**.
+
+Éprouvé sur un serveur WSUS d'essai (Windows Server 2025 en français, base interne WID), vu dans HYPHA : jamais synchronisé (WARN), première synchronisation avec Microsoft Update en cours (OK), service WsusService et pool WsusPool arrêtés (CRIT puis OK au retour), synchronisation en échec provoquée par un mandataire inexistant (CRIT, avec le message de WSUS). Pas encore vus sur un vrai serveur : une synchronisation réussie (la première synchronisation des catégories dépassait une heure sur la machine d'essai) et des ordinateurs clients qui font leur rapport.
 
 ## Compatibilité
 

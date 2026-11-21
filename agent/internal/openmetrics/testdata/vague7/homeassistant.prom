@@ -1,0 +1,815 @@
+# HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 108062.0
+python_gc_objects_collected_total{generation="1"} 8070.0
+python_gc_objects_collected_total{generation="2"} 16529.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 402.0
+python_gc_collections_total{generation="1"} 36.0
+python_gc_collections_total{generation="2"} 3.0
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="14",patchlevel="10",version="3.14.10"} 1.0
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 1.368948736e+09
+# HELP process_resident_memory_bytes Resident memory size in bytes.
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 3.54504704e+08
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1.7952275124e+09
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 18.27
+# HELP process_open_fds Number of open file descriptors.
+# TYPE process_open_fds gauge
+process_open_fds 24.0
+# HELP process_max_fds Maximum number of open file descriptors.
+# TYPE process_max_fds gauge
+process_max_fds 2048.0
+# HELP homeassistant_state_change_total The number of state changes
+# TYPE homeassistant_state_change_total counter
+homeassistant_state_change_total{domain="zone",entity="zone.home",friendly_name="Essai HYPHA"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.temperature_cave",friendly_name="Température cave"} 2.0
+homeassistant_state_change_total{domain="input_boolean",entity="input_boolean.essai_alarme",friendly_name="Alarme d'essai"} 1.0
+homeassistant_state_change_total{domain="conversation",entity="conversation.home_assistant",friendly_name="Home Assistant"} 1.0
+homeassistant_state_change_total{domain="sun",entity="sun.sun",friendly_name="Sun"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.sun_next_dawn",friendly_name="Sun Next dawn"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.sun_next_dusk",friendly_name="Sun Next dusk"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.sun_next_midnight",friendly_name="Sun Next midnight"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.sun_next_noon",friendly_name="Sun Next noon"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.sun_next_rising",friendly_name="Sun Next rising"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.sun_next_setting",friendly_name="Sun Next setting"} 1.0
+homeassistant_state_change_total{domain="air_quality",entity="air_quality.demo_air_quality_home",friendly_name="Demo Air Quality Home"} 1.0
+homeassistant_state_change_total{domain="air_quality",entity="air_quality.demo_air_quality_office",friendly_name="Demo Air Quality Office"} 1.0
+homeassistant_state_change_total{domain="alarm_control_panel",entity="alarm_control_panel.security",friendly_name="Security"} 1.0
+homeassistant_state_change_total{domain="binary_sensor",entity="binary_sensor.basement_floor_wet",friendly_name="Basement Floor Wet"} 1.0
+homeassistant_state_change_total{domain="binary_sensor",entity="binary_sensor.movement_backyard",friendly_name="Movement Backyard"} 1.0
+homeassistant_state_change_total{domain="binary_sensor",entity="binary_sensor.outside_temperature_battery_charging",friendly_name="Outside Temperature Battery Charging"} 1.0
+homeassistant_state_change_total{domain="button",entity="button.push",friendly_name="Push"} 1.0
+homeassistant_state_change_total{domain="camera",entity="camera.demo_camera",friendly_name="Demo camera"} 1.0
+homeassistant_state_change_total{domain="camera",entity="camera.demo_camera_png",friendly_name="Demo camera png"} 1.0
+homeassistant_state_change_total{domain="camera",entity="camera.demo_camera_without_stream",friendly_name="Demo camera without stream"} 1.0
+homeassistant_state_change_total{domain="calendar",entity="calendar.calendar_1",friendly_name="Calendar 1"} 1.0
+homeassistant_state_change_total{domain="calendar",entity="calendar.calendar_2",friendly_name="Calendar 2"} 1.0
+homeassistant_state_change_total{domain="climate",entity="climate.heatpump",friendly_name="HeatPump"} 1.0
+homeassistant_state_change_total{domain="climate",entity="climate.hvac",friendly_name="Hvac"} 1.0
+homeassistant_state_change_total{domain="climate",entity="climate.ecobee",friendly_name="Ecobee"} 1.0
+homeassistant_state_change_total{domain="cover",entity="cover.kitchen_window",friendly_name="Kitchen Window"} 1.0
+homeassistant_state_change_total{domain="cover",entity="cover.hall_window",friendly_name="Hall Window"} 1.0
+homeassistant_state_change_total{domain="cover",entity="cover.living_room_window",friendly_name="Living Room Window"} 1.0
+homeassistant_state_change_total{domain="cover",entity="cover.garage_door",friendly_name="Garage Door"} 1.0
+homeassistant_state_change_total{domain="cover",entity="cover.pergola_roof",friendly_name="Pergola Roof"} 1.0
+homeassistant_state_change_total{domain="date",entity="date.date",friendly_name="Date"} 1.0
+homeassistant_state_change_total{domain="datetime",entity="datetime.date_and_time",friendly_name="Date and Time"} 1.0
+homeassistant_state_change_total{domain="event",entity="event.push_button_press",friendly_name="Push Button press"} 1.0
+homeassistant_state_change_total{domain="fan",entity="fan.living_room_fan",friendly_name="Living Room Fan"} 1.0
+homeassistant_state_change_total{domain="fan",entity="fan.ceiling_fan",friendly_name="Ceiling Fan"} 1.0
+homeassistant_state_change_total{domain="fan",entity="fan.percentage_full_fan",friendly_name="Percentage Full Fan"} 1.0
+homeassistant_state_change_total{domain="fan",entity="fan.percentage_limited_fan",friendly_name="Percentage Limited Fan"} 1.0
+homeassistant_state_change_total{domain="fan",entity="fan.preset_only_limited_fan",friendly_name="Preset Only Limited Fan"} 1.0
+homeassistant_state_change_total{domain="humidifier",entity="humidifier.humidifier",friendly_name="Humidifier"} 1.0
+homeassistant_state_change_total{domain="humidifier",entity="humidifier.dehumidifier",friendly_name="Dehumidifier"} 1.0
+homeassistant_state_change_total{domain="humidifier",entity="humidifier.hygrostat",friendly_name="Hygrostat"} 1.0
+homeassistant_state_change_total{domain="lawn_mower",entity="lawn_mower.my_lawn_mower",friendly_name="My Lawn Mower"} 1.0
+homeassistant_state_change_total{domain="light",entity="light.bed_light",friendly_name="Bed Light"} 1.0
+homeassistant_state_change_total{domain="light",entity="light.ceiling_lights",friendly_name="Ceiling Lights"} 1.0
+homeassistant_state_change_total{domain="light",entity="light.kitchen_lights",friendly_name="Kitchen Lights"} 1.0
+homeassistant_state_change_total{domain="light",entity="light.office_rgbw_lights",friendly_name="Office RGBW Lights"} 1.0
+homeassistant_state_change_total{domain="light",entity="light.living_room_rgbww_lights",friendly_name="Living Room RGBWW Lights"} 1.0
+homeassistant_state_change_total{domain="light",entity="light.entrance_color_white_lights",friendly_name="Entrance Color + White Lights"} 1.0
+homeassistant_state_change_total{domain="lock",entity="lock.front_door",friendly_name="Front Door"} 1.0
+homeassistant_state_change_total{domain="lock",entity="lock.kitchen_door",friendly_name="Kitchen Door"} 1.0
+homeassistant_state_change_total{domain="lock",entity="lock.poorly_installed_door",friendly_name="Poorly Installed Door"} 1.0
+homeassistant_state_change_total{domain="lock",entity="lock.openable_lock",friendly_name="Openable Lock"} 1.0
+homeassistant_state_change_total{domain="media_player",entity="media_player.living_room",friendly_name="Living Room"} 1.0
+homeassistant_state_change_total{domain="media_player",entity="media_player.bedroom",friendly_name="Bedroom"} 1.0
+homeassistant_state_change_total{domain="media_player",entity="media_player.walkman",friendly_name="Walkman"} 1.0
+homeassistant_state_change_total{domain="media_player",entity="media_player.kitchen",friendly_name="Kitchen"} 1.0
+homeassistant_state_change_total{domain="media_player",entity="media_player.lounge_room",friendly_name="Lounge room"} 1.0
+homeassistant_state_change_total{domain="media_player",entity="media_player.browse",friendly_name="Browse"} 1.0
+homeassistant_state_change_total{domain="media_player",entity="media_player.group",friendly_name="Group"} 1.0
+homeassistant_state_change_total{domain="media_player",entity="media_player.search",friendly_name="Search"} 1.0
+homeassistant_state_change_total{domain="notify",entity="notify.notifier",friendly_name="Notifier"} 1.0
+homeassistant_state_change_total{domain="number",entity="number.volume",friendly_name="volume"} 1.0
+homeassistant_state_change_total{domain="number",entity="number.pwm_1",friendly_name="PWM 1"} 1.0
+homeassistant_state_change_total{domain="number",entity="number.large_range",friendly_name="Large Range"} 1.0
+homeassistant_state_change_total{domain="number",entity="number.small_range",friendly_name="Small Range"} 1.0
+homeassistant_state_change_total{domain="number",entity="number.temperature_setting",friendly_name="Temperature setting"} 1.0
+homeassistant_state_change_total{domain="remote",entity="remote.remote_one",friendly_name="Remote One"} 1.0
+homeassistant_state_change_total{domain="remote",entity="remote.remote_two",friendly_name="Remote Two"} 1.0
+homeassistant_state_change_total{domain="select",entity="select.speed",friendly_name="Speed"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.outside_temperature",friendly_name="Outside Temperature"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.outside_temperature_battery",friendly_name="Outside Temperature Battery"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.outside_humidity",friendly_name="Outside Humidity"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.carbon_monoxide",friendly_name="Carbon monoxide"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.carbon_dioxide",friendly_name="Carbon dioxide"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.carbon_dioxide_battery",friendly_name="Carbon dioxide Battery"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.power_consumption",friendly_name="Power consumption"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.total_energy_kwh",friendly_name="Total energy 1"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.total_energy_mwh",friendly_name="Total energy 2"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.total_gas_m3",friendly_name="Total gas 1"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.total_gas_ft3",friendly_name="Total gas 2"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.thermostat",friendly_name="Thermostat"} 1.0
+homeassistant_state_change_total{domain="siren",entity="siren.siren",friendly_name="Siren"} 1.0
+homeassistant_state_change_total{domain="siren",entity="siren.siren_with_all_features",friendly_name="Siren with all features"} 1.0
+homeassistant_state_change_total{domain="stt",entity="stt.demo_stt",friendly_name="Demo STT"} 1.0
+homeassistant_state_change_total{domain="switch",entity="switch.decorative_lights",friendly_name="Decorative Lights"} 1.0
+homeassistant_state_change_total{domain="switch",entity="switch.ac",friendly_name="AC"} 1.0
+homeassistant_state_change_total{domain="text",entity="text.text",friendly_name="Text"} 1.0
+homeassistant_state_change_total{domain="text",entity="text.password",friendly_name="Password"} 1.0
+homeassistant_state_change_total{domain="text",entity="text.text_with_1_to_5_characters",friendly_name="Text with 1 to 5 characters"} 1.0
+homeassistant_state_change_total{domain="text",entity="text.text_with_only_lower_case_characters",friendly_name="Text with only lower case characters"} 1.0
+homeassistant_state_change_total{domain="time",entity="time.time",friendly_name="Time"} 1.0
+homeassistant_state_change_total{domain="update",entity="update.demo_update_no_install",friendly_name="Demo Update No Install"} 1.0
+homeassistant_state_change_total{domain="update",entity="update.demo_no_update",friendly_name="Demo No Update"} 1.0
+homeassistant_state_change_total{domain="update",entity="update.demo_add_on",friendly_name="Demo add-on"} 1.0
+homeassistant_state_change_total{domain="update",entity="update.demo_living_room_bulb_update",friendly_name="Demo Living Room Bulb Update"} 1.0
+homeassistant_state_change_total{domain="update",entity="update.demo_update_with_progress",friendly_name="Demo Update with Progress"} 1.0
+homeassistant_state_change_total{domain="update",entity="update.demo_update_with_decimal_progress",friendly_name="Demo Update with Decimal Progress"} 1.0
+homeassistant_state_change_total{domain="vacuum",entity="vacuum.demo_vacuum_0_ground_floor",friendly_name="Demo vacuum 0 ground floor"} 1.0
+homeassistant_state_change_total{domain="vacuum",entity="vacuum.demo_vacuum_1_first_floor",friendly_name="Demo vacuum 1 first floor"} 1.0
+homeassistant_state_change_total{domain="vacuum",entity="vacuum.demo_vacuum_2_second_floor",friendly_name="Demo vacuum 2 second floor"} 1.0
+homeassistant_state_change_total{domain="vacuum",entity="vacuum.demo_vacuum_3_third_floor",friendly_name="Demo vacuum 3 third floor"} 1.0
+homeassistant_state_change_total{domain="vacuum",entity="vacuum.demo_vacuum_4_fourth_floor",friendly_name="Demo vacuum 4 fourth floor"} 1.0
+homeassistant_state_change_total{domain="valve",entity="valve.front_garden",friendly_name="Front Garden"} 1.0
+homeassistant_state_change_total{domain="valve",entity="valve.orchard",friendly_name="Orchard"} 1.0
+homeassistant_state_change_total{domain="valve",entity="valve.back_garden",friendly_name="Back Garden"} 1.0
+homeassistant_state_change_total{domain="valve",entity="valve.trees",friendly_name="Trees"} 1.0
+homeassistant_state_change_total{domain="water_heater",entity="water_heater.demo_water_heater",friendly_name="Demo Water Heater"} 1.0
+homeassistant_state_change_total{domain="water_heater",entity="water_heater.demo_water_heater_celsius",friendly_name="Demo Water Heater Celsius"} 1.0
+homeassistant_state_change_total{domain="weather",entity="weather.demo_weather_south",friendly_name="Demo Weather South"} 1.0
+homeassistant_state_change_total{domain="weather",entity="weather.demo_weather_north",friendly_name="Demo Weather North"} 1.0
+homeassistant_state_change_total{domain="image_processing",entity="image_processing.demo_face",friendly_name="Demo Face"} 2.0
+homeassistant_state_change_total{domain="geo_location",entity="geo_location.structure_fire",friendly_name="Structure Fire"} 1.0
+homeassistant_state_change_total{domain="geo_location",entity="geo_location.tornado",friendly_name="Tornado"} 1.0
+homeassistant_state_change_total{domain="device_tracker",entity="device_tracker.demo_paulus",friendly_name="Paulus"} 1.0
+homeassistant_state_change_total{domain="device_tracker",entity="device_tracker.demo_anne_therese",friendly_name="Anne Therese"} 1.0
+homeassistant_state_change_total{domain="device_tracker",entity="device_tracker.demo_home_boy",friendly_name="Home Boy"} 1.0
+homeassistant_state_change_total{domain="event",entity="event.backup_automatic_backup",friendly_name="Backup Automatic backup"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.backup_backup_manager_state",friendly_name="Backup Backup Manager state"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.backup_next_scheduled_automatic_backup",friendly_name="Backup Next scheduled automatic backup"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.backup_last_successful_automatic_backup",friendly_name="Backup Last successful automatic backup"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.backup_last_attempted_automatic_backup",friendly_name="Backup Last attempted automatic backup"} 1.0
+homeassistant_state_change_total{domain="sensor",entity="sensor.backup_last_successful_automatic_backup_size",friendly_name="Backup Last successful automatic backup size"} 1.0
+homeassistant_state_change_total{domain="person",entity="person.essai",friendly_name="Essai"} 1.0
+# HELP homeassistant_state_change_created The number of state changes
+# TYPE homeassistant_state_change_created gauge
+homeassistant_state_change_created{domain="zone",entity="zone.home",friendly_name="Essai HYPHA"} 1.7952275264705224e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.temperature_cave",friendly_name="Température cave"} 1.7952275268774464e+09
+homeassistant_state_change_created{domain="input_boolean",entity="input_boolean.essai_alarme",friendly_name="Alarme d'essai"} 1.7952275269915497e+09
+homeassistant_state_change_created{domain="conversation",entity="conversation.home_assistant",friendly_name="Home Assistant"} 1.7952275277259305e+09
+homeassistant_state_change_created{domain="sun",entity="sun.sun",friendly_name="Sun"} 1.7952275279336789e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.sun_next_dawn",friendly_name="Sun Next dawn"} 1.795227527936351e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.sun_next_dusk",friendly_name="Sun Next dusk"} 1.7952275279374986e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.sun_next_midnight",friendly_name="Sun Next midnight"} 1.7952275279383166e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.sun_next_noon",friendly_name="Sun Next noon"} 1.7952275279389424e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.sun_next_rising",friendly_name="Sun Next rising"} 1.7952275279396975e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.sun_next_setting",friendly_name="Sun Next setting"} 1.7952275279403043e+09
+homeassistant_state_change_created{domain="air_quality",entity="air_quality.demo_air_quality_home",friendly_name="Demo Air Quality Home"} 1.795227528003623e+09
+homeassistant_state_change_created{domain="air_quality",entity="air_quality.demo_air_quality_office",friendly_name="Demo Air Quality Office"} 1.7952275280038626e+09
+homeassistant_state_change_created{domain="alarm_control_panel",entity="alarm_control_panel.security",friendly_name="Security"} 1.795227528004767e+09
+homeassistant_state_change_created{domain="binary_sensor",entity="binary_sensor.basement_floor_wet",friendly_name="Basement Floor Wet"} 1.795227528006277e+09
+homeassistant_state_change_created{domain="binary_sensor",entity="binary_sensor.movement_backyard",friendly_name="Movement Backyard"} 1.7952275280068438e+09
+homeassistant_state_change_created{domain="binary_sensor",entity="binary_sensor.outside_temperature_battery_charging",friendly_name="Outside Temperature Battery Charging"} 1.7952275280073133e+09
+homeassistant_state_change_created{domain="button",entity="button.push",friendly_name="Push"} 1.7952275280082736e+09
+homeassistant_state_change_created{domain="camera",entity="camera.demo_camera",friendly_name="Demo camera"} 1.7952275280087821e+09
+homeassistant_state_change_created{domain="camera",entity="camera.demo_camera_png",friendly_name="Demo camera png"} 1.7952275280089447e+09
+homeassistant_state_change_created{domain="camera",entity="camera.demo_camera_without_stream",friendly_name="Demo camera without stream"} 1.7952275280091763e+09
+homeassistant_state_change_created{domain="calendar",entity="calendar.calendar_1",friendly_name="Calendar 1"} 1.7952275280124257e+09
+homeassistant_state_change_created{domain="calendar",entity="calendar.calendar_2",friendly_name="Calendar 2"} 1.7952275280126948e+09
+homeassistant_state_change_created{domain="climate",entity="climate.heatpump",friendly_name="HeatPump"} 1.7952275280143993e+09
+homeassistant_state_change_created{domain="climate",entity="climate.hvac",friendly_name="Hvac"} 1.7952275280153813e+09
+homeassistant_state_change_created{domain="climate",entity="climate.ecobee",friendly_name="Ecobee"} 1.7952275280165033e+09
+homeassistant_state_change_created{domain="cover",entity="cover.kitchen_window",friendly_name="Kitchen Window"} 1.795227528017697e+09
+homeassistant_state_change_created{domain="cover",entity="cover.hall_window",friendly_name="Hall Window"} 1.7952275280182261e+09
+homeassistant_state_change_created{domain="cover",entity="cover.living_room_window",friendly_name="Living Room Window"} 1.795227528019259e+09
+homeassistant_state_change_created{domain="cover",entity="cover.garage_door",friendly_name="Garage Door"} 1.7952275280201797e+09
+homeassistant_state_change_created{domain="cover",entity="cover.pergola_roof",friendly_name="Pergola Roof"} 1.7952275280207658e+09
+homeassistant_state_change_created{domain="date",entity="date.date",friendly_name="Date"} 1.795227528021795e+09
+homeassistant_state_change_created{domain="datetime",entity="datetime.date_and_time",friendly_name="Date and Time"} 1.7952275280225575e+09
+homeassistant_state_change_created{domain="event",entity="event.push_button_press",friendly_name="Push Button press"} 1.7952275280232027e+09
+homeassistant_state_change_created{domain="fan",entity="fan.living_room_fan",friendly_name="Living Room Fan"} 1.7952275280246282e+09
+homeassistant_state_change_created{domain="fan",entity="fan.ceiling_fan",friendly_name="Ceiling Fan"} 1.7952275280257056e+09
+homeassistant_state_change_created{domain="fan",entity="fan.percentage_full_fan",friendly_name="Percentage Full Fan"} 1.7952275280263796e+09
+homeassistant_state_change_created{domain="fan",entity="fan.percentage_limited_fan",friendly_name="Percentage Limited Fan"} 1.7952275280268297e+09
+homeassistant_state_change_created{domain="fan",entity="fan.preset_only_limited_fan",friendly_name="Preset Only Limited Fan"} 1.7952275280271716e+09
+homeassistant_state_change_created{domain="humidifier",entity="humidifier.humidifier",friendly_name="Humidifier"} 1.795227528028039e+09
+homeassistant_state_change_created{domain="humidifier",entity="humidifier.dehumidifier",friendly_name="Dehumidifier"} 1.7952275280283546e+09
+homeassistant_state_change_created{domain="humidifier",entity="humidifier.hygrostat",friendly_name="Hygrostat"} 1.7952275280285337e+09
+homeassistant_state_change_created{domain="lawn_mower",entity="lawn_mower.my_lawn_mower",friendly_name="My Lawn Mower"} 1.7952275280293622e+09
+homeassistant_state_change_created{domain="light",entity="light.bed_light",friendly_name="Bed Light"} 1.795227528030616e+09
+homeassistant_state_change_created{domain="light",entity="light.ceiling_lights",friendly_name="Ceiling Lights"} 1.7952275280312462e+09
+homeassistant_state_change_created{domain="light",entity="light.kitchen_lights",friendly_name="Kitchen Lights"} 1.79522752803195e+09
+homeassistant_state_change_created{domain="light",entity="light.office_rgbw_lights",friendly_name="Office RGBW Lights"} 1.7952275280326812e+09
+homeassistant_state_change_created{domain="light",entity="light.living_room_rgbww_lights",friendly_name="Living Room RGBWW Lights"} 1.7952275280334587e+09
+homeassistant_state_change_created{domain="light",entity="light.entrance_color_white_lights",friendly_name="Entrance Color + White Lights"} 1.7952275280345182e+09
+homeassistant_state_change_created{domain="lock",entity="lock.front_door",friendly_name="Front Door"} 1.7952275280352829e+09
+homeassistant_state_change_created{domain="lock",entity="lock.kitchen_door",friendly_name="Kitchen Door"} 1.7952275280357065e+09
+homeassistant_state_change_created{domain="lock",entity="lock.poorly_installed_door",friendly_name="Poorly Installed Door"} 1.795227528036011e+09
+homeassistant_state_change_created{domain="lock",entity="lock.openable_lock",friendly_name="Openable Lock"} 1.7952275280362167e+09
+homeassistant_state_change_created{domain="media_player",entity="media_player.living_room",friendly_name="Living Room"} 1.7952275280383162e+09
+homeassistant_state_change_created{domain="media_player",entity="media_player.bedroom",friendly_name="Bedroom"} 1.795227528038678e+09
+homeassistant_state_change_created{domain="media_player",entity="media_player.walkman",friendly_name="Walkman"} 1.7952275280389488e+09
+homeassistant_state_change_created{domain="media_player",entity="media_player.kitchen",friendly_name="Kitchen"} 1.795227528039295e+09
+homeassistant_state_change_created{domain="media_player",entity="media_player.lounge_room",friendly_name="Lounge room"} 1.7952275280397534e+09
+homeassistant_state_change_created{domain="media_player",entity="media_player.browse",friendly_name="Browse"} 1.795227528040089e+09
+homeassistant_state_change_created{domain="media_player",entity="media_player.group",friendly_name="Group"} 1.7952275280402713e+09
+homeassistant_state_change_created{domain="media_player",entity="media_player.search",friendly_name="Search"} 1.7952275280404515e+09
+homeassistant_state_change_created{domain="notify",entity="notify.notifier",friendly_name="Notifier"} 1.7952275280422127e+09
+homeassistant_state_change_created{domain="number",entity="number.volume",friendly_name="volume"} 1.7952275280433435e+09
+homeassistant_state_change_created{domain="number",entity="number.pwm_1",friendly_name="PWM 1"} 1.7952275280441642e+09
+homeassistant_state_change_created{domain="number",entity="number.large_range",friendly_name="Large Range"} 1.7952275280446975e+09
+homeassistant_state_change_created{domain="number",entity="number.small_range",friendly_name="Small Range"} 1.7952275280454545e+09
+homeassistant_state_change_created{domain="number",entity="number.temperature_setting",friendly_name="Temperature setting"} 1.7952275280460343e+09
+homeassistant_state_change_created{domain="remote",entity="remote.remote_one",friendly_name="Remote One"} 1.795227528046945e+09
+homeassistant_state_change_created{domain="remote",entity="remote.remote_two",friendly_name="Remote Two"} 1.7952275280472088e+09
+homeassistant_state_change_created{domain="select",entity="select.speed",friendly_name="Speed"} 1.7952275280479417e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.outside_temperature",friendly_name="Outside Temperature"} 1.7952275280492415e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.outside_temperature_battery",friendly_name="Outside Temperature Battery"} 1.7952275280499468e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.outside_humidity",friendly_name="Outside Humidity"} 1.7952275280507486e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.carbon_monoxide",friendly_name="Carbon monoxide"} 1.795227528051636e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.carbon_dioxide",friendly_name="Carbon dioxide"} 1.7952275280523221e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.carbon_dioxide_battery",friendly_name="Carbon dioxide Battery"} 1.7952275280528746e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.power_consumption",friendly_name="Power consumption"} 1.7952275280536106e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.total_energy_kwh",friendly_name="Total energy 1"} 1.7952275280544097e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.total_energy_mwh",friendly_name="Total energy 2"} 1.7952275280553331e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.total_gas_m3",friendly_name="Total gas 1"} 1.7952275280562444e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.total_gas_ft3",friendly_name="Total gas 2"} 1.7952275280570047e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.thermostat",friendly_name="Thermostat"} 1.7952275280588543e+09
+homeassistant_state_change_created{domain="siren",entity="siren.siren",friendly_name="Siren"} 1.7952275280597765e+09
+homeassistant_state_change_created{domain="siren",entity="siren.siren_with_all_features",friendly_name="Siren with all features"} 1.7952275280601163e+09
+homeassistant_state_change_created{domain="stt",entity="stt.demo_stt",friendly_name="Demo STT"} 1.7952275280606284e+09
+homeassistant_state_change_created{domain="switch",entity="switch.decorative_lights",friendly_name="Decorative Lights"} 1.7952275280614755e+09
+homeassistant_state_change_created{domain="switch",entity="switch.ac",friendly_name="AC"} 1.7952275280622334e+09
+homeassistant_state_change_created{domain="text",entity="text.text",friendly_name="Text"} 1.795227528063217e+09
+homeassistant_state_change_created{domain="text",entity="text.password",friendly_name="Password"} 1.7952275280637813e+09
+homeassistant_state_change_created{domain="text",entity="text.text_with_1_to_5_characters",friendly_name="Text with 1 to 5 characters"} 1.7952275280644383e+09
+homeassistant_state_change_created{domain="text",entity="text.text_with_only_lower_case_characters",friendly_name="Text with only lower case characters"} 1.7952275280651102e+09
+homeassistant_state_change_created{domain="time",entity="time.time",friendly_name="Time"} 1.795227528066131e+09
+homeassistant_state_change_created{domain="update",entity="update.demo_update_no_install",friendly_name="Demo Update No Install"} 1.7952275280672305e+09
+homeassistant_state_change_created{domain="update",entity="update.demo_no_update",friendly_name="Demo No Update"} 1.7952275280679376e+09
+homeassistant_state_change_created{domain="update",entity="update.demo_add_on",friendly_name="Demo add-on"} 1.7952275280684068e+09
+homeassistant_state_change_created{domain="update",entity="update.demo_living_room_bulb_update",friendly_name="Demo Living Room Bulb Update"} 1.7952275280690398e+09
+homeassistant_state_change_created{domain="update",entity="update.demo_update_with_progress",friendly_name="Demo Update with Progress"} 1.7952275280694864e+09
+homeassistant_state_change_created{domain="update",entity="update.demo_update_with_decimal_progress",friendly_name="Demo Update with Decimal Progress"} 1.795227528070452e+09
+homeassistant_state_change_created{domain="vacuum",entity="vacuum.demo_vacuum_0_ground_floor",friendly_name="Demo vacuum 0 ground floor"} 1.795227528071352e+09
+homeassistant_state_change_created{domain="vacuum",entity="vacuum.demo_vacuum_1_first_floor",friendly_name="Demo vacuum 1 first floor"} 1.7952275280718646e+09
+homeassistant_state_change_created{domain="vacuum",entity="vacuum.demo_vacuum_2_second_floor",friendly_name="Demo vacuum 2 second floor"} 1.7952275280723152e+09
+homeassistant_state_change_created{domain="vacuum",entity="vacuum.demo_vacuum_3_third_floor",friendly_name="Demo vacuum 3 third floor"} 1.795227528072805e+09
+homeassistant_state_change_created{domain="vacuum",entity="vacuum.demo_vacuum_4_fourth_floor",friendly_name="Demo vacuum 4 fourth floor"} 1.7952275280733647e+09
+homeassistant_state_change_created{domain="valve",entity="valve.front_garden",friendly_name="Front Garden"} 1.7952275280745845e+09
+homeassistant_state_change_created{domain="valve",entity="valve.orchard",friendly_name="Orchard"} 1.7952275280750127e+09
+homeassistant_state_change_created{domain="valve",entity="valve.back_garden",friendly_name="Back Garden"} 1.7952275280755317e+09
+homeassistant_state_change_created{domain="valve",entity="valve.trees",friendly_name="Trees"} 1.795227528076353e+09
+homeassistant_state_change_created{domain="water_heater",entity="water_heater.demo_water_heater",friendly_name="Demo Water Heater"} 1.7952275280772202e+09
+homeassistant_state_change_created{domain="water_heater",entity="water_heater.demo_water_heater_celsius",friendly_name="Demo Water Heater Celsius"} 1.7952275280782192e+09
+homeassistant_state_change_created{domain="weather",entity="weather.demo_weather_south",friendly_name="Demo Weather South"} 1.7952275280795834e+09
+homeassistant_state_change_created{domain="weather",entity="weather.demo_weather_north",friendly_name="Demo Weather North"} 1.7952275280800867e+09
+homeassistant_state_change_created{domain="image_processing",entity="image_processing.demo_face",friendly_name="Demo Face"} 1.7952275280819044e+09
+homeassistant_state_change_created{domain="geo_location",entity="geo_location.structure_fire",friendly_name="Structure Fire"} 1.7952275280848129e+09
+homeassistant_state_change_created{domain="geo_location",entity="geo_location.tornado",friendly_name="Tornado"} 1.795227528085222e+09
+homeassistant_state_change_created{domain="device_tracker",entity="device_tracker.demo_paulus",friendly_name="Paulus"} 1.7952275280865211e+09
+homeassistant_state_change_created{domain="device_tracker",entity="device_tracker.demo_anne_therese",friendly_name="Anne Therese"} 1.795227528087074e+09
+homeassistant_state_change_created{domain="device_tracker",entity="device_tracker.demo_home_boy",friendly_name="Home Boy"} 1.7952275280874808e+09
+homeassistant_state_change_created{domain="event",entity="event.backup_automatic_backup",friendly_name="Backup Automatic backup"} 1.795227528125089e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.backup_backup_manager_state",friendly_name="Backup Backup Manager state"} 1.7952275281267447e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.backup_next_scheduled_automatic_backup",friendly_name="Backup Next scheduled automatic backup"} 1.7952275281279566e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.backup_last_successful_automatic_backup",friendly_name="Backup Last successful automatic backup"} 1.7952275281291113e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.backup_last_attempted_automatic_backup",friendly_name="Backup Last attempted automatic backup"} 1.7952275281297073e+09
+homeassistant_state_change_created{domain="sensor",entity="sensor.backup_last_successful_automatic_backup_size",friendly_name="Backup Last successful automatic backup size"} 1.7952275281304102e+09
+homeassistant_state_change_created{domain="person",entity="person.essai",friendly_name="Essai"} 1.7952275417747746e+09
+# HELP homeassistant_entity_available Entity is available (not in the unavailable or unknown state)
+# TYPE homeassistant_entity_available gauge
+homeassistant_entity_available{domain="zone",entity="zone.home",friendly_name="Essai HYPHA"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.temperature_cave",friendly_name="Température cave"} 1.0
+homeassistant_entity_available{domain="input_boolean",entity="input_boolean.essai_alarme",friendly_name="Alarme d'essai"} 1.0
+homeassistant_entity_available{domain="conversation",entity="conversation.home_assistant",friendly_name="Home Assistant"} 0.0
+homeassistant_entity_available{domain="sun",entity="sun.sun",friendly_name="Sun"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.sun_next_dawn",friendly_name="Sun Next dawn"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.sun_next_dusk",friendly_name="Sun Next dusk"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.sun_next_midnight",friendly_name="Sun Next midnight"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.sun_next_noon",friendly_name="Sun Next noon"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.sun_next_rising",friendly_name="Sun Next rising"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.sun_next_setting",friendly_name="Sun Next setting"} 1.0
+homeassistant_entity_available{domain="air_quality",entity="air_quality.demo_air_quality_home",friendly_name="Demo Air Quality Home"} 1.0
+homeassistant_entity_available{domain="air_quality",entity="air_quality.demo_air_quality_office",friendly_name="Demo Air Quality Office"} 1.0
+homeassistant_entity_available{domain="alarm_control_panel",entity="alarm_control_panel.security",friendly_name="Security"} 1.0
+homeassistant_entity_available{domain="binary_sensor",entity="binary_sensor.basement_floor_wet",friendly_name="Basement Floor Wet"} 1.0
+homeassistant_entity_available{domain="binary_sensor",entity="binary_sensor.movement_backyard",friendly_name="Movement Backyard"} 1.0
+homeassistant_entity_available{domain="binary_sensor",entity="binary_sensor.outside_temperature_battery_charging",friendly_name="Outside Temperature Battery Charging"} 1.0
+homeassistant_entity_available{domain="button",entity="button.push",friendly_name="Push"} 0.0
+homeassistant_entity_available{domain="camera",entity="camera.demo_camera",friendly_name="Demo camera"} 1.0
+homeassistant_entity_available{domain="camera",entity="camera.demo_camera_png",friendly_name="Demo camera png"} 1.0
+homeassistant_entity_available{domain="camera",entity="camera.demo_camera_without_stream",friendly_name="Demo camera without stream"} 1.0
+homeassistant_entity_available{domain="calendar",entity="calendar.calendar_1",friendly_name="Calendar 1"} 1.0
+homeassistant_entity_available{domain="calendar",entity="calendar.calendar_2",friendly_name="Calendar 2"} 1.0
+homeassistant_entity_available{domain="climate",entity="climate.heatpump",friendly_name="HeatPump"} 1.0
+homeassistant_entity_available{domain="climate",entity="climate.hvac",friendly_name="Hvac"} 1.0
+homeassistant_entity_available{domain="climate",entity="climate.ecobee",friendly_name="Ecobee"} 1.0
+homeassistant_entity_available{domain="cover",entity="cover.kitchen_window",friendly_name="Kitchen Window"} 1.0
+homeassistant_entity_available{domain="cover",entity="cover.hall_window",friendly_name="Hall Window"} 1.0
+homeassistant_entity_available{domain="cover",entity="cover.living_room_window",friendly_name="Living Room Window"} 1.0
+homeassistant_entity_available{domain="cover",entity="cover.garage_door",friendly_name="Garage Door"} 1.0
+homeassistant_entity_available{domain="cover",entity="cover.pergola_roof",friendly_name="Pergola Roof"} 1.0
+homeassistant_entity_available{domain="date",entity="date.date",friendly_name="Date"} 1.0
+homeassistant_entity_available{domain="datetime",entity="datetime.date_and_time",friendly_name="Date and Time"} 1.0
+homeassistant_entity_available{domain="event",entity="event.push_button_press",friendly_name="Push Button press"} 0.0
+homeassistant_entity_available{domain="fan",entity="fan.living_room_fan",friendly_name="Living Room Fan"} 1.0
+homeassistant_entity_available{domain="fan",entity="fan.ceiling_fan",friendly_name="Ceiling Fan"} 1.0
+homeassistant_entity_available{domain="fan",entity="fan.percentage_full_fan",friendly_name="Percentage Full Fan"} 1.0
+homeassistant_entity_available{domain="fan",entity="fan.percentage_limited_fan",friendly_name="Percentage Limited Fan"} 1.0
+homeassistant_entity_available{domain="fan",entity="fan.preset_only_limited_fan",friendly_name="Preset Only Limited Fan"} 1.0
+homeassistant_entity_available{domain="humidifier",entity="humidifier.humidifier",friendly_name="Humidifier"} 1.0
+homeassistant_entity_available{domain="humidifier",entity="humidifier.dehumidifier",friendly_name="Dehumidifier"} 1.0
+homeassistant_entity_available{domain="humidifier",entity="humidifier.hygrostat",friendly_name="Hygrostat"} 1.0
+homeassistant_entity_available{domain="lawn_mower",entity="lawn_mower.my_lawn_mower",friendly_name="My Lawn Mower"} 1.0
+homeassistant_entity_available{domain="light",entity="light.bed_light",friendly_name="Bed Light"} 1.0
+homeassistant_entity_available{domain="light",entity="light.ceiling_lights",friendly_name="Ceiling Lights"} 1.0
+homeassistant_entity_available{domain="light",entity="light.kitchen_lights",friendly_name="Kitchen Lights"} 1.0
+homeassistant_entity_available{domain="light",entity="light.office_rgbw_lights",friendly_name="Office RGBW Lights"} 1.0
+homeassistant_entity_available{domain="light",entity="light.living_room_rgbww_lights",friendly_name="Living Room RGBWW Lights"} 1.0
+homeassistant_entity_available{domain="light",entity="light.entrance_color_white_lights",friendly_name="Entrance Color + White Lights"} 1.0
+homeassistant_entity_available{domain="lock",entity="lock.front_door",friendly_name="Front Door"} 1.0
+homeassistant_entity_available{domain="lock",entity="lock.kitchen_door",friendly_name="Kitchen Door"} 1.0
+homeassistant_entity_available{domain="lock",entity="lock.poorly_installed_door",friendly_name="Poorly Installed Door"} 1.0
+homeassistant_entity_available{domain="lock",entity="lock.openable_lock",friendly_name="Openable Lock"} 1.0
+homeassistant_entity_available{domain="media_player",entity="media_player.living_room",friendly_name="Living Room"} 1.0
+homeassistant_entity_available{domain="media_player",entity="media_player.bedroom",friendly_name="Bedroom"} 1.0
+homeassistant_entity_available{domain="media_player",entity="media_player.walkman",friendly_name="Walkman"} 1.0
+homeassistant_entity_available{domain="media_player",entity="media_player.kitchen",friendly_name="Kitchen"} 1.0
+homeassistant_entity_available{domain="media_player",entity="media_player.lounge_room",friendly_name="Lounge room"} 1.0
+homeassistant_entity_available{domain="media_player",entity="media_player.browse",friendly_name="Browse"} 1.0
+homeassistant_entity_available{domain="media_player",entity="media_player.group",friendly_name="Group"} 1.0
+homeassistant_entity_available{domain="media_player",entity="media_player.search",friendly_name="Search"} 1.0
+homeassistant_entity_available{domain="notify",entity="notify.notifier",friendly_name="Notifier"} 0.0
+homeassistant_entity_available{domain="number",entity="number.volume",friendly_name="volume"} 1.0
+homeassistant_entity_available{domain="number",entity="number.pwm_1",friendly_name="PWM 1"} 1.0
+homeassistant_entity_available{domain="number",entity="number.large_range",friendly_name="Large Range"} 1.0
+homeassistant_entity_available{domain="number",entity="number.small_range",friendly_name="Small Range"} 1.0
+homeassistant_entity_available{domain="number",entity="number.temperature_setting",friendly_name="Temperature setting"} 1.0
+homeassistant_entity_available{domain="remote",entity="remote.remote_one",friendly_name="Remote One"} 1.0
+homeassistant_entity_available{domain="remote",entity="remote.remote_two",friendly_name="Remote Two"} 1.0
+homeassistant_entity_available{domain="select",entity="select.speed",friendly_name="Speed"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.outside_temperature",friendly_name="Outside Temperature"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.outside_temperature_battery",friendly_name="Outside Temperature Battery"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.outside_humidity",friendly_name="Outside Humidity"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.carbon_monoxide",friendly_name="Carbon monoxide"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.carbon_dioxide",friendly_name="Carbon dioxide"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.carbon_dioxide_battery",friendly_name="Carbon dioxide Battery"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.power_consumption",friendly_name="Power consumption"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.total_energy_kwh",friendly_name="Total energy 1"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.total_energy_mwh",friendly_name="Total energy 2"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.total_gas_m3",friendly_name="Total gas 1"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.total_gas_ft3",friendly_name="Total gas 2"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.thermostat",friendly_name="Thermostat"} 1.0
+homeassistant_entity_available{domain="siren",entity="siren.siren",friendly_name="Siren"} 1.0
+homeassistant_entity_available{domain="siren",entity="siren.siren_with_all_features",friendly_name="Siren with all features"} 1.0
+homeassistant_entity_available{domain="stt",entity="stt.demo_stt",friendly_name="Demo STT"} 0.0
+homeassistant_entity_available{domain="switch",entity="switch.decorative_lights",friendly_name="Decorative Lights"} 1.0
+homeassistant_entity_available{domain="switch",entity="switch.ac",friendly_name="AC"} 1.0
+homeassistant_entity_available{domain="text",entity="text.text",friendly_name="Text"} 1.0
+homeassistant_entity_available{domain="text",entity="text.password",friendly_name="Password"} 1.0
+homeassistant_entity_available{domain="text",entity="text.text_with_1_to_5_characters",friendly_name="Text with 1 to 5 characters"} 1.0
+homeassistant_entity_available{domain="text",entity="text.text_with_only_lower_case_characters",friendly_name="Text with only lower case characters"} 1.0
+homeassistant_entity_available{domain="time",entity="time.time",friendly_name="Time"} 1.0
+homeassistant_entity_available{domain="update",entity="update.demo_update_no_install",friendly_name="Demo Update No Install"} 1.0
+homeassistant_entity_available{domain="update",entity="update.demo_no_update",friendly_name="Demo No Update"} 1.0
+homeassistant_entity_available{domain="update",entity="update.demo_add_on",friendly_name="Demo add-on"} 1.0
+homeassistant_entity_available{domain="update",entity="update.demo_living_room_bulb_update",friendly_name="Demo Living Room Bulb Update"} 1.0
+homeassistant_entity_available{domain="update",entity="update.demo_update_with_progress",friendly_name="Demo Update with Progress"} 1.0
+homeassistant_entity_available{domain="update",entity="update.demo_update_with_decimal_progress",friendly_name="Demo Update with Decimal Progress"} 1.0
+homeassistant_entity_available{domain="vacuum",entity="vacuum.demo_vacuum_0_ground_floor",friendly_name="Demo vacuum 0 ground floor"} 1.0
+homeassistant_entity_available{domain="vacuum",entity="vacuum.demo_vacuum_1_first_floor",friendly_name="Demo vacuum 1 first floor"} 1.0
+homeassistant_entity_available{domain="vacuum",entity="vacuum.demo_vacuum_2_second_floor",friendly_name="Demo vacuum 2 second floor"} 1.0
+homeassistant_entity_available{domain="vacuum",entity="vacuum.demo_vacuum_3_third_floor",friendly_name="Demo vacuum 3 third floor"} 1.0
+homeassistant_entity_available{domain="vacuum",entity="vacuum.demo_vacuum_4_fourth_floor",friendly_name="Demo vacuum 4 fourth floor"} 1.0
+homeassistant_entity_available{domain="valve",entity="valve.front_garden",friendly_name="Front Garden"} 1.0
+homeassistant_entity_available{domain="valve",entity="valve.orchard",friendly_name="Orchard"} 1.0
+homeassistant_entity_available{domain="valve",entity="valve.back_garden",friendly_name="Back Garden"} 1.0
+homeassistant_entity_available{domain="valve",entity="valve.trees",friendly_name="Trees"} 1.0
+homeassistant_entity_available{domain="water_heater",entity="water_heater.demo_water_heater",friendly_name="Demo Water Heater"} 1.0
+homeassistant_entity_available{domain="water_heater",entity="water_heater.demo_water_heater_celsius",friendly_name="Demo Water Heater Celsius"} 1.0
+homeassistant_entity_available{domain="weather",entity="weather.demo_weather_south",friendly_name="Demo Weather South"} 1.0
+homeassistant_entity_available{domain="weather",entity="weather.demo_weather_north",friendly_name="Demo Weather North"} 1.0
+homeassistant_entity_available{domain="image_processing",entity="image_processing.demo_face",friendly_name="Demo Face"} 1.0
+homeassistant_entity_available{domain="geo_location",entity="geo_location.structure_fire",friendly_name="Structure Fire"} 1.0
+homeassistant_entity_available{domain="geo_location",entity="geo_location.tornado",friendly_name="Tornado"} 1.0
+homeassistant_entity_available{domain="device_tracker",entity="device_tracker.demo_paulus",friendly_name="Paulus"} 1.0
+homeassistant_entity_available{domain="device_tracker",entity="device_tracker.demo_anne_therese",friendly_name="Anne Therese"} 1.0
+homeassistant_entity_available{domain="device_tracker",entity="device_tracker.demo_home_boy",friendly_name="Home Boy"} 1.0
+homeassistant_entity_available{domain="event",entity="event.backup_automatic_backup",friendly_name="Backup Automatic backup"} 0.0
+homeassistant_entity_available{domain="sensor",entity="sensor.backup_backup_manager_state",friendly_name="Backup Backup Manager state"} 1.0
+homeassistant_entity_available{domain="sensor",entity="sensor.backup_next_scheduled_automatic_backup",friendly_name="Backup Next scheduled automatic backup"} 0.0
+homeassistant_entity_available{domain="sensor",entity="sensor.backup_last_successful_automatic_backup",friendly_name="Backup Last successful automatic backup"} 0.0
+homeassistant_entity_available{domain="sensor",entity="sensor.backup_last_attempted_automatic_backup",friendly_name="Backup Last attempted automatic backup"} 0.0
+homeassistant_entity_available{domain="sensor",entity="sensor.backup_last_successful_automatic_backup_size",friendly_name="Backup Last successful automatic backup size"} 0.0
+homeassistant_entity_available{domain="person",entity="person.essai",friendly_name="Essai"} 0.0
+# HELP homeassistant_last_updated_time_seconds The last_updated timestamp
+# TYPE homeassistant_last_updated_time_seconds gauge
+homeassistant_last_updated_time_seconds{domain="zone",entity="zone.home",friendly_name="Essai HYPHA"} 1.795227523152246e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.temperature_cave",friendly_name="Température cave"} 1.795227528096829e+09
+homeassistant_last_updated_time_seconds{domain="input_boolean",entity="input_boolean.essai_alarme",friendly_name="Alarme d'essai"} 1.795227526991425e+09
+homeassistant_last_updated_time_seconds{domain="conversation",entity="conversation.home_assistant",friendly_name="Home Assistant"} 1.79522752772574e+09
+homeassistant_last_updated_time_seconds{domain="sun",entity="sun.sun",friendly_name="Sun"} 1.795227527933551e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.sun_next_dawn",friendly_name="Sun Next dawn"} 1.79522752793628e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.sun_next_dusk",friendly_name="Sun Next dusk"} 1.795227527937396e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.sun_next_midnight",friendly_name="Sun Next midnight"} 1.795227527938238e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.sun_next_noon",friendly_name="Sun Next noon"} 1.795227527938838e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.sun_next_rising",friendly_name="Sun Next rising"} 1.795227527939595e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.sun_next_setting",friendly_name="Sun Next setting"} 1.795227527940249e+09
+homeassistant_last_updated_time_seconds{domain="air_quality",entity="air_quality.demo_air_quality_home",friendly_name="Demo Air Quality Home"} 1.795227528003451e+09
+homeassistant_last_updated_time_seconds{domain="air_quality",entity="air_quality.demo_air_quality_office",friendly_name="Demo Air Quality Office"} 1.795227528003789e+09
+homeassistant_last_updated_time_seconds{domain="alarm_control_panel",entity="alarm_control_panel.security",friendly_name="Security"} 1.795227528004698e+09
+homeassistant_last_updated_time_seconds{domain="binary_sensor",entity="binary_sensor.basement_floor_wet",friendly_name="Basement Floor Wet"} 1.795227528006208e+09
+homeassistant_last_updated_time_seconds{domain="binary_sensor",entity="binary_sensor.movement_backyard",friendly_name="Movement Backyard"} 1.795227528006788e+09
+homeassistant_last_updated_time_seconds{domain="binary_sensor",entity="binary_sensor.outside_temperature_battery_charging",friendly_name="Outside Temperature Battery Charging"} 1.795227528007261e+09
+homeassistant_last_updated_time_seconds{domain="button",entity="button.push",friendly_name="Push"} 1.795227528008208e+09
+homeassistant_last_updated_time_seconds{domain="camera",entity="camera.demo_camera",friendly_name="Demo camera"} 1.795227528008724e+09
+homeassistant_last_updated_time_seconds{domain="camera",entity="camera.demo_camera_png",friendly_name="Demo camera png"} 1.795227528008899e+09
+homeassistant_last_updated_time_seconds{domain="camera",entity="camera.demo_camera_without_stream",friendly_name="Demo camera without stream"} 1.795227528009103e+09
+homeassistant_last_updated_time_seconds{domain="calendar",entity="calendar.calendar_1",friendly_name="Calendar 1"} 1.795227528012326e+09
+homeassistant_last_updated_time_seconds{domain="calendar",entity="calendar.calendar_2",friendly_name="Calendar 2"} 1.795227528012645e+09
+homeassistant_last_updated_time_seconds{domain="climate",entity="climate.heatpump",friendly_name="HeatPump"} 1.795227528014319e+09
+homeassistant_last_updated_time_seconds{domain="climate",entity="climate.hvac",friendly_name="Hvac"} 1.795227528015322e+09
+homeassistant_last_updated_time_seconds{domain="climate",entity="climate.ecobee",friendly_name="Ecobee"} 1.795227528016447e+09
+homeassistant_last_updated_time_seconds{domain="cover",entity="cover.kitchen_window",friendly_name="Kitchen Window"} 1.795227528017608e+09
+homeassistant_last_updated_time_seconds{domain="cover",entity="cover.hall_window",friendly_name="Hall Window"} 1.795227528018176e+09
+homeassistant_last_updated_time_seconds{domain="cover",entity="cover.living_room_window",friendly_name="Living Room Window"} 1.795227528019141e+09
+homeassistant_last_updated_time_seconds{domain="cover",entity="cover.garage_door",friendly_name="Garage Door"} 1.79522752802007e+09
+homeassistant_last_updated_time_seconds{domain="cover",entity="cover.pergola_roof",friendly_name="Pergola Roof"} 1.795227528020702e+09
+homeassistant_last_updated_time_seconds{domain="date",entity="date.date",friendly_name="Date"} 1.795227528021659e+09
+homeassistant_last_updated_time_seconds{domain="datetime",entity="datetime.date_and_time",friendly_name="Date and Time"} 1.795227528022472e+09
+homeassistant_last_updated_time_seconds{domain="event",entity="event.push_button_press",friendly_name="Push Button press"} 1.79522752802312e+09
+homeassistant_last_updated_time_seconds{domain="fan",entity="fan.living_room_fan",friendly_name="Living Room Fan"} 1.795227528024547e+09
+homeassistant_last_updated_time_seconds{domain="fan",entity="fan.ceiling_fan",friendly_name="Ceiling Fan"} 1.795227528025577e+09
+homeassistant_last_updated_time_seconds{domain="fan",entity="fan.percentage_full_fan",friendly_name="Percentage Full Fan"} 1.795227528026201e+09
+homeassistant_last_updated_time_seconds{domain="fan",entity="fan.percentage_limited_fan",friendly_name="Percentage Limited Fan"} 1.795227528026752e+09
+homeassistant_last_updated_time_seconds{domain="fan",entity="fan.preset_only_limited_fan",friendly_name="Preset Only Limited Fan"} 1.795227528027117e+09
+homeassistant_last_updated_time_seconds{domain="humidifier",entity="humidifier.humidifier",friendly_name="Humidifier"} 1.795227528027931e+09
+homeassistant_last_updated_time_seconds{domain="humidifier",entity="humidifier.dehumidifier",friendly_name="Dehumidifier"} 1.795227528028306e+09
+homeassistant_last_updated_time_seconds{domain="humidifier",entity="humidifier.hygrostat",friendly_name="Hygrostat"} 1.795227528028491e+09
+homeassistant_last_updated_time_seconds{domain="lawn_mower",entity="lawn_mower.my_lawn_mower",friendly_name="My Lawn Mower"} 1.795227528029303e+09
+homeassistant_last_updated_time_seconds{domain="light",entity="light.bed_light",friendly_name="Bed Light"} 1.795227528030537e+09
+homeassistant_last_updated_time_seconds{domain="light",entity="light.ceiling_lights",friendly_name="Ceiling Lights"} 1.795227528031181e+09
+homeassistant_last_updated_time_seconds{domain="light",entity="light.kitchen_lights",friendly_name="Kitchen Lights"} 1.795227528031857e+09
+homeassistant_last_updated_time_seconds{domain="light",entity="light.office_rgbw_lights",friendly_name="Office RGBW Lights"} 1.795227528032623e+09
+homeassistant_last_updated_time_seconds{domain="light",entity="light.living_room_rgbww_lights",friendly_name="Living Room RGBWW Lights"} 1.795227528033341e+09
+homeassistant_last_updated_time_seconds{domain="light",entity="light.entrance_color_white_lights",friendly_name="Entrance Color + White Lights"} 1.79522752803446e+09
+homeassistant_last_updated_time_seconds{domain="lock",entity="lock.front_door",friendly_name="Front Door"} 1.795227528035157e+09
+homeassistant_last_updated_time_seconds{domain="lock",entity="lock.kitchen_door",friendly_name="Kitchen Door"} 1.795227528035609e+09
+homeassistant_last_updated_time_seconds{domain="lock",entity="lock.poorly_installed_door",friendly_name="Poorly Installed Door"} 1.795227528035943e+09
+homeassistant_last_updated_time_seconds{domain="lock",entity="lock.openable_lock",friendly_name="Openable Lock"} 1.795227528036166e+09
+homeassistant_last_updated_time_seconds{domain="media_player",entity="media_player.living_room",friendly_name="Living Room"} 1.795227528038208e+09
+homeassistant_last_updated_time_seconds{domain="media_player",entity="media_player.bedroom",friendly_name="Bedroom"} 1.795227528038602e+09
+homeassistant_last_updated_time_seconds{domain="media_player",entity="media_player.walkman",friendly_name="Walkman"} 1.795227528038889e+09
+homeassistant_last_updated_time_seconds{domain="media_player",entity="media_player.kitchen",friendly_name="Kitchen"} 1.795227528039184e+09
+homeassistant_last_updated_time_seconds{domain="media_player",entity="media_player.lounge_room",friendly_name="Lounge room"} 1.795227528039643e+09
+homeassistant_last_updated_time_seconds{domain="media_player",entity="media_player.browse",friendly_name="Browse"} 1.795227528040016e+09
+homeassistant_last_updated_time_seconds{domain="media_player",entity="media_player.group",friendly_name="Group"} 1.795227528040228e+09
+homeassistant_last_updated_time_seconds{domain="media_player",entity="media_player.search",friendly_name="Search"} 1.795227528040389e+09
+homeassistant_last_updated_time_seconds{domain="notify",entity="notify.notifier",friendly_name="Notifier"} 1.795227528042106e+09
+homeassistant_last_updated_time_seconds{domain="number",entity="number.volume",friendly_name="volume"} 1.795227528043269e+09
+homeassistant_last_updated_time_seconds{domain="number",entity="number.pwm_1",friendly_name="PWM 1"} 1.795227528044107e+09
+homeassistant_last_updated_time_seconds{domain="number",entity="number.large_range",friendly_name="Large Range"} 1.795227528044646e+09
+homeassistant_last_updated_time_seconds{domain="number",entity="number.small_range",friendly_name="Small Range"} 1.795227528045397e+09
+homeassistant_last_updated_time_seconds{domain="number",entity="number.temperature_setting",friendly_name="Temperature setting"} 1.795227528045953e+09
+homeassistant_last_updated_time_seconds{domain="remote",entity="remote.remote_one",friendly_name="Remote One"} 1.795227528046789e+09
+homeassistant_last_updated_time_seconds{domain="remote",entity="remote.remote_two",friendly_name="Remote Two"} 1.795227528047158e+09
+homeassistant_last_updated_time_seconds{domain="select",entity="select.speed",friendly_name="Speed"} 1.795227528047877e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.outside_temperature",friendly_name="Outside Temperature"} 1.795227528049159e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.outside_temperature_battery",friendly_name="Outside Temperature Battery"} 1.795227528049883e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.outside_humidity",friendly_name="Outside Humidity"} 1.795227528050677e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.carbon_monoxide",friendly_name="Carbon monoxide"} 1.79522752805157e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.carbon_dioxide",friendly_name="Carbon dioxide"} 1.795227528052271e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.carbon_dioxide_battery",friendly_name="Carbon dioxide Battery"} 1.795227528052807e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.power_consumption",friendly_name="Power consumption"} 1.795227528053556e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.total_energy_kwh",friendly_name="Total energy 1"} 1.795227528054299e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.total_energy_mwh",friendly_name="Total energy 2"} 1.795227528055266e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.total_gas_m3",friendly_name="Total gas 1"} 1.795227528056193e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.total_gas_ft3",friendly_name="Total gas 2"} 1.795227528056942e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.thermostat",friendly_name="Thermostat"} 1.795227528058719e+09
+homeassistant_last_updated_time_seconds{domain="siren",entity="siren.siren",friendly_name="Siren"} 1.7952275280597e+09
+homeassistant_last_updated_time_seconds{domain="siren",entity="siren.siren_with_all_features",friendly_name="Siren with all features"} 1.795227528059997e+09
+homeassistant_last_updated_time_seconds{domain="stt",entity="stt.demo_stt",friendly_name="Demo STT"} 1.795227528060549e+09
+homeassistant_last_updated_time_seconds{domain="switch",entity="switch.decorative_lights",friendly_name="Decorative Lights"} 1.795227528061383e+09
+homeassistant_last_updated_time_seconds{domain="switch",entity="switch.ac",friendly_name="AC"} 1.795227528062149e+09
+homeassistant_last_updated_time_seconds{domain="text",entity="text.text",friendly_name="Text"} 1.795227528063133e+09
+homeassistant_last_updated_time_seconds{domain="text",entity="text.password",friendly_name="Password"} 1.795227528063724e+09
+homeassistant_last_updated_time_seconds{domain="text",entity="text.text_with_1_to_5_characters",friendly_name="Text with 1 to 5 characters"} 1.795227528064375e+09
+homeassistant_last_updated_time_seconds{domain="text",entity="text.text_with_only_lower_case_characters",friendly_name="Text with only lower case characters"} 1.795227528065031e+09
+homeassistant_last_updated_time_seconds{domain="time",entity="time.time",friendly_name="Time"} 1.795227528066042e+09
+homeassistant_last_updated_time_seconds{domain="update",entity="update.demo_update_no_install",friendly_name="Demo Update No Install"} 1.795227528067158e+09
+homeassistant_last_updated_time_seconds{domain="update",entity="update.demo_no_update",friendly_name="Demo No Update"} 1.795227528067809e+09
+homeassistant_last_updated_time_seconds{domain="update",entity="update.demo_add_on",friendly_name="Demo add-on"} 1.795227528068355e+09
+homeassistant_last_updated_time_seconds{domain="update",entity="update.demo_living_room_bulb_update",friendly_name="Demo Living Room Bulb Update"} 1.79522752806898e+09
+homeassistant_last_updated_time_seconds{domain="update",entity="update.demo_update_with_progress",friendly_name="Demo Update with Progress"} 1.795227528069415e+09
+homeassistant_last_updated_time_seconds{domain="update",entity="update.demo_update_with_decimal_progress",friendly_name="Demo Update with Decimal Progress"} 1.795227528070357e+09
+homeassistant_last_updated_time_seconds{domain="vacuum",entity="vacuum.demo_vacuum_0_ground_floor",friendly_name="Demo vacuum 0 ground floor"} 1.795227528071271e+09
+homeassistant_last_updated_time_seconds{domain="vacuum",entity="vacuum.demo_vacuum_1_first_floor",friendly_name="Demo vacuum 1 first floor"} 1.795227528071808e+09
+homeassistant_last_updated_time_seconds{domain="vacuum",entity="vacuum.demo_vacuum_2_second_floor",friendly_name="Demo vacuum 2 second floor"} 1.795227528072232e+09
+homeassistant_last_updated_time_seconds{domain="vacuum",entity="vacuum.demo_vacuum_3_third_floor",friendly_name="Demo vacuum 3 third floor"} 1.795227528072732e+09
+homeassistant_last_updated_time_seconds{domain="vacuum",entity="vacuum.demo_vacuum_4_fourth_floor",friendly_name="Demo vacuum 4 fourth floor"} 1.795227528073295e+09
+homeassistant_last_updated_time_seconds{domain="valve",entity="valve.front_garden",friendly_name="Front Garden"} 1.795227528074502e+09
+homeassistant_last_updated_time_seconds{domain="valve",entity="valve.orchard",friendly_name="Orchard"} 1.795227528074957e+09
+homeassistant_last_updated_time_seconds{domain="valve",entity="valve.back_garden",friendly_name="Back Garden"} 1.795227528075438e+09
+homeassistant_last_updated_time_seconds{domain="valve",entity="valve.trees",friendly_name="Trees"} 1.795227528076115e+09
+homeassistant_last_updated_time_seconds{domain="water_heater",entity="water_heater.demo_water_heater",friendly_name="Demo Water Heater"} 1.795227528077152e+09
+homeassistant_last_updated_time_seconds{domain="water_heater",entity="water_heater.demo_water_heater_celsius",friendly_name="Demo Water Heater Celsius"} 1.795227528078147e+09
+homeassistant_last_updated_time_seconds{domain="weather",entity="weather.demo_weather_south",friendly_name="Demo Weather South"} 1.79522752807939e+09
+homeassistant_last_updated_time_seconds{domain="weather",entity="weather.demo_weather_north",friendly_name="Demo Weather North"} 1.79522752808001e+09
+homeassistant_last_updated_time_seconds{domain="image_processing",entity="image_processing.demo_face",friendly_name="Demo Face"} 1.79522753808507e+09
+homeassistant_last_updated_time_seconds{domain="geo_location",entity="geo_location.structure_fire",friendly_name="Structure Fire"} 1.795227528084724e+09
+homeassistant_last_updated_time_seconds{domain="geo_location",entity="geo_location.tornado",friendly_name="Tornado"} 1.795227528085114e+09
+homeassistant_last_updated_time_seconds{domain="device_tracker",entity="device_tracker.demo_paulus",friendly_name="Paulus"} 1.795227528086318e+09
+homeassistant_last_updated_time_seconds{domain="device_tracker",entity="device_tracker.demo_anne_therese",friendly_name="Anne Therese"} 1.795227528086904e+09
+homeassistant_last_updated_time_seconds{domain="device_tracker",entity="device_tracker.demo_home_boy",friendly_name="Home Boy"} 1.795227528087389e+09
+homeassistant_last_updated_time_seconds{domain="event",entity="event.backup_automatic_backup",friendly_name="Backup Automatic backup"} 1.795227528124692e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.backup_backup_manager_state",friendly_name="Backup Backup Manager state"} 1.795227528126446e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.backup_next_scheduled_automatic_backup",friendly_name="Backup Next scheduled automatic backup"} 1.795227528127768e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.backup_last_successful_automatic_backup",friendly_name="Backup Last successful automatic backup"} 1.795227528128668e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.backup_last_attempted_automatic_backup",friendly_name="Backup Last attempted automatic backup"} 1.795227528129596e+09
+homeassistant_last_updated_time_seconds{domain="sensor",entity="sensor.backup_last_successful_automatic_backup_size",friendly_name="Backup Last successful automatic backup size"} 1.795227528130291e+09
+homeassistant_last_updated_time_seconds{domain="person",entity="person.essai",friendly_name="Essai"} 1.795227541774343e+09
+# HELP homeassistant_input_boolean_state State of the input boolean
+# TYPE homeassistant_input_boolean_state gauge
+homeassistant_input_boolean_state{domain="input_boolean",entity="input_boolean.essai_alarme",friendly_name="Alarme d'essai"} 0.0
+# HELP homeassistant_sensor_timestamp_seconds State of the sensor
+# TYPE homeassistant_sensor_timestamp_seconds gauge
+homeassistant_sensor_timestamp_seconds{domain="sensor",entity="sensor.sun_next_dawn",friendly_name="Sun Next dawn"} 1.795242778e+09
+homeassistant_sensor_timestamp_seconds{domain="sensor",entity="sensor.sun_next_dusk",friendly_name="Sun Next dusk"} 1.795278804e+09
+homeassistant_sensor_timestamp_seconds{domain="sensor",entity="sensor.sun_next_midnight",friendly_name="Sun Next midnight"} 1.795304023e+09
+homeassistant_sensor_timestamp_seconds{domain="sensor",entity="sensor.sun_next_noon",friendly_name="Sun Next noon"} 1.795260798e+09
+homeassistant_sensor_timestamp_seconds{domain="sensor",entity="sensor.sun_next_rising",friendly_name="Sun Next rising"} 1.795245003e+09
+homeassistant_sensor_timestamp_seconds{domain="sensor",entity="sensor.sun_next_setting",friendly_name="Sun Next setting"} 1.795276581e+09
+# HELP homeassistant_alarm_control_panel_state State of the alarm control panel (0/1)
+# TYPE homeassistant_alarm_control_panel_state gauge
+homeassistant_alarm_control_panel_state{domain="alarm_control_panel",entity="alarm_control_panel.security",friendly_name="Security",state="disarmed"} 1.0
+homeassistant_alarm_control_panel_state{domain="alarm_control_panel",entity="alarm_control_panel.security",friendly_name="Security",state="armed_home"} 0.0
+homeassistant_alarm_control_panel_state{domain="alarm_control_panel",entity="alarm_control_panel.security",friendly_name="Security",state="armed_away"} 0.0
+homeassistant_alarm_control_panel_state{domain="alarm_control_panel",entity="alarm_control_panel.security",friendly_name="Security",state="armed_night"} 0.0
+homeassistant_alarm_control_panel_state{domain="alarm_control_panel",entity="alarm_control_panel.security",friendly_name="Security",state="armed_vacation"} 0.0
+homeassistant_alarm_control_panel_state{domain="alarm_control_panel",entity="alarm_control_panel.security",friendly_name="Security",state="armed_custom_bypass"} 0.0
+homeassistant_alarm_control_panel_state{domain="alarm_control_panel",entity="alarm_control_panel.security",friendly_name="Security",state="pending"} 0.0
+homeassistant_alarm_control_panel_state{domain="alarm_control_panel",entity="alarm_control_panel.security",friendly_name="Security",state="arming"} 0.0
+homeassistant_alarm_control_panel_state{domain="alarm_control_panel",entity="alarm_control_panel.security",friendly_name="Security",state="disarming"} 0.0
+homeassistant_alarm_control_panel_state{domain="alarm_control_panel",entity="alarm_control_panel.security",friendly_name="Security",state="triggered"} 0.0
+# HELP homeassistant_binary_sensor_state State of the binary sensor
+# TYPE homeassistant_binary_sensor_state gauge
+homeassistant_binary_sensor_state{domain="binary_sensor",entity="binary_sensor.basement_floor_wet",friendly_name="Basement Floor Wet"} 0.0
+homeassistant_binary_sensor_state{domain="binary_sensor",entity="binary_sensor.movement_backyard",friendly_name="Movement Backyard"} 1.0
+homeassistant_binary_sensor_state{domain="binary_sensor",entity="binary_sensor.outside_temperature_battery_charging",friendly_name="Outside Temperature Battery Charging"} 0.0
+# HELP homeassistant_climate_target_temperature_celsius Target temperature in degrees Celsius
+# TYPE homeassistant_climate_target_temperature_celsius gauge
+homeassistant_climate_target_temperature_celsius{domain="climate",entity="climate.heatpump",friendly_name="HeatPump"} 20.0
+homeassistant_climate_target_temperature_celsius{domain="climate",entity="climate.hvac",friendly_name="Hvac"} 21.0
+# HELP homeassistant_climate_current_temperature_celsius Current temperature in degrees Celsius
+# TYPE homeassistant_climate_current_temperature_celsius gauge
+homeassistant_climate_current_temperature_celsius{domain="climate",entity="climate.heatpump",friendly_name="HeatPump"} 25.0
+homeassistant_climate_current_temperature_celsius{domain="climate",entity="climate.hvac",friendly_name="Hvac"} 22.0
+homeassistant_climate_current_temperature_celsius{domain="climate",entity="climate.ecobee",friendly_name="Ecobee"} 23.0
+# HELP homeassistant_climate_action HVAC action
+# TYPE homeassistant_climate_action gauge
+homeassistant_climate_action{action="cooling",domain="climate",entity="climate.heatpump",friendly_name="HeatPump"} 0.0
+homeassistant_climate_action{action="defrosting",domain="climate",entity="climate.heatpump",friendly_name="HeatPump"} 0.0
+homeassistant_climate_action{action="drying",domain="climate",entity="climate.heatpump",friendly_name="HeatPump"} 0.0
+homeassistant_climate_action{action="fan",domain="climate",entity="climate.heatpump",friendly_name="HeatPump"} 0.0
+homeassistant_climate_action{action="heating",domain="climate",entity="climate.heatpump",friendly_name="HeatPump"} 1.0
+homeassistant_climate_action{action="idle",domain="climate",entity="climate.heatpump",friendly_name="HeatPump"} 0.0
+homeassistant_climate_action{action="off",domain="climate",entity="climate.heatpump",friendly_name="HeatPump"} 0.0
+homeassistant_climate_action{action="preheating",domain="climate",entity="climate.heatpump",friendly_name="HeatPump"} 0.0
+homeassistant_climate_action{action="cooling",domain="climate",entity="climate.hvac",friendly_name="Hvac"} 1.0
+homeassistant_climate_action{action="defrosting",domain="climate",entity="climate.hvac",friendly_name="Hvac"} 0.0
+homeassistant_climate_action{action="drying",domain="climate",entity="climate.hvac",friendly_name="Hvac"} 0.0
+homeassistant_climate_action{action="fan",domain="climate",entity="climate.hvac",friendly_name="Hvac"} 0.0
+homeassistant_climate_action{action="heating",domain="climate",entity="climate.hvac",friendly_name="Hvac"} 0.0
+homeassistant_climate_action{action="idle",domain="climate",entity="climate.hvac",friendly_name="Hvac"} 0.0
+homeassistant_climate_action{action="off",domain="climate",entity="climate.hvac",friendly_name="Hvac"} 0.0
+homeassistant_climate_action{action="preheating",domain="climate",entity="climate.hvac",friendly_name="Hvac"} 0.0
+# HELP homeassistant_climate_mode HVAC mode
+# TYPE homeassistant_climate_mode gauge
+homeassistant_climate_mode{domain="climate",entity="climate.heatpump",friendly_name="HeatPump",mode="heat"} 1.0
+homeassistant_climate_mode{domain="climate",entity="climate.heatpump",friendly_name="HeatPump",mode="off"} 0.0
+homeassistant_climate_mode{domain="climate",entity="climate.hvac",friendly_name="Hvac",mode="off"} 0.0
+homeassistant_climate_mode{domain="climate",entity="climate.hvac",friendly_name="Hvac",mode="heat"} 0.0
+homeassistant_climate_mode{domain="climate",entity="climate.hvac",friendly_name="Hvac",mode="cool"} 1.0
+homeassistant_climate_mode{domain="climate",entity="climate.hvac",friendly_name="Hvac",mode="auto"} 0.0
+homeassistant_climate_mode{domain="climate",entity="climate.hvac",friendly_name="Hvac",mode="dry"} 0.0
+homeassistant_climate_mode{domain="climate",entity="climate.hvac",friendly_name="Hvac",mode="fan_only"} 0.0
+homeassistant_climate_mode{domain="climate",entity="climate.ecobee",friendly_name="Ecobee",mode="off"} 0.0
+homeassistant_climate_mode{domain="climate",entity="climate.ecobee",friendly_name="Ecobee",mode="cool"} 0.0
+homeassistant_climate_mode{domain="climate",entity="climate.ecobee",friendly_name="Ecobee",mode="heat_cool"} 1.0
+homeassistant_climate_mode{domain="climate",entity="climate.ecobee",friendly_name="Ecobee",mode="auto"} 0.0
+homeassistant_climate_mode{domain="climate",entity="climate.ecobee",friendly_name="Ecobee",mode="dry"} 0.0
+homeassistant_climate_mode{domain="climate",entity="climate.ecobee",friendly_name="Ecobee",mode="fan_only"} 0.0
+# HELP homeassistant_climate_fan_mode Fan mode enum
+# TYPE homeassistant_climate_fan_mode gauge
+homeassistant_climate_fan_mode{domain="climate",entity="climate.hvac",friendly_name="Hvac",mode="on_low"} 0.0
+homeassistant_climate_fan_mode{domain="climate",entity="climate.hvac",friendly_name="Hvac",mode="on_high"} 1.0
+homeassistant_climate_fan_mode{domain="climate",entity="climate.hvac",friendly_name="Hvac",mode="auto_low"} 0.0
+homeassistant_climate_fan_mode{domain="climate",entity="climate.hvac",friendly_name="Hvac",mode="auto_high"} 0.0
+homeassistant_climate_fan_mode{domain="climate",entity="climate.hvac",friendly_name="Hvac",mode="off"} 0.0
+homeassistant_climate_fan_mode{domain="climate",entity="climate.ecobee",friendly_name="Ecobee",mode="on_low"} 0.0
+homeassistant_climate_fan_mode{domain="climate",entity="climate.ecobee",friendly_name="Ecobee",mode="on_high"} 0.0
+homeassistant_climate_fan_mode{domain="climate",entity="climate.ecobee",friendly_name="Ecobee",mode="auto_low"} 1.0
+homeassistant_climate_fan_mode{domain="climate",entity="climate.ecobee",friendly_name="Ecobee",mode="auto_high"} 0.0
+homeassistant_climate_fan_mode{domain="climate",entity="climate.ecobee",friendly_name="Ecobee",mode="off"} 0.0
+# HELP homeassistant_climate_target_temperature_high_celsius Target high temperature in degrees Celsius
+# TYPE homeassistant_climate_target_temperature_high_celsius gauge
+homeassistant_climate_target_temperature_high_celsius{domain="climate",entity="climate.ecobee",friendly_name="Ecobee"} 24.0
+# HELP homeassistant_climate_target_temperature_low_celsius Target low temperature in degrees Celsius
+# TYPE homeassistant_climate_target_temperature_low_celsius gauge
+homeassistant_climate_target_temperature_low_celsius{domain="climate",entity="climate.ecobee",friendly_name="Ecobee"} 21.0
+# HELP homeassistant_climate_preset_mode Preset mode enum
+# TYPE homeassistant_climate_preset_mode gauge
+homeassistant_climate_preset_mode{domain="climate",entity="climate.ecobee",friendly_name="Ecobee",mode="home"} 1.0
+homeassistant_climate_preset_mode{domain="climate",entity="climate.ecobee",friendly_name="Ecobee",mode="eco"} 0.0
+homeassistant_climate_preset_mode{domain="climate",entity="climate.ecobee",friendly_name="Ecobee",mode="away"} 0.0
+# HELP homeassistant_cover_state State of the cover (0/1)
+# TYPE homeassistant_cover_state gauge
+homeassistant_cover_state{domain="cover",entity="cover.kitchen_window",friendly_name="Kitchen Window",state="closed"} 1.0
+homeassistant_cover_state{domain="cover",entity="cover.kitchen_window",friendly_name="Kitchen Window",state="closing"} 0.0
+homeassistant_cover_state{domain="cover",entity="cover.kitchen_window",friendly_name="Kitchen Window",state="open"} 0.0
+homeassistant_cover_state{domain="cover",entity="cover.kitchen_window",friendly_name="Kitchen Window",state="opening"} 0.0
+homeassistant_cover_state{domain="cover",entity="cover.hall_window",friendly_name="Hall Window",state="closed"} 0.0
+homeassistant_cover_state{domain="cover",entity="cover.hall_window",friendly_name="Hall Window",state="closing"} 0.0
+homeassistant_cover_state{domain="cover",entity="cover.hall_window",friendly_name="Hall Window",state="open"} 1.0
+homeassistant_cover_state{domain="cover",entity="cover.hall_window",friendly_name="Hall Window",state="opening"} 0.0
+homeassistant_cover_state{domain="cover",entity="cover.living_room_window",friendly_name="Living Room Window",state="closed"} 0.0
+homeassistant_cover_state{domain="cover",entity="cover.living_room_window",friendly_name="Living Room Window",state="closing"} 0.0
+homeassistant_cover_state{domain="cover",entity="cover.living_room_window",friendly_name="Living Room Window",state="open"} 1.0
+homeassistant_cover_state{domain="cover",entity="cover.living_room_window",friendly_name="Living Room Window",state="opening"} 0.0
+homeassistant_cover_state{domain="cover",entity="cover.garage_door",friendly_name="Garage Door",state="closed"} 1.0
+homeassistant_cover_state{domain="cover",entity="cover.garage_door",friendly_name="Garage Door",state="closing"} 0.0
+homeassistant_cover_state{domain="cover",entity="cover.garage_door",friendly_name="Garage Door",state="open"} 0.0
+homeassistant_cover_state{domain="cover",entity="cover.garage_door",friendly_name="Garage Door",state="opening"} 0.0
+homeassistant_cover_state{domain="cover",entity="cover.pergola_roof",friendly_name="Pergola Roof",state="closed"} 1.0
+homeassistant_cover_state{domain="cover",entity="cover.pergola_roof",friendly_name="Pergola Roof",state="closing"} 0.0
+homeassistant_cover_state{domain="cover",entity="cover.pergola_roof",friendly_name="Pergola Roof",state="open"} 0.0
+homeassistant_cover_state{domain="cover",entity="cover.pergola_roof",friendly_name="Pergola Roof",state="opening"} 0.0
+# HELP homeassistant_cover_position Position of the cover (0-100)
+# TYPE homeassistant_cover_position gauge
+homeassistant_cover_position{domain="cover",entity="cover.hall_window",friendly_name="Hall Window"} 10.0
+homeassistant_cover_position{domain="cover",entity="cover.living_room_window",friendly_name="Living Room Window"} 70.0
+# HELP homeassistant_cover_tilt_position Tilt Position of the cover (0-100)
+# TYPE homeassistant_cover_tilt_position gauge
+homeassistant_cover_tilt_position{domain="cover",entity="cover.living_room_window",friendly_name="Living Room Window"} 50.0
+homeassistant_cover_tilt_position{domain="cover",entity="cover.pergola_roof",friendly_name="Pergola Roof"} 60.0
+# HELP homeassistant_fan_state State of the fan
+# TYPE homeassistant_fan_state gauge
+homeassistant_fan_state{domain="fan",entity="fan.living_room_fan",friendly_name="Living Room Fan"} 0.0
+homeassistant_fan_state{domain="fan",entity="fan.ceiling_fan",friendly_name="Ceiling Fan"} 0.0
+homeassistant_fan_state{domain="fan",entity="fan.percentage_full_fan",friendly_name="Percentage Full Fan"} 0.0
+homeassistant_fan_state{domain="fan",entity="fan.percentage_limited_fan",friendly_name="Percentage Limited Fan"} 0.0
+homeassistant_fan_state{domain="fan",entity="fan.preset_only_limited_fan",friendly_name="Preset Only Limited Fan"} 0.0
+# HELP homeassistant_fan_is_oscillating Whether the fan is oscillating (0/1)
+# TYPE homeassistant_fan_is_oscillating gauge
+homeassistant_fan_is_oscillating{domain="fan",entity="fan.living_room_fan",friendly_name="Living Room Fan"} 0.0
+homeassistant_fan_is_oscillating{domain="fan",entity="fan.percentage_full_fan",friendly_name="Percentage Full Fan"} 0.0
+# HELP homeassistant_fan_direction_reversed Fan direction reversed (bool)
+# TYPE homeassistant_fan_direction_reversed gauge
+homeassistant_fan_direction_reversed{domain="fan",entity="fan.living_room_fan",friendly_name="Living Room Fan"} 0.0
+homeassistant_fan_direction_reversed{domain="fan",entity="fan.percentage_full_fan",friendly_name="Percentage Full Fan"} 0.0
+# HELP homeassistant_humidifier_state State of the humidifier
+# TYPE homeassistant_humidifier_state gauge
+homeassistant_humidifier_state{domain="humidifier",entity="humidifier.humidifier",friendly_name="Humidifier"} 1.0
+homeassistant_humidifier_state{domain="humidifier",entity="humidifier.dehumidifier",friendly_name="Dehumidifier"} 1.0
+homeassistant_humidifier_state{domain="humidifier",entity="humidifier.hygrostat",friendly_name="Hygrostat"} 1.0
+# HELP homeassistant_humidifier_target_humidity_percent Target Relative Humidity
+# TYPE homeassistant_humidifier_target_humidity_percent gauge
+homeassistant_humidifier_target_humidity_percent{domain="humidifier",entity="humidifier.humidifier",friendly_name="Humidifier"} 65.0
+homeassistant_humidifier_target_humidity_percent{domain="humidifier",entity="humidifier.dehumidifier",friendly_name="Dehumidifier"} 54.2
+homeassistant_humidifier_target_humidity_percent{domain="humidifier",entity="humidifier.hygrostat",friendly_name="Hygrostat"} 50.0
+# HELP homeassistant_humidifier_mode Humidifier Mode
+# TYPE homeassistant_humidifier_mode gauge
+homeassistant_humidifier_mode{domain="humidifier",entity="humidifier.hygrostat",friendly_name="Hygrostat",mode="home"} 1.0
+homeassistant_humidifier_mode{domain="humidifier",entity="humidifier.hygrostat",friendly_name="Hygrostat",mode="eco"} 0.0
+# HELP homeassistant_light_brightness_percent Light brightness percentage (0..100)
+# TYPE homeassistant_light_brightness_percent gauge
+homeassistant_light_brightness_percent{domain="light",entity="light.bed_light",friendly_name="Bed Light"} 0.0
+homeassistant_light_brightness_percent{domain="light",entity="light.ceiling_lights",friendly_name="Ceiling Lights"} 70.58823529411765
+homeassistant_light_brightness_percent{domain="light",entity="light.kitchen_lights",friendly_name="Kitchen Lights"} 70.58823529411765
+homeassistant_light_brightness_percent{domain="light",entity="light.office_rgbw_lights",friendly_name="Office RGBW Lights"} 70.58823529411765
+homeassistant_light_brightness_percent{domain="light",entity="light.living_room_rgbww_lights",friendly_name="Living Room RGBWW Lights"} 70.58823529411765
+homeassistant_light_brightness_percent{domain="light",entity="light.entrance_color_white_lights",friendly_name="Entrance Color + White Lights"} 70.58823529411765
+# HELP homeassistant_lock_state State of the lock
+# TYPE homeassistant_lock_state gauge
+homeassistant_lock_state{domain="lock",entity="lock.front_door",friendly_name="Front Door"} 1.0
+homeassistant_lock_state{domain="lock",entity="lock.kitchen_door",friendly_name="Kitchen Door"} 0.0
+homeassistant_lock_state{domain="lock",entity="lock.poorly_installed_door",friendly_name="Poorly Installed Door"} 0.0
+homeassistant_lock_state{domain="lock",entity="lock.openable_lock",friendly_name="Openable Lock"} 1.0
+# HELP homeassistant_number_state State of the number
+# TYPE homeassistant_number_state gauge
+homeassistant_number_state{domain="number",entity="number.volume",friendly_name="volume"} 42.0
+homeassistant_number_state{domain="number",entity="number.pwm_1",friendly_name="PWM 1"} 0.42
+homeassistant_number_state{domain="number",entity="number.large_range",friendly_name="Large Range"} 500.0
+homeassistant_number_state{domain="number",entity="number.small_range",friendly_name="Small Range"} 128.0
+# HELP homeassistant_number_state_celsius State of the number measured in celsius
+# TYPE homeassistant_number_state_celsius gauge
+homeassistant_number_state_celsius{domain="number",entity="number.temperature_setting",friendly_name="Temperature setting"} 22.0
+# HELP homeassistant_sensor_temperature_celsius Sensor data measured in celsius
+# TYPE homeassistant_sensor_temperature_celsius gauge
+homeassistant_sensor_temperature_celsius{domain="sensor",entity="sensor.outside_temperature",friendly_name="Outside Temperature"} 15.6
+homeassistant_sensor_temperature_celsius{domain="sensor",entity="sensor.temperature_cave",friendly_name="Température cave"} 12.5
+# HELP homeassistant_sensor_battery_percent Sensor data measured in percent
+# TYPE homeassistant_sensor_battery_percent gauge
+homeassistant_sensor_battery_percent{domain="sensor",entity="sensor.outside_temperature_battery",friendly_name="Outside Temperature Battery"} 12.0
+homeassistant_sensor_battery_percent{domain="sensor",entity="sensor.carbon_dioxide_battery",friendly_name="Carbon dioxide Battery"} 99.0
+# HELP homeassistant_sensor_humidity_percent Sensor data measured in percent
+# TYPE homeassistant_sensor_humidity_percent gauge
+homeassistant_sensor_humidity_percent{domain="sensor",entity="sensor.outside_humidity",friendly_name="Outside Humidity"} 54.0
+# HELP homeassistant_sensor_carbon_monoxide_ppm Sensor data measured in ppm
+# TYPE homeassistant_sensor_carbon_monoxide_ppm gauge
+homeassistant_sensor_carbon_monoxide_ppm{domain="sensor",entity="sensor.carbon_monoxide",friendly_name="Carbon monoxide"} 54.0
+# HELP homeassistant_sensor_carbon_dioxide_ppm Sensor data measured in ppm
+# TYPE homeassistant_sensor_carbon_dioxide_ppm gauge
+homeassistant_sensor_carbon_dioxide_ppm{domain="sensor",entity="sensor.carbon_dioxide",friendly_name="Carbon dioxide"} 54.0
+# HELP homeassistant_sensor_power_w Sensor data measured in w
+# TYPE homeassistant_sensor_power_w gauge
+homeassistant_sensor_power_w{domain="sensor",entity="sensor.power_consumption",friendly_name="Power consumption"} 100.0
+# HELP homeassistant_sensor_energy_kwh Sensor data measured in kwh
+# TYPE homeassistant_sensor_energy_kwh gauge
+homeassistant_sensor_energy_kwh{domain="sensor",entity="sensor.total_energy_kwh",friendly_name="Total energy 1"} 0.0
+# HELP homeassistant_sensor_energy_mwh Sensor data measured in mwh
+# TYPE homeassistant_sensor_energy_mwh gauge
+homeassistant_sensor_energy_mwh{domain="sensor",entity="sensor.total_energy_mwh",friendly_name="Total energy 2"} 0.0
+# HELP homeassistant_sensor_gas_mu0xb3 Sensor data measured in m³
+# TYPE homeassistant_sensor_gas_mu0xb3 gauge
+homeassistant_sensor_gas_mu0xb3{domain="sensor",entity="sensor.total_gas_m3",friendly_name="Total gas 1"} 0.0
+homeassistant_sensor_gas_mu0xb3{domain="sensor",entity="sensor.total_gas_ft3",friendly_name="Total gas 2"} 0.0
+# HELP homeassistant_switch_state State of the switch
+# TYPE homeassistant_switch_state gauge
+homeassistant_switch_state{domain="switch",entity="switch.decorative_lights",friendly_name="Decorative Lights"} 1.0
+homeassistant_switch_state{domain="switch",entity="switch.ac",friendly_name="AC"} 0.0
+# HELP homeassistant_switch_attr_assumed_state assumed_state attribute of switch entity
+# TYPE homeassistant_switch_attr_assumed_state gauge
+homeassistant_switch_attr_assumed_state{domain="switch",entity="switch.decorative_lights",friendly_name="Decorative Lights"} 1.0
+# HELP homeassistant_update_state State of the update
+# TYPE homeassistant_update_state gauge
+homeassistant_update_state{domain="update",entity="update.demo_update_no_install",friendly_name="Demo Update No Install"} 1.0
+homeassistant_update_state{domain="update",entity="update.demo_no_update",friendly_name="Demo No Update"} 0.0
+homeassistant_update_state{domain="update",entity="update.demo_add_on",friendly_name="Demo add-on"} 1.0
+homeassistant_update_state{domain="update",entity="update.demo_living_room_bulb_update",friendly_name="Demo Living Room Bulb Update"} 1.0
+homeassistant_update_state{domain="update",entity="update.demo_update_with_progress",friendly_name="Demo Update with Progress"} 1.0
+homeassistant_update_state{domain="update",entity="update.demo_update_with_decimal_progress",friendly_name="Demo Update with Decimal Progress"} 1.0
+# HELP homeassistant_water_heater_temperature_celsius Target temperature in degrees Celsius
+# TYPE homeassistant_water_heater_temperature_celsius gauge
+homeassistant_water_heater_temperature_celsius{domain="water_heater",entity="water_heater.demo_water_heater",friendly_name="Demo Water Heater"} 48.3
+homeassistant_water_heater_temperature_celsius{domain="water_heater",entity="water_heater.demo_water_heater_celsius",friendly_name="Demo Water Heater Celsius"} 45.0
+# HELP homeassistant_water_heater_min_temperature_celsius Minimum allowed temperature in degrees Celsius
+# TYPE homeassistant_water_heater_min_temperature_celsius gauge
+homeassistant_water_heater_min_temperature_celsius{domain="water_heater",entity="water_heater.demo_water_heater",friendly_name="Demo Water Heater"} 43.3
+homeassistant_water_heater_min_temperature_celsius{domain="water_heater",entity="water_heater.demo_water_heater_celsius",friendly_name="Demo Water Heater Celsius"} 43.3
+# HELP homeassistant_water_heater_max_temperature_celsius Maximum allowed temperature in degrees Celsius
+# TYPE homeassistant_water_heater_max_temperature_celsius gauge
+homeassistant_water_heater_max_temperature_celsius{domain="water_heater",entity="water_heater.demo_water_heater",friendly_name="Demo Water Heater"} 60.0
+homeassistant_water_heater_max_temperature_celsius{domain="water_heater",entity="water_heater.demo_water_heater_celsius",friendly_name="Demo Water Heater Celsius"} 60.0
+# HELP homeassistant_water_heater_operation_mode Water heater operation mode
+# TYPE homeassistant_water_heater_operation_mode gauge
+homeassistant_water_heater_operation_mode{domain="water_heater",entity="water_heater.demo_water_heater",friendly_name="Demo Water Heater",mode="eco"} 1.0
+homeassistant_water_heater_operation_mode{domain="water_heater",entity="water_heater.demo_water_heater",friendly_name="Demo Water Heater",mode="electric"} 0.0
+homeassistant_water_heater_operation_mode{domain="water_heater",entity="water_heater.demo_water_heater",friendly_name="Demo Water Heater",mode="performance"} 0.0
+homeassistant_water_heater_operation_mode{domain="water_heater",entity="water_heater.demo_water_heater",friendly_name="Demo Water Heater",mode="high_demand"} 0.0
+homeassistant_water_heater_operation_mode{domain="water_heater",entity="water_heater.demo_water_heater",friendly_name="Demo Water Heater",mode="heat_pump"} 0.0
+homeassistant_water_heater_operation_mode{domain="water_heater",entity="water_heater.demo_water_heater",friendly_name="Demo Water Heater",mode="gas"} 0.0
+homeassistant_water_heater_operation_mode{domain="water_heater",entity="water_heater.demo_water_heater",friendly_name="Demo Water Heater",mode="off"} 0.0
+homeassistant_water_heater_operation_mode{domain="water_heater",entity="water_heater.demo_water_heater_celsius",friendly_name="Demo Water Heater Celsius",mode="eco"} 1.0
+homeassistant_water_heater_operation_mode{domain="water_heater",entity="water_heater.demo_water_heater_celsius",friendly_name="Demo Water Heater Celsius",mode="electric"} 0.0
+homeassistant_water_heater_operation_mode{domain="water_heater",entity="water_heater.demo_water_heater_celsius",friendly_name="Demo Water Heater Celsius",mode="performance"} 0.0
+homeassistant_water_heater_operation_mode{domain="water_heater",entity="water_heater.demo_water_heater_celsius",friendly_name="Demo Water Heater Celsius",mode="high_demand"} 0.0
+homeassistant_water_heater_operation_mode{domain="water_heater",entity="water_heater.demo_water_heater_celsius",friendly_name="Demo Water Heater Celsius",mode="heat_pump"} 0.0
+homeassistant_water_heater_operation_mode{domain="water_heater",entity="water_heater.demo_water_heater_celsius",friendly_name="Demo Water Heater Celsius",mode="gas"} 0.0
+homeassistant_water_heater_operation_mode{domain="water_heater",entity="water_heater.demo_water_heater_celsius",friendly_name="Demo Water Heater Celsius",mode="off"} 0.0
+# HELP homeassistant_water_heater_away_mode Whether away mode is on (0/1)
+# TYPE homeassistant_water_heater_away_mode gauge
+homeassistant_water_heater_away_mode{domain="water_heater",entity="water_heater.demo_water_heater",friendly_name="Demo Water Heater"} 0.0
+homeassistant_water_heater_away_mode{domain="water_heater",entity="water_heater.demo_water_heater_celsius",friendly_name="Demo Water Heater Celsius"} 1.0
+# HELP homeassistant_geo_location_distance_meters Distance of the geo location event from home in meters
+# TYPE homeassistant_geo_location_distance_meters gauge
+homeassistant_geo_location_distance_meters{domain="geo_location",entity="geo_location.structure_fire",friendly_name="Structure Fire",source="demo"} 3000.0
+homeassistant_geo_location_distance_meters{domain="geo_location",entity="geo_location.tornado",friendly_name="Tornado",source="demo"} 13600.0
+# HELP homeassistant_geo_location_latitude_degrees Latitude of the geo location event in degrees
+# TYPE homeassistant_geo_location_latitude_degrees gauge
+homeassistant_geo_location_latitude_degrees{domain="geo_location",entity="geo_location.structure_fire",friendly_name="Structure Fire",source="demo"} 50.37416
+homeassistant_geo_location_latitude_degrees{domain="geo_location",entity="geo_location.tornado",friendly_name="Tornado",source="demo"} 50.31673
+# HELP homeassistant_geo_location_longitude_degrees Longitude of the geo location event in degrees
+# TYPE homeassistant_geo_location_longitude_degrees gauge
+homeassistant_geo_location_longitude_degrees{domain="geo_location",entity="geo_location.structure_fire",friendly_name="Structure Fire",source="demo"} 3.08898
+homeassistant_geo_location_longitude_degrees{domain="geo_location",entity="geo_location.tornado",friendly_name="Tornado",source="demo"} 3.24129
+# HELP homeassistant_device_tracker_state State of the device tracker
+# TYPE homeassistant_device_tracker_state gauge
+homeassistant_device_tracker_state{domain="device_tracker",entity="device_tracker.demo_paulus",friendly_name="Paulus"} 0.0
+homeassistant_device_tracker_state{domain="device_tracker",entity="device_tracker.demo_anne_therese",friendly_name="Anne Therese"} 0.0
+homeassistant_device_tracker_state{domain="device_tracker",entity="device_tracker.demo_home_boy",friendly_name="Home Boy"} 1.0
+# HELP homeassistant_area_info Area information
+# TYPE homeassistant_area_info gauge
+homeassistant_area_info{area="salon",area_name="Salon",floor=""} 1.0
+homeassistant_area_info{area="cuisine",area_name="Cuisine",floor=""} 1.0
+homeassistant_area_info{area="chambre",area_name="Chambre",floor=""} 1.0

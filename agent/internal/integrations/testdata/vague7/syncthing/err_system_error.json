@@ -1,0 +1,24 @@
+{
+  "errors": [
+    {
+      "level": "ERR",
+      "message": "Failed to create folder marker (folder.label=Essai folder.id=essai folder.type=sendreceive error=\"mkdir /var/syncthing/essai/.stfolder: permission denied\" log.pkg=model)",
+      "when": "2026-11-21T02:11:40.772379214Z"
+    },
+    {
+      "level": "ERR",
+      "message": "Failed initial scan (error=\"folder marker missing (this indicates potential data loss, search docs/forum to get information about how to proceed)\" folder.label=Essai folder.id=essai folder.type=sendreceive log.pkg=model)",
+      "when": "2026-11-21T02:11:40.782488172Z"
+    },
+    {
+      "level": "ERR",
+      "message": "Failed to create folder marker (folder.label=Seul folder.id=solo folder.type=sendonly error=\"mkdir /var/syncthing/solo/.stfolder: permission denied\" log.pkg=model)",
+      "when": "2026-11-21T02:12:46.433798516Z"
+    },
+    {
+      "level": "ERR",
+      "message": "Failed initial scan (error=\"folder marker missing (this indicates potential data loss, search docs/forum to get information about how to proceed)\" folder.label=Seul folder.id=solo folder.type=sendonly log.pkg=model)",
+      "when": "2026-11-21T02:12:46.452352459Z"
+    }
+  ]
+}

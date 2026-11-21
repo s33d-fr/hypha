@@ -25,15 +25,16 @@ router = APIRouter()
 KEY_FIELDS = "id, name, kind, prefix, created_at, last_used_at, revoked_at, created_by"
 CHANNEL_FIELDS = "id, kind, name, config, enabled, created_at"
 CHANNEL_KINDS = ("email", "webhook", "slack", "teams", "telegram", "discord", "googlechat", "mattermost", "ntfy",
-                 "pagerduty", "opsgenie", "push")
+                 "pagerduty", "opsgenie", "push", "glpi")
 PUSH_MAX_USERS = 50
-SECRET_FIELDS = ("headers", "bot_token", "routing_key", "api_key", "token")
+SECRET_FIELDS = ("headers", "bot_token", "routing_key", "api_key", "token", "app_token", "user_token")
 _EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 _TELEGRAM_TOKEN_RE = re.compile(r"^\d{3,15}:[A-Za-z0-9_-]{20,100}$")
 _TELEGRAM_CHAT_RE = re.compile(r"^(-?\d{1,20}|@[A-Za-z0-9_]{4,64})$")
 _NTFY_TOPIC_RE = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
 _PAGERDUTY_KEY_RE = re.compile(r"^[A-Za-z0-9]{32}$")
 _OPSGENIE_KEY_RE = re.compile(r"^[A-Za-z0-9-]{20,64}$")
+_GLPI_TOKEN_RE = re.compile(r"^[A-Za-z0-9]{20,100}$")
 KEY_PLACEHOLDER = "<HYPHA_API_KEY>"
 
 
@@ -148,6 +149,29 @@ def validate_channel(kind: str, config) -> dict:
             raise ValueError("config.region attendu : eu|us")
         return {"api_key": _match(config.get("api_key"), _OPSGENIE_KEY_RE, "config.api_key : clé d'API Opsgenie"),
                 "region": region}
+    if kind == "glpi":
+        # API REST de GLPI : adresse (…/apirest.php), jeton de l'application et jeton d'API d'un utilisateur ;
+        # entité, catégorie, source de la demande et type (1 incident, 2 demande) facultatifs.
+        out = {"url": _url(config.get("url"), False),
+               "app_token": _match(config.get("app_token"), _GLPI_TOKEN_RE, "config.app_token : jeton du client d'API de GLPI"),
+               "user_token": _match(config.get("user_token"), _GLPI_TOKEN_RE,
+                                    "config.user_token : jeton d'API de l'utilisateur GLPI (Préférences › Clés d'accès distant)")}
+        for key in ("entities_id", "itilcategories_id", "requesttypes_id"):
+            v = config.get(key)
+            if v in (None, ""):
+                continue
+            if isinstance(v, str) and v.strip().isdigit():
+                v = int(v.strip())
+            if isinstance(v, bool) or not isinstance(v, int) or not 0 <= v < 10 ** 9:
+                raise ValueError(f"config.{key} : identifiant numérique GLPI")
+            out[key] = v
+        t = config.get("ticket_type", 1)
+        if isinstance(t, str) and t.strip().isdigit():
+            t = int(t.strip())
+        if t not in (1, 2):
+            raise ValueError("config.ticket_type attendu : 1 (incident) ou 2 (demande)")
+        out["ticket_type"] = t
+        return out
     # slack, teams, discord, googlechat, mattermost : un webhook entrant en https.
     return {"url": _url(config.get("url"), True)}
 

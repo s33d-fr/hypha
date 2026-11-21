@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-<url><loc>https://hypha.s33d.fr/</loc></url>
+<url><loc>https://hypha.s33d.fr/</loc><xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/"/><xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://hypha.s33d.fr/"/></url>
+<url><loc>https://hypha.s33d.fr/en/</loc><xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/"/><xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://hypha.s33d.fr/"/></url>
 <url><loc>https://hypha.s33d.fr/cgv/</loc>
 <lastmod>2026-11-19</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/cgv/"/>
@@ -32,7 +33,7 @@
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/agent-windows/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/docs/alertes-et-canaux/</loc>
-<lastmod>2026-11-20</lastmod>
+<lastmod>2026-11-21</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/alertes-et-canaux/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/alerts-and-channels/"/>
 </url>
@@ -45,6 +46,11 @@
 <lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/application-mobile/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/mobile-app/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/applications-auto-hebergees/</loc>
+<lastmod>2026-11-21</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/applications-auto-hebergees/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/self-hosted-apps/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/docs/applications-et-services/</loc>
 <lastmod>2026-11-20</lastmod>
@@ -60,6 +66,11 @@
 <lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/bases-de-donnees/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/databases/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/docs/ci-forges-et-gestion/</loc>
+<lastmod>2026-11-21</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/ci-forges-et-gestion/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/ci-forges-and-business-apps/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/docs/cloud/</loc>
 <lastmod>2026-11-19</lastmod>
@@ -156,6 +167,11 @@
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/pages-de-statut/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/status-pages/"/>
 </url>
+<url><loc>https://hypha.s33d.fr/docs/reseau-stockage-sauvegardes/</loc>
+<lastmod>2026-11-21</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/reseau-stockage-sauvegardes/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/network-storage-backups/"/>
+</url>
 <url><loc>https://hypha.s33d.fr/docs/securite/</loc>
 <lastmod>2026-11-19</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/securite/"/>
@@ -192,7 +208,7 @@
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/virtualization/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/docs/windows/</loc>
-<lastmod>2026-11-20</lastmod>
+<lastmod>2026-11-21</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/windows/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/windows/"/>
 </url>
@@ -227,7 +243,7 @@
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/ai-and-gpu/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/en/docs/alerts-and-channels/</loc>
-<lastmod>2026-11-20</lastmod>
+<lastmod>2026-11-21</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/alertes-et-canaux/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/alerts-and-channels/"/>
 </url>
@@ -240,6 +256,11 @@
 <lastmod>2026-11-20</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/applications-et-services/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/applications-and-services/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/ci-forges-and-business-apps/</loc>
+<lastmod>2026-11-21</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/ci-forges-et-gestion/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/ci-forges-and-business-apps/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/en/docs/cloud/</loc>
 <lastmod>2026-11-19</lastmod>
@@ -316,6 +337,11 @@
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/moniteurs/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/monitors/"/>
 </url>
+<url><loc>https://hypha.s33d.fr/en/docs/network-storage-backups/</loc>
+<lastmod>2026-11-21</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/reseau-stockage-sauvegardes/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/network-storage-backups/"/>
+</url>
 <url><loc>https://hypha.s33d.fr/en/docs/plans-and-billing/</loc>
 <lastmod>2026-11-19</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/formules-et-facturation/"/>
@@ -330,6 +356,11 @@
 <lastmod>2026-11-19</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/securite/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/security/"/>
+</url>
+<url><loc>https://hypha.s33d.fr/en/docs/self-hosted-apps/</loc>
+<lastmod>2026-11-21</lastmod>
+<xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/applications-auto-hebergees/"/>
+<xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/self-hosted-apps/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/en/docs/self-hosting/</loc>
 <lastmod>2026-11-20</lastmod>
@@ -377,7 +408,7 @@
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/virtualization/"/>
 </url>
 <url><loc>https://hypha.s33d.fr/en/docs/windows/</loc>
-<lastmod>2026-11-20</lastmod>
+<lastmod>2026-11-21</lastmod>
 <xhtml:link rel="alternate" hreflang="fr" href="https://hypha.s33d.fr/docs/windows/"/>
 <xhtml:link rel="alternate" hreflang="en" href="https://hypha.s33d.fr/en/docs/windows/"/>
 </url>

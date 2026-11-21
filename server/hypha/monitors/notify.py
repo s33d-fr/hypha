@@ -2,7 +2,7 @@
 
 Canaux : courriel (SMTP, HTML + texte), webhook, Slack, Teams, Telegram, Discord, Google Chat,
 Mattermost (format Slack), ntfy, PagerDuty (Events API v2 : trigger/resolve), Opsgenie
-(create/close par alias) et notifications push (Web Push vers les appareils des destinataires,
+(create/close par alias), GLPI (ticket ouvert à l'alerte, suivi et solution à la reprise, glpi.py) et notifications push (Web Push vers les appareils des destinataires,
 hypha/push). Délai de 10 s par appel, deux reprises espacées (le push reprend lui-même appareil par
 appareil : un échec n'y est jamais renvoyé aux appareils déjà servis).
 
@@ -281,6 +281,9 @@ async def send(settings: Settings, client: httpx.AsyncClient, n: Notice, db=None
             return
         await _post(client, PAGERDUTY_URL, pagerduty_event(n, cfg.get("routing_key", "")))
         return
+    if kind == "glpi":
+        from . import glpi
+        return await glpi.send(client, n, text_body)
     if kind == "opsgenie":
         base = OPSGENIE_URLS.get(cfg.get("region", "eu"), OPSGENIE_URLS["eu"])
         headers = {"Authorization": f"GenieKey {cfg.get('api_key', '')}"}

@@ -1,0 +1,28 @@
+{
+    "archives": [
+        {
+            "archive": "essai-20261121T022920",
+            "barchive": "essai-20261121T022920",
+            "id": "8b23f33844e8489b5620bb1839769f00d241f16ad8903960faf9c7c7fc4d900c",
+            "name": "essai-20261121T022920",
+            "start": "2026-11-21T02:29:21.000000",
+            "time": "2026-11-21T02:29:21.000000"
+        },
+        {
+            "archive": "coupee-20261121T022922.checkpoint",
+            "barchive": "coupee-20261121T022922.checkpoint",
+            "id": "3e6289aba44ce2b74f6b4a6863775fae3a3ea0d2d44075bd5d1b101014fcdd5c",
+            "name": "coupee-20261121T022922.checkpoint",
+            "start": "2026-11-21T02:29:23.000000",
+            "time": "2026-11-21T02:29:23.000000"
+        }
+    ],
+    "encryption": {
+        "mode": "repokey"
+    },
+    "repository": {
+        "id": "1fda5b68786c871f88524cc4ecdc602db0d61cf814748686db705774dbf6c972",
+        "last_modified": "2026-11-21T02:29:28.000000",
+        "location": "ssh://borg@192.0.2.20/srv/borg/essai"
+    }
+}

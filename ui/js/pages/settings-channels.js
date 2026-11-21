@@ -7,7 +7,7 @@ import { section, empty, panel, modal, field, select, toast, confirmDialog, erro
 import { dataTable } from '../components/table.js';
 import { isAdmin } from './ops-shared.js';
 
-export const KINDS = ['email', 'push', 'webhook', 'slack', 'teams', 'mattermost', 'discord', 'googlechat', 'telegram', 'ntfy', 'pagerduty', 'opsgenie'];
+export const KINDS = ['email', 'push', 'webhook', 'slack', 'teams', 'mattermost', 'discord', 'googlechat', 'telegram', 'ntfy', 'pagerduty', 'opsgenie', 'glpi'];
 const URL_KINDS = ['webhook', 'slack', 'teams', 'mattermost', 'discord', 'googlechat'];
 
 // Champs propres à chaque type (§ 18). secret : saisi masqué, jamais affiché dans la liste.
@@ -27,6 +27,15 @@ const FIELDS = {
   opsgenie: [
     { key: 'api_key', secret: true, required: true, placeholder: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', check: (v) => v.length >= 20 },
     { key: 'region', required: true, options: ['eu', 'us'], def: 'eu' },
+  ],
+  glpi: [
+    { key: 'url', required: true, placeholder: 'https://glpi.example.fr/apirest.php', check: (v) => /^https?:\/\/[^\s/]+/i.test(v) },
+    { key: 'app_token', secret: true, required: true, check: (v) => /^[A-Za-z0-9]{20,100}$/.test(v) },
+    { key: 'user_token', secret: true, required: true, check: (v) => /^[A-Za-z0-9]{20,100}$/.test(v) },
+    { key: 'ticket_type', required: true, options: ['1', '2'], def: '1' },
+    { key: 'entities_id', required: false, placeholder: '0', check: (v) => /^\d{1,9}$/.test(v) },
+    { key: 'itilcategories_id', required: false, check: (v) => /^\d{1,9}$/.test(v) },
+    { key: 'requesttypes_id', required: false, check: (v) => /^\d{1,9}$/.test(v) },
   ],
 };
 
@@ -49,6 +58,7 @@ export function channelTarget(c) {
     case 'ntfy': { let host = ''; try { host = new URL(cfg.url || 'https://ntfy.sh').host; } catch (e) { host = cfg.url || ''; } return host + (cfg.topic ? '/' + cfg.topic : ''); }
     case 'pagerduty': return t('channels.target.pagerduty', { k: tail(cfg.routing_key) });
     case 'opsgenie': return t('channels.target.opsgenie', { r: String(cfg.region || 'eu').toUpperCase() });
+    case 'glpi': { let host = ''; try { host = new URL(cfg.url || '').host; } catch (e) { host = ''; } return t('channels.target.glpi', { h: host || '-' }); }
     default: {
       const url = cfg.url || '';
       try { const u = new URL(url); return u.host + (u.pathname.length > 1 ? '/…' : ''); } catch (e) { return url ? url.slice(0, 40) : '-'; }

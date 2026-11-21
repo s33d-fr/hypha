@@ -40,7 +40,8 @@ function readStored() {
   }
 }
 
-let lang = readStored() || 'fr';
+// Sans préférence enregistrée, l'adresse décide : /en/ est l'entrée anglaise du site.
+let lang = readStored() || (location.pathname.startsWith('/en/') ? 'en' : 'fr');
 
 export function getLang() { return lang; }
 export function locale() { return LOCALES[lang] || 'fr-FR'; }

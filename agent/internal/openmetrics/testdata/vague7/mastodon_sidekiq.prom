@@ -1,0 +1,232 @@
+# HELP collector_working Is the master process collector able to collect metrics
+# TYPE collector_working gauge
+collector_working 1
+
+
+# HELP collector_rss total memory used by collector process
+# TYPE collector_rss gauge
+collector_rss 339161088
+
+
+# HELP collector_metrics_total Total metrics processed by exporter web.
+# TYPE collector_metrics_total counter
+collector_metrics_total 0
+
+
+# HELP collector_sessions_total Total send_metric sessions processed by exporter web.
+# TYPE collector_sessions_total counter
+collector_sessions_total 0
+
+
+# HELP collector_bad_metrics_total Total mis-handled metrics by collector.
+# TYPE collector_bad_metrics_total counter
+collector_bad_metrics_total 0
+
+# HELP heap_free_slots Free ruby heap slots.
+# TYPE heap_free_slots gauge
+heap_free_slots{type="sidekiq",pid="7",hostname="3befdbb6fcd0"} 14652
+
+# HELP heap_live_slots Used ruby heap slots.
+# TYPE heap_live_slots gauge
+heap_live_slots{type="sidekiq",pid="7",hostname="3befdbb6fcd0"} 1284502
+
+# HELP rss Total RSS used by process.
+# TYPE rss gauge
+rss{type="sidekiq",pid="7",hostname="3befdbb6fcd0"} 338165760
+
+# HELP malloc_increase_bytes_limit Limit before Ruby triggers a GC against current objects (bytes).
+# TYPE malloc_increase_bytes_limit gauge
+malloc_increase_bytes_limit{type="sidekiq",pid="7",hostname="3befdbb6fcd0"} 32225676
+
+# HELP oldmalloc_increase_bytes_limit Limit before Ruby triggers a major GC against old objects (bytes).
+# TYPE oldmalloc_increase_bytes_limit gauge
+oldmalloc_increase_bytes_limit{type="sidekiq",pid="7",hostname="3befdbb6fcd0"} 34107091
+
+# HELP marking_time Time spent in GC marking.
+# TYPE marking_time gauge
+marking_time{type="sidekiq",pid="7",hostname="3befdbb6fcd0"} 2101
+
+# HELP sweeping_time Time spent in GC sweeping.
+# TYPE sweeping_time gauge
+sweeping_time{type="sidekiq",pid="7",hostname="3befdbb6fcd0"} 667
+
+# HELP major_gc_ops_total Major GC operations by process.
+# TYPE major_gc_ops_total counter
+major_gc_ops_total{type="sidekiq",pid="7",hostname="3befdbb6fcd0"} 10
+
+# HELP minor_gc_ops_total Minor GC operations by process.
+# TYPE minor_gc_ops_total counter
+minor_gc_ops_total{type="sidekiq",pid="7",hostname="3befdbb6fcd0"} 20
+
+# HELP allocated_objects_total Total number of allocated objects by process.
+# TYPE allocated_objects_total counter
+allocated_objects_total{type="sidekiq",pid="7",hostname="3befdbb6fcd0"} 3458443
+
+# HELP sidekiq_job_duration_seconds Total time spent in sidekiq jobs.
+# TYPE sidekiq_job_duration_seconds summary
+sidekiq_job_duration_seconds{job_name="Scheduler::RepairRemoteCollectionsScheduler",queue="scheduler",quantile="0.99"} 0.12063813800000389
+sidekiq_job_duration_seconds{job_name="Scheduler::RepairRemoteCollectionsScheduler",queue="scheduler",quantile="0.9"} 0.12063813800000389
+sidekiq_job_duration_seconds{job_name="Scheduler::RepairRemoteCollectionsScheduler",queue="scheduler",quantile="0.5"} 0.12063813800000389
+sidekiq_job_duration_seconds{job_name="Scheduler::RepairRemoteCollectionsScheduler",queue="scheduler",quantile="0.1"} 0.12063813800000389
+sidekiq_job_duration_seconds{job_name="Scheduler::RepairRemoteCollectionsScheduler",queue="scheduler",quantile="0.01"} 0.12063813800000389
+sidekiq_job_duration_seconds_sum{job_name="Scheduler::RepairRemoteCollectionsScheduler",queue="scheduler"} 0.12063813800000389
+sidekiq_job_duration_seconds_count{job_name="Scheduler::RepairRemoteCollectionsScheduler",queue="scheduler"} 1
+sidekiq_job_duration_seconds{job_name="Scheduler::IndexingScheduler",queue="scheduler",quantile="0.99"} 0.00011915699997189222
+sidekiq_job_duration_seconds{job_name="Scheduler::IndexingScheduler",queue="scheduler",quantile="0.9"} 0.00011915699997189222
+sidekiq_job_duration_seconds{job_name="Scheduler::IndexingScheduler",queue="scheduler",quantile="0.5"} 4.412799989950145e-05
+sidekiq_job_duration_seconds{job_name="Scheduler::IndexingScheduler",queue="scheduler",quantile="0.1"} 4.412799989950145e-05
+sidekiq_job_duration_seconds{job_name="Scheduler::IndexingScheduler",queue="scheduler",quantile="0.01"} 4.412799989950145e-05
+sidekiq_job_duration_seconds_sum{job_name="Scheduler::IndexingScheduler",queue="scheduler"} 0.00016328499987139367
+sidekiq_job_duration_seconds_count{job_name="Scheduler::IndexingScheduler",queue="scheduler"} 2
+sidekiq_job_duration_seconds{job_name="Scheduler::SuspendedUserCleanupScheduler",queue="scheduler",quantile="0.99"} 0.024152586999889536
+sidekiq_job_duration_seconds{job_name="Scheduler::SuspendedUserCleanupScheduler",queue="scheduler",quantile="0.9"} 0.024152586999889536
+sidekiq_job_duration_seconds{job_name="Scheduler::SuspendedUserCleanupScheduler",queue="scheduler",quantile="0.5"} 0.00801425399981781
+sidekiq_job_duration_seconds{job_name="Scheduler::SuspendedUserCleanupScheduler",queue="scheduler",quantile="0.1"} 0.00801425399981781
+sidekiq_job_duration_seconds{job_name="Scheduler::SuspendedUserCleanupScheduler",queue="scheduler",quantile="0.01"} 0.00801425399981781
+sidekiq_job_duration_seconds_sum{job_name="Scheduler::SuspendedUserCleanupScheduler",queue="scheduler"} 0.03216684099970735
+sidekiq_job_duration_seconds_count{job_name="Scheduler::SuspendedUserCleanupScheduler",queue="scheduler"} 2
+sidekiq_job_duration_seconds{job_name="Scheduler::AccountsStatusesCleanupScheduler",queue="scheduler",quantile="0.99"} 0.11680322200004412
+sidekiq_job_duration_seconds{job_name="Scheduler::AccountsStatusesCleanupScheduler",queue="scheduler",quantile="0.9"} 0.11680322200004412
+sidekiq_job_duration_seconds{job_name="Scheduler::AccountsStatusesCleanupScheduler",queue="scheduler",quantile="0.5"} 0.04762457699985134
+sidekiq_job_duration_seconds{job_name="Scheduler::AccountsStatusesCleanupScheduler",queue="scheduler",quantile="0.1"} 0.04762457699985134
+sidekiq_job_duration_seconds{job_name="Scheduler::AccountsStatusesCleanupScheduler",queue="scheduler",quantile="0.01"} 0.04762457699985134
+sidekiq_job_duration_seconds_sum{job_name="Scheduler::AccountsStatusesCleanupScheduler",queue="scheduler"} 0.16442779899989546
+sidekiq_job_duration_seconds_count{job_name="Scheduler::AccountsStatusesCleanupScheduler",queue="scheduler"} 2
+sidekiq_job_duration_seconds{job_name="TriggerWebhookWorker",queue="default",quantile="0.99"} 1.5862725050001245
+sidekiq_job_duration_seconds{job_name="TriggerWebhookWorker",queue="default",quantile="0.9"} 1.5862725050001245
+sidekiq_job_duration_seconds{job_name="TriggerWebhookWorker",queue="default",quantile="0.5"} 0.3761396929999137
+sidekiq_job_duration_seconds{job_name="TriggerWebhookWorker",queue="default",quantile="0.1"} 0.24102255000002515
+sidekiq_job_duration_seconds{job_name="TriggerWebhookWorker",queue="default",quantile="0.01"} 0.24102255000002515
+sidekiq_job_duration_seconds_sum{job_name="TriggerWebhookWorker",queue="default"} 4.374706248000166
+sidekiq_job_duration_seconds_count{job_name="TriggerWebhookWorker",queue="default"} 6
+sidekiq_job_duration_seconds{job_name="LinkCrawlWorker",queue="pull",quantile="0.99"} 0.1917944310000621
+sidekiq_job_duration_seconds{job_name="LinkCrawlWorker",queue="pull",quantile="0.9"} 0.1917944310000621
+sidekiq_job_duration_seconds{job_name="LinkCrawlWorker",queue="pull",quantile="0.5"} 0.018207715000016833
+sidekiq_job_duration_seconds{job_name="LinkCrawlWorker",queue="pull",quantile="0.1"} 0.004405820999863863
+sidekiq_job_duration_seconds{job_name="LinkCrawlWorker",queue="pull",quantile="0.01"} 0.004405820999863863
+sidekiq_job_duration_seconds_sum{job_name="LinkCrawlWorker",queue="pull"} 0.2561418610000601
+sidekiq_job_duration_seconds_count{job_name="LinkCrawlWorker",queue="pull"} 5
+sidekiq_job_duration_seconds{job_name="ActivityPub::DistributionWorker",queue="push",quantile="0.99"} 1.7182373100001769
+sidekiq_job_duration_seconds{job_name="ActivityPub::DistributionWorker",queue="push",quantile="0.9"} 1.7182373100001769
+sidekiq_job_duration_seconds{job_name="ActivityPub::DistributionWorker",queue="push",quantile="0.5"} 0.32472652300020854
+sidekiq_job_duration_seconds{job_name="ActivityPub::DistributionWorker",queue="push",quantile="0.1"} 0.23131040099997335
+sidekiq_job_duration_seconds{job_name="ActivityPub::DistributionWorker",queue="push",quantile="0.01"} 0.23131040099997335
+sidekiq_job_duration_seconds_sum{job_name="ActivityPub::DistributionWorker",queue="push"} 2.9927019510005266
+sidekiq_job_duration_seconds_count{job_name="ActivityPub::DistributionWorker",queue="push"} 5
+sidekiq_job_duration_seconds{job_name="DistributionWorker",queue="default",quantile="0.99"} 1.9203868780000448
+sidekiq_job_duration_seconds{job_name="DistributionWorker",queue="default",quantile="0.9"} 1.9203868780000448
+sidekiq_job_duration_seconds{job_name="DistributionWorker",queue="default",quantile="0.5"} 0.556304068999907
+sidekiq_job_duration_seconds{job_name="DistributionWorker",queue="default",quantile="0.1"} 0.3696809939999639
+sidekiq_job_duration_seconds{job_name="DistributionWorker",queue="default",quantile="0.01"} 0.3696809939999639
+sidekiq_job_duration_seconds_sum{job_name="DistributionWorker",queue="default"} 5.0657365959998515
+sidekiq_job_duration_seconds_count{job_name="DistributionWorker",queue="default"} 5
+sidekiq_job_duration_seconds{job_name="PushUpdateWorker",queue="default",quantile="0.99"} 0.26635280699997566
+sidekiq_job_duration_seconds{job_name="PushUpdateWorker",queue="default",quantile="0.9"} 0.26635280699997566
+sidekiq_job_duration_seconds{job_name="PushUpdateWorker",queue="default",quantile="0.5"} 0.1323004429998491
+sidekiq_job_duration_seconds{job_name="PushUpdateWorker",queue="default",quantile="0.1"} 0.06365144899996267
+sidekiq_job_duration_seconds{job_name="PushUpdateWorker",queue="default",quantile="0.01"} 0.06365144899996267
+sidekiq_job_duration_seconds_sum{job_name="PushUpdateWorker",queue="default"} 0.46230469899978743
+sidekiq_job_duration_seconds_count{job_name="PushUpdateWorker",queue="default"} 3
+
+# HELP sidekiq_jobs_total Total number of sidekiq jobs executed.
+# TYPE sidekiq_jobs_total counter
+sidekiq_jobs_total{job_name="Scheduler::RepairRemoteCollectionsScheduler",queue="scheduler"} 1
+sidekiq_jobs_total{job_name="Scheduler::IndexingScheduler",queue="scheduler"} 2
+sidekiq_jobs_total{job_name="Scheduler::SuspendedUserCleanupScheduler",queue="scheduler"} 2
+sidekiq_jobs_total{job_name="Scheduler::AccountsStatusesCleanupScheduler",queue="scheduler"} 2
+sidekiq_jobs_total{job_name="TriggerWebhookWorker",queue="default"} 6
+sidekiq_jobs_total{job_name="LinkCrawlWorker",queue="pull"} 5
+sidekiq_jobs_total{job_name="ActivityPub::DistributionWorker",queue="push"} 5
+sidekiq_jobs_total{job_name="DistributionWorker",queue="default"} 5
+sidekiq_jobs_total{job_name="PushUpdateWorker",queue="default"} 3
+
+# HELP sidekiq_restarted_jobs_total Total number of sidekiq jobs that we restarted because of a sidekiq shutdown.
+# TYPE sidekiq_restarted_jobs_total counter
+
+
+# HELP sidekiq_failed_jobs_total Total number of failed sidekiq jobs.
+# TYPE sidekiq_failed_jobs_total counter
+
+
+# HELP sidekiq_dead_jobs_total Total number of dead sidekiq jobs.
+# TYPE sidekiq_dead_jobs_total counter
+
+
+# HELP sidekiq_queue_backlog Size of the sidekiq queue.
+# TYPE sidekiq_queue_backlog gauge
+sidekiq_queue_backlog{queue="scheduler"} 0
+sidekiq_queue_backlog{queue="default"} 0
+sidekiq_queue_backlog{queue="pull"} 0
+sidekiq_queue_backlog{queue="push"} 0
+
+# HELP sidekiq_queue_latency_seconds Latency of the sidekiq queue.
+# TYPE sidekiq_queue_latency_seconds gauge
+sidekiq_queue_latency_seconds{queue="scheduler"} 0
+sidekiq_queue_latency_seconds{queue="default"} 0
+sidekiq_queue_latency_seconds{queue="pull"} 0
+sidekiq_queue_latency_seconds{queue="push"} 0
+
+# HELP sidekiq_process_busy Number of running jobs
+# TYPE sidekiq_process_busy gauge
+sidekiq_process_busy{labels="",queues="default,fasp,ingress,mailers,pull,push,scheduler",quiet="false",tag="mastodon",hostname="3befdbb6fcd0",identity="3befdbb6fcd0:7:7141a3395c5d"} 0
+
+# HELP sidekiq_process_concurrency Maximum concurrency
+# TYPE sidekiq_process_concurrency gauge
+sidekiq_process_concurrency{labels="",queues="default,fasp,ingress,mailers,pull,push,scheduler",quiet="false",tag="mastodon",hostname="3befdbb6fcd0",identity="3befdbb6fcd0:7:7141a3395c5d"} 5
+
+# HELP sidekiq_stats_dead_size Size of dead the queue
+# TYPE sidekiq_stats_dead_size gauge
+sidekiq_stats_dead_size 0
+
+# HELP sidekiq_stats_enqueued Number of enqueued jobs
+# TYPE sidekiq_stats_enqueued gauge
+sidekiq_stats_enqueued 0
+
+# HELP sidekiq_stats_failed Number of failed jobs
+# TYPE sidekiq_stats_failed gauge
+sidekiq_stats_failed 0
+
+# HELP sidekiq_stats_processed Total number of processed jobs
+# TYPE sidekiq_stats_processed gauge
+sidekiq_stats_processed 28
+
+# HELP sidekiq_stats_processes_size Number of processes
+# TYPE sidekiq_stats_processes_size gauge
+sidekiq_stats_processes_size 1
+
+# HELP sidekiq_stats_retry_size Size of the retries queue
+# TYPE sidekiq_stats_retry_size gauge
+sidekiq_stats_retry_size 0
+
+# HELP sidekiq_stats_scheduled_size Size of the scheduled queue
+# TYPE sidekiq_stats_scheduled_size gauge
+sidekiq_stats_scheduled_size 0
+
+# HELP sidekiq_stats_workers_size Number of jobs actively being processed
+# TYPE sidekiq_stats_workers_size gauge
+sidekiq_stats_workers_size 0
+
+# HELP active_record_connection_pool_connections Total connections in pool
+# TYPE active_record_connection_pool_connections gauge
+active_record_connection_pool_connections{type="sidekiq",pool_name="primary",dbconfig_database="mastodon",dbconfig_host="v7-masto-db",pid="7",hostname="3befdbb6fcd0"} 5
+
+# HELP active_record_connection_pool_busy Connections in use in pool
+# TYPE active_record_connection_pool_busy gauge
+active_record_connection_pool_busy{type="sidekiq",pool_name="primary",dbconfig_database="mastodon",dbconfig_host="v7-masto-db",pid="7",hostname="3befdbb6fcd0"} 0
+
+# HELP active_record_connection_pool_dead Dead connections in pool
+# TYPE active_record_connection_pool_dead gauge
+active_record_connection_pool_dead{type="sidekiq",pool_name="primary",dbconfig_database="mastodon",dbconfig_host="v7-masto-db",pid="7",hostname="3befdbb6fcd0"} 0
+
+# HELP active_record_connection_pool_idle Idle connections in pool
+# TYPE active_record_connection_pool_idle gauge
+active_record_connection_pool_idle{type="sidekiq",pool_name="primary",dbconfig_database="mastodon",dbconfig_host="v7-masto-db",pid="7",hostname="3befdbb6fcd0"} 5
+
+# HELP active_record_connection_pool_waiting Connection requests waiting
+# TYPE active_record_connection_pool_waiting gauge
+active_record_connection_pool_waiting{type="sidekiq",pool_name="primary",dbconfig_database="mastodon",dbconfig_host="v7-masto-db",pid="7",hostname="3befdbb6fcd0"} 0
+
+# HELP active_record_connection_pool_size Maximum allowed connection pool size
+# TYPE active_record_connection_pool_size gauge
+active_record_connection_pool_size{type="sidekiq",pool_name="primary",dbconfig_database="mastodon",dbconfig_host="v7-masto-db",pid="7",hostname="3befdbb6fcd0"} 5
+

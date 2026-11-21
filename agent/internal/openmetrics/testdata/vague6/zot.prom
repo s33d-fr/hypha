@@ -1,0 +1,126 @@
+# HELP zot_gc_duration_seconds Duration of garbage collection runs
+# TYPE zot_gc_duration_seconds summary
+zot_gc_duration_seconds_sum 0
+zot_gc_duration_seconds_count 0
+# HELP zot_http_method_latency_seconds Latency of serving HTTP requests
+# TYPE zot_http_method_latency_seconds histogram
+zot_http_method_latency_seconds_bucket{method="GET",le="0.05"} 3
+zot_http_method_latency_seconds_bucket{method="GET",le="0.5"} 3
+zot_http_method_latency_seconds_bucket{method="GET",le="1"} 3
+zot_http_method_latency_seconds_bucket{method="GET",le="5"} 3
+zot_http_method_latency_seconds_bucket{method="GET",le="30"} 3
+zot_http_method_latency_seconds_bucket{method="GET",le="60"} 3
+zot_http_method_latency_seconds_bucket{method="GET",le="600"} 3
+zot_http_method_latency_seconds_bucket{method="GET",le="+Inf"} 3
+zot_http_method_latency_seconds_sum{method="GET"} 0
+zot_http_method_latency_seconds_count{method="GET"} 3
+zot_http_method_latency_seconds_bucket{method="HEAD",le="0.05"} 9
+zot_http_method_latency_seconds_bucket{method="HEAD",le="0.5"} 9
+zot_http_method_latency_seconds_bucket{method="HEAD",le="1"} 9
+zot_http_method_latency_seconds_bucket{method="HEAD",le="5"} 9
+zot_http_method_latency_seconds_bucket{method="HEAD",le="30"} 9
+zot_http_method_latency_seconds_bucket{method="HEAD",le="60"} 9
+zot_http_method_latency_seconds_bucket{method="HEAD",le="600"} 9
+zot_http_method_latency_seconds_bucket{method="HEAD",le="+Inf"} 9
+zot_http_method_latency_seconds_sum{method="HEAD"} 0
+zot_http_method_latency_seconds_count{method="HEAD"} 9
+zot_http_method_latency_seconds_bucket{method="POST",le="0.05"} 7
+zot_http_method_latency_seconds_bucket{method="POST",le="0.5"} 7
+zot_http_method_latency_seconds_bucket{method="POST",le="1"} 7
+zot_http_method_latency_seconds_bucket{method="POST",le="5"} 7
+zot_http_method_latency_seconds_bucket{method="POST",le="30"} 7
+zot_http_method_latency_seconds_bucket{method="POST",le="60"} 7
+zot_http_method_latency_seconds_bucket{method="POST",le="600"} 7
+zot_http_method_latency_seconds_bucket{method="POST",le="+Inf"} 7
+zot_http_method_latency_seconds_sum{method="POST"} 0
+zot_http_method_latency_seconds_count{method="POST"} 7
+zot_http_method_latency_seconds_bucket{method="PUT",le="0.05"} 8
+zot_http_method_latency_seconds_bucket{method="PUT",le="0.5"} 8
+zot_http_method_latency_seconds_bucket{method="PUT",le="1"} 8
+zot_http_method_latency_seconds_bucket{method="PUT",le="5"} 8
+zot_http_method_latency_seconds_bucket{method="PUT",le="30"} 8
+zot_http_method_latency_seconds_bucket{method="PUT",le="60"} 8
+zot_http_method_latency_seconds_bucket{method="PUT",le="600"} 8
+zot_http_method_latency_seconds_bucket{method="PUT",le="+Inf"} 8
+zot_http_method_latency_seconds_sum{method="PUT"} 0
+zot_http_method_latency_seconds_count{method="PUT"} 8
+# HELP zot_http_repo_latency_seconds Latency of serving HTTP requests
+# TYPE zot_http_repo_latency_seconds summary
+zot_http_repo_latency_seconds_sum{repo="N/A"} 0
+zot_http_repo_latency_seconds_count{repo="N/A"} 2
+zot_http_repo_latency_seconds_sum{repo="essai/memcached"} 0
+zot_http_repo_latency_seconds_count{repo="essai/memcached"} 24
+zot_http_repo_latency_seconds_sum{repo="nope"} 0
+zot_http_repo_latency_seconds_count{repo="nope"} 1
+# HELP zot_http_requests_total Total number of http request in zot
+# TYPE zot_http_requests_total counter
+zot_http_requests_total{code="200",method="GET"} 2
+zot_http_requests_total{code="200",method="HEAD"} 1
+zot_http_requests_total{code="201",method="PUT"} 8
+zot_http_requests_total{code="202",method="POST"} 7
+zot_http_requests_total{code="404",method="GET"} 1
+zot_http_requests_total{code="404",method="HEAD"} 8
+# HELP zot_info Server general information
+# TYPE zot_info gauge
+zot_info{binaryType="-events-imagetrust-lint-metrics-mgmt-profile-scrub-search-sync-ui-userprefs",commit="v2.1.23-d7915e82e6693255338ef7fa9bb15300c82db020",goVersion="go1.27.3",version="1.1.1"} 0
+# HELP zot_repo_downloads_total Total number times an image was downloaded
+# TYPE zot_repo_downloads_total counter
+zot_repo_downloads_total{repo="essai/memcached"} 2
+# HELP zot_repo_storage_bytes Storage used per zot repo
+# TYPE zot_repo_storage_bytes gauge
+zot_repo_storage_bytes{repo="essai/memcached"} 3.2287839e+07
+# HELP zot_repo_uploads_total Total number times an image was uploaded
+# TYPE zot_repo_uploads_total counter
+zot_repo_uploads_total{repo="essai/memcached"} 1
+# HELP zot_scheduler_generators_status Scheduler generators by priority & state
+# TYPE zot_scheduler_generators_status gauge
+zot_scheduler_generators_status{priority="high",state="done"} 1
+zot_scheduler_generators_status{priority="high",state="ready"} 0
+zot_scheduler_generators_status{priority="high",state="waiting"} 0
+zot_scheduler_generators_status{priority="low",state="done"} 0
+zot_scheduler_generators_status{priority="low",state="ready"} 0
+zot_scheduler_generators_status{priority="low",state="waiting"} 2
+zot_scheduler_generators_status{priority="medium",state="done"} 1
+zot_scheduler_generators_status{priority="medium",state="ready"} 0
+zot_scheduler_generators_status{priority="medium",state="waiting"} 1
+# HELP zot_scheduler_generators_total Total number of generators registered in scheduler
+# TYPE zot_scheduler_generators_total counter
+zot_scheduler_generators_total 5
+# HELP zot_scheduler_tasksqueue_length Number of tasks waiting in the queue to pe processed by scheduler workers
+# TYPE zot_scheduler_tasksqueue_length gauge
+zot_scheduler_tasksqueue_length{priority="high"} 0
+zot_scheduler_tasksqueue_length{priority="low"} 0
+zot_scheduler_tasksqueue_length{priority="medium"} 0
+# HELP zot_scheduler_workers Scheduler workers state
+# TYPE zot_scheduler_workers gauge
+zot_scheduler_workers{state="idle"} 16
+zot_scheduler_workers{state="working"} 0
+# HELP zot_scheduler_workers_total Total number of available workers to perform scheduler tasks
+# TYPE zot_scheduler_workers_total gauge
+zot_scheduler_workers_total 16
+# HELP zot_storage_lock_latency_seconds Latency of serving HTTP requests
+# TYPE zot_storage_lock_latency_seconds histogram
+zot_storage_lock_latency_seconds_bucket{lockType="RLock",storageName="/var/lib/registry",le="0.001"} 13
+zot_storage_lock_latency_seconds_bucket{lockType="RLock",storageName="/var/lib/registry",le="0.01"} 14
+zot_storage_lock_latency_seconds_bucket{lockType="RLock",storageName="/var/lib/registry",le="0.1"} 14
+zot_storage_lock_latency_seconds_bucket{lockType="RLock",storageName="/var/lib/registry",le="1"} 14
+zot_storage_lock_latency_seconds_bucket{lockType="RLock",storageName="/var/lib/registry",le="5"} 14
+zot_storage_lock_latency_seconds_bucket{lockType="RLock",storageName="/var/lib/registry",le="10"} 14
+zot_storage_lock_latency_seconds_bucket{lockType="RLock",storageName="/var/lib/registry",le="15"} 14
+zot_storage_lock_latency_seconds_bucket{lockType="RLock",storageName="/var/lib/registry",le="30"} 14
+zot_storage_lock_latency_seconds_bucket{lockType="RLock",storageName="/var/lib/registry",le="60"} 14
+zot_storage_lock_latency_seconds_bucket{lockType="RLock",storageName="/var/lib/registry",le="+Inf"} 14
+zot_storage_lock_latency_seconds_sum{lockType="RLock",storageName="/var/lib/registry"} 0.004339774
+zot_storage_lock_latency_seconds_count{lockType="RLock",storageName="/var/lib/registry"} 14
+zot_storage_lock_latency_seconds_bucket{lockType="RWLock",storageName="/var/lib/registry",le="0.001"} 9
+zot_storage_lock_latency_seconds_bucket{lockType="RWLock",storageName="/var/lib/registry",le="0.01"} 16
+zot_storage_lock_latency_seconds_bucket{lockType="RWLock",storageName="/var/lib/registry",le="0.1"} 16
+zot_storage_lock_latency_seconds_bucket{lockType="RWLock",storageName="/var/lib/registry",le="1"} 16
+zot_storage_lock_latency_seconds_bucket{lockType="RWLock",storageName="/var/lib/registry",le="5"} 16
+zot_storage_lock_latency_seconds_bucket{lockType="RWLock",storageName="/var/lib/registry",le="10"} 16
+zot_storage_lock_latency_seconds_bucket{lockType="RWLock",storageName="/var/lib/registry",le="15"} 16
+zot_storage_lock_latency_seconds_bucket{lockType="RWLock",storageName="/var/lib/registry",le="30"} 16
+zot_storage_lock_latency_seconds_bucket{lockType="RWLock",storageName="/var/lib/registry",le="60"} 16
+zot_storage_lock_latency_seconds_bucket{lockType="RWLock",storageName="/var/lib/registry",le="+Inf"} 16
+zot_storage_lock_latency_seconds_sum{lockType="RWLock",storageName="/var/lib/registry"} 0.025225135999999995
+zot_storage_lock_latency_seconds_count{lockType="RWLock",storageName="/var/lib/registry"} 16

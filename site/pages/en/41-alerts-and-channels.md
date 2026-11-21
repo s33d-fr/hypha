@@ -5,8 +5,8 @@ title: Alerts, Problems view and notification channels
 nav: Alerts and channels
 section: Alert and act
 order: 41
-updated: 2026-11-20
-description: The HYPHA Problems view, acknowledgement, priorities, escalations, and the twelve notification channels: email, push notifications, webhook, Slack, Teams, Telegram, Discord, Google Chat, Mattermost, ntfy, PagerDuty, Opsgenie.
+updated: 2026-11-21
+description: The HYPHA Problems view, acknowledgement, priorities, escalations, and the thirteen notification channels: email, push notifications, webhook, Slack, Teams, Telegram, Discord, Google Chat, Mattermost, ntfy, PagerDuty, Opsgenie, GLPI.
 lead: A single list of what is wrong, sorted by priority, and notifications that reach the place where the team works.
 ---
 ## The Problems view
@@ -46,10 +46,23 @@ Filters: priority, state, acknowledged or not, held by a downtime or a dependenc
 | ntfy | server, topic, optional token |
 | PagerDuty | routing key (Events API v2): trigger then resolve |
 | Opsgenie | API key and region (EU or US): create then close |
+| GLPI | REST API address, application token and a user's API token: ticket opened on alert, solved on recovery (see below) |
 
 Each send has 10 seconds to succeed, and two retries. A channel's secrets (tokens, keys, headers) are never shown again.
 
 SMS notifications, planned for the Pro and Entreprise plans (€0.10 excl. VAT each), are not open yet.
+
+### GLPI channel
+
+An alert opens a ticket in [GLPI](https://glpi-project.org) through its REST API (`apirest.php`); the recovery solves it.
+
+- **Alert** (ALERT, WARN, no data): a ticket is opened, titled with the monitor and group followed by a stable reference (`[HYPHA-1a2b3c4d5e]`); its urgency follows the monitor priority (P1 very high to P5 very low). While that ticket is not solved, reminders, escalations and worsening add a **follow-up** to it instead of opening another ticket.
+- **Recovery**: a “recovered” follow-up, then a **solution**: the ticket becomes “Solved” (closing stays with GLPI and its approval rule).
+- **Send a test**: a ticket opened then solved right away.
+
+Settings: the address (`https://your-glpi/apirest.php`, or the GLPI address, completed automatically), the **application token** (Setup › General › API: enable the REST API, then an API client with its token) and a **user's API token** (Preferences › Remote access keys), preferably a service account with the Technician profile (allowed to create tickets and add follow-ups and solutions). Optional: type (incident or request), entity, ITIL category, request source (GLPI numeric IDs). The API is reached with tokens only: no login or password. A session is opened then closed for each send. A GLPI on a private network is only reached when the workspace allows private targets (self-hosting).
+
+Tested against GLPI 12.0.2 (official image, MariaDB 11.4): ticket opened with “very high” urgency for a P1 monitor, follow-up added by the reminder, follow-up and solution on recovery (status “Solved”), channel test, rejected token (the `ERROR_GLPI_LOGIN_USER_TOKEN` error shown as is).
 
 ## Escalations
 

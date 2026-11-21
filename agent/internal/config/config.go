@@ -204,6 +204,12 @@ type IntegrationsConfig struct {
 	IntegrationsV5 `yaml:",inline"`
 	// Vague 3 : sondes dédiées (dedicated.go).
 	DedicatedIntegrations `yaml:",inline"`
+	// Vague 6 : Jenkins, GitHub, Odoo, WSUS (vague6.go).
+	IntegrationsV6 `yaml:",inline"`
+	// Vague 7 (applications auto-hébergées) : vague7.go.
+	IntegrationsV7 `yaml:",inline"`
+	// Vague 8 : réseau, stockage et sauvegardes auto-hébergés (vague8.go).
+	IntegrationsV8 `yaml:",inline"`
 }
 
 // PostgresConfig : serveur PostgreSQL local. Sans dsn, connexion par la socket Unix en
@@ -299,6 +305,9 @@ func Default() *Config {
 	defaultsV5(c)
 	defaultsWindows(c)
 	defaultsDedicated(c)
+	defaultsV6(c)
+	defaultsV7(c)
+	defaultsV8(c)
 	return c
 }
 
@@ -428,6 +437,9 @@ func (c *Config) normalize() {
 	c.normalizeInstances()
 	c.normalizeV5()
 	c.normalizeDedicated()
+	c.normalizeV6()
+	c.normalizeV7()
+	c.normalizeV8()
 }
 
 var (
@@ -566,6 +578,9 @@ func (c *Config) Validate(requireKey bool) []string {
 	c.validateInstances(add, warn)
 	c.validateV5(add, warn)
 	c.validateDedicated(add, warn)
+	c.validateV6(add, warn)
+	c.validateV7(add, warn)
+	c.validateV8(add, warn)
 	// Avec plusieurs fichiers, chaque erreur nomme celui qui a posé la clé fautive.
 	if len(c.Files) > 1 {
 		for i, e := range errs {

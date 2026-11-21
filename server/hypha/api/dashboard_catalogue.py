@@ -1177,6 +1177,18 @@ CATALOGUE.extend(device_board(*m) for m in DEVICE_MODELS)
 from .dashboard_catalogue_sondes import boards  # noqa: E402
 
 CATALOGUE += boards(board, ts, qv, top, checks, WARN80)
+# Vague 6 : Jenkins, GitHub, Zot, Odoo, WSUS (dashboard_catalogue_vague6.py), en fin de catalogue.
+from .dashboard_catalogue_vague6 import boards as boards_v6  # noqa: E402
+
+CATALOGUE += boards_v6(board, ts, qv, top, checks, WARN80)
+# Vague 7 : applications auto-hébergées (dashboard_catalogue_vague7.py), en fin de catalogue.
+from .dashboard_catalogue_vague7 import boards as boards_v7  # noqa: E402
+
+CATALOGUE += boards_v7(board, ts, qv, top, checks, WARN80)
+# Vague 8 : réseau, stockage et sauvegardes auto-hébergés (dashboard_catalogue_vague8.py), en fin de catalogue.
+from .dashboard_catalogue_vague8 import boards as boards_v8  # noqa: E402
+
+CATALOGUE += boards_v8(board, ts, qv, top, checks, WARN80)
 BY_ID = {c["id"]: c for c in CATALOGUE}
 
 

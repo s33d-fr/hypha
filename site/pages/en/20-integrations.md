@@ -44,9 +44,13 @@ nginx, Apache and HAProxy access logs are parsed on arrival: method, path, HTTP 
 
 PHP-FPM, Varnish, Squid, Lighttpd, Gunicorn and Supervisor, as well as PowerDNS, OpenLDAP, Keycloak, Nexus, Harbor, ZooKeeper and Ceph, have their dedicated probes: see [Applications and services](/en/docs/applications-and-services/).
 
+Jenkins, GitHub (and GitHub Enterprise Cloud), the Zot registry and Odoo: see [CI, forges and business apps](/en/docs/ci-forges-and-business-apps/).
+
 ## DNS
 
 `bind` reads the JSON statistics channel (`statistics-channels { inet 127.0.0.1 port 8053; };`), otherwise `rndc status`. Metrics: `bind.queries` by type, `bind.responses.nxdomain`, `bind.responses.servfail`, `bind.zone.serial` per zone, `bind.recursive_clients`.
+
+Pi-hole, AdGuard Home and Unbound, as well as Caddy, MinIO, Mosquitto, Proxmox Backup Server, Borg and restic, have their own page: [Network, storage and backups](/en/docs/network-storage-backups/).
 
 ## Mail
 

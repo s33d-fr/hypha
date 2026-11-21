@@ -1,0 +1,48 @@
+[
+  {
+    "deviceID": "FA7KCNA-EPKI7ZB-II4PQID-P3MPLX6-RS3BPRC-VIPLKXS-BXMBW3B-YXSN3QT",
+    "name": "st-b",
+    "addresses": [
+      "tcp://v7-syncthing-b:22000"
+    ],
+    "compression": "metadata",
+    "certName": "",
+    "introducer": false,
+    "skipIntroductionRemovals": false,
+    "introducedBy": "",
+    "paused": false,
+    "allowedNetworks": [],
+    "autoAcceptFolders": true,
+    "maxSendKbps": 0,
+    "maxRecvKbps": 0,
+    "ignoredFolders": [],
+    "maxRequestKiB": 0,
+    "untrusted": false,
+    "remoteGUIPort": 0,
+    "numConnections": 0,
+    "group": ""
+  },
+  {
+    "deviceID": "MV7DJHS-OVJ3AHW-YJLSWI6-O373GYN-WYTZBAW-ME6XMQE-QLWEM3N-PHVZHQF",
+    "name": "st-a",
+    "addresses": [
+      "dynamic"
+    ],
+    "compression": "metadata",
+    "certName": "",
+    "introducer": false,
+    "skipIntroductionRemovals": false,
+    "introducedBy": "",
+    "paused": false,
+    "allowedNetworks": [],
+    "autoAcceptFolders": false,
+    "maxSendKbps": 0,
+    "maxRecvKbps": 0,
+    "ignoredFolders": [],
+    "maxRequestKiB": 0,
+    "untrusted": false,
+    "remoteGUIPort": 0,
+    "numConnections": 0,
+    "group": ""
+  }
+]
