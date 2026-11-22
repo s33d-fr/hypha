@@ -89,7 +89,7 @@ func New(cfg config.ActionsConfig, store *state.Store, log *slog.Logger, d Deps)
 
 // Capabilities rend les gestes que l'agent accepte (host.capabilities.actions).
 func (e *Executor) Capabilities() model.ActionCapabilities {
-	c := model.ActionCapabilities{Enabled: e.cfg.Enabled, Kinds: []string{}, Scripts: []string{}}
+	c := model.ActionCapabilities{Enabled: e.cfg.Enabled, Kinds: []string{}, Scripts: []string{}, Services: []string{}, DenyServices: []string{}}
 	if !e.cfg.Enabled {
 		return c
 	}
@@ -103,6 +103,10 @@ func (e *Executor) Capabilities() model.ActionCapabilities {
 	}
 	if slices.Contains(c.Kinds, "run_script") {
 		c.Scripts = config.SortedScriptNames(e.cfg.Scripts)
+	}
+	if slices.ContainsFunc(c.Kinds, func(k string) bool { return strings.HasSuffix(k, "_service") }) {
+		c.Services = append(c.Services, e.cfg.Services...)
+		c.DenyServices = append(append(c.DenyServices, selfServices...), e.cfg.DenyServices...)
 	}
 	return c
 }

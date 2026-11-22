@@ -159,7 +159,8 @@ function proposedActions(r, payload, me) {
       icon(pa.kind === 'run_script' ? 'play' : 'refresh', 13), h('span', label));
     btn.addEventListener('click', () => confirmAndRun(me, {
       host_id: hostId, hostname, kind: pa.kind, params: pa.params || {}, reason: pa.reason || '', label, proposed_by_ai: true,
-      origin: Object.assign({}, payload.monitor_id !== undefined ? { monitor_id: payload.monitor_id, group: payload.group } : {}, payload.kind ? { explain_kind: payload.kind } : {}),
+      // Clés admises par le serveur (api/actions.py, _origin) : explain marque le geste proposé par l'IA.
+      origin: Object.assign({ explain: true }, payload.monitor_id !== undefined ? { monitor_id: payload.monitor_id, group: payload.group } : {}, payload.kind ? { kind: payload.kind } : {}),
     }));
     box.appendChild(h('div', { class: 'act-row' }, btn, pa.reason ? h('div', { class: 'xsmall text-2' }, pa.reason) : null));
   }

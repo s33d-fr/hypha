@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -199,6 +200,18 @@ func TestCapabilities(t *testing.T) {
 	e = New(cfg, &state.Store{Dir: t.TempDir()}, slog.New(slog.NewTextHandler(io.Discard, nil)), Deps{Update: func(context.Context, string) error { return errors.New("x") }})
 	if !strings.Contains(strings.Join(e.Capabilities().Kinds, ","), "update_agent") {
 		t.Fatal("update_agent absent alors que la mise à jour est possible")
+	}
+	// Motifs de services annoncés : le serveur ne propose que ce que l'agent acceptera.
+	cfg.Allow = []string{"restart_service"}
+	cfg.Services = []string{"nginx*"}
+	cfg.DenyServices = []string{"sshd*"}
+	c = New(cfg, &state.Store{Dir: t.TempDir()}, slog.New(slog.NewTextHandler(io.Discard, nil)), Deps{}).Capabilities()
+	if strings.Join(c.Services, ",") != "nginx*" || !slices.Contains(c.DenyServices, "sshd*") || !slices.Contains(c.DenyServices, "hypha-agent.service") {
+		t.Fatalf("motifs de services : %+v", c)
+	}
+	cfg.Allow = []string{"run_script"}
+	if c = New(cfg, &state.Store{Dir: t.TempDir()}, slog.New(slog.NewTextHandler(io.Discard, nil)), Deps{}).Capabilities(); len(c.Services) != 0 {
+		t.Fatalf("motifs annoncés sans geste sur un service : %+v", c)
 	}
 }
 

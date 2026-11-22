@@ -4,6 +4,7 @@ explication (contrat § 28). Sans accès à la base.
 Aucune commande libre ne sort d'ici : seulement un geste (`restart_service`…) et ses paramètres,
 validés par des expressions fermées. L'agent revérifie tout contre sa propre conf.
 """
+import fnmatch
 import re
 import unicodedata
 
@@ -141,4 +142,27 @@ def capable(capabilities: dict | None, kind: str, params: dict) -> tuple[bool, s
         return False, f"l'agent n'autorise pas le geste {kind} (actions.allow)"
     if kind == "run_script" and params.get("script") not in (act.get("scripts") or []):
         return False, f"script inconnu de l'agent : {params.get('script')}"
+    # Agents 0.13.2 et suivants : motifs actions.services / deny_services annoncés. Même règle que
+    # l'agent (suffixe .service facultatif sous Linux, casse ignorée sous Windows) : aucun bouton
+    # ne propose un geste que l'agent refusera. Agent plus ancien : pas de motifs, pas de filtre.
+    if kind in ("restart_service", "start_service", "stop_service") and isinstance(act.get("services"), list):
+        windows = "service" in params
+        name = str((params.get("service") if windows else params.get("unit")) or "")
+        if not windows and "." not in name:
+            name += ".service"
+        if _service_match(act.get("deny_services") or [], name, windows):
+            return False, f"{name} interdit par actions.deny_services de l'agent"
+        if not _service_match(act["services"], name, windows):
+            return False, f"{name} hors de actions.services de l'agent"
     return True, ""
+
+
+def _service_match(patterns: list, name: str, fold: bool) -> bool:
+    short = name[:-len(".service")] if name.endswith(".service") else name
+    for p in patterns:
+        if not isinstance(p, str):
+            continue
+        pp, n, s = (p.lower(), name.lower(), short.lower()) if fold else (p, name, short)
+        if fnmatch.fnmatchcase(n, pp) or fnmatch.fnmatchcase(s, pp):
+            return True
+    return False

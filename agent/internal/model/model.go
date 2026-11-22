@@ -73,11 +73,15 @@ type Capabilities struct {
 	Integrations []string           `json:"integrations"`
 }
 
-// ActionCapabilities : gestes admis et scripts nommés (§ 28).
+// ActionCapabilities : gestes admis et scripts nommés (§ 28). Services et DenyServices
+// (motifs de actions.services et actions.deny_services, service de l'agent compris dans le
+// refus) : le serveur ne propose que les gestes sur un service que l'agent acceptera.
 type ActionCapabilities struct {
-	Enabled bool     `json:"enabled"`
-	Kinds   []string `json:"kinds"`
-	Scripts []string `json:"scripts"`
+	Enabled      bool     `json:"enabled"`
+	Kinds        []string `json:"kinds"`
+	Scripts      []string `json:"scripts"`
+	Services     []string `json:"services"`
+	DenyServices []string `json:"deny_services"`
 }
 
 // Device : fiche d'un équipement réseau (§ 14, host.device).

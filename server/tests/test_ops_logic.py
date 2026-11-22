@@ -443,6 +443,16 @@ def test_action_params_and_capabilities():
     assert not P.capable(caps, "run_script", {"script": "autre"})[0]
     assert not P.capable({"actions": {"enabled": False, "kinds": ["restart_service"]}}, "restart_service", {})[0]
     assert not P.capable({}, "restart_service", {})[0]
+    # Motifs de services annoncés par l'agent (0.13.2) : le serveur ne propose que ce qu'il acceptera.
+    act = {"actions": {"enabled": True, "kinds": ["restart_service"], "services": ["nginx*"],
+                       "deny_services": ["hypha-agent.service", "nginx-interdit*"]}}
+    assert P.capable(act, "restart_service", {"unit": "nginx.service"}) == (True, "")
+    assert P.capable(act, "restart_service", {"unit": "nginx"}) == (True, "")
+    assert not P.capable(act, "restart_service", {"unit": "cloud-final.service"})[0]
+    assert not P.capable(act, "restart_service", {"unit": "nginx-interdit.service"})[0]
+    win = {"actions": {"enabled": True, "kinds": ["restart_service"], "services": ["Spooler"], "deny_services": []}}
+    assert P.capable(win, "restart_service", {"service": "spooler"}) == (True, "")
+    assert not P.capable(win, "restart_service", {"service": "W32Time"})[0]
 
 
 # ── pages de statut ────────────────────────────────────────────────────────────
