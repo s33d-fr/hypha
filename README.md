@@ -89,8 +89,10 @@ go test ./...
 CGO_ENABLED=0 go build -trimpath -ldflags "-s -w -X main.version=0.0.0-dev" -o hypha-agent ./cmd/hypha-agent
 ```
 
-`agent/packaging/build.sh` builds every target with `.deb` and `.rpm` packages; release builds of
-this repository run in GitHub Actions (`.github/workflows/agent.yml`).
+`agent/packaging/build.sh` builds every target with `.deb` and `.rpm` packages. Release files
+(binaries, packages, `SHA256SUMS` and its ed25519 signature) are built by S33D from a version tag
+with this script and published on the [Releases](https://github.com/s33d-fr/hypha/releases) page;
+GitHub Actions (`.github/workflows/agent.yml`) runs the tests and builds every push.
 
 Server (Python 3.14):
 
@@ -102,9 +104,9 @@ python -m pytest -q
 
 ## Code signing policy
 
-Windows builds of the agent are to be signed through SignPath Foundation. See
-[CODE_SIGNING_POLICY.md](CODE_SIGNING_POLICY.md) for the signing scope, team roles and privacy
-policy.
+The Windows build of the agent is signed by S33D with an OV code signing certificate issued by
+Certum. See [CODE_SIGNING_POLICY.md](CODE_SIGNING_POLICY.md) for the certificate, the signing
+scope, how to verify a download, team roles and privacy policy.
 
 ## Security
 
@@ -215,9 +217,11 @@ go test ./...
 CGO_ENABLED=0 go build -trimpath -ldflags "-s -w -X main.version=0.0.0-dev" -o hypha-agent ./cmd/hypha-agent
 ```
 
-`agent/packaging/build.sh` construit toutes les cibles avec les paquets `.deb` et `.rpm` ; les
-versions publiées depuis ce dépôt sont construites par GitHub Actions
-(`.github/workflows/agent.yml`).
+`agent/packaging/build.sh` construit toutes les cibles avec les paquets `.deb` et `.rpm`. Les
+fichiers des versions (binaires, paquets, `SHA256SUMS` et sa signature ed25519) sont construits par
+S33D avec ce script à partir d'une étiquette de version et publiés sur la page
+[Releases](https://github.com/s33d-fr/hypha/releases) ; GitHub Actions
+(`.github/workflows/agent.yml`) lance les tests et construit chaque push.
 
 Serveur (Python 3.14) :
 
@@ -229,9 +233,9 @@ python -m pytest -q
 
 ## Politique de signature du code
 
-Les exécutables Windows de l'agent ont vocation à être signés par SignPath Foundation. Périmètre,
-rôles et politique de confidentialité : [CODE_SIGNING_POLICY.md](CODE_SIGNING_POLICY.md) (en
-anglais).
+L'exécutable Windows de l'agent est signé par S33D avec un certificat de signature de code OV
+délivré par Certum. Certificat, périmètre, vérification d'un téléchargement, rôles et politique de
+confidentialité : [CODE_SIGNING_POLICY.md](CODE_SIGNING_POLICY.md) (en anglais).
 
 ## Sécurité
 

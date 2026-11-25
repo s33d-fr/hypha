@@ -70,7 +70,7 @@ Fonctions du tableau :
 | Bases de données, recherche, files | PostgreSQL, MySQL et MariaDB, Redis et Valkey, Memcached, MongoDB, OpenSearch et Elasticsearch, RabbitMQ |
 | Web, messagerie, réseau, sécurité | nginx et Apache, HAProxy, messagerie (Postfix, Dovecot, rspamd, Exchange), DNS BIND, équipements SNMP, certificats et accès |
 | Conteneurs, virtualisation, cloud | Docker, Kubernetes, KVM et VirtualBox, Proxmox VE, Hyper-V, VMware vSphere, clouds (AWS, Azure, Google Cloud, Scaleway, OVHcloud) |
-| Collecte générique | cibles OpenMetrics, node_exporter, serveur Prometheus, plugins Nagios et Centreon, journaux reçus par syslog (voir [Collecte générique](/docs/collecte-generique/)) |
+| Collecte générique | cibles OpenMetrics, node_exporter, serveur Prometheus, greffons, journaux reçus par syslog (voir [Collecte générique](/docs/collecte-generique/)) |
 
 API : `GET /api/v1/dashboards/catalogue`, `POST /api/v1/dashboards/catalogue/{id}`.
 

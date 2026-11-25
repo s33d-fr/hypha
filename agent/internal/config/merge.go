@@ -98,8 +98,8 @@ func (c *Config) applyDocs(docs []fileDoc) error {
 	merged := &yaml.Node{Kind: yaml.MappingNode, Tag: "!!map"}
 	for _, d := range docs {
 		c.Files = append(c.Files, d.path)
-		if declaresNagios(d.root) {
-			c.NagiosFiles = append(c.NagiosFiles, d.path)
+		if declaresPlugins(d.root) {
+			c.PluginFiles = append(c.PluginFiles, d.path)
 		}
 		if d.root != nil {
 			mergeMapping(merged, d.root, "", d.path, c.origins)
@@ -133,7 +133,7 @@ func mergeMapping(dst, src *yaml.Node, prefix, file string, origins map[string]s
 		}
 		if (k.Value == "instances" || concatLists[p]) && cur.Kind == yaml.SequenceNode && v.Kind == yaml.SequenceNode {
 			// § 50 : un fichier conf.d par compte ou par grappe, les instances s'additionnent ;
-			// de même les cibles OpenMetrics et les plugins Nagios (0.5.0).
+			// de même les cibles OpenMetrics et les greffons (0.5.0).
 			joined := *cur
 			joined.Content = append(append([]*yaml.Node{}, cur.Content...), v.Content...)
 			dst.Content[j+1] = &joined
@@ -144,11 +144,11 @@ func mergeMapping(dst, src *yaml.Node, prefix, file string, origins map[string]s
 }
 
 // concatLists : listes qui s'additionnent d'un fichier à l'autre au lieu de se remplacer.
-var concatLists = map[string]bool{"integrations.openmetrics": true, "integrations.nagios": true,
+var concatLists = map[string]bool{"integrations.openmetrics": true, "integrations.plugins": true, "integrations.nagios": true,
 	"integrations.perf_counters": true, "integrations.wmi": true}
 
-// declaresNagios dit si un document pose integrations.nagios.
-func declaresNagios(root *yaml.Node) bool {
+// declaresPlugins dit si un document pose integrations.plugins (ou son ancienne clé).
+func declaresPlugins(root *yaml.Node) bool {
 	if root == nil {
 		return false
 	}
@@ -156,7 +156,7 @@ func declaresNagios(root *yaml.Node) bool {
 	if i < 0 || root.Content[i+1].Kind != yaml.MappingNode {
 		return false
 	}
-	return findKey(root.Content[i+1], "nagios") >= 0
+	return findKey(root.Content[i+1], "plugins") >= 0 || findKey(root.Content[i+1], "nagios") >= 0
 }
 
 func markOrigins(v *yaml.Node, p, file string, origins map[string]string) {

@@ -70,7 +70,7 @@ Dashboard features:
 | Databases, search, queues | PostgreSQL, MySQL and MariaDB, Redis and Valkey, Memcached, MongoDB, OpenSearch and Elasticsearch, RabbitMQ |
 | Web, mail, network, security | nginx and Apache, HAProxy, mail (Postfix, Dovecot, rspamd, Exchange), BIND DNS, SNMP devices, certificates and access |
 | Containers, virtualization, cloud | Docker, Kubernetes, KVM and VirtualBox, Proxmox VE, Hyper-V, VMware vSphere, clouds (AWS, Azure, Google Cloud, Scaleway, OVHcloud) |
-| Generic collection | OpenMetrics targets, node_exporter, Prometheus server, Nagios and Centreon plugins, logs received by syslog (see [Generic collection](/en/docs/generic-collection/)) |
+| Generic collection | OpenMetrics targets, node_exporter, Prometheus server, plugins, logs received by syslog (see [Generic collection](/en/docs/generic-collection/)) |
 
 API: `GET /api/v1/dashboards/catalogue`, `POST /api/v1/dashboards/catalogue/{id}`.
 

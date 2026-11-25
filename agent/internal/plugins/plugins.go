@@ -1,4 +1,4 @@
-package nagios
+package plugins
 
 import (
 	"bytes"
@@ -21,9 +21,9 @@ import (
 )
 
 const (
-	maxStdout     = 64 << 10 // Nagios 4 coupe à 8 Kio par défaut ; Centreon en écrit parfois plus
+	maxStdout     = 64 << 10 // certains greffons écrivent bien plus que les 8 Kio habituels
 	maxStderr     = 4 << 10
-	maxConcurrent = 4 // plugins lancés en même temps au plus
+	maxConcurrent = 4 // greffons lancés en même temps au plus
 	maxMessage    = 3500
 )
 
@@ -33,13 +33,13 @@ type Options struct {
 	Post      func(series []model.Series, checks []model.Check)
 	SetStatus func(name, state string)
 	Log       *slog.Logger
-	// ConfigFiles : fichiers de conf qui déclarent des plugins (propriétaire vérifié).
+	// ConfigFiles : fichiers de conf qui déclarent des greffons (propriétaire vérifié).
 	ConfigFiles []string
 }
 
-// Check : un plugin déclaré.
+// Check : un greffon déclaré.
 type Check struct {
-	cfg  config.NagiosCheck
+	cfg  config.PluginCheck
 	o    Options
 	sem  chan struct{}
 	deny string // motif de refus calculé au démarrage (conf modifiable par un autre compte)
@@ -48,14 +48,14 @@ type Check struct {
 	state string
 }
 
-// Manager fait tourner les plugins.
+// Manager fait tourner les greffons.
 type Manager struct {
 	list []*Check
 }
 
-// New prépare les plugins ; si un fichier de conf qui en déclare n'est pas sûr, aucun de ses
-// plugins ne sera lancé (état d'erreur et contrôle UNKNOWN qui le disent).
-func New(cfgs []config.NagiosCheck, o Options) *Manager {
+// New prépare les greffons ; si un fichier de conf qui en déclare n'est pas sûr, aucun de ses
+// greffons ne sera lancé (état d'erreur et contrôle UNKNOWN qui le disent).
+func New(cfgs []config.PluginCheck, o Options) *Manager {
 	deny := ""
 	for _, f := range o.ConfigFiles {
 		if why := unsafeConfig(f); why != "" {
@@ -71,10 +71,10 @@ func New(cfgs []config.NagiosCheck, o Options) *Manager {
 	return m
 }
 
-// Len rend le nombre de plugins.
+// Len rend le nombre de greffons.
 func (m *Manager) Len() int { return len(m.list) }
 
-func (c *Check) name() string { return "nagios:" + c.cfg.Name }
+func (c *Check) name() string { return "plugin:" + c.cfg.Name }
 
 func (c *Check) setState(s string) {
 	c.mu.Lock()
@@ -86,7 +86,7 @@ func (c *Check) setState(s string) {
 }
 
 func (c *Check) tags(kv ...string) map[string]string {
-	base := []string{"nagios_check", c.cfg.Name}
+	base := []string{"plugin", c.cfg.Name}
 	for _, k := range model.SortedKeys(c.cfg.Tags) {
 		base = append(base, k, c.cfg.Tags[k])
 	}
@@ -94,7 +94,7 @@ func (c *Check) tags(kv ...string) map[string]string {
 }
 
 // Resolve trouve l'exécutable : chemin absolu tel quel, simple nom cherché dans les dossiers
-// de plugins connus (jamais dans le PATH, qu'un autre compte pourrait détourner).
+// de greffons connus (jamais dans le PATH, qu'un autre compte pourrait détourner).
 func Resolve(name string) (string, error) {
 	if filepath.IsAbs(name) {
 		return name, nil
@@ -102,13 +102,13 @@ func Resolve(name string) (string, error) {
 	if runtime.GOOS == "windows" || strings.ContainsAny(name, `/\`) {
 		return "", fmt.Errorf("%s : chemin absolu attendu", name)
 	}
-	for _, d := range config.NagiosPluginDirs {
+	for _, d := range config.PluginDirs {
 		p := filepath.Join(d, name)
 		if fi, err := os.Stat(p); err == nil && fi.Mode().IsRegular() {
 			return p, nil
 		}
 	}
-	return "", fmt.Errorf("plugin %s introuvable dans %s", name, strings.Join(config.NagiosPluginDirs, ", "))
+	return "", fmt.Errorf("greffon %s introuvable : indiquer son chemin absolu", name)
 }
 
 // limited garde le début d'une sortie et compte le reste.
@@ -131,7 +131,7 @@ type Result struct {
 	Output   string
 	Stderr   string
 	Duration time.Duration
-	Err      string // le plugin n'a pas pu tourner (introuvable, refusé, délai)
+	Err      string // le greffon n'a pas pu tourner (introuvable, refusé, délai)
 }
 
 func (c *Check) env() []string {
@@ -151,7 +151,7 @@ func (c *Check) env() []string {
 	return env
 }
 
-// Exec lance le plugin une fois.
+// Exec lance le greffon une fois.
 func (c *Check) Exec(ctx context.Context) Result {
 	if c.deny != "" {
 		return Result{Status: model.CheckUnknown, Err: c.deny}
@@ -181,7 +181,7 @@ func (c *Check) Exec(ctx context.Context) Result {
 	var ee *exec.ExitError
 	switch {
 	case ctx.Err() == context.DeadlineExceeded:
-		r.Status, r.Err = model.CheckCrit, fmt.Sprintf("délai de %s dépassé : plugin arrêté", c.cfg.Timeout.D())
+		r.Status, r.Err = model.CheckCrit, fmt.Sprintf("délai de %s dépassé : greffon arrêté", c.cfg.Timeout.D())
 	case err == nil:
 		r.Status = model.CheckOK
 	case errors.As(err, &ee) && ee.ExitCode() >= 0:
@@ -189,7 +189,7 @@ func (c *Check) Exec(ctx context.Context) Result {
 		case 1, 2, 3:
 			r.Status = code
 		default:
-			r.Status = model.CheckUnknown // code hors convention : UNKNOWN, comme Nagios
+			r.Status = model.CheckUnknown // code hors convention (0 à 3) : UNKNOWN
 		}
 	default:
 		r.Status, r.Err = model.CheckUnknown, err.Error()
@@ -221,14 +221,14 @@ func (c *Check) Measure(r Result, now time.Time) ([]model.Series, model.Check) {
 	if long != "" {
 		msg += "\n" + long
 	}
-	check := model.Check{TS: ts, Name: "nagios.check", Status: r.Status, Message: model.Truncate(msg, maxMessage), Tags: c.tags()}
+	check := model.Check{TS: ts, Name: "plugin.check", Status: r.Status, Message: model.Truncate(msg, maxMessage), Tags: c.tags()}
 	var series []model.Series
 	add := func(name, unit string, v float64, kv ...string) {
 		series = append(series, model.Series{Metric: name, Type: model.TypeGauge, Unit: unit, Tags: c.tags(kv...),
 			Points: []model.Point{{TS: ts, Value: v}}})
 	}
 	if r.Duration > 0 {
-		add("nagios.duration", "second", r.Duration.Seconds())
+		add("plugin.duration", "second", r.Duration.Seconds())
 	}
 	if r.Err == "" && c.cfg.PerfdataOn() {
 		seen := map[string]bool{}
@@ -239,14 +239,14 @@ func (c *Check) Measure(r Result, now time.Time) ([]model.Series, model.Check) {
 			}
 			seen[label] = true
 			v, unit := Normalize(p.Value, p.UOM)
-			add("nagios.perfdata", unit, v, "perf_label", label)
+			add("plugin.perfdata", unit, v, "perf_label", label)
 			for _, b := range []struct {
 				suffix string
 				v      *float64
 			}{{".warn", p.Warn}, {".crit", p.Crit}, {".min", p.Min}, {".max", p.Max}} {
 				if b.v != nil {
 					x, _ := Normalize(*b.v, p.UOM)
-					add("nagios.perfdata"+b.suffix, unit, x, "perf_label", label)
+					add("plugin.perfdata"+b.suffix, unit, x, "perf_label", label)
 				}
 			}
 		}
@@ -299,14 +299,14 @@ func (c *Check) run(ctx context.Context) {
 	}
 }
 
-// Run fait tourner les plugins jusqu'à l'arrêt (4 lancés en même temps au plus).
+// Run fait tourner les greffons jusqu'à l'arrêt (4 lancés en même temps au plus).
 func (m *Manager) Run(ctx context.Context) {
 	var wg sync.WaitGroup
 	for _, c := range m.list {
 		if c.deny != "" {
 			c.setState("erreur : " + c.deny)
 			if c.o.Log != nil {
-				c.o.Log.Warn("plugins Nagios refusés", "plugin", c.cfg.Name, "motif", c.deny)
+				c.o.Log.Warn("greffon refusé", "greffon", c.cfg.Name, "motif", c.deny)
 			}
 		} else {
 			c.setState("ok")
@@ -320,7 +320,7 @@ func (m *Manager) Run(ctx context.Context) {
 	wg.Wait()
 }
 
-// Once lance chaque plugin une fois (run --once).
+// Once lance chaque greffon une fois (run --once).
 func (m *Manager) Once(ctx context.Context) {
 	var wg sync.WaitGroup
 	for _, c := range m.list {
@@ -333,7 +333,7 @@ func (m *Manager) Once(ctx context.Context) {
 	wg.Wait()
 }
 
-// Active : plugins en service (capacités de l'agent).
+// Active : greffons en service (capacités de l'agent).
 func (m *Manager) Active() []string {
 	var out []string
 	for _, c := range m.list {

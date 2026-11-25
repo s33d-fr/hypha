@@ -1,15 +1,15 @@
 ---
 id: generic-collection
 path: /docs/collecte-generique/
-title: Collecte générique : Prometheus, plugins Nagios et syslog
-nav: Prometheus, Nagios, syslog
+title: Collecte générique : OpenMetrics, greffons et syslog
+nav: OpenMetrics, greffons, syslog
 section: Intégrations
 order: 25
-updated: 2026-11-20
-description: Le lecteur OpenMetrics et Prometheus de l'agent HYPHA et ses profils, l'exécution des plugins Nagios, Monitoring Plugins et Centreon, la réception syslog des équipements réseau.
-lead: Trois moteurs pour superviser ce qui n'a pas d'intégration dédiée : tout logiciel qui publie ses mesures au format Prometheus, les milliers de plugins Nagios et Centreon existants, et les journaux envoyés par syslog.
+updated: 2026-11-23
+description: Le lecteur OpenMetrics de l'agent HYPHA et ses profils, les greffons (scripts et programmes de contrôle) lancés par l'agent, la réception syslog des équipements réseau.
+lead: Trois moteurs pour superviser ce qui n'a pas d'intégration dédiée : tout logiciel qui publie ses mesures au format OpenMetrics, vos scripts et programmes de contrôle, et les journaux envoyés par syslog.
 ---
-## Lecteur OpenMetrics et Prometheus
+## Lecteur OpenMetrics
 
 L'agent lit les pages `/metrics` au format d'exposition Prometheus (texte 0.0.4) ou OpenMetrics 1.0 (texte). Une entrée par cible, dans `integrations.openmetrics` :
 
@@ -65,39 +65,41 @@ Vingt-neuf autres profils (Consul, Vault, etcd, Traefik, Kafka par l'exportateur
 - `openmetrics.can_connect` : critique quand la cible ne répond pas, répond en erreur ou rend une exposition illisible (le format protobuf n'est pas lu).
 - `openmetrics.series`, `openmetrics.series.dropped`, `openmetrics.scrape.duration` par cible.
 
-## Plugins Nagios, Monitoring Plugins et Centreon
+## Greffons
 
-L'agent lance des plugins au format Nagios et en tire un contrôle et des métriques :
+Un greffon est un programme ou un script de contrôle : il rend un code de sortie (0 OK, 1 WARNING, 2 CRITICAL, 3 UNKNOWN), une ligne de texte et, après `|`, des données de performance. L'agent le lance à intervalle régulier et en tire un contrôle et des métriques :
 
 ```yaml
 integrations:
-  nagios:
+  plugins:
     - name: disque-racine
       command: check_disk -w 20% -c 10% -p /
       interval: 60s                        # 10 s au moins
       timeout: 30s                         # au plus l'intervalle
     - name: http-local
       command: [check_http, -H, 127.0.0.1, -u, /sante]
-      user: nagios                         # compte qui lance le plugin (Linux)
-    - name: charge-centreon
-      command: [/usr/bin/perl, /usr/lib/centreon/plugins/centreon_plugins.pl,
-                --plugin=os::linux::local::plugin, --mode=load]
+      user: nobody                         # compte qui lance le greffon (Linux)
+    - name: sauvegarde
+      command: [/usr/local/bin/verif-sauvegarde.sh, --age-max, 26h]
+      interval: 15m
       tags: {role: web}
 ```
 
-- Code de sortie 0, 1, 2, 3 : contrôle `nagios.check` OK, WARNING, CRITICAL, UNKNOWN, avec l'étiquette `nagios_check` (le nom de l'entrée) et le texte rendu par le plugin. Un autre code compte comme UNKNOWN, un délai dépassé comme CRITICAL.
-- Données de performance (`'label'=valeur[unité];warn;crit;min;max`) : métrique `nagios.perfdata` avec l'étiquette `perf_label`, et `nagios.perfdata.warn`, `.crit`, `.min`, `.max` quand le plugin les donne. Unités converties : `s`, `ms`, `us`, `%`, `B`, `KB`, `MB`, `GB`, `TB`, `c`. `perfdata: false` les coupe.
-- `nagios.duration` : durée de chaque lancement.
+- Code de sortie 0, 1, 2, 3 : contrôle `plugin.check` OK, WARNING, CRITICAL, UNKNOWN, avec l'étiquette `plugin` (le nom de l'entrée) et le texte rendu par le greffon. Un autre code compte comme UNKNOWN, un délai dépassé comme CRITICAL.
+- Données de performance (`'label'=valeur[unité];warn;crit;min;max`) : métrique `plugin.perfdata` avec l'étiquette `perf_label`, et `plugin.perfdata.warn`, `.crit`, `.min`, `.max` quand le greffon les donne. Unités converties : `s`, `ms`, `us`, `%`, `B`, `KB`, `MB`, `GB`, `TB`, `c`. `perfdata: false` les coupe.
+- `plugin.duration` : durée de chaque lancement.
+
+Les greffons déjà écrits pour d'autres outils de supervision suivent cette convention et tournent sans changement. Paquets usuels : `monitoring-plugins` (Debian, Ubuntu), `nagios-plugins-all` (EPEL), dépôt libre `centreon-plugins` (Perl, avec `libjson-xs-perl`).
 
 ### Sécurité
 
 - Les commandes viennent **seulement** des fichiers de configuration de l'hôte. Le serveur HYPHA ne peut ni en envoyer, ni en modifier.
-- Sous Linux, l'agent refuse de lancer quoi que ce soit si un fichier qui déclare des plugins, ou l'exécutable lui-même, n'appartient pas à root ou reste modifiable par le groupe ou par tous (contrôle UNKNOWN qui le dit).
-- Lancement direct, sans shell : `$`, `*`, `|` ou `;` restent des caractères ordinaires. Un simple nom de plugin est cherché dans `/usr/lib/nagios/plugins`, `/usr/lib64/nagios/plugins`, `/usr/lib/monitoring-plugins`, `/usr/local/nagios/libexec`, `/usr/lib/centreon/plugins`, jamais dans le `PATH`.
-- Environnement réduit (`PATH` système, `LANG=C`), sans les variables de l'agent ; sortie bornée à 64 Kio ; au délai dépassé, le plugin et ses enfants sont arrêtés ; quatre plugins au plus en même temps.
+- Sous Linux, l'agent refuse de lancer quoi que ce soit si un fichier qui déclare des greffons, ou l'exécutable lui-même, n'appartient pas à root ou reste modifiable par le groupe ou par tous (contrôle UNKNOWN qui le dit).
+- Lancement direct, sans shell : `$`, `*`, `|` ou `;` restent des caractères ordinaires. Un simple nom de greffon est cherché dans `/usr/lib/hypha/plugins`, puis dans les dossiers où les paquets ci-dessus les installent (`/usr/lib/nagios/plugins`, `/usr/lib64/nagios/plugins`, `/usr/lib/monitoring-plugins`, `/usr/local/nagios/libexec`, `/usr/lib/centreon/plugins`), jamais dans le `PATH`.
+- Environnement réduit (`PATH` système, `LANG=C`), sans les variables de l'agent ; sortie bornée à 64 Kio ; au délai dépassé, le greffon et ses enfants sont arrêtés ; quatre greffons au plus en même temps.
 - Sous Windows : chemin absolu obligatoire ; protégez le dossier de configuration de l'agent par ses droits (administrateurs seulement).
 
-Paquets usuels : `monitoring-plugins` (Debian, Ubuntu), `nagios-plugins-all` (EPEL) ; plugins Centreon : dépôt libre `centreon-plugins` (Perl, avec `libjson-xs-perl`).
+Les agents d'avant la 0.14.0 lisaient ces entrées sous la clé `integrations.nagios` ; l'agent la lit toujours et le serveur range leurs résultats sous les noms ci-dessus.
 
 ## Réception syslog
 
@@ -128,6 +130,6 @@ Modèles des pare-feux et routeurs (Fortinet, Stormshield, pfSense, OPNsense, Pa
 
 ## Modèles de moniteurs et tableaux
 
-Famille **Collecte générique** du catalogue de moniteurs : cible OpenMetrics injoignable, plafond de séries atteint, plugin Nagios en alerte, réception syslog en échec, équipement syslog muet, lignes syslog jetées, erreurs graves reçues par syslog.
+Famille **Collecte générique** du catalogue de moniteurs : cible OpenMetrics injoignable, plafond de séries atteint, greffon en alerte, réception syslog en échec, équipement syslog muet, lignes syslog jetées, erreurs graves reçues par syslog.
 
-Le [catalogue de tableaux](/docs/metriques/#catalogue-de-tableaux-prets) propose « Cibles OpenMetrics et Prometheus », « node_exporter (Prometheus) », « Serveur Prometheus », « Plugins Nagios et Centreon » et « Journaux reçus par syslog ».
+Le [catalogue de tableaux](/docs/metriques/#catalogue-de-tableaux-prets) propose « Cibles OpenMetrics », « node_exporter (système Linux) », « Serveur Prometheus », « Greffons » et « Journaux reçus par syslog ».

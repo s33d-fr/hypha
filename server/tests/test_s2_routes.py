@@ -773,7 +773,7 @@ def test_dashboard_catalogue_install(c):
     r = c.get("/api/v1/dashboards/catalogue", headers=UI)
     assert r.status_code == 200, r.text
     cat = {d["id"]: d for d in r.json()}
-    assert {"postgresql", "openmetrics", "nagios", "syslog", "node_exporter"} <= set(cat)
+    assert {"postgresql", "openmetrics", "plugins", "syslog", "node_exporter"} <= set(cat)
     assert cat["postgresql"]["widget_count"] > 5 and "widgets" not in cat["postgresql"]
     r = c.post("/api/v1/dashboards/catalogue/syslog", headers=UI)
     assert r.status_code == 201, r.text

@@ -24,25 +24,25 @@ import (
 
 // Config reprend hypha.yaml clé pour clé.
 type Config struct {
-	APIKey        string             `yaml:"api_key"`
-	URL           string             `yaml:"url"`
-	Hostname      string             `yaml:"hostname"`
-	RawTags       map[string]any     `yaml:"tags"`
-	Interval      Duration           `yaml:"interval"`
-	TLSSkipVerify bool               `yaml:"tls_skip_verify"`
-	TLSPin        string             `yaml:"tls_pin"`
-	Proxy         string             `yaml:"proxy"`
-	Buffer        BufferConfig       `yaml:"buffer"`
-	Logs          LogsConfig         `yaml:"logs"`
-	Processes     ProcessesConfig    `yaml:"processes"`
-	Network       NetworkConfig      `yaml:"network"`
-	Containers    ContainersConfig   `yaml:"containers"`
-	Checks        ChecksConfig       `yaml:"checks"`
-	StatsD        ListenerConfig     `yaml:"statsd"`
-	OTLP          ListenerConfig     `yaml:"otlp"`
+	APIKey        string           `yaml:"api_key"`
+	URL           string           `yaml:"url"`
+	Hostname      string           `yaml:"hostname"`
+	RawTags       map[string]any   `yaml:"tags"`
+	Interval      Duration         `yaml:"interval"`
+	TLSSkipVerify bool             `yaml:"tls_skip_verify"`
+	TLSPin        string           `yaml:"tls_pin"`
+	Proxy         string           `yaml:"proxy"`
+	Buffer        BufferConfig     `yaml:"buffer"`
+	Logs          LogsConfig       `yaml:"logs"`
+	Processes     ProcessesConfig  `yaml:"processes"`
+	Network       NetworkConfig    `yaml:"network"`
+	Containers    ContainersConfig `yaml:"containers"`
+	Checks        ChecksConfig     `yaml:"checks"`
+	StatsD        ListenerConfig   `yaml:"statsd"`
+	OTLP          ListenerConfig   `yaml:"otlp"`
 	// 0.5.0 : réception syslog (coupée par défaut).
-	Syslog SyslogConfig `yaml:"syslog"`
-	Integrations  IntegrationsConfig `yaml:"integrations"`
+	Syslog       SyslogConfig       `yaml:"syslog"`
+	Integrations IntegrationsConfig `yaml:"integrations"`
 
 	// 0.4.0 (CONTRAT-04) : mise à jour signée, canal de contrôle, actions à distance,
 	// emplacement privé de synthétiques, équipements SNMP, inventaire.
@@ -63,9 +63,9 @@ type Config struct {
 	origins map[string]string
 	// instErrs : erreurs de décodage des instances (§ 50), rendues par Validate.
 	instErrs []string
-	// NagiosFiles : fichiers qui déclarent integrations.nagios (contrôle de leur propriétaire
+	// PluginFiles : fichiers qui déclarent integrations.plugins (contrôle de leur propriétaire
 	// avant de lancer la moindre commande).
-	NagiosFiles []string `yaml:"-"`
+	PluginFiles []string `yaml:"-"`
 	// Warnings : remarques non bloquantes (clé inconnue, URL en clair…).
 	Warnings []string `yaml:"-"`
 	// Sources des valeurs surchargées par l'environnement, pour check-config.
@@ -80,12 +80,12 @@ type BufferConfig struct {
 
 // LogsConfig : collecte des journaux.
 type LogsConfig struct {
-	Enabled         bool         `yaml:"enabled"`
-	Journald        bool         `yaml:"journald"`
+	Enabled  bool `yaml:"enabled"`
+	Journald bool `yaml:"journald"`
 	// WindowsEventlog : canaux des journaux d'événements, nom seul ou objet avec filtres (windows.go).
 	WindowsEventlog []EventlogChannel `yaml:"windows_eventlog"`
-	Files           []FileSource `yaml:"files"`
-	ExcludePatterns []string     `yaml:"exclude_patterns"`
+	Files           []FileSource      `yaml:"files"`
+	ExcludePatterns []string          `yaml:"exclude_patterns"`
 }
 
 // FileSource : un motif glob de fichiers journaux.
@@ -172,12 +172,12 @@ type IntegrationsConfig struct {
 	Updates       IntegrationToggle `yaml:"updates"`
 
 	// § 34 : connecteurs cloud, en lecture seule, actifs dès que leurs identifiants sont posés.
-	OVHCloud OVHCloudConfig `yaml:"ovhcloud"`
-	MySQL    MySQLConfig    `yaml:"mysql"`
-	Redis    RedisConfig    `yaml:"redis"`
-	Memcached MemcachedConfig `yaml:"memcached"`
-	RabbitMQ  RabbitMQConfig  `yaml:"rabbitmq"`
-	MongoDB   MongoDBConfig   `yaml:"mongodb"`
+	OVHCloud   OVHCloudConfig   `yaml:"ovhcloud"`
+	MySQL      MySQLConfig      `yaml:"mysql"`
+	Redis      RedisConfig      `yaml:"redis"`
+	Memcached  MemcachedConfig  `yaml:"memcached"`
+	RabbitMQ   RabbitMQConfig   `yaml:"rabbitmq"`
+	MongoDB    MongoDBConfig    `yaml:"mongodb"`
 	OpenSearch OpenSearchConfig `yaml:"opensearch"`
 	Kubernetes KubernetesConfig `yaml:"kubernetes"`
 	Libvirt    LibvirtConfig    `yaml:"libvirt"`
@@ -186,11 +186,14 @@ type IntegrationsConfig struct {
 	Scaleway   ScalewayConfig   `yaml:"scaleway"`
 	Azure      AzureConfig      `yaml:"azure"`
 	GCP        GCPConfig        `yaml:"gcp"`
-	VSphere  VSphereConfig  `yaml:"vsphere"`
+	VSphere    VSphereConfig    `yaml:"vsphere"`
 
 	// 0.5.0 : moteurs génériques (v05.go).
 	OpenMetrics []OpenMetricsInstance `yaml:"openmetrics"`
-	Nagios      []NagiosCheck         `yaml:"nagios"`
+	Plugins     []PluginCheck         `yaml:"plugins"`
+	// LegacyPlugins : ancienne clé des greffons, lue pour les confs écrites avant la 0.14.0 ;
+	// normalizeV05 la verse dans Plugins.
+	LegacyPlugins []PluginCheck `yaml:"nagios"`
 
 	// Vague 3 (Windows, windows.go) : compteurs de performance, WMI, Active Directory, DNS Microsoft.
 	PerfCounters    []PerfCounterSet      `yaml:"perf_counters"`

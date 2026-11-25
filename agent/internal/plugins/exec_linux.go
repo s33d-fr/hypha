@@ -1,6 +1,6 @@
 //go:build linux
 
-package nagios
+package plugins
 
 import (
 	"fmt"
@@ -11,8 +11,8 @@ import (
 	"syscall"
 )
 
-// prepareCmd : le plugin et ses enfants forment un groupe, tué en entier au délai dépassé ;
-// avec user, le plugin tourne sous ce compte (l'agent doit être root pour en changer).
+// prepareCmd : le greffon et ses enfants forment un groupe, tué en entier au délai dépassé ;
+// avec user, le greffon tourne sous ce compte (l'agent doit être root pour en changer).
 func prepareCmd(cmd *exec.Cmd, account string) error {
 	attr := &syscall.SysProcAttr{Setpgid: true}
 	if account != "" {
@@ -55,15 +55,15 @@ func unsafeFile(p, what string) string {
 func unsafeConfig(p string) string { return unsafeFile(p, "fichier de conf") }
 
 func unsafeExecutable(p string) string {
-	if why := unsafeFile(p, "plugin"); why != "" {
+	if why := unsafeFile(p, "greffon"); why != "" {
 		return why
 	}
 	fi, _ := os.Stat(p)
 	if !fi.Mode().IsRegular() {
-		return fmt.Sprintf("plugin %s : fichier ordinaire attendu", p)
+		return fmt.Sprintf("greffon %s : fichier ordinaire attendu", p)
 	}
 	if fi.Mode().Perm()&0o111 == 0 {
-		return fmt.Sprintf("plugin %s non exécutable", p)
+		return fmt.Sprintf("greffon %s non exécutable", p)
 	}
 	return ""
 }

@@ -94,7 +94,7 @@ HTTP and TCP checks start from the host: they see internal addresses. For schedu
 
 ## Integrations
 
-Each integration turns itself on when its software is detected (`enabled: auto`), or is forced (`true`) or turned off (`false`). Its state shows in **Settings › Agents**: ok, absent, disabled, or the error met. Each one is described on the [Integrations](/en/docs/integrations/), [Databases](/en/docs/databases/), [SNMP](/en/docs/snmp/), [Clouds](/en/docs/cloud/), [Virtualization](/en/docs/virtualization/), [Kubernetes](/en/docs/kubernetes/), [AI and GPU](/en/docs/ai-and-gpu/) and [Generic collection](/en/docs/generic-collection/) pages (`integrations.openmetrics`, `integrations.nagios`: lists, which also add up across `conf.d` files).
+Each integration turns itself on when its software is detected (`enabled: auto`), or is forced (`true`) or turned off (`false`). Its state shows in **Settings › Agents**: ok, absent, disabled, or the error met. Each one is described on the [Integrations](/en/docs/integrations/), [Databases](/en/docs/databases/), [SNMP](/en/docs/snmp/), [Clouds](/en/docs/cloud/), [Virtualization](/en/docs/virtualization/), [Kubernetes](/en/docs/kubernetes/), [AI and GPU](/en/docs/ai-and-gpu/) and [Generic collection](/en/docs/generic-collection/) pages (`integrations.openmetrics`, `integrations.plugins`: lists, which also add up across `conf.d` files).
 
 ### Several instances
 

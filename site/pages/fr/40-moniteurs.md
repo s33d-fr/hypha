@@ -86,7 +86,7 @@ Variables : `{{name}}`, `{{group}}`, `{{host}}`, `{{value}}`, `{{last_value}}`, 
 | Messagerie | file d'attente Postfix |
 | Synthétiques | synthétique en échec |
 | Kubernetes, Cloud, Virtualisation | grappes, nœuds, AWS, Azure, Google Cloud, OVHcloud, Scaleway, vSphere, Proxmox, Hyper-V, KVM |
-| Collecte générique | cible OpenMetrics injoignable, plafond de séries atteint, plugin Nagios en alerte, réception syslog en échec, équipement syslog muet, lignes syslog jetées, erreurs graves reçues par syslog |
+| Collecte générique | cible OpenMetrics injoignable, plafond de séries atteint, greffon en alerte, réception syslog en échec, équipement syslog muet, lignes syslog jetées, erreurs graves reçues par syslog |
 | IA et GPU | Ollama, vLLM, LiteLLM, TGI, llama.cpp : injoignable, file d'attente, latence ; GPU NVIDIA trop chaud, saturé, mémoire pleine, en défaut |
 
 Un espace neuf reçoit six moniteurs du catalogue, reliés à un canal e-mail vers l'adresse du compte : hôte sans nouvelles, disque presque plein, mémoire saturée, unité systemd en échec, service Windows arrêté, certificat proche de la fin.

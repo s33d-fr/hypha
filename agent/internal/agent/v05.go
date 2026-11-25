@@ -6,14 +6,14 @@ import (
 
 	"s33d.fr/hypha/agent/internal/logs"
 	"s33d.fr/hypha/agent/internal/model"
-	"s33d.fr/hypha/agent/internal/nagios"
 	"s33d.fr/hypha/agent/internal/openmetrics"
+	"s33d.fr/hypha/agent/internal/plugins"
 	"s33d.fr/hypha/agent/internal/sender"
 	"s33d.fr/hypha/agent/internal/syslog"
 )
 
-// Moteurs génériques de la 0.5.0 : lecteur OpenMetrics/Prometheus et plugins Nagios, chacun
-// dans ses propres boucles (une cible lente ou un plugin long ne retarde ni les métriques
+// Moteurs génériques de la 0.5.0 : lecteur OpenMetrics et greffons, chacun
+// dans ses propres boucles (une cible lente ou un greffon long ne retarde ni les métriques
 // système ni les intégrations) ; réception syslog, branchée sur la file des journaux.
 
 func (a *Agent) postResults(series []model.Series, checks []model.Check) {
@@ -32,9 +32,9 @@ func (a *Agent) setupV05() {
 			Version: a.opt.Version, Tags: a.tags, Post: a.postResults, SetStatus: a.status.Set, Log: a.log,
 		})
 	}
-	if len(cfg.Integrations.Nagios) > 0 {
-		a.nagiosMgr = nagios.New(cfg.Integrations.Nagios, nagios.Options{
-			Tags: a.tags, Post: a.postResults, SetStatus: a.status.Set, Log: a.log, ConfigFiles: cfg.NagiosFiles,
+	if len(cfg.Integrations.Plugins) > 0 {
+		a.pluginsMgr = plugins.New(cfg.Integrations.Plugins, plugins.Options{
+			Tags: a.tags, Post: a.postResults, SetStatus: a.status.Set, Log: a.log, ConfigFiles: cfg.PluginFiles,
 		})
 	}
 	if !cfg.Syslog.Enabled {
@@ -46,18 +46,18 @@ func (a *Agent) startV05(ctx context.Context, goRun func(func())) {
 	if a.omMgr != nil {
 		goRun(func() { a.omMgr.Run(ctx) })
 	}
-	if a.nagiosMgr != nil {
-		goRun(func() { a.nagiosMgr.Run(ctx) })
+	if a.pluginsMgr != nil {
+		goRun(func() { a.pluginsMgr.Run(ctx) })
 	}
 }
 
-// onceV05 : un relevé des cibles OpenMetrics et un lancement de chaque plugin (run --once).
+// onceV05 : un relevé des cibles OpenMetrics et un lancement de chaque greffon (run --once).
 func (a *Agent) onceV05(ctx context.Context) {
 	if a.omMgr != nil {
 		a.omMgr.Once(ctx)
 	}
-	if a.nagiosMgr != nil {
-		a.nagiosMgr.Once(ctx)
+	if a.pluginsMgr != nil {
+		a.pluginsMgr.Once(ctx)
 	}
 }
 
@@ -79,14 +79,14 @@ func (a *Agent) flushSyslog(now time.Time) ([]model.Series, []model.Check) {
 	return s, c
 }
 
-// capabilitiesV05 : cibles, plugins et réception syslog en service.
+// capabilitiesV05 : cibles, greffons et réception syslog en service.
 func (a *Agent) capabilitiesV05() []string {
 	var out []string
 	if a.omMgr != nil {
 		out = append(out, a.omMgr.Active()...)
 	}
-	if a.nagiosMgr != nil {
-		out = append(out, a.nagiosMgr.Active()...)
+	if a.pluginsMgr != nil {
+		out = append(out, a.pluginsMgr.Active()...)
 	}
 	if a.syslogSrv != nil {
 		out = append(out, "syslog")

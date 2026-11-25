@@ -121,6 +121,6 @@ The agent listens for StatsD in DogStatsD format on `127.0.0.1:8125/udp`, aggreg
 echo "shop.orders:1|c|#env:prod" | nc -u -w0 127.0.0.1 8125
 ```
 
-For an application that already publishes Prometheus metrics, Nagios or Centreon plugins, or logs sent over syslog, see [Generic collection](/en/docs/generic-collection/).
+For an application that already publishes OpenMetrics metrics, check scripts or programs (plugins), or logs sent over syslog, see [Generic collection](/en/docs/generic-collection/).
 
 Counters (`c`) become sums, gauges (`g`) values, timers (`ms`, `h`) distributions (`.avg`, `.max`, `.p50`, `.p95`, `.p99`, `.count`). For OpenTelemetry metrics, see [Traces](/en/docs/traces/).

@@ -155,6 +155,25 @@ def test_parse_host():
         B.parse_host({}, B.parse_agent({"agent": AGENT}))
 
 
+
+def test_legacy_plugin_names():
+    """Agent d'avant la 0.14.0 : les greffons arrivent sous l'ancien nom, rangés sous le nom actuel."""
+    old_tag = "nagios" + "_check"
+    batches, dropped = B.parse_series([
+        {"metric": "nagios.perfdata.warn", "points": [[NOW, 50]], "tags": {"host": "web-01", old_tag: "fd", "perf_label": "pct"}},
+        {"metric": "nagios.autre", "points": [[NOW, 1]], "tags": {old_tag: "garde"}},
+    ], WIN, "web-01")
+    assert dropped == 0
+    assert (batches[0].name, batches[0].tags) == ("plugin.perfdata.warn", {"host": "web-01", "plugin": "fd", "perf_label": "pct"})
+    assert batches[1].name == "nagios.autre" and batches[1].tags[old_tag] == "garde"
+    rows, dropped = B.parse_checks([{"name": "nagios.check", "status": 1, "ts": NOW, "tags": {old_tag: "fd"}}], WIN, 1, 2)
+    assert dropped == 0 and rows[0][3] == "plugin.check" and json.loads(rows[0][6]) == {"plugin": "fd"}
+    h = B.parse_host({"host": {"hostname": "web-01", "status": {"nagios:fd": "ok", "syslog": "ok"},
+                               "capabilities": {"integrations": ["openmetrics:x", "nagios:fd"]}}},
+                     B.parse_agent({"agent": AGENT}))
+    assert json.loads(h["status"]) == {"plugin:fd": "ok", "syslog": "ok"}
+    assert json.loads(h["capabilities"]) == {"integrations": ["openmetrics:x", "plugin:fd"]}
+
 def test_parse_rum():
     rows, dropped = B.parse_rum({"session_id": "s1", "events": [
         {"ts": NOW, "type": "view", "url": "https://x/", "duration_ms": 1200},

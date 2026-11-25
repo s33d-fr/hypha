@@ -94,7 +94,7 @@ Les contrôles HTTP et TCP partent de l'hôte : ils voient les adresses internes
 
 ## Intégrations
 
-Chaque intégration s'active seule quand son logiciel est détecté (`enabled: auto`), ou se force (`true`) et se coupe (`false`). Son état apparaît dans **Réglages › Agents** : ok, absent, coupée, ou l'erreur rencontrée. Le détail de chacune est sur les pages [Intégrations](/docs/integrations/), [Bases de données](/docs/bases-de-donnees/), [SNMP](/docs/snmp/), [Clouds](/docs/cloud/), [Virtualisation](/docs/virtualisation/), [Kubernetes](/docs/kubernetes/), [IA et GPU](/docs/ia-et-gpu/) et [Collecte générique](/docs/collecte-generique/) (`integrations.openmetrics`, `integrations.nagios` : des listes, qui s'additionnent elles aussi d'un fichier `conf.d` à l'autre).
+Chaque intégration s'active seule quand son logiciel est détecté (`enabled: auto`), ou se force (`true`) et se coupe (`false`). Son état apparaît dans **Réglages › Agents** : ok, absent, coupée, ou l'erreur rencontrée. Le détail de chacune est sur les pages [Intégrations](/docs/integrations/), [Bases de données](/docs/bases-de-donnees/), [SNMP](/docs/snmp/), [Clouds](/docs/cloud/), [Virtualisation](/docs/virtualisation/), [Kubernetes](/docs/kubernetes/), [IA et GPU](/docs/ia-et-gpu/) et [Collecte générique](/docs/collecte-generique/) (`integrations.openmetrics`, `integrations.plugins` : des listes, qui s'additionnent elles aussi d'un fichier `conf.d` à l'autre).
 
 ### Plusieurs instances
 

@@ -32,6 +32,17 @@ for target in linux/amd64 linux/arm64 windows/amd64; do
         -o "dist/hypha-agent-$os-$arch$ext" ./cmd/hypha-agent
 done
 
+# Signature Authenticode de l'exécutable Windows (certificat de signature de code de S33D) avant
+# les sommes : SHA256SUMS et sa signature couvrent l'exécutable signé. SIGNER signe en place les
+# fichiers donnés (options -n description, -u URL) ; sans lui, l'exécutable reste non signé et la
+# publication le refuse.
+SIGNER="${SIGNER:-/usr/local/sbin/signer-authenticode}"
+if [ -x "$SIGNER" ]; then
+    "$SIGNER" -n "HYPHA agent" -u "https://hypha.s33d.fr" dist/hypha-agent-windows-amd64.exe
+else
+    echo "AVERTISSEMENT : $SIGNER absent : hypha-agent-windows-amd64.exe non signé (Authenticode)"
+fi
+
 for arch in amd64 arm64; do
     cp "dist/hypha-agent-linux-$arch" dist/pkg/hypha-agent
     for packager in deb rpm; do

@@ -1,21 +1,42 @@
 # Code signing policy
 
-Free code signing provided by [SignPath.io](https://signpath.io), certificate by
-[SignPath Foundation](https://signpath.org).
+The Windows build of the HYPHA agent is signed by S33D with an organization-validated (OV) code
+signing certificate issued by [Certum](https://www.certum.eu) (Asseco Data Systems S.A.).
+
+| Certificate | |
+|---|---|
+| Subject | `CN=S33D, O=S33D, L=Faumont, ST=Hauts-de-France, C=FR` |
+| Issuer | `Certum Code Signing 2021 CA` |
+| Serial number | `6E5FC59DF514928075C5971180D7443B` |
+| SHA-1 thumbprint | `58608C1836F7C4727F5CFB787E70BEE80BC74E37` |
+| Valid | 2026-11-25 to 2027-11-25 |
+
+The private key (RSA 4096) was generated in Certum's cloud signing service (SimplySign) and cannot
+be exported. Each signature carries an RFC 3161 timestamp from Certum, so it stays valid after the
+certificate expires.
 
 ## What is signed
 
-Only the Windows build of the HYPHA agent, `hypha-agent-windows-amd64.exe`, built from this
-repository. No third-party binary is signed with this certificate.
+Only software published by S33D. For HYPHA: the Windows build of the agent,
+`hypha-agent-windows-amd64.exe`. No third-party binary is signed with this certificate.
 
-- The binary is built by GitHub Actions ([`.github/workflows/agent.yml`](.github/workflows/agent.yml))
-  from a version tag `vX.Y.Z` of this repository, on GitHub-hosted runners, with a pinned Go
-  version and `-trimpath`.
-- Its Windows version resource carries the product name `HYPHA agent` and the product version of
-  the tag.
-- The unsigned artifact is submitted to SignPath from the same workflow run; SignPath verifies
-  its origin before signing.
-- Every signing request is approved manually by an approver.
+- Release binaries are built by S33D from a version tag `vX.Y.Z` of this repository with
+  [`agent/packaging/build.sh`](agent/packaging/build.sh) (`-trimpath`, version set at link time).
+  The Windows executable is signed right after it is built, before the checksums are computed.
+- `SHA256SUMS` lists every file of a release (binaries, `.deb`, `.rpm`, `version.txt`) and is
+  signed with ed25519 (`SHA256SUMS.sig`); the public key is
+  [`agent/internal/update/release_pubkey.txt`](agent/internal/update/release_pubkey.txt), the
+  same key the agent uses to check automatic updates.
+- GitHub Actions ([`.github/workflows/agent.yml`](.github/workflows/agent.yml)) runs the tests and
+  builds every push; its artifacts are not signed and are not release files.
+- Release files are published on the [Releases](https://github.com/s33d-fr/hypha/releases) page
+  of this repository and on `https://hypha.s33d.fr/install/`, with the same checksums.
+
+## Verifying a download
+
+- Windows (PowerShell): `Get-AuthenticodeSignature .\hypha-agent-windows-amd64.exe` must report
+  `Valid` with the subject above.
+- Any system: `sha256sum -c SHA256SUMS`, then check `SHA256SUMS.sig` with the public key above.
 
 ## Team roles
 
@@ -23,7 +44,8 @@ repository. No third-party binary is signed with this certificate.
 - Approvers: [s33d-fr](https://github.com/s33d-fr)
 
 Changes proposed by people outside the team (pull requests) are reviewed by a committer before
-they are accepted. All team members use multi-factor authentication on GitHub and on SignPath.
+they are accepted. All team members use multi-factor authentication on GitHub. Signing runs only
+on S33D's build host, which holds the credentials of S33D's Certum account.
 
 ## Privacy policy
 
@@ -52,4 +74,4 @@ Installation and uninstallation instructions:
 
 Security issues: see [SECURITY.md](SECURITY.md). If you believe a file signed with this
 certificate violates this policy, write to [contact@s33d.fr](mailto:contact@s33d.fr) and to
-SignPath Foundation (<https://signpath.org>).
+Certum (<https://www.certum.eu>).

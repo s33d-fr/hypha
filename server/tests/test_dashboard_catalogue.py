@@ -71,7 +71,7 @@ def test_catalogue_metrics_exist_in_agent():
 @pytest.mark.skipif(not AGENT.is_dir(), reason="arbre de l'agent absent")
 def test_new_monitor_templates_target_real_names():
     known = _agent_names()
-    for tid in ("openmetrics_down", "openmetrics_cardinality", "nagios_check", "syslog_receiver", "syslog_silent",
+    for tid in ("openmetrics_down", "openmetrics_cardinality", "plugin_check", "syslog_receiver", "syslog_silent",
                 "syslog_dropped", "syslog_device_errors"):
         d = templates.build(tid, {})
         q = d["query"]

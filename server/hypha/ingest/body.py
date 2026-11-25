@@ -205,14 +205,14 @@ def parse_host(body: dict, agent: AgentInfo) -> dict:
     ips = [clean_text(str(ip), 64) for ip in ips[:64]] if isinstance(ips, list) else []
     boot = as_ts(h.get("boot_time"))
     meta = h.get("meta") if isinstance(h.get("meta"), dict) else {}
-    status = h.get("status") if isinstance(h.get("status"), dict) else {}
+    status = current_plugin_entries(h.get("status")) if isinstance(h.get("status"), dict) else {}
     # § 14 : un équipement réseau (pas d'agent installé dessus) ; § 27 : capacités et mise à jour.
     # § 34-35 : ressource lue par un connecteur (serveur OVH, hôte ESXi, VM), même rattachement.
     device_kind = h.get("kind") in DEVICE_KINDS or agent.via is not None
     device = h.get("device") if isinstance(h.get("device"), dict) else {}
     if device_kind and not ips and isinstance(device.get("address"), str) and device["address"].strip():
         ips = [clean_text(device["address"], 64)]
-    capabilities = h.get("capabilities") if isinstance(h.get("capabilities"), dict) else None
+    capabilities = current_plugin_entries(h.get("capabilities")) if isinstance(h.get("capabilities"), dict) else None
     update = status.get("update") if isinstance(status.get("update"), dict) else None
     return {
         "hostname": opt_text(h.get("hostname"), 255) or agent.hostname,
@@ -236,6 +236,36 @@ def parse_host(body: dict, agent: AgentInfo) -> dict:
         "update_status": jdump(update) if update is not None and not device_kind else None,
         "config_hash": opt_text(h.get("config_hash"), 128) if not device_kind else None,
     }
+
+
+# ── Greffons : noms des agents d'avant la 0.14.0 ──────────────────────────────
+# Ces agents publient les greffons sous un ancien nom (contrôle, mesures, étiquette, nom de
+# l'entrée dans l'état et les capacités) ; le serveur les range sous les noms actuels.
+LEGACY_PLUGIN_NAMES = {"nagios." + n: "plugin." + n for n in (
+    "check", "duration", "perfdata", "perfdata.warn", "perfdata.crit", "perfdata.min", "perfdata.max")}
+LEGACY_PLUGIN_TAG, PLUGIN_TAG = "nagios_check", "plugin"
+LEGACY_PLUGIN_ENTRY, PLUGIN_ENTRY = "nagios:", "plugin:"
+
+
+def current_plugin_name(name: str, tags: dict) -> tuple[str, dict]:
+    """Nom et étiquettes actuels d'une mesure ou d'un contrôle de greffon (inchangés sinon)."""
+    new = LEGACY_PLUGIN_NAMES.get(name)
+    if new is None:
+        return name, tags
+    if LEGACY_PLUGIN_TAG in tags:
+        tags = {(PLUGIN_TAG if k == LEGACY_PLUGIN_TAG else k): v for k, v in tags.items()}
+    return new, tags
+
+
+def current_plugin_entries(value):
+    """État et capacités : « nagios:<nom> » (clé ou élément de liste) devient « plugin:<nom> »."""
+    def entry(s):
+        return PLUGIN_ENTRY + s[len(LEGACY_PLUGIN_ENTRY):] if isinstance(s, str) and s.startswith(LEGACY_PLUGIN_ENTRY) else s
+    if isinstance(value, dict):
+        return {entry(k): current_plugin_entries(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [current_plugin_entries(entry(v)) for v in value]
+    return value
 
 
 # ── § 3.2 series ───────────────────────────────────────────────────────────────
@@ -264,7 +294,7 @@ def parse_series(items: list, window: Window, default_host: str | None) -> tuple
             continue
         mtype = item.get("type")
         mtype = mtype if mtype in METRIC_TYPES else "gauge"
-        tags = clean_tags(item.get("tags"))
+        name, tags = current_plugin_name(name, clean_tags(item.get("tags")))
         if default_host and "host" not in tags:
             # « L'hôte est toujours l'étiquette host » : on la pose si l'agent l'a omise.
             tags["host"] = default_host
@@ -351,8 +381,9 @@ def parse_checks(items: list, window: Window, org_id: int, host_id: int,
         if not name or status is None or not window.ok(ts):
             dropped += 1
             continue
+        name, tags = current_plugin_name(name, clean_tags(item.get("tags")))
         rows.append((org_id, host_id, ms_to_dt(ts), name, status,
-                     opt_text(item.get("message"), 4000), jdump(clean_tags(item.get("tags")))))
+                     opt_text(item.get("message"), 4000), jdump(tags)))
     return rows, dropped
 
 

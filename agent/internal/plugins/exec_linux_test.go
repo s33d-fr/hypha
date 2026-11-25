@@ -1,6 +1,6 @@
 //go:build linux
 
-package nagios
+package plugins
 
 import (
 	"context"
@@ -26,7 +26,7 @@ func plugin(t *testing.T, body string) string {
 
 func run(t *testing.T, cmd []string, timeout time.Duration) Result {
 	t.Helper()
-	c := &Check{cfg: config.NagiosCheck{Name: "essai", Command: cmd, Timeout: config.Duration(timeout)}}
+	c := &Check{cfg: config.PluginCheck{Name: "essai", Command: cmd, Timeout: config.Duration(timeout)}}
 	return c.Exec(context.Background())
 }
 
@@ -55,7 +55,7 @@ func TestExecCodes(t *testing.T) {
 		t.Fatalf("sortie non bornée : %d octets", len(r.Output))
 	}
 	if r := run(t, []string{"check_qui_n_existe_pas"}, time.Second); r.Status != model.CheckUnknown || !strings.Contains(r.Err, "introuvable") {
-		t.Fatalf("plugin absent : %+v", r)
+		t.Fatalf("greffon absent : %+v", r)
 	}
 }
 
@@ -63,12 +63,12 @@ func TestUnsafeFiles(t *testing.T) {
 	p := plugin(t, "exit 0")
 	os.Chmod(p, 0o777)
 	if r := run(t, []string{p}, time.Second); r.Status != model.CheckUnknown || !strings.Contains(r.Err, "modifiable") {
-		t.Fatalf("plugin modifiable par tous accepté : %+v", r)
+		t.Fatalf("greffon modifiable par tous accepté : %+v", r)
 	}
-	conf := filepath.Join(t.TempDir(), "50-nagios.yaml")
+	conf := filepath.Join(t.TempDir(), "50-greffons.yaml")
 	os.WriteFile(conf, []byte("integrations: {}\n"), 0o666)
 	os.Chmod(conf, 0o666)
-	m := New([]config.NagiosCheck{{Name: "x", Command: []string{plugin(t, "exit 0")}, Timeout: config.Duration(time.Second)}},
+	m := New([]config.PluginCheck{{Name: "x", Command: []string{plugin(t, "exit 0")}, Timeout: config.Duration(time.Second)}},
 		Options{ConfigFiles: []string{conf}, Tags: func(kv ...string) map[string]string { return map[string]string{} }})
 	if r := m.list[0].Exec(context.Background()); r.Status != model.CheckUnknown || !strings.Contains(r.Err, "fichier de conf") {
 		t.Fatalf("conf modifiable par tous acceptée : %+v", r)

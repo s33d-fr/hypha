@@ -1,12 +1,12 @@
-// Package nagios lance les plugins Nagios, Monitoring Plugins et Centreon déclarés dans la conf
-// locale de l'hôte (integrations.nagios) : code de sortie 0/1/2/3 → contrôle nagios.check
-// OK/WARN/CRIT/UNKNOWN, données de performance → métriques nagios.perfdata.
+// Package plugins lance les greffons déclarés dans la conf locale de l'hôte
+// (integrations.plugins) : code de sortie 0/1/2/3 → contrôle plugin.check
+// OK/WARN/CRIT/UNKNOWN, données de performance → métriques plugin.perfdata.
 //
 // Sécurité : les commandes ne viennent que des fichiers de conf de l'hôte (le serveur ne pousse
 // jamais de commande) ; sous Linux, ces fichiers et l'exécutable doivent appartenir à root et
 // n'être modifiables ni par le groupe ni par les autres ; lancement direct, sans shell ;
 // environnement réduit ; sortie bornée ; groupe de processus tué au délai dépassé.
-package nagios
+package plugins
 
 import (
 	"math"
@@ -27,7 +27,7 @@ type Perf struct {
 	Min, Max   *float64
 }
 
-// SplitOutput sépare le texte et les données de performance (format Nagios 3+ : après la
+// SplitOutput sépare le texte et les données de performance (convention des greffons : après la
 // première « | » de la première ligne, puis tout ce qui suit la première « | » des lignes
 // suivantes).
 func SplitOutput(out string) (text, long, perf string) {
@@ -141,7 +141,7 @@ func splitValue(s string) (float64, string, bool) {
 		((s[i] == 'e' || s[i] == 'E') && i > 0 && i+1 < len(s) && (s[i+1] == '-' || s[i+1] == '+' || (s[i+1] >= '0' && s[i+1] <= '9')))) {
 		i++
 	}
-	num := strings.Replace(s[:i], ",", ".", 1) // certains plugins écrivent la virgule décimale
+	num := strings.Replace(s[:i], ",", ".", 1) // certains greffons écrivent la virgule décimale
 	v, err := strconv.ParseFloat(num, 64)
 	if err != nil || math.IsNaN(v) || math.IsInf(v, 0) || !uomRe.MatchString(s[i:]) {
 		return 0, "", false
@@ -161,7 +161,7 @@ func plain(s string) *float64 {
 	return &v
 }
 
-// threshold : borne lisible d'une plage Nagios ([@][début:][fin]) ; la fin si elle existe,
+// threshold : borne lisible d'une plage de seuils ([@][début:][fin]) ; la fin si elle existe,
 // sinon le début (« 10: » = alerte sous 10).
 func threshold(s string) *float64 {
 	s = strings.TrimPrefix(strings.TrimSpace(s), "@")
@@ -181,7 +181,7 @@ func threshold(s string) *float64 {
 	return plain(start)
 }
 
-// Normalize ramène l'unité Nagios à une unité HYPHA et la valeur à cette unité.
+// Normalize ramène l'unité du greffon à une unité HYPHA et la valeur à cette unité.
 func Normalize(v float64, uom string) (float64, string) {
 	switch strings.ToLower(uom) {
 	case "s":

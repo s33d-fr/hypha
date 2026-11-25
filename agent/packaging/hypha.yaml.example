@@ -254,7 +254,7 @@ snmp:
 
 # --- 0.5.0 : moteurs génériques ----------------------------------------------------------
 
-# Lecteur OpenMetrics/Prometheus (dans « integrations: » ci-dessus) : une entrée par cible.
+# Lecteur OpenMetrics (dans « integrations: » ci-dessus) : une entrée par cible.
 # profile : node_exporter, prometheus (port, chemin, métriques, renommages et étiquettes par
 # défaut). Compteurs envoyés en débits par seconde, jauges telles quelles, histogrammes et
 # résumés en .count, .sum, .avg et centiles (p50, p95, p99). labels : étiquettes gardées comme
@@ -277,20 +277,22 @@ snmp:
 #       ca_file: /etc/hypha/ca-interne.pem
 #       max_series: 2000
 #
-# Plugins Nagios, Monitoring Plugins ou Centreon (dans « integrations: ») : commandes lues dans
-# CE fichier seulement (jamais envoyées par le serveur), qui doit appartenir à root et n'être
-# modifiable ni par le groupe ni par les autres ; l'exécutable aussi. Lancement direct, sans
-# shell ($, *, | restent des caractères ordinaires) ; un simple nom est cherché dans
-# /usr/lib/nagios/plugins, /usr/lib/monitoring-plugins, /usr/lib/centreon/plugins…
-# Code de sortie 0/1/2/3 → contrôle nagios.check OK/WARN/CRIT/UNKNOWN (étiquette nagios_check) ;
-# données de performance → nagios.perfdata (étiquette perf_label) et .warn, .crit, .min, .max.
+# Greffons (dans « integrations: ») : programmes ou scripts qui rendent un code de sortie
+# (0 OK, 1 WARNING, 2 CRITICAL, 3 UNKNOWN), une ligne de texte et, après « | », des données de
+# performance. Commandes lues dans CE fichier seulement (jamais envoyées par le serveur), qui doit
+# appartenir à root et n'être modifiable ni par le groupe ni par les autres ; l'exécutable aussi.
+# Lancement direct, sans shell ($, *, | restent des caractères ordinaires) ; un simple nom est
+# cherché dans /usr/lib/hypha/plugins, puis dans les dossiers où la distribution installe les
+# greffons de supervision. Code de sortie → contrôle plugin.check OK/WARN/CRIT/UNKNOWN
+# (étiquette plugin = name) ; données de performance → plugin.perfdata (étiquette perf_label)
+# et .warn, .crit, .min, .max.
 # integrations:
-#   nagios:
+#   plugins:
 #     - name: disque-racine
 #       command: check_disk -w 20% -c 10% -p /
 #       interval: 60s
 #       timeout: 30s
-#       user: nagios            # compte qui lance le plugin (facultatif, Linux)
+#       user: nobody            # compte qui lance le greffon (facultatif, Linux)
 #     - name: http-local
 #       command: [check_http, -H, 127.0.0.1, -u, /sante]
 

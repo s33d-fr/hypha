@@ -17,14 +17,15 @@ import (
 )
 
 // Moteurs génériques de la 0.5.0 (vague 1 des intégrations) :
-//   - integrations.openmetrics : lecteur OpenMetrics/Prometheus, une entrée par cible, avec ou
+//   - integrations.openmetrics : lecteur OpenMetrics, une entrée par cible, avec ou
 //     sans profil intégré (omprofiles) ;
-//   - integrations.nagios : plugins Nagios, Monitoring Plugins ou Centreon lancés par l'agent ;
-//     les commandes ne viennent que des fichiers de conf locaux (jamais du serveur) ;
+//   - integrations.plugins : greffons lancés par l'agent (code de sortie 0 à 3, texte, données
+//     de performance) ; les commandes ne viennent que des fichiers de conf locaux (jamais du
+//     serveur) ; l'ancienne clé integrations.nagios reste lue et s'ajoute à la liste ;
 //   - syslog : réception syslog UDP et TCP, coupée par défaut.
-// Les listes openmetrics et nagios de plusieurs fichiers conf.d s'additionnent (merge.go).
+// Les listes openmetrics et plugins de plusieurs fichiers conf.d s'additionnent (merge.go).
 
-// OpenMetricsInstance : une cible au format Prometheus ou OpenMetrics (texte).
+// OpenMetricsInstance : une cible au format d'exposition OpenMetrics (texte, ou sa forme 0.0.4).
 type OpenMetricsInstance struct {
 	Name      string   `yaml:"name"`    // étiquette instance_name ; par défaut le nom du profil
 	Profile   string   `yaml:"profile"` // profil intégré (node_exporter, prometheus…)
@@ -134,25 +135,26 @@ func SplitCommand(s string) ([]string, error) {
 	return out, nil
 }
 
-// NagiosCheck : un plugin lancé à intervalle régulier ; code de sortie 0/1/2/3 → contrôle
-// nagios.check OK/WARN/CRIT/UNKNOWN, données de performance → métriques nagios.perfdata.
-type NagiosCheck struct {
+// PluginCheck : un greffon lancé à intervalle régulier ; code de sortie 0/1/2/3 → contrôle
+// plugin.check OK/WARN/CRIT/UNKNOWN, données de performance → métriques plugin.perfdata.
+type PluginCheck struct {
 	Name     string            `yaml:"name"`
 	Command  CommandLine       `yaml:"command"`
 	Interval Duration          `yaml:"interval"`
 	Timeout  Duration          `yaml:"timeout"`
-	User     string            `yaml:"user"`     // compte qui lance le plugin (Linux, agent en root)
+	User     string            `yaml:"user"`     // compte qui lance le greffon (Linux, agent en root)
 	Perfdata *bool             `yaml:"perfdata"` // données de performance en métriques (oui par défaut)
 	Env      map[string]string `yaml:"env"`
 	Tags     map[string]string `yaml:"tags"`
 }
 
 // PerfdataOn dit si les données de performance deviennent des métriques.
-func (n NagiosCheck) PerfdataOn() bool { return n.Perfdata == nil || *n.Perfdata }
+func (n PluginCheck) PerfdataOn() bool { return n.Perfdata == nil || *n.Perfdata }
 
-// NagiosPluginDirs : dossiers où un nom de plugin sans chemin est cherché (jamais le PATH).
-var NagiosPluginDirs = []string{
-	"/usr/lib/nagios/plugins", "/usr/lib64/nagios/plugins", "/usr/lib/monitoring-plugins",
+// PluginDirs : dossiers où un nom de greffon sans chemin est cherché (jamais le PATH) : celui
+// de HYPHA, puis ceux où les distributions installent les greffons de supervision.
+var PluginDirs = []string{
+	"/usr/lib/hypha/plugins", "/usr/lib/nagios/plugins", "/usr/lib64/nagios/plugins", "/usr/lib/monitoring-plugins",
 	"/usr/local/nagios/libexec", "/usr/lib/centreon/plugins", "/usr/lib64/centreon/plugins",
 }
 
@@ -183,8 +185,8 @@ const (
 	defaultOMTimeout   = 10 * time.Second
 	defaultOMMaxSeries = 2000
 	maxOMMaxSeries     = 50000
-	defaultNagiosEvery = 60 * time.Second
-	defaultNagiosLimit = 30 * time.Second
+	defaultPluginEvery = 60 * time.Second
+	defaultPluginLimit = 30 * time.Second
 )
 
 func defaultsV05(c *Config) {
@@ -195,19 +197,23 @@ func defaultsV05(c *Config) {
 }
 
 // normalizeV05 applique les profils et les valeurs par défaut des instances OpenMetrics et des
-// plugins Nagios.
+// greffons ; les entrées de l'ancienne clé integrations.nagios rejoignent integrations.plugins.
 func (c *Config) normalizeV05() {
 	for i := range c.Integrations.OpenMetrics {
 		normalizeOM(&c.Integrations.OpenMetrics[i])
 	}
-	for i := range c.Integrations.Nagios {
-		n := &c.Integrations.Nagios[i]
+	if len(c.Integrations.LegacyPlugins) > 0 {
+		c.Integrations.Plugins = append(c.Integrations.Plugins, c.Integrations.LegacyPlugins...)
+		c.Integrations.LegacyPlugins = nil
+	}
+	for i := range c.Integrations.Plugins {
+		n := &c.Integrations.Plugins[i]
 		n.Name = strings.TrimSpace(n.Name)
 		if n.Interval == 0 {
-			n.Interval = Duration(defaultNagiosEvery)
+			n.Interval = Duration(defaultPluginEvery)
 		}
 		if n.Timeout == 0 {
-			n.Timeout = Duration(min(defaultNagiosLimit, n.Interval.D()))
+			n.Timeout = Duration(min(defaultPluginLimit, n.Interval.D()))
 		}
 	}
 	s := &c.Syslog
@@ -291,7 +297,7 @@ func union(a, b []string) []string {
 
 var (
 	omNamespaceRe   = regexp.MustCompile(`^[A-Za-z0-9_][A-Za-z0-9_.\-]{0,99}$`)
-	nagiosNameRe    = regexp.MustCompile(`^[a-z0-9][a-z0-9_\-]{0,63}$`)
+	pluginNameRe    = regexp.MustCompile(`^[a-z0-9][a-z0-9_\-]{0,63}$`)
 	syslogParserRe  = regexp.MustCompile(`^[a-z0-9][a-z0-9_\-]{0,31}$`)
 	headerNameRe    = regexp.MustCompile(`^[A-Za-z0-9!#$%&'*+.^_` + "`" + `|~-]{1,100}$`)
 	metricPatternRe = regexp.MustCompile(`^[A-Za-z0-9_:*?\[\]\-]{1,200}$`)
@@ -389,15 +395,15 @@ func (c *Config) validateV05(add, warn func(string, ...any)) {
 	}
 
 	names = map[string]bool{}
-	for i, n := range c.Integrations.Nagios {
-		at := fmt.Sprintf("integrations.nagios[%d]", i)
+	for i, n := range c.Integrations.Plugins {
+		at := fmt.Sprintf("integrations.plugins[%d]", i)
 		if n.Name != "" {
 			at += " (" + n.Name + ")"
 		}
 		switch {
 		case n.Name == "":
 			add("%s : name manquant", at)
-		case !nagiosNameRe.MatchString(n.Name):
+		case !pluginNameRe.MatchString(n.Name):
 			add("%s : name invalide (minuscules, chiffres, - et _, 64 au plus)", at)
 		case names[n.Name]:
 			add("%s : name en double", at)
@@ -406,7 +412,7 @@ func (c *Config) validateV05(add, warn func(string, ...any)) {
 		if len(n.Command) == 0 || n.Command[0] == "" {
 			add("%s : command manquante", at)
 		} else if p := n.Command[0]; !filepath.IsAbs(p) && strings.ContainsAny(p, `/\`) {
-			add("%s : %q : chemin absolu ou simple nom de plugin attendu", at, p)
+			add("%s : %q : chemin absolu ou simple nom de greffon attendu", at, p)
 		}
 		if n.Interval.D() < 10*time.Second || n.Interval.D() > 24*time.Hour {
 			add("%s : interval %s hors de 10s à 24h", at, n.Interval.D())

@@ -419,7 +419,7 @@ CATALOGUE = [
               ts("w14", "CPU des instances EC2 (%)", 6, 8, ["avg:aws.ec2.cpu.usage{*} by {aws_instance}"], "percent"),
           ], tvars=[]),
     # ── Moteurs génériques (0.5.0) ───────────────────────────────────────────
-    board("openmetrics", "Collecte générique", "Cibles OpenMetrics et Prometheus",
+    board("openmetrics", "Collecte générique", "Cibles OpenMetrics",
           "Toutes les cibles lues par le lecteur OpenMetrics : joignables, séries envoyées, séries écartées par le "
           "plafond de cardinalité, durée des relevés.", ["openmetrics"], [
               checks("w1", "Cibles joignables", 0, 0, "openmetrics.can_connect", w=4),
@@ -432,7 +432,7 @@ CATALOGUE = [
               top("w6", "Séries écartées par cible", 0, 7, "max:openmetrics.series.dropped{$host} by {host,instance_name}", "count",
                   w=12, precision=0),
           ]),
-    board("node_exporter", "Collecte générique", "node_exporter (Prometheus)",
+    board("node_exporter", "Collecte générique", "node_exporter (système Linux)",
           "Machines lues par leur node_exporter (profil node_exporter) : charge, processeur par mode, mémoire, "
           "systèmes de fichiers, réseau et disques.", ["openmetrics:node_exporter"], [
               ts("w1", "Charge (1 min)", 0, 0, ["avg:node.load.1{$host} by {host,instance_name}"]),
@@ -464,15 +464,15 @@ CATALOGUE = [
                  "second", precision=3),
               ts("w9", "Mémoire résidente", 0, 10, ["max:prometheus.process.resident_memory{$host} by {host}"], "byte", w=12),
           ]),
-    board("nagios", "Collecte générique", "Plugins Nagios et Centreon",
-          "État des plugins lancés par les agents (nagios.check), leur durée, et leurs données de performance.",
-          ["nagios"], [
-              checks("w1", "Plugins", 0, 0, "nagios.check", w=4, h=4),
+    board("plugins", "Collecte générique", "Greffons",
+          "État des greffons lancés par les agents (plugin.check), leur durée, et leurs données de performance.",
+          ["plugin"], [
+              checks("w1", "Greffons", 0, 0, "plugin.check", w=4, h=4),
               {"id": "w2", "type": "table", "title": "Données de performance (dernière valeur)", "x": 4, "y": 0, "w": 8, "h": 4,
-               "queries": [{"q": "avg:nagios.perfdata{$host} by {host,nagios_check,perf_label}"}],
+               "queries": [{"q": "avg:plugin.perfdata{$host} by {host,plugin,perf_label}"}],
                "options": {"precision": 2, "aggs": ["last"], "aliases": ["Valeur"]}},
-              ts("w3", "Durée des plugins (s)", 0, 4, ["max:nagios.duration{$host} by {host,nagios_check}"], "second", precision=2),
-              ts("w4", "Données de performance", 6, 4, ["avg:nagios.perfdata{$host} by {nagios_check,perf_label}"]),
+              ts("w3", "Durée des greffons (s)", 0, 4, ["max:plugin.duration{$host} by {host,plugin}"], "second", precision=2),
+              ts("w4", "Données de performance", 6, 4, ["avg:plugin.perfdata{$host} by {plugin,perf_label}"]),
           ]),
     board("syslog", "Collecte générique", "Journaux reçus par syslog",
           "Lignes reçues par émetteur, émetteurs muets, lignes jetées (débit, file pleine, source refusée), connexions "

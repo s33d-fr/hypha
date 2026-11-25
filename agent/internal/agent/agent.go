@@ -36,10 +36,10 @@ import (
 	"s33d.fr/hypha/agent/internal/logs"
 	"s33d.fr/hypha/agent/internal/metrics"
 	"s33d.fr/hypha/agent/internal/model"
-	"s33d.fr/hypha/agent/internal/nagios"
 	"s33d.fr/hypha/agent/internal/netconn"
 	"s33d.fr/hypha/agent/internal/openmetrics"
 	"s33d.fr/hypha/agent/internal/otlp"
+	"s33d.fr/hypha/agent/internal/plugins"
 	"s33d.fr/hypha/agent/internal/procs"
 	"s33d.fr/hypha/agent/internal/sender"
 	"s33d.fr/hypha/agent/internal/snmp"
@@ -96,21 +96,21 @@ type Agent struct {
 	totalMem atomic.Uint64 // écrit par l'inventaire, lu par processus et conteneurs
 
 	// 0.4.0 (CONTRAT-04 §§ 14, 15, 27, 28, 29).
-	updates      *updates.Checker
-	updater      *update.Updater
-	updateOff    string
-	actions      *actions.Executor
-	synth        *synthetics.Runner
-	snmp         *snmp.Manager
-	inventory    *cmdb.Collector
-	configHash   string
-	restart      atomic.Bool
-	integrFirst  atomic.Bool
-	cancelRun    context.CancelFunc
+	updates     *updates.Checker
+	updater     *update.Updater
+	updateOff   string
+	actions     *actions.Executor
+	synth       *synthetics.Runner
+	snmp        *snmp.Manager
+	inventory   *cmdb.Collector
+	configHash  string
+	restart     atomic.Bool
+	integrFirst atomic.Bool
+	cancelRun   context.CancelFunc
 	// 0.5.0 : moteurs génériques (v05.go).
-	omMgr     *openmetrics.Manager
-	nagiosMgr *nagios.Manager
-	syslogSrv *syslog.Server
+	omMgr        *openmetrics.Manager
+	pluginsMgr   *plugins.Manager
+	syslogSrv    *syslog.Server
 	controlPause time.Time // canal de contrôle en pause jusqu'à cette heure (erreurs)
 	controlFails int
 
@@ -719,17 +719,17 @@ func (a *Agent) flushStates() {
 
 // statusFile : contenu de status.json.
 type statusFile struct {
-	PID           int               `json:"pid"`
-	Version       string            `json:"version"`
-	AgentID       string            `json:"agent_id"`
-	Hostname      string            `json:"hostname"`
-	URL           string            `json:"url"`
-	Started       time.Time         `json:"started"`
-	Updated       time.Time         `json:"updated"`
-	LastSendOK    *time.Time        `json:"last_send_ok,omitempty"`
-	LastError     string            `json:"last_error,omitempty"`
-	BufferedCount int               `json:"buffered_count"`
-	BufferedBytes int64             `json:"buffered_bytes"`
+	PID           int                 `json:"pid"`
+	Version       string              `json:"version"`
+	AgentID       string              `json:"agent_id"`
+	Hostname      string              `json:"hostname"`
+	URL           string              `json:"url"`
+	Started       time.Time           `json:"started"`
+	Updated       time.Time           `json:"updated"`
+	LastSendOK    *time.Time          `json:"last_send_ok,omitempty"`
+	LastError     string              `json:"last_error,omitempty"`
+	BufferedCount int                 `json:"buffered_count"`
+	BufferedBytes int64               `json:"buffered_bytes"`
 	Collectors    map[string]string   `json:"collectors"`
 	Errors        []string            `json:"errors"`
 	Update        *model.UpdateStatus `json:"update,omitempty"`

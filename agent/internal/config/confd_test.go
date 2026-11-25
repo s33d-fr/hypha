@@ -46,10 +46,10 @@ logs:
   files: [{path: /var/log/c.log}]
 tags: {role: base}
 `,
-		"conf.d/20-local.yaml":   "tags: {rack: 7}\nactions: {timeout: 30s}\n",
-		"conf.d/.cache.yaml":     "interval: [ceci n'est pas lu\n",
-		"conf.d/30-ancien.yml":   "interval: 99s\n",
-		"conf.d/40-x.yaml.bak":   "interval: 99s\n",
+		"conf.d/20-local.yaml": "tags: {rack: 7}\nactions: {timeout: 30s}\n",
+		"conf.d/.cache.yaml":   "interval: [ceci n'est pas lu\n",
+		"conf.d/30-ancien.yml": "interval: 99s\n",
+		"conf.d/40-x.yaml.bak": "interval: 99s\n",
 	})
 	c, err := Load(path)
 	if err != nil {
@@ -172,5 +172,38 @@ func TestValidateV04(t *testing.T) {
 	}
 	if d.Actions.Enabled || d.AutoUpdate || d.Synthetics.Enabled || d.SNMP.Traps.Enabled {
 		t.Fatal("un défaut n'est pas sûr (actions, mise à jour, synthétiques ou traps actifs)")
+	}
+}
+
+// Greffons : l'ancienne clé (avant la 0.14.0) et la nouvelle s'additionnent d'un fichier à l'autre,
+// et chaque fichier qui en déclare passe au contrôle de son propriétaire.
+func TestConfDPluginsLegacyKey(t *testing.T) {
+	dir := t.TempDir()
+	path := writeConf(t, dir, map[string]string{
+		"hypha.yaml": "api_key: " + testKey + "\n" +
+			"integrations:\n  plugins:\n    - {name: neuf, command: [/bin/true]}\n",
+		"conf.d/30-descripteurs.yaml": "integrations:\n  nagios:\n    - {name: ancien, command: [/bin/true], interval: 5m}\n",
+	})
+	c, err := Load(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if errs := c.Validate(true); len(errs) > 0 {
+		t.Fatalf("erreurs : %v", errs)
+	}
+	in := c.Integrations
+	if len(in.Plugins) != 2 || in.Plugins[0].Name != "neuf" || in.Plugins[1].Name != "ancien" || len(in.LegacyPlugins) != 0 {
+		t.Fatalf("greffons : %+v (ancienne clé : %+v)", in.Plugins, in.LegacyPlugins)
+	}
+	if in.Plugins[1].Interval.D() != 5*time.Minute || in.Plugins[0].Timeout.D() != 30*time.Second {
+		t.Fatalf("valeurs par défaut : %+v", in.Plugins)
+	}
+	if len(c.PluginFiles) != 2 {
+		t.Fatalf("fichiers qui déclarent des greffons : %v", c.PluginFiles)
+	}
+	for _, w := range c.Warnings {
+		if strings.Contains(w, "nagios") {
+			t.Fatalf("ancienne clé signalée comme inconnue : %s", w)
+		}
 	}
 }

@@ -288,10 +288,10 @@ func cmdCheckConfig(args []string) int {
 	for _, o := range cfg.Integrations.OpenMetrics {
 		om = append(om, o.Name+" "+o.URL)
 	}
-	for _, n := range cfg.Integrations.Nagios {
+	for _, n := range cfg.Integrations.Plugins {
 		ng = append(ng, n.Name)
 	}
-	fmt.Printf("OpenMetrics    : %d cible(s) %v ; plugins Nagios : %d %v\n", len(om), om, len(ng), ng)
+	fmt.Printf("OpenMetrics    : %d cible(s) %v ; greffons : %d %v\n", len(om), om, len(ng), ng)
 	if cfg.Syslog.Enabled {
 		fmt.Printf("Syslog         : actif, udp=%q tcp=%q, %d lignes/s au plus\n", cfg.Syslog.UDP, cfg.Syslog.TCP, cfg.Syslog.RateLimit)
 	} else {

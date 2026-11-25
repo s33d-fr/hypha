@@ -1,6 +1,6 @@
 //go:build !linux
 
-package nagios
+package plugins
 
 import (
 	"fmt"
@@ -23,10 +23,10 @@ func unsafeConfig(string) string { return "" }
 func unsafeExecutable(p string) string {
 	fi, err := os.Stat(p)
 	if err != nil {
-		return fmt.Sprintf("plugin %s introuvable", p)
+		return fmt.Sprintf("greffon %s introuvable", p)
 	}
 	if !fi.Mode().IsRegular() {
-		return fmt.Sprintf("plugin %s : fichier ordinaire attendu", p)
+		return fmt.Sprintf("greffon %s : fichier ordinaire attendu", p)
 	}
 	return ""
 }

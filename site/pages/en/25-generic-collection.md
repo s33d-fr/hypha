@@ -1,15 +1,15 @@
 ---
 id: generic-collection
 path: /en/docs/generic-collection/
-title: Generic collection: Prometheus, Nagios plugins and syslog
-nav: Prometheus, Nagios, syslog
+title: Generic collection: OpenMetrics, plugins and syslog
+nav: OpenMetrics, plugins, syslog
 section: Integrations
 order: 25
-updated: 2026-11-20
-description: The HYPHA agent's OpenMetrics and Prometheus reader and its profiles, running Nagios, Monitoring Plugins and Centreon plugins, receiving syslog from network devices.
-lead: Three engines to monitor what has no dedicated integration: any software that publishes its metrics in Prometheus format, the thousands of existing Nagios and Centreon plugins, and logs sent over syslog.
+updated: 2026-11-23
+description: The HYPHA agent's OpenMetrics reader and its profiles, plugins (check scripts and programs) run by the agent, receiving syslog from network devices.
+lead: Three engines to monitor what has no dedicated integration: any software that publishes its metrics in OpenMetrics format, your check scripts and programs, and logs sent over syslog.
 ---
-## OpenMetrics and Prometheus reader
+## OpenMetrics reader
 
 The agent reads `/metrics` pages in the Prometheus exposition format (text 0.0.4) or OpenMetrics 1.0 (text). One entry per target, under `integrations.openmetrics`:
 
@@ -65,39 +65,41 @@ Twenty-nine more profiles (Consul, Vault, etcd, Traefik, Kafka through the JMX e
 - `openmetrics.can_connect`: critical when the target does not answer, answers with an error or returns an unreadable exposition (the protobuf format is not read).
 - `openmetrics.series`, `openmetrics.series.dropped`, `openmetrics.scrape.duration` per target.
 
-## Nagios, Monitoring Plugins and Centreon plugins
+## Plugins
 
-The agent runs Nagios-format plugins and turns them into a check and metrics:
+A plugin is a check program or script: it returns an exit code (0 OK, 1 WARNING, 2 CRITICAL, 3 UNKNOWN), a line of text and, after `|`, performance data. The agent runs it at a regular interval and turns it into a check and metrics:
 
 ```yaml
 integrations:
-  nagios:
+  plugins:
     - name: root-disk
       command: check_disk -w 20% -c 10% -p /
       interval: 60s                        # at least 10 s
       timeout: 30s                         # at most the interval
     - name: local-http
       command: [check_http, -H, 127.0.0.1, -u, /health]
-      user: nagios                         # account running the plugin (Linux)
-    - name: centreon-load
-      command: [/usr/bin/perl, /usr/lib/centreon/plugins/centreon_plugins.pl,
-                --plugin=os::linux::local::plugin, --mode=load]
+      user: nobody                         # account running the plugin (Linux)
+    - name: backup
+      command: [/usr/local/bin/check-backup.sh, --max-age, 26h]
+      interval: 15m
       tags: {role: web}
 ```
 
-- Exit code 0, 1, 2, 3: `nagios.check` check OK, WARNING, CRITICAL, UNKNOWN, tagged `nagios_check` (the entry name), with the plugin's text. Any other code counts as UNKNOWN, a timeout as CRITICAL.
-- Performance data (`'label'=value[unit];warn;crit;min;max`): `nagios.perfdata` metric tagged `perf_label`, plus `nagios.perfdata.warn`, `.crit`, `.min`, `.max` when the plugin gives them. Converted units: `s`, `ms`, `us`, `%`, `B`, `KB`, `MB`, `GB`, `TB`, `c`. `perfdata: false` turns them off.
-- `nagios.duration`: duration of each run.
+- Exit code 0, 1, 2, 3: `plugin.check` check OK, WARNING, CRITICAL, UNKNOWN, tagged `plugin` (the entry name), with the plugin's text. Any other code counts as UNKNOWN, a timeout as CRITICAL.
+- Performance data (`'label'=value[unit];warn;crit;min;max`): `plugin.perfdata` metric tagged `perf_label`, plus `plugin.perfdata.warn`, `.crit`, `.min`, `.max` when the plugin gives them. Converted units: `s`, `ms`, `us`, `%`, `B`, `KB`, `MB`, `GB`, `TB`, `c`. `perfdata: false` turns them off.
+- `plugin.duration`: duration of each run.
+
+Plugins already written for other monitoring tools follow this convention and run unchanged. Usual packages: `monitoring-plugins` (Debian, Ubuntu), `nagios-plugins-all` (EPEL), the open `centreon-plugins` repository (Perl, with `libjson-xs-perl`).
 
 ### Security
 
 - Commands come **only** from the host's configuration files. The HYPHA server can neither send nor change them.
-- On Linux, the agent refuses to run anything if a file declaring plugins, or the executable itself, is not owned by root or is writable by group or others (an UNKNOWN check says so).
-- Direct execution, no shell: `$`, `*`, `|` or `;` stay ordinary characters. A bare plugin name is looked up in `/usr/lib/nagios/plugins`, `/usr/lib64/nagios/plugins`, `/usr/lib/monitoring-plugins`, `/usr/local/nagios/libexec`, `/usr/lib/centreon/plugins`, never in `PATH`.
-- Reduced environment (system `PATH`, `LANG=C`), without the agent's variables; output capped at 64 KiB; on timeout, the plugin and its children are stopped; at most four plugins at once.
+- On Linux, the agent refuses to run anything if a file declaring plugins, or the executable itself, is not owned by root or stays writable by its group or by everyone (an UNKNOWN check says so).
+- Direct execution, no shell: `$`, `*`, `|` or `;` stay ordinary characters. A bare plugin name is looked up in `/usr/lib/hypha/plugins`, then in the folders where the packages above install them (`/usr/lib/nagios/plugins`, `/usr/lib64/nagios/plugins`, `/usr/lib/monitoring-plugins`, `/usr/local/nagios/libexec`, `/usr/lib/centreon/plugins`), never in `PATH`.
+- Reduced environment (system `PATH`, `LANG=C`), without the agent's variables; output capped at 64 KiB; on timeout, the plugin and its children are stopped; at most four plugins at the same time.
 - On Windows: absolute path required; protect the agent's configuration folder with its permissions (administrators only).
 
-Usual packages: `monitoring-plugins` (Debian, Ubuntu), `nagios-plugins-all` (EPEL); Centreon plugins: the open `centreon-plugins` repository (Perl, with `libjson-xs-perl`).
+Agents before 0.14.0 read these entries under the `integrations.nagios` key; the agent still reads it and the server stores their results under the names above.
 
 ## Syslog reception
 
@@ -128,6 +130,6 @@ Models for firewalls and routers (Fortinet, Stormshield, pfSense, OPNsense, Palo
 
 ## Monitor templates and dashboards
 
-**Collecte générique** family of the monitor catalogue: OpenMetrics target unreachable, series cap reached, Nagios plugin alerting, syslog reception failing, silent syslog device, dropped syslog lines, severe errors received by syslog.
+**Collecte générique** family of the monitor catalogue: OpenMetrics target unreachable, series cap reached, plugin alerting, syslog reception failing, silent syslog device, dropped syslog lines, severe errors received by syslog.
 
-The [dashboard catalogue](/en/docs/metrics/#ready-made-dashboard-catalogue) offers "Cibles OpenMetrics et Prometheus", "node_exporter (Prometheus)", "Serveur Prometheus", "Plugins Nagios et Centreon" and "Journaux reçus par syslog".
+The [dashboard catalogue](/en/docs/metrics/#ready-made-dashboard-catalogue) offers "Cibles OpenMetrics", "node_exporter (système Linux)", "Serveur Prometheus", "Greffons" and "Journaux reçus par syslog".

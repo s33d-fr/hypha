@@ -86,7 +86,7 @@ Variables: `{{name}}`, `{{group}}`, `{{host}}`, `{{value}}`, `{{last_value}}`, `
 | Mail | Postfix queue |
 | Synthetics | synthetic test failing |
 | Kubernetes, Cloud, Virtualization | clusters, nodes, AWS, Azure, Google Cloud, OVHcloud, Scaleway, vSphere, Proxmox, Hyper-V, KVM |
-| Generic collection | OpenMetrics target unreachable, series cap reached, Nagios plugin alerting, syslog reception failing, silent syslog device, dropped syslog lines, severe errors received by syslog |
+| Generic collection | OpenMetrics target unreachable, series cap reached, plugin alerting, syslog reception failing, silent syslog device, dropped syslog lines, severe errors received by syslog |
 | AI and GPU | Ollama, vLLM, LiteLLM, TGI, llama.cpp: unreachable, queue, latency; NVIDIA GPU too hot, saturated, memory full, faulty |
 
 A new workspace receives six catalogue monitors, linked to an email channel to the account's address: host not reporting, disk almost full, memory saturated, systemd unit failed, Windows service stopped, certificate close to expiry.

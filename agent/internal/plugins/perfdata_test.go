@@ -1,4 +1,4 @@
-package nagios
+package plugins
 
 import (
 	"testing"
@@ -77,18 +77,18 @@ func TestMeasure(t *testing.T) {
 		}
 		return m
 	}
-	c := &Check{cfg: config.NagiosCheck{Name: "disque", Tags: map[string]string{"role": "web"}}, o: Options{Tags: tags}}
+	c := &Check{cfg: config.PluginCheck{Name: "disque", Tags: map[string]string{"role": "web"}}, o: Options{Tags: tags}}
 	series, check := c.Measure(Result{Status: 1, Output: "DISK WARNING - / 90%|/=900MB;800;950;0;1000\n", Duration: time.Second}, time.Unix(10, 0))
-	if check.Name != "nagios.check" || check.Status != model.CheckWarn || check.Message != "DISK WARNING - / 90%" ||
-		check.Tags["nagios_check"] != "disque" || check.Tags["role"] != "web" {
+	if check.Name != "plugin.check" || check.Status != model.CheckWarn || check.Message != "DISK WARNING - / 90%" ||
+		check.Tags["plugin"] != "disque" || check.Tags["role"] != "web" {
 		t.Fatalf("contrôle : %+v", check)
 	}
 	got := map[string]float64{}
 	for _, s := range series {
 		got[s.Metric+"|"+s.Tags["perf_label"]+"|"+s.Unit] = s.Points[0].Value
 	}
-	for k, v := range map[string]float64{"nagios.duration||second": 1, "nagios.perfdata|/|byte": 900 << 20, "nagios.perfdata.warn|/|byte": 800 << 20,
-		"nagios.perfdata.crit|/|byte": 950 << 20, "nagios.perfdata.min|/|byte": 0, "nagios.perfdata.max|/|byte": 1000 << 20} {
+	for k, v := range map[string]float64{"plugin.duration||second": 1, "plugin.perfdata|/|byte": 900 << 20, "plugin.perfdata.warn|/|byte": 800 << 20,
+		"plugin.perfdata.crit|/|byte": 950 << 20, "plugin.perfdata.min|/|byte": 0, "plugin.perfdata.max|/|byte": 1000 << 20} {
 		if got[k] != v {
 			t.Errorf("%s = %v, attendu %v (%v)", k, got[k], v, got)
 		}
@@ -99,8 +99,8 @@ func TestMeasure(t *testing.T) {
 	if len(series) != 0 {
 		t.Fatalf("perfdata: false ignoré : %+v", series)
 	}
-	_, check = c.Measure(Result{Status: 3, Err: "plugin x introuvable"}, time.Unix(10, 0))
-	if check.Status != model.CheckUnknown || check.Message != "plugin x introuvable" {
+	_, check = c.Measure(Result{Status: 3, Err: "greffon x introuvable"}, time.Unix(10, 0))
+	if check.Status != model.CheckUnknown || check.Message != "greffon x introuvable" {
 		t.Fatalf("erreur de lancement : %+v", check)
 	}
 }
